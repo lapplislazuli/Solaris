@@ -40,10 +40,8 @@ public class Program extends Application{
         scene.widthProperty().addListener(evt -> drawAll(gc));
         scene.heightProperty().addListener(evt -> drawAll(gc));
 	
-    
         canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
-        
         drawAll(gc);
         
         //ToDo: Kill Timer on Close
@@ -53,7 +51,7 @@ public class Program extends Application{
             public void run() {
             	Platform.runLater ( () -> drawAll(gc) ); 
             }
-        }, 0, 50);
+        }, 0, 5);
         
         primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);
@@ -65,7 +63,7 @@ public class Program extends Application{
                 new Stop(0.0, Color.BLUE),
                 new Stop(1.0, Color.DARKBLUE)));          
 		gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-		// TODO Auto-generated method stub
+		
 		for(SpaceObject item : rootSpaceObjects) {
 			item.update(gc);
 		}
@@ -76,18 +74,18 @@ public class Program extends Application{
 		
 		//Sun Will be centered in the first update
 		Star sun = new Star("Sun",Color.ORANGE,100);
-		Planet earth = new Planet("Earth", (SpaceObject)sun, Color.CYAN, 50, 150, Math.PI/10);
-		Planet mars = new Planet("Mars", (SpaceObject)sun, Color.INDIANRED, 75, 250, Math.PI/5);
-		Planet moon = new Planet("Moon", (SpaceObject)earth, Color.GRAY,10,20,Math.PI/4);
+		Planet earth = new Planet("Earth", (SpaceObject)sun, Color.CYAN, 50, 150, Math.PI/200);
+		Planet mars = new Planet("Mars", (SpaceObject)sun, Color.INDIANRED, 75, 250, Math.PI/100);
+		Planet moon = new Planet("Moon", (SpaceObject)earth, Color.GRAY,10,20,Math.PI/80);
 		
 		Planet saturn = (new Planet.Builder("Saturn", sun))
 							.size(100)
 							.color(Color.LIGHTGOLDENRODYELLOW)
-							.speed(Math.PI/50)
+							.speed(Math.PI/1000)
 							.distance(500)
 							.build();
 		
-		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/100,500);
+		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,500);
 		
 		rootSpaceObjects=new LinkedList<SpaceObject>();
 		rootSpaceObjects.add(milkyway);

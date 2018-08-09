@@ -5,18 +5,13 @@ import java.util.stream.Collectors;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class SpaceObject {
+public abstract class SpaceObject {
 	
-	protected int x,y;
+	protected int x,y,size;
 	String name;
 	
 	protected List<MovingSpaceObject> trabants;
-	
-	protected int size;
-	
 	protected float rotation; //in radiant-degree
-	
-	//img?
 	
 	public SpaceObject(String name,int x, int y, int size) {
 		this.name=name;
@@ -46,9 +41,7 @@ public class SpaceObject {
 		}
 	};
 	protected void draw(GraphicsContext gc) {
-		//Draw me?
-		
-		//Mockup:
+		//Mockup for failed/missing implementation:
 		System.out.println("I am " + name + " chilling at [" + x + "," + y + "]" );
 	}
 	public int getX() {return x;}

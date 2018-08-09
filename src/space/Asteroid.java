@@ -54,13 +54,13 @@ public class Asteroid extends MovingSpaceObject{
 	@Override
 	public void update(GraphicsContext gc,int parentX, int parentY) {
 		move(parentX,parentY);
-		shuffle();
+		shake();
 		draw(gc);
 		//i do not have children, i do not need to update children
 	}
 
 	//Change my koords by a little noise, so its not a perfect circle
-	private void shuffle() {
+	private void shake() {
 		x+=(Math.random()+1)*3;
 		y+=(Math.random()+1)*3;
 	}

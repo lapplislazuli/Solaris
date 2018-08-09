@@ -3,7 +3,7 @@ package space;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class MovingSpaceObject extends SpaceObject {
+public abstract class MovingSpaceObject extends SpaceObject {
 	
 	
 	protected int distance;
@@ -13,13 +13,12 @@ public class MovingSpaceObject extends SpaceObject {
 	//Add to parents Trabants
 	@SuppressWarnings("restriction")
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
-		super(name,parent.getX()+distance,parent.getY()+distance,size);
+		super(name,parent.getX(),parent.getY()+distance,size);
 		
 		this.distance=distance;
 		this.speed=speed;
 		this.color=color;
 		relativePos=0;
-		// MAYBE:
 		parent.addTrabant(this);
 	}
 	@SuppressWarnings("restriction")
@@ -42,7 +41,7 @@ public class MovingSpaceObject extends SpaceObject {
 	@Override
 	protected void draw(GraphicsContext gc) {
 		gc.setFill(color);
-		//change so the center is drawn, not the edgepoint
-		gc.fillOval(x-size/2, y-size/2, size/2, size/2);
+		//change so the center is drawn, not the corner
+		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
 	}
 }

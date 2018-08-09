@@ -27,6 +27,7 @@ public class FixStar extends Star{
 		super.draw(gc);
 	}
 	
+	//if window is resized, put me in the correct position again
 	protected void fixPosition(GraphicsContext gc) {
 		x=(int) (relativeX*gc.getCanvas().getWidth());
 		y=(int) (relativeY*gc.getCanvas().getHeight());

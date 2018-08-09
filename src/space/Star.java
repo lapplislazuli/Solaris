@@ -37,6 +37,6 @@ public class Star extends SpaceObject {
 	@Override
 	protected void draw(GraphicsContext gc) {
 		gc.setFill(color);
-		gc.fillOval(x, y, size/2, size/2);
+		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
 	}
 }
