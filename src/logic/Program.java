@@ -51,7 +51,7 @@ public class Program extends Application{
             public void run() {
             	Platform.runLater ( () -> drawAll(gc) ); 
             }
-        }, 0, 5);
+        }, 0, 25);
         
         primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);
@@ -87,6 +87,9 @@ public class Program extends Application{
 		
 		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,500);
 		
+		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,15,5,0.05);
+		shuttle.setTarget(sun);
+		shuttle.launch();
 		rootSpaceObjects=new LinkedList<SpaceObject>();
 		rootSpaceObjects.add(milkyway);
 		rootSpaceObjects.add(sun);
