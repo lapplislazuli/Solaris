@@ -97,7 +97,6 @@ public class Program extends Application{
 		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,15,5,0.05);
 		
 		nav = new ShuttleNavigator("NASA", shuttle);
-		//nav.addToRoute(mars);
 		nav.addToRoute(sun);
 		
 		rootSpaceObjects=new LinkedList<SpaceObject>();
