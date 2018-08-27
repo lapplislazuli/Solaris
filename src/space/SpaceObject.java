@@ -34,6 +34,10 @@ public abstract class SpaceObject {
 				.get(0);
 	}
 	
+	public boolean removeTrabant(MovingSpaceObject trabant) {
+		return trabants.remove(trabant);
+	}
+	
 	public void update(GraphicsContext gc) {
 		draw(gc);
 		for (MovingSpaceObject trabant : trabants){
@@ -46,4 +50,14 @@ public abstract class SpaceObject {
 	}
 	public int getX() {return x;}
 	public int getY() {return y;}
+	
+	public double distanceTo(SpaceObject other) {
+		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
+	}
+	public double degreeTo(SpaceObject other) {
+		return Math.asin((x-other.x)/(y-other.y));                        
+	}
+	public boolean collidesWith(SpaceObject other) {
+		return (distanceTo(other)<=size/2+other.size/2);
+	}
 }
