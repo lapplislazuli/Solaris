@@ -34,16 +34,20 @@ public class SpaceShuttle extends MovingSpaceObject{
 			target=null;
 			
 			//Distance+Degree relative to new Parent
-			distance=(int)distanceTo(parent);
 			relativePos=degreeTo(parent);
+			distance=(int)distanceTo(parent);
+			
 		}
 		//Else?	
 	}
 	
+	public SpaceObject getParent() { return parent;}
+	public boolean isOrbiting() {return orbiting;}
+	
+	@SuppressWarnings("restriction")
 	@Override
 	protected void draw(GraphicsContext gc) {
 		gc.setFill(color);
-		//change so the center is drawn, not the corner
 		gc.fillRect(x-size/4, y-size/4, size/2, size/2);
 	}
 	

@@ -19,6 +19,7 @@ import javafx.scene.paint.Stop;
 public class Program extends Application{
 	
 	private List<SpaceObject> rootSpaceObjects;
+	private ShuttleNavigator nav;
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Solaris");
@@ -49,7 +50,7 @@ public class Program extends Application{
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-            	Platform.runLater ( () -> drawAll(gc) ); 
+            	Platform.runLater ( () -> updateAll(gc) ); 
             }
         }, 0, 25);
         
@@ -57,8 +58,14 @@ public class Program extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
 	}
-
+	
+	private void updateAll(GraphicsContext gc) {
+		nav.update();
+		drawAll(gc);
+	}
+	
 	private void drawAll(GraphicsContext gc) {
+		
 		gc.setFill(new LinearGradient(0, 0, 0.2, 0.2, true, CycleMethod.REFLECT, 
                 new Stop(0.0, Color.BLUE),
                 new Stop(1.0, Color.DARKBLUE)));          
@@ -88,8 +95,11 @@ public class Program extends Application{
 		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,500);
 		
 		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,15,5,0.05);
-		shuttle.setTarget(sun);
-		shuttle.launch();
+		
+		nav = new ShuttleNavigator("NASA", shuttle);
+		//nav.addToRoute(mars);
+		nav.addToRoute(sun);
+		
 		rootSpaceObjects=new LinkedList<SpaceObject>();
 		rootSpaceObjects.add(milkyway);
 		rootSpaceObjects.add(sun);

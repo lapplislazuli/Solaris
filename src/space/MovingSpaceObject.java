@@ -18,7 +18,8 @@ public abstract class MovingSpaceObject extends SpaceObject {
 		this.distance=distance;
 		this.speed=speed;
 		this.color=color;
-		relativePos=0;
+		relativePos=degreeTo(parent);
+		//relativePos=0;
 		parent.addTrabant(this);
 	}
 	@SuppressWarnings("restriction")
@@ -33,8 +34,8 @@ public abstract class MovingSpaceObject extends SpaceObject {
 		if (relativePos >= Math.PI*2)
 			relativePos -=  Math.PI*2;
 		
-		x = parentX+ (int)(Math.sin(relativePos)*distance);
-		y = parentY+ (int)(Math.cos(relativePos)*distance);
+		x = (parentX+ (int)(Math.cos(relativePos)*distance));
+		y = (parentY- (int)(Math.sin(relativePos)*distance));
 		//Change my Koords, according to parent, distance and speed
 	};
 	

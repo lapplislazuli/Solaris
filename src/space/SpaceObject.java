@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.scene.canvas.GraphicsContext;
+import logic.UpdatingObject;
 
 public abstract class SpaceObject {
 	
@@ -54,8 +55,14 @@ public abstract class SpaceObject {
 	public double distanceTo(SpaceObject other) {
 		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
 	}
+	
 	public double degreeTo(SpaceObject other) {
-		return Math.asin((x-other.x)/(y-other.y));                        
+		if(distanceTo(other)==0) 
+			return 0;
+		if(y<other.y)
+			return Math.acos((x-other.x)/distanceTo(other));
+		else
+			return Math.acos(Math.abs(x-other.x)/distanceTo(other))+Math.PI;
 	}
 	public boolean collidesWith(SpaceObject other) {
 		return (distanceTo(other)<=size/2+other.size/2);
