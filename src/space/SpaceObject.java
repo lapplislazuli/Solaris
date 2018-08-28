@@ -62,7 +62,7 @@ public abstract class SpaceObject {
 		if(y<other.y)
 			return Math.acos((x-other.x)/distanceTo(other));
 		else
-			return Math.acos(Math.abs(x-other.x)/distanceTo(other))+Math.PI;
+			return 2*Math.PI-Math.acos((x-other.x)/distanceTo(other));
 	}
 	public boolean collidesWith(SpaceObject other) {
 		return (distanceTo(other)<=size/2+other.size/2);

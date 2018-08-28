@@ -20,6 +20,7 @@ public class Program extends Application{
 	
 	private List<SpaceObject> rootSpaceObjects;
 	private ShuttleNavigator nav;
+	private ShuttleNavigator nav2;
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Solaris");
@@ -61,6 +62,7 @@ public class Program extends Application{
 	
 	private void updateAll(GraphicsContext gc) {
 		nav.update();
+		nav2.update();
 		drawAll(gc);
 	}
 	
@@ -95,9 +97,14 @@ public class Program extends Application{
 		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,500);
 		
 		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,15,5,0.05);
+		SpaceShuttle shuttle2 = new SpaceShuttle("Alien SpaceShip",mars,15,5,0.05);
 		
 		nav = new ShuttleNavigator("NASA", shuttle);
 		nav.addToRoute(sun);
+		nav.addToRoute(saturn);
+		
+		nav2 = new ShuttleNavigator("AlienOverlord", shuttle2);
+		nav2.addToRoute(earth);
 		
 		rootSpaceObjects=new LinkedList<SpaceObject>();
 		rootSpaceObjects.add(milkyway);
