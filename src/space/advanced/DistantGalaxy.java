@@ -1,10 +1,11 @@
-package space;
+package space.advanced;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import javafx.scene.canvas.GraphicsContext;
+import space.core.SpaceObject;
 
 public class DistantGalaxy extends SpaceObject{
 	

@@ -1,6 +1,12 @@
 package logic;
 
 import space.*;
+import space.advanced.AsteroidBelt;
+import space.advanced.DistantGalaxy;
+import space.advanced.SpaceShuttle;
+import space.core.Planet;
+import space.core.SpaceObject;
+import space.core.Star;
 
 import java.util.LinkedList;
 import java.util.List;

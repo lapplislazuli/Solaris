@@ -3,7 +3,10 @@ package logic;
 import java.util.LinkedList;
 import java.util.List;
 
+import interfaces.UpdatingObject;
 import space.*;
+import space.advanced.SpaceShuttle;
+import space.core.SpaceObject;
 
 /*
  * Pushes a Shuttle whenever its orbiting to another SpaceObject

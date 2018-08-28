@@ -1,4 +1,4 @@
-package logic;
+package interfaces;
 
 import javafx.scene.canvas.GraphicsContext;
 

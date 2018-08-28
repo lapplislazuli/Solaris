@@ -1,10 +1,10 @@
-package space;
+package space.core;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
-import logic.UpdatingObject;
 
 public abstract class SpaceObject {
 	

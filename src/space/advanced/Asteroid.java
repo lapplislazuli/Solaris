@@ -1,8 +1,10 @@
-package space;
+package space.advanced;
 
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import space.core.MovingSpaceObject;
+import space.core.SpaceObject;
 
 public class Asteroid extends MovingSpaceObject{
 	

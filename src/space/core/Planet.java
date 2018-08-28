@@ -1,4 +1,4 @@
-package space;
+package space.core;
 
 import javafx.scene.paint.Color;
 

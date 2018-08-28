@@ -1,7 +1,7 @@
-package space;
+package space.advanced;
 
 import javafx.scene.paint.Color;
-
+import space.core.Star;
 import javafx.scene.canvas.GraphicsContext;
 
 public class FixStar extends Star{

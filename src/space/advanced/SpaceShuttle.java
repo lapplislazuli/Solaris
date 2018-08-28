@@ -1,7 +1,9 @@
-package space;
+package space.advanced;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import space.core.MovingSpaceObject;
+import space.core.SpaceObject;
 
 /*
  * The SpaceShuttle orbits a Planet, then gets launched to another planet, and then orbits there
@@ -36,7 +38,6 @@ public class SpaceShuttle extends MovingSpaceObject{
 			//Distance+Degree relative to new Parent
 			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
-			
 		}
 		//Else?	
 	}

@@ -1,4 +1,4 @@
-package space;
+package space.core;
 
 public class Satellite extends MovingSpaceObject{
 	public Satellite(String name, SpaceObject parent, int size, int distance, double speed) {
