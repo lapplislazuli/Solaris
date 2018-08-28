@@ -23,7 +23,7 @@ public class AsteroidBelt extends MovingSpaceObject{
 		for(int i = 1; i<=asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,distance,speed);
 			//move them on different points
-			a.relativePos=i/Math.PI*2;
+			a.setRelativePos(i/Math.PI*2);
 			astroids.add(a);
 		}
 	}

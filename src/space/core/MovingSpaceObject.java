@@ -45,4 +45,8 @@ public abstract class MovingSpaceObject extends SpaceObject {
 		//change so the center is drawn, not the corner
 		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
 	}
+	
+	public void setRelativePos(double newPos) {
+		this.relativePos=newPos;
+	}
 }

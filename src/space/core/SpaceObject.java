@@ -67,4 +67,7 @@ public abstract class SpaceObject {
 	public boolean collidesWith(SpaceObject other) {
 		return (distanceTo(other)<=size/2+other.size/2);
 	}
+	public int getSize() {
+		return size;
+	}
 }

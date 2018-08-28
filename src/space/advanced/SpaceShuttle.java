@@ -20,7 +20,7 @@ public class SpaceShuttle extends MovingSpaceObject{
 		super(name, parent, Color.GHOSTWHITE, size, 0 , speed);
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;
-		distance=orbitingDistance+parent.size/2;
+		distance=orbitingDistance+parent.getSize()/2;
 	}
 	
 	
@@ -55,7 +55,7 @@ public class SpaceShuttle extends MovingSpaceObject{
 	@Override 
 	protected void move(int parentX, int parentY) {
 		if(!orbiting) {
-			if(distance>=orbitingDistance+parent.size/2) 
+			if(distance>=orbitingDistance+parent.getSize()/2) 
 				distance--;
 			else 
 				orbiting=true;

@@ -60,7 +60,11 @@ public class Asteroid extends MovingSpaceObject{
 		draw(gc);
 		//i do not have children, i do not need to update children
 	}
-
+	
+	public void setRelativePos(double newPos) {
+		this.relativePos=newPos;
+	}
+	
 	//Change my koords by a little noise, so its not a perfect circle
 	private void shake() {
 		x+=(Math.random()+1)*3;
