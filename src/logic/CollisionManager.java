@@ -23,6 +23,11 @@ public class CollisionManager implements UpdatingObject {
 		}
 	}
 	
+	public void emptyCollisions() {
+		collidables = new LinkedList<CollidingObject>();
+		destructibles = new LinkedList<DestructibleObject>();
+	}
+	
 	public void addCollidable(CollidingObject o){
 		collidables.add(o);
 		if(o instanceof DestructibleObject)

@@ -3,6 +3,7 @@ package space.advanced;
 
 import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
+import interfaces.NamedObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
@@ -11,6 +12,7 @@ import space.core.SpaceObject;
 @SuppressWarnings("restriction")
 public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
+	SpaceObject parent;
 	enum Type            
 	{
 	   ORE, ROCK, TRASH;  
@@ -32,6 +34,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {
 		super(name,parent,null,5,distance,speed);
 		this.type=type;
+		this.parent=parent;
 	}
 	
 	
@@ -75,6 +78,14 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	public void destruct(CollidingObject other) {
 		// TODO Auto-generated method stub
-		System.out.println("Asteroid: " + name + " collided with " + other.toString());
+		if(other instanceof NamedObject)
+			System.out.println("Asteroid: " + name + " collided with " + ((NamedObject)other).getName());
+		if(parent!=null) {
+			System.out.println("Remove " + name + " from " + parent.getName());
+			parent.removeTrabant(this);
+			parent=null;
+		}
+			
+		
 	}
 }

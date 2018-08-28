@@ -7,10 +7,11 @@ import java.util.stream.Collectors;
 
 import interfaces.CollidingObject;
 import interfaces.DrawingObject;
+import interfaces.NamedObject;
 import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject{
+public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject, NamedObject{
 	
 	protected int x,y,size;
 	protected String name;
@@ -57,6 +58,8 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 	
 	public int getX() {return x;}
 	public int getY() {return y;}
+	
+	public String getName() {return name;}
 	
 	public double distanceTo(SpaceObject other) {
 		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
