@@ -1,9 +1,10 @@
 package space.core;
 
+import interfaces.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public abstract class MovingSpaceObject extends SpaceObject {
+public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {
 	
 	
 	protected int distance;
@@ -22,13 +23,7 @@ public abstract class MovingSpaceObject extends SpaceObject {
 		//relativePos=0;
 		parent.addTrabant(this);
 	}
-	@SuppressWarnings("restriction")
-	public void update(GraphicsContext gc,int parentX, int parentY) {
-		move(parentX,parentY);
-		super.update(gc);
-	}
-	
-	protected void move(int parentX, int parentY) {
+	public void move(int parentX, int parentY) {
 		// rotate relative position
 		relativePos+=speed;
 		if (relativePos >= Math.PI*2)
@@ -40,10 +35,11 @@ public abstract class MovingSpaceObject extends SpaceObject {
 	};
 	
 	@Override
-	protected void draw(GraphicsContext gc) {
+	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
 		//change so the center is drawn, not the corner
 		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
+		super.draw(gc);
 	}
 	
 	public void setRelativePos(double newPos) {

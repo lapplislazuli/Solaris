@@ -47,13 +47,13 @@ public class SpaceShuttle extends MovingSpaceObject{
 	
 	@SuppressWarnings("restriction")
 	@Override
-	protected void draw(GraphicsContext gc) {
+	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
 		gc.fillRect(x-size/4, y-size/4, size/2, size/2);
 	}
 	
 	@Override 
-	protected void move(int parentX, int parentY) {
+	public void move(int parentX, int parentY) {
 		if(!orbiting) {
 			if(distance>=orbitingDistance+parent.getSize()/2) 
 				distance--;

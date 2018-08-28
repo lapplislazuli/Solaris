@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import javafx.scene.paint.Color;
 
+@SuppressWarnings("restriction")
 public class Star extends SpaceObject {
 	//i am a sun, bright and shining
 	protected Color color;
@@ -22,21 +23,18 @@ public class Star extends SpaceObject {
 		this.isCenter=isCenter;
 	}
 	
-	@Override
-	public void update(GraphicsContext gc) {
-		if(isCenter)
-			reCenter(gc);
-		super.update(gc);
-	}
-	
 	private void reCenter(GraphicsContext gc) {
 		x=(int) (gc.getCanvas().getWidth()-size)/2;
 		y=(int) (gc.getCanvas().getHeight()-size)/2;
 	}
 	
 	@Override
-	protected void draw(GraphicsContext gc) {
+	public void draw(GraphicsContext gc) {
+		if(isCenter)
+			reCenter(gc);
+		
 		gc.setFill(color);
 		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
+		super.draw(gc);
 	}
 }

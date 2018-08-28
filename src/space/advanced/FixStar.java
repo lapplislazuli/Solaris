@@ -22,7 +22,7 @@ public class FixStar extends Star{
 	}
 	
 	@Override
-	protected void draw(GraphicsContext gc) {
+	public void draw(GraphicsContext gc) {
 		fixPosition(gc);
 		super.draw(gc);
 	}

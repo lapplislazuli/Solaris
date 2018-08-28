@@ -5,7 +5,7 @@ public class Satellite extends MovingSpaceObject{
 		super(name, parent,null, size, distance, speed);
 	}
 	@Override
-	protected void move(int parentX, int parentY) {
+	public void move(int parentX, int parentY) {
 		super.move(parentX, parentY);
 		//ToDo: Change my Rotation
 	}

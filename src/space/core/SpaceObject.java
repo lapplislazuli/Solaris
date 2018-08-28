@@ -3,10 +3,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import interfaces.DrawingObject;
 import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class SpaceObject {
+public abstract class SpaceObject implements UpdatingObject, DrawingObject{
 	
 	protected int x,y,size;
 	String name;
@@ -39,16 +40,18 @@ public abstract class SpaceObject {
 		return trabants.remove(trabant);
 	}
 	
-	public void update(GraphicsContext gc) {
-		draw(gc);
+	public void update() {
 		for (MovingSpaceObject trabant : trabants){
-			trabant.update(gc,x,y);
+			trabant.move(x,y);
+			trabant.update();
 		}
 	};
-	protected void draw(GraphicsContext gc) {
-		//Mockup for failed/missing implementation:
-		System.out.println("I am " + name + " chilling at [" + x + "," + y + "]" );
+	
+	public void draw(GraphicsContext gc) {
+		for (MovingSpaceObject trabant : trabants) 
+			trabant.draw(gc);
 	}
+	
 	public int getX() {return x;}
 	public int getY() {return y;}
 	

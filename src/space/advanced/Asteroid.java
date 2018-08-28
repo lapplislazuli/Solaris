@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
+@SuppressWarnings("restriction")
 public class Asteroid extends MovingSpaceObject{
 	
 	enum Type            
@@ -33,7 +34,7 @@ public class Asteroid extends MovingSpaceObject{
 	
 	
 	@Override
-	protected void draw(GraphicsContext gc) {
+	public void draw(GraphicsContext gc) {
 		switch(type) {
 		case ORE:
 			gc.setFill(Color.DARKSLATEGRAY);
@@ -54,15 +55,14 @@ public class Asteroid extends MovingSpaceObject{
 		}
 	}
 	@Override
-	public void update(GraphicsContext gc,int parentX, int parentY) {
-		move(parentX,parentY);
-		shake();
-		draw(gc);
+	public void update() {
 		//i do not have children, i do not need to update children
 	}
 	
-	public void setRelativePos(double newPos) {
-		this.relativePos=newPos;
+	@Override 
+	public void move(int parentX, int parentY) {
+		super.move(parentX, parentY);
+		shake();
 	}
 	
 	//Change my koords by a little noise, so its not a perfect circle
