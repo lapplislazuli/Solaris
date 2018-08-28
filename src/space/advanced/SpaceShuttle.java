@@ -4,6 +4,7 @@ import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import logic.CollisionManager;
 import space.core.MovingSpaceObject;
 import space.core.Satellite;
 import space.core.SpaceObject;
@@ -67,7 +68,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 
 	public void destruct(CollidingObject other) {
-		// TODO Auto-generated method stub
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
 		if(parent!=null) {
 			if(other instanceof SpaceObject)

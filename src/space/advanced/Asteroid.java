@@ -6,6 +6,7 @@ import interfaces.DestructibleObject;
 import interfaces.NamedObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import logic.CollisionManager;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
@@ -76,8 +77,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		y+=(Math.random()+1)*3;
 	}
 	
-	public void destruct(CollidingObject other) {
-		// TODO Auto-generated method stub
+	public void destruct(CollidingObject other) {		
 		if(other instanceof NamedObject)
 			System.out.println("Asteroid: " + name + " collided with " + ((NamedObject)other).getName());
 		if(parent!=null) {
@@ -85,7 +85,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			parent.removeTrabant(this);
 			parent=null;
 		}
-			
+	}		
 		
-	}
+	
 }

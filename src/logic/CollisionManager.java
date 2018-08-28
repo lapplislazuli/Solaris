@@ -15,12 +15,17 @@ public class CollisionManager implements UpdatingObject {
 	public CollisionManager() {}
 	
 	public void update() {
+		List<DestructibleObject> destroyed=new LinkedList<DestructibleObject>();
 		for(DestructibleObject destructible : destructibles) {
 			for(CollidingObject collider: collidables) {
-				if(destructible!=collider && destructible.collides(collider))
+				if(destructible!=collider && destructible.collides(collider)) {
 					destructible.destruct(collider);
+					destroyed.add(destructible);
+				}	
 			}
 		}
+		destructibles.removeAll(destroyed);
+		collidables.removeAll(destroyed);
 	}
 	
 	public void emptyCollisions() {
@@ -33,4 +38,6 @@ public class CollisionManager implements UpdatingObject {
 		if(o instanceof DestructibleObject)
 			destructibles.add((DestructibleObject)o);
 	}
+	
+	
 }

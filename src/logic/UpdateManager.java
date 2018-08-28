@@ -23,18 +23,17 @@ public class UpdateManager implements UpdatingObject{
 		toDraw=new LinkedList<DrawingObject>();
 		this.gc = gc;
 		cm= new CollisionManager();
-		
+		/*
 		Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-            	Platform.runLater ( () -> refreshCollisionManager() ); 
+            	Platform.runLater ( () ->cm.update() ); 
             }
-        }, 0, 1000);
+        }, 0, 1000);*/
 	}
 	
 	public void update() {
-		//refreshCollisionManager();
 		updateAll();
 		drawAll();
 	}
@@ -52,6 +51,9 @@ public class UpdateManager implements UpdatingObject{
 	public void addSpaceObject(SpaceObject o) {
 		toUpdate.add(o);
 		toDraw.add(o);
+		
+		for(SpaceObject child : ((SpaceObject)o).getChildren())
+			cm.addCollidable(child);
 	}
 	/*
 	private void refreshCollisionManager() {
