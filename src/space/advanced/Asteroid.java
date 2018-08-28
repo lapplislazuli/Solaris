@@ -86,6 +86,4 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			parent=null;
 		}
 	}		
-		
-	
 }

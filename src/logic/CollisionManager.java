@@ -6,6 +6,7 @@ import java.util.List;
 import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import interfaces.UpdatingObject;
+import space.core.SpaceObject;
 
 public class CollisionManager implements UpdatingObject {
 	
@@ -39,5 +40,14 @@ public class CollisionManager implements UpdatingObject {
 			destructibles.add((DestructibleObject)o);
 	}
 	
-	
+	public void refresh(List<SpaceObject> objects) {
+		collidables = new LinkedList<CollidingObject>();
+		destructibles = new LinkedList<DestructibleObject>();
+		
+		for(SpaceObject o : objects)
+			addCollidable(o);
+		
+		//System.out.println("Collisionmanager Refreshed");
+		//System.out.println("Destructible:"+destructibles.size() + " Collidable:" + collidables.size());
+	}
 }
