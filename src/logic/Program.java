@@ -79,7 +79,7 @@ public class Program extends Application{
 							.distance(500)
 							.build();
 		
-		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,500);
+		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,100);
 		
 		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,15,5,0.05);
 		SpaceShuttle shuttle2 = new SpaceShuttle("Alien SpaceShip",mars,15,5,0.05);

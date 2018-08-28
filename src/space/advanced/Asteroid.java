@@ -1,13 +1,14 @@
 package space.advanced;
 
 
+import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
-public class Asteroid extends MovingSpaceObject{
+public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	enum Type            
 	{
@@ -69,5 +70,10 @@ public class Asteroid extends MovingSpaceObject{
 	private void shake() {
 		x+=(Math.random()+1)*3;
 		y+=(Math.random()+1)*3;
+	}
+	
+	public void destruct() {
+		// TODO Auto-generated method stub
+		System.out.println("Asteroid: " + name + " collided!");
 	}
 }

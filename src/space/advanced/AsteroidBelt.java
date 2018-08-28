@@ -3,6 +3,7 @@ package space.advanced;
 import java.util.LinkedList;
 import java.util.List;
 
+import interfaces.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
@@ -25,6 +26,11 @@ public class AsteroidBelt extends MovingSpaceObject{
 			a.setRelativePos(i/Math.PI*2);
 			astroids.add(a);
 		}
+	}
+	
+	@Override
+	public boolean collides(CollidingObject other) {
+		return false;
 	}
 	
 	@Override

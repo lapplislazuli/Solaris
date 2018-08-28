@@ -1,5 +1,5 @@
 package interfaces;
 
-public interface DestructibleObject {
+public interface DestructibleObject extends CollidingObject{
 	public void destruct();
 }

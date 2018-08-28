@@ -14,11 +14,13 @@ public class UpdateManager implements UpdatingObject{
 	public List<UpdatingObject> toUpdate;
 	public List<DrawingObject> toDraw;
 	private GraphicsContext gc;
+	private CollisionManager cm;
 	
 	public UpdateManager(GraphicsContext gc) {
 		toUpdate=new LinkedList<UpdatingObject>();
 		toDraw=new LinkedList<DrawingObject>();
 		this.gc = gc;
+		cm= new CollisionManager();
 	}
 	
 	public void update() {
@@ -29,6 +31,7 @@ public class UpdateManager implements UpdatingObject{
 	private void updateAll() {
 		for(UpdatingObject updateMe : toUpdate)
 			updateMe.update();
+		cm.update();
 	}
 	private void drawAll() {
 		for(DrawingObject drawMe : toDraw)
@@ -38,5 +41,7 @@ public class UpdateManager implements UpdatingObject{
 	public void addSpaceObject(SpaceObject o) {
 		toUpdate.add(o);
 		toDraw.add(o);
+		for(SpaceObject child : o.getChildren())
+			cm.addCollidable(child);
 	}
 }

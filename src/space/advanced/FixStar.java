@@ -2,6 +2,7 @@ package space.advanced;
 
 import javafx.scene.paint.Color;
 import space.core.Star;
+import interfaces.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 
 public class FixStar extends Star{
@@ -25,6 +26,11 @@ public class FixStar extends Star{
 	public void draw(GraphicsContext gc) {
 		fixPosition(gc);
 		super.draw(gc);
+	}
+	
+	@Override
+	public boolean collides(CollidingObject other) {
+		return false;
 	}
 	
 	//if window is resized, put me in the correct position again

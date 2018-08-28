@@ -1,5 +1,6 @@
 package space.advanced;
 
+import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
@@ -9,7 +10,7 @@ import space.core.SpaceObject;
  * The SpaceShuttle orbits a Planet, then gets launched to another planet, and then orbits there
  * The whole "flying" Process will be displayed in the move
  */
-public class SpaceShuttle extends MovingSpaceObject{
+public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
 
 	private boolean orbiting; 
 	private SpaceObject target;
@@ -61,5 +62,10 @@ public class SpaceShuttle extends MovingSpaceObject{
 				orbiting=true;
 		}
 		super.move(parentX, parentY);
+	}
+
+	public void destruct() {
+		// TODO Auto-generated method stub
+		System.out.println("Spaceship: " + name + " collided!");
 	}
 }

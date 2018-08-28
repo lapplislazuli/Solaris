@@ -1,16 +1,19 @@
 package space.core;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import interfaces.CollidingObject;
 import interfaces.DrawingObject;
 import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class SpaceObject implements UpdatingObject, DrawingObject{
+public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject{
 	
 	protected int x,y,size;
-	String name;
+	protected String name;
 	
 	protected List<MovingSpaceObject> trabants;
 	protected float rotation; //in radiant-degree
@@ -67,10 +70,21 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject{
 		else
 			return 2*Math.PI-Math.acos((x-other.x)/distanceTo(other));
 	}
-	public boolean collidesWith(SpaceObject other) {
-		return (distanceTo(other)<=size/2+other.size/2);
+	public boolean collides(CollidingObject other) {
+		if(other instanceof SpaceObject){
+			return (distanceTo((SpaceObject)other)<=size/2+((SpaceObject)other).size/2);
+		}
+		return false;
+			
 	}
 	public int getSize() {
 		return size;
+	}
+	public List<SpaceObject> getChildren(){
+		List<SpaceObject> flatChildren = new LinkedList<SpaceObject>();
+		for(SpaceObject trabant : trabants)
+			flatChildren.addAll(trabant.getChildren());
+		flatChildren.add(this);
+		return flatChildren;
 	}
 }

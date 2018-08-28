@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import interfaces.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -24,6 +25,11 @@ public class DistantGalaxy extends SpaceObject{
 			FixStar relativeFixStar  = new FixStar(name+"#"+i,r.nextDouble(), r.nextDouble());
 			this.stars.add(relativeFixStar);
 		}
+	}
+    
+    @Override
+	public boolean collides(CollidingObject other) {
+		return false;
 	}
     
     @Override
