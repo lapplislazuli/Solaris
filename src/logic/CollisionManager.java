@@ -18,7 +18,7 @@ public class CollisionManager implements UpdatingObject {
 		for(DestructibleObject destructible : destructibles) {
 			for(CollidingObject collider: collidables) {
 				if(destructible!=collider && destructible.collides(collider))
-					destructible.destruct();
+					destructible.destruct(collider);
 			}
 		}
 	}

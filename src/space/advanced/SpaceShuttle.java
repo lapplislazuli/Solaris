@@ -1,9 +1,11 @@
 package space.advanced;
 
+import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
+import space.core.Satellite;
 import space.core.SpaceObject;
 
 /*
@@ -64,8 +66,13 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		super.move(parentX, parentY);
 	}
 
-	public void destruct() {
+	public void destruct(CollidingObject other) {
 		// TODO Auto-generated method stub
-		System.out.println("Spaceship: " + name + " collided!");
+		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
+		//new Satellite(("SpaceTrash from " + name),parent,size,(int)orbitingDistance+parent.getSize()/2,speed);
+		new Asteroid("Trash from " + name,parent,(int)orbitingDistance+parent.getSize()/2,speed,Asteroid.Type.TRASH);
+		parent.removeTrabant(this);
+		parent=null;
+		target=null;
 	}
 }

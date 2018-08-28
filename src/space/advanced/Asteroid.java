@@ -1,6 +1,7 @@
 package space.advanced;
 
 
+import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -72,8 +73,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		y+=(Math.random()+1)*3;
 	}
 	
-	public void destruct() {
+	public void destruct(CollidingObject other) {
 		// TODO Auto-generated method stub
-		System.out.println("Asteroid: " + name + " collided!");
+		System.out.println("Asteroid: " + name + " collided with " + other.toString());
 	}
 }
