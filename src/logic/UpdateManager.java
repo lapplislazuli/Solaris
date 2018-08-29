@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.SpaceObject;
 
+@SuppressWarnings("restriction")
 public class UpdateManager implements UpdatingObject{
 
 	public List<UpdatingObject> toUpdate;

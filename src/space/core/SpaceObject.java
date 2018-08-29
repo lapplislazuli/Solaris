@@ -1,8 +1,6 @@
 package space.core;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import interfaces.CollidingObject;
@@ -11,6 +9,7 @@ import interfaces.NamedObject;
 import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
+@SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject, NamedObject{
 	
 	protected int x,y,size;
@@ -55,7 +54,8 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 		for (MovingSpaceObject trabant : trabants) 
 			trabant.draw(gc);
 	}
-	
+	@Override
+	public String toString() {return name+"@"+x+"|"+y;}
 	public int getX() {return x;}
 	public int getY() {return y;}
 	

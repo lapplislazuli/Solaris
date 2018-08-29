@@ -5,6 +5,7 @@ import space.core.Star;
 import interfaces.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 
+@SuppressWarnings("restriction")
 public class FixStar extends Star{
 	
 	//Shows Percentage of screen

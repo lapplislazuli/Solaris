@@ -6,7 +6,6 @@ import interfaces.DestructibleObject;
 import interfaces.NamedObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import logic.CollisionManager;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 

@@ -5,11 +5,8 @@ import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.advanced.SpaceShuttle;
 import space.core.Planet;
-import space.core.SpaceObject;
 import space.core.Star;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,9 +15,6 @@ import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 @SuppressWarnings("restriction")
 public class Program extends Application{
 	
@@ -81,7 +75,7 @@ public class Program extends Application{
 		
 		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/2000,200);
 		
-		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,5,10,0.05);
+		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,5,10,0.025);
 		SpaceShuttle shuttle2 = new SpaceShuttle("Alien SpaceShip",mars,4,15,0.05);
 		
 		ShuttleNavigator nav1 = new ShuttleNavigator("NASA", shuttle);

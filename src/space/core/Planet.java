@@ -5,11 +5,9 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-import javafx.scene.canvas.GraphicsContext;
-
+@SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
 
-	@SuppressWarnings("restriction")
 	public Planet(String name, SpaceObject parent, Color color, int size, int distance, double speed) {
 		super(name, parent, color, size, distance, speed);
 	}

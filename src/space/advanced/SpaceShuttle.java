@@ -4,9 +4,7 @@ import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import logic.CollisionManager;
 import space.core.MovingSpaceObject;
-import space.core.Satellite;
 import space.core.SpaceObject;
 
 /*
@@ -48,8 +46,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	
 	public SpaceObject getParent() { return parent;}
 	public boolean isOrbiting() {return orbiting;}
-	
-	@SuppressWarnings("restriction")
+
 	@Override
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
