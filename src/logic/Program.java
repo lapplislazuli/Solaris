@@ -34,7 +34,7 @@ public class Program extends Application{
         Scene scene = new Scene(root,1200 , 600);
         
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        updateManager=new UpdateManager(gc);
+        updateManager=new UpdateManager(25,gc);
         initSpace();
         //Listeners for resize
         //scene.widthProperty().addListener(evt -> drawAll(gc));
@@ -42,15 +42,6 @@ public class Program extends Application{
 	
         canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
-        
-        //ToDo: Kill Timer on Close
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-            	Platform.runLater ( () -> updateManager.update() ); 
-            }
-        }, 0, 25);
         
         primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);

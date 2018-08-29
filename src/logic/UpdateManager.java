@@ -6,33 +6,28 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import interfaces.DrawingObject;
+import interfaces.TimerObject;
 import interfaces.UpdatingObject;
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
-public class UpdateManager implements UpdatingObject{
+public class UpdateManager implements TimerObject{
 
 	public List<UpdatingObject> toUpdate;
 	public List<DrawingObject> toDraw;
 	private GraphicsContext gc;
 	private CollisionManager cm;
+	private Timer timer;
 	
-	public UpdateManager(GraphicsContext gc) {
+	
+	public UpdateManager(int updateIntervall, GraphicsContext gc) {
 		toUpdate=new LinkedList<UpdatingObject>();
 		toDraw=new LinkedList<DrawingObject>();
 		this.gc = gc;
-		cm= new CollisionManager();
-		
-		Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-            	Platform.runLater ( () ->refreshCollisionManager() ); 
-            }
-        }, 0, 1000);
-        
+		cm= new CollisionManager(1000,this);
+		setTimer(updateIntervall);
 	}
 	
 	public void update() {
@@ -58,12 +53,15 @@ public class UpdateManager implements UpdatingObject{
 			cm.addCollidable(child);
 	}
 	
-	public void refreshCollisionManager() {
-		//Read current toUpdate Objects, whether new ones are spawned somewhere
-		List<SpaceObject> collisionItems=new LinkedList<SpaceObject>();
-		for(UpdatingObject uO : toUpdate)
-			if(uO instanceof SpaceObject)
-				collisionItems.addAll(((SpaceObject) uO).getChildren());
-		cm.refresh(collisionItems);
+	@Override
+	public void setTimer(int updateIntervall) {
+		timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+            	Platform.runLater ( () ->update()); 
+            }
+        }, 0, updateIntervall);
 	}
+
 }
