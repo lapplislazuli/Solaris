@@ -46,4 +46,5 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public void setRelativePos(double newPos) {
 		this.relativePos=newPos;
 	}
+	public double getSpeed() {return speed;}
 }

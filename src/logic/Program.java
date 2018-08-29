@@ -66,20 +66,20 @@ public class Program extends Application{
 		
 		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/2000,200);
 		
-		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,5,10,0.025);
-		SpaceShuttle shuttle2 = new SpaceShuttle("Alien SpaceShip",mars,4,15,0.05);
-		
-		ShuttleNavigator nav1 = new ShuttleNavigator("NASA", shuttle);
-		nav1.addToRoute(sun);
-		
-		ShuttleNavigator  nav2 = new ShuttleNavigator("AlienOverlord", shuttle2);
-		nav2.addToRoute(earth);
-		
+		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
+				.shuttleName("Ikarus")
+				.idlingTurns(2)
+				.doesRespawn(true)
+				.shuttlesize(4)
+				.shuttleOrbitingDistance(15)
+				.shuttleSpeed(Math.PI/100)
+				.start(earth)
+				.next(mars)
+				.build();
+
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
-		
-		updateManager.toUpdate.add(nav2);
-		updateManager.toUpdate.add(nav1);
+		updateManager.toUpdate.add(nasa);
 	}
 	
 }

@@ -57,6 +57,7 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 	public String toString() {return name+"@"+x+"|"+y;}
 	public int getX() {return x;}
 	public int getY() {return y;}
+	public String getName() {return name;}
 	
 	public double distanceTo(SpaceObject other) {
 		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));

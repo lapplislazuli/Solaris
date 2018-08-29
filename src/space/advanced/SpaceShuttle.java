@@ -64,6 +64,10 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		super.move(parentX, parentY);
 	}
 
+	public boolean isDead() {
+		return parent==null;
+	}
+	
 	public void destruct(CollidingObject other) {
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
 		if(parent!=null) {
@@ -78,4 +82,5 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		parent=null;
 		target=null;
 	}
+	public int getOrbitingDistance() {return (int) orbitingDistance;}
 }
