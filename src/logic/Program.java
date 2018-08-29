@@ -5,6 +5,7 @@ import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.advanced.SpaceShuttle;
 import space.core.Planet;
+import space.core.Satellite;
 import space.core.Star;
 
 import java.util.Timer;
@@ -76,6 +77,9 @@ public class Program extends Application{
 				.start(earth)
 				.next(mars)
 				.build();
+		
+		Satellite sat1 = new Satellite("sat1", saturn, 10, 70, -Math.PI/200);
+		Satellite sat2 = new Satellite("sat2", saturn, 10, 50, -Math.PI/50);
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
