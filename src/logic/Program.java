@@ -80,6 +80,7 @@ public class Program extends Application{
 		
 		Satellite sat1 = new Satellite("sat1", saturn, 10, 70, -Math.PI/200);
 		Satellite sat2 = new Satellite("sat2", saturn, 10, 50, -Math.PI/50);
+		Satellite sat3 = new Satellite("sat3", saturn, 10, 60, -Math.PI/100);
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
