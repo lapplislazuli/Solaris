@@ -13,6 +13,7 @@ import space.core.SpaceObject;
  * The SpaceShuttle orbits a Planet, then gets launched to another planet, and then orbits there
  * The whole "flying" Process will be displayed in the move
  */
+@SuppressWarnings("restriction")
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
 
 	private boolean orbiting; 
@@ -26,7 +27,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		this.orbitingDistance=orbitingDistance;
 		distance=orbitingDistance+parent.getSize()/2;
 	}
-	
 	
 	public void setTarget(SpaceObject target) {
 		this.target=target;
@@ -53,7 +53,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	@Override
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
-		gc.fillRect(x-size/4, y-size/4, size/2, size/2);
+		gc.fillRect(x-size/2, y-size/2, size, size);
 	}
 	
 	@Override 

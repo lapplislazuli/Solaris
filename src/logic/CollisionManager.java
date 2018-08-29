@@ -46,8 +46,5 @@ public class CollisionManager implements UpdatingObject {
 		
 		for(SpaceObject o : objects)
 			addCollidable(o);
-		
-		//System.out.println("Collisionmanager Refreshed");
-		//System.out.println("Destructible:"+destructibles.size() + " Collidable:" + collidables.size());
 	}
 }

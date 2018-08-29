@@ -34,7 +34,7 @@ public class Star extends SpaceObject {
 			reCenter(gc);
 		
 		gc.setFill(color);
-		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
+		gc.fillOval(x-size/2, y-size/2, size, size);
 		super.draw(gc);
 	}
 }

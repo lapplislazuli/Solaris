@@ -16,7 +16,7 @@ public class FixStar extends Star{
 	}
 	
 	public FixStar(String name, double relX, double relY) {
-		super(name, Color.WHITESMOKE, 0, 0, 4);
+		super(name, Color.WHITESMOKE, 0, 0, 2);
 		relativeX=relX;
 		relativeY=relY;
 		isCenter=false;

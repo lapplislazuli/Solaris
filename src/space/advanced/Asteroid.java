@@ -20,7 +20,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
-		super(name,parent,null,5,distance,speed);
+		super(name,parent,null,3,distance,speed);
 		int typeHelper=((int)((Math.random()+1)*3)%3);
 		if(typeHelper==0)
 			type=Type.ORE;
@@ -44,19 +44,19 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		switch(type) {
 		case ORE:
 			gc.setFill(Color.DARKSLATEGRAY);
-			gc.fillOval(x, y, size/1, size/3);
+			gc.fillOval(x-size/2, y-size/2, size, size/3);
 			break;
 		case ROCK:
 			gc.setFill(Color.LIGHTGRAY);
-			gc.fillOval(x, y, size/3, size/1);
+			gc.fillOval(x-size/2, y-size/2, size/2, size);
 			break;
 		case TRASH:
 			gc.setFill(Color.GRAY);
-			gc.fillRect(x, y, size/2, size/2);
+			gc.fillRect(x-size/2, y-size/2, size, size);
 			break;
 		default:
 			gc.setFill(Color.BLACK);
-			gc.fillRect(x, y, size/2, size/2);
+			gc.fillRect(x-size/2, y-size/2, size, size/2);
 			break;
 		}
 	}

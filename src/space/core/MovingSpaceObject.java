@@ -4,6 +4,7 @@ import interfaces.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+@SuppressWarnings("restriction")
 public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {
 	
 	
@@ -38,7 +39,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
 		//change so the center is drawn, not the corner
-		gc.fillOval(x-size/4, y-size/4, size/2, size/2);
+		gc.fillOval(x-size/2, y-size/2, size, size);
 		super.draw(gc);
 	}
 	

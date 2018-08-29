@@ -67,22 +67,22 @@ public class Program extends Application{
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,500);
 		
 		//Sun Will be centered in the first update
-		Star sun = new Star("Sun",Color.ORANGE,100);
-		Planet earth = new Planet("Earth", sun, Color.CYAN, 50, 150, Math.PI/200);
-		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 75, 250, Math.PI/100);
-		Planet moon = new Planet("Moon", earth, Color.GRAY,10,20,Math.PI/80);
+		Star sun = new Star("Sun",Color.ORANGE,60);
+		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/200);
+		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/100);
+		Planet moon = new Planet("Moon", earth, Color.GRAY,10,10,Math.PI/80);
 		
 		Planet saturn = (new Planet.Builder("Saturn", sun))
-							.size(100)
+							.size(45)
 							.color(Color.LIGHTGOLDENRODYELLOW)
 							.speed(Math.PI/1000)
 							.distance(500)
 							.build();
 		
-		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,320,Math.PI/2000,100);
+		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/2000,200);
 		
-		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,13,10,0.05);
-		SpaceShuttle shuttle2 = new SpaceShuttle("Alien SpaceShip",mars,5,15,0.05);
+		SpaceShuttle shuttle = new SpaceShuttle("Trumps SpaceTroopers",earth,5,10,0.05);
+		SpaceShuttle shuttle2 = new SpaceShuttle("Alien SpaceShip",mars,4,15,0.05);
 		
 		ShuttleNavigator nav1 = new ShuttleNavigator("NASA", shuttle);
 		nav1.addToRoute(sun);
