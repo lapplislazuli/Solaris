@@ -69,9 +69,13 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		if(parent!=null) {
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.getSize(),speed,Asteroid.Type.TRASH);
-			parent.removeTrabant(this);
-			parent=null;
-			target=null;
+			remove();
 		}
+	}
+	
+	public void remove() {
+		parent.removeTrabant(this);
+		parent=null;
+		target=null;
 	}
 }

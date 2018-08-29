@@ -5,12 +5,11 @@ import java.util.stream.Collectors;
 
 import interfaces.CollidingObject;
 import interfaces.DrawingObject;
-import interfaces.NamedObject;
 import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
-public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject, NamedObject{
+public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject{
 	
 	protected int x,y,size;
 	protected String name;
@@ -58,8 +57,6 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 	public String toString() {return name+"@"+x+"|"+y;}
 	public int getX() {return x;}
 	public int getY() {return y;}
-	
-	public String getName() {return name;}
 	
 	public double distanceTo(SpaceObject other) {
 		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
