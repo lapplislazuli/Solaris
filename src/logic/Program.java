@@ -36,7 +36,10 @@ public class Program extends Application{
         Scene scene = new Scene(root,1200 , 600);
         
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        updateManager=new UpdateManager(25,gc);
+
+        UpdateManager.getInstance().initUpdateManager(25, gc);
+        updateManager = UpdateManager.getInstance();
+        
         initSpace();
         //Listeners for resize
         //scene.widthProperty().addListener(evt -> drawAll(gc));
