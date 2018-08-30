@@ -1,5 +1,6 @@
 package space.advanced;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -10,21 +11,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
 public class DistantGalaxy extends SpaceObject{
 	
 	List<FixStar> stars;
+	int starsCount;
 	
     public DistantGalaxy(String name, int width, int height, int stars) {
 		super(name, 0, 0, 0);
 		this.stars = new LinkedList<FixStar>();
+		starsCount = 0;
 		
-		Random r= new Random();
 		for(int i = 1;i<stars;i++) {
-			FixStar relativeFixStar  = new FixStar(name+"#"+i,r.nextDouble(), r.nextDouble());
-			this.stars.add(relativeFixStar);
+			this.stars.add(produceFixStar());
 		}
 	}
     
@@ -47,5 +49,34 @@ public class DistantGalaxy extends SpaceObject{
     	}
     }
     
-    
+    @Override
+    public void update() {
+    	checkStars();
+    	
+		super.update();
+	};
+	
+	public FixStar produceFixStar() {
+		Random r = new Random();
+		FixStar relativeFixStar  = new FixStar(name+"#"+starsCount++,r.nextDouble(), r.nextDouble());
+		relativeFixStar.setTimer(new Random().nextInt(25));
+		return relativeFixStar;
+	}
+	
+    public void checkStars() {
+    	List<FixStar> deadStars = new ArrayList<>();
+    	
+    	//Check if stars are dead
+    	for(FixStar star : stars) {
+    		if (star.dead == true) {
+    			deadStars.add(star);
+    		}
+    	}
+    	
+    	//Replace dead stars
+    	for(FixStar star : deadStars) {
+    		stars.remove(star);
+			stars.add(produceFixStar());
+    	}
+    }
 }

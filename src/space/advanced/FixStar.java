@@ -2,18 +2,25 @@ package space.advanced;
 
 import javafx.scene.paint.Color;
 import space.core.Star;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import interfaces.CollidingObject;
+import interfaces.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
-public class FixStar extends Star{
+public class FixStar extends Star implements TimerObject {
 	
 	//Shows Percentage of screen
 	private double relativeX,relativeY;
+	public boolean dead;
 	
 	public FixStar(String name, int x, int y) {
 		super(name, Color.WHITESMOKE, x, y, 2);
 		isCenter=false;
+		dead = false;
 	}
 	
 	public FixStar(String name, double relX, double relY) {
@@ -21,6 +28,7 @@ public class FixStar extends Star{
 		relativeX=relX;
 		relativeY=relY;
 		isCenter=false;
+		dead = false;
 	}
 	
 	@Override
@@ -39,5 +47,15 @@ public class FixStar extends Star{
 		x=(int) (relativeX*gc.getCanvas().getWidth());
 		y=(int) (relativeY*gc.getCanvas().getHeight());
 	}
-	
+
+	@Override
+	public void setTimer(int updateIntervall) {
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+            	dead = true;
+            }
+        }, updateIntervall*1000);
+	}
 }
