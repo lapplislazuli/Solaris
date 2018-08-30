@@ -3,10 +3,11 @@ package logic;
 import space.*;
 import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
-import space.advanced.SpaceShuttle;
 import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
+import space.shuttle.ShuttleNavigator;
+import space.shuttle.SpaceShuttle;
 
 import java.util.Timer;
 import java.util.TimerTask;

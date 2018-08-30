@@ -12,7 +12,7 @@ import space.core.SpaceObject;
 public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	SpaceObject parent;
-	enum Type            
+	public enum Type            
 	{
 	   ORE, ROCK, TRASH;  
 	}
