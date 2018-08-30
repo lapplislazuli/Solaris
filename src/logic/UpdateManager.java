@@ -21,10 +21,15 @@ public class UpdateManager implements TimerObject{
 	private CollisionManager cm;
 	private Timer timer;
 	
+	private static final UpdateManager INSTANCE = new UpdateManager();
 	
-	public UpdateManager(int updateIntervall, GraphicsContext gc) {
+	private UpdateManager() {
 		toUpdate=new LinkedList<UpdatingObject>();
 		toDraw=new LinkedList<DrawingObject>();
+	}
+	public static UpdateManager getInstance() {return INSTANCE;}
+	
+	public void initUpdateManager(int updateIntervall, GraphicsContext gc) {
 		this.gc = gc;
 		cm= new CollisionManager(1000,this);
 		setTimer(updateIntervall);
