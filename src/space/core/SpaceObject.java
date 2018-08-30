@@ -81,6 +81,7 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 	public int getSize() {
 		return size;
 	}
+	
 	public List<SpaceObject> getChildren(){
 		List<SpaceObject> flatChildren = new LinkedList<SpaceObject>();
 		for(SpaceObject trabant : trabants)

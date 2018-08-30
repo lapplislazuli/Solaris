@@ -1,9 +1,11 @@
-package space.advanced;
+package space.shuttle;
 
 import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import space.advanced.Asteroid;
+import space.advanced.Asteroid.Type;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
@@ -40,6 +42,11 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 			//Distance+Degree relative to new Parent
 			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
+			
+			//TestLaser
+			new Laserbeam("TestLaser",this);
+			//TestRocket
+			new Rocket("Test Rocket from " + name,this,2);
 		}
 		//Else?	
 	}
@@ -51,6 +58,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
 		gc.fillRect(x-size/2, y-size/2, size, size);
+		super.draw(gc);
 	}
 	
 	@Override 
