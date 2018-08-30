@@ -31,7 +31,8 @@ public class UpdateManager implements TimerObject{
 	
 	public void initUpdateManager(int updateIntervall, GraphicsContext gc) {
 		this.gc = gc;
-		cm= new CollisionManager(1000,this);
+		CollisionManager.getInstance().initCollisionManager(1000, this);
+		cm = CollisionManager.getInstance();
 		setTimer(updateIntervall);
 	}
 	
