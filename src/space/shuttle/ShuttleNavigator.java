@@ -1,11 +1,10 @@
-package logic;
+package space.shuttle;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import interfaces.UpdatingObject;
 import javafx.scene.paint.Color;
-import space.advanced.SpaceShuttle;
 import space.core.MovingSpaceObject;
 import space.core.Planet;
 import space.core.SpaceObject;

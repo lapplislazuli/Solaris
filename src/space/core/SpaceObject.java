@@ -50,6 +50,8 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 	};
 	
 	public void draw(GraphicsContext gc) {
+		gc.setEffect(null);
+		gc.setFill(null);
 		for (MovingSpaceObject trabant : trabants) 
 			trabant.draw(gc);
 	}
@@ -76,11 +78,12 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 			return (distanceTo((SpaceObject)other)<=size/2+((SpaceObject)other).size/2);
 		}
 		return false;
-			
 	}
+	
 	public int getSize() {
 		return size;
 	}
+	
 	public List<SpaceObject> getChildren(){
 		List<SpaceObject> flatChildren = new LinkedList<SpaceObject>();
 		for(SpaceObject trabant : trabants)
