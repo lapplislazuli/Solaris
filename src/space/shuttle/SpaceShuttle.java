@@ -19,7 +19,7 @@ import space.effect.Explosion;
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
 	private boolean orbiting; 
 	private SpaceObject target;
-	private SpaceObject parent;
+	protected SpaceObject parent;
 	private double orbitingDistance;
 	
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {

@@ -17,9 +17,15 @@ public class Laserbeam extends Missile{
 		color = Color.LIGHTGREEN;
 		xTrail=new LinkedList<Integer>();
 		yTrail=new LinkedList<Integer>();
-		System.out.println("Laser Shot!"+toString());
 	}
 	
+	public Laserbeam(String name, SpaceShuttle emitter,  double direction, int speed) {
+		super(name, emitter, 2,direction, speed);
+		color = Color.LIGHTGREEN;
+		xTrail=new LinkedList<Integer>();
+		yTrail=new LinkedList<Integer>();
+	}
+
 	@Override
 	public void move(int parentX, int parentY) {
 		xTrail.add(x);yTrail.add(y);

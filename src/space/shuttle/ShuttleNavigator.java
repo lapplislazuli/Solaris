@@ -19,14 +19,14 @@ public class ShuttleNavigator implements UpdatingObject{
 	private String name;
 	private int currentPointer = 1;
 	private List<SpaceObject> route;
-	private SpaceShuttle shuttle;
+	private ArmedSpaceShuttle shuttle;
 	
 	private boolean respawn; //Bool whether new Ships will be spawned
 	private int idlingTime; //Time Spent to Idle on Planet before Relaunch in MS -- NOT USED
 	private double idlingTurns; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	private double currentIdlingTime; //Both for Time and Turns
 	
-	public ShuttleNavigator(String name, SpaceShuttle shuttle) {
+	public ShuttleNavigator(String name, ArmedSpaceShuttle shuttle) {
 		route= new LinkedList<SpaceObject>();
 		route.add(shuttle.getParent());
 		this.shuttle=shuttle;
@@ -65,7 +65,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	}
 	
 	private void rebuildShuttle() {
-		shuttle = new SpaceShuttle(shuttle.getName(),route.get(0),shuttle.getSize(),shuttle.getOrbitingDistance(),shuttle.getSpeed());
+		shuttle = new ArmedSpaceShuttle(shuttle.getName(),route.get(0),shuttle.getSize(),shuttle.getOrbitingDistance(),shuttle.getSpeed());
 	}
 
 	public static class Builder {
@@ -132,7 +132,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	}
 	
 	private ShuttleNavigator(Builder builder) {
-		shuttle = new SpaceShuttle(builder.shuttleName,builder.route.get(1),builder.size,builder.orbitingDistance,builder.speed);
+		shuttle = new ArmedSpaceShuttle(builder.shuttleName,builder.route.get(1),builder.size,builder.orbitingDistance,builder.speed);
 		route=builder.route;
 		name=builder.name;
 		idlingTime=builder.idlingTime;

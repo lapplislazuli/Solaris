@@ -22,6 +22,7 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		rotation=emitter.getRotation();
 	}
 	
+	
 	/*
 	 * For Absolute speeded Missiles like lasers
 	 */
@@ -30,6 +31,14 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		this.emitter=emitter;
 		rotation=emitter.getRotation();
 	}
+	
+
+	public Missile(String name, SpaceShuttle emitter, int size,double direction, double speed) {
+		super(name, emitter, null, size, 0,speed);
+		this.emitter=emitter;
+		rotation=direction;
+	}
+	
 	@Override
 	public void update() {
 		super.update();

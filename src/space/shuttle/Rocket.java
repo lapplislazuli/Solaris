@@ -5,6 +5,7 @@ import interfaces.DestructibleObject;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import space.effect.Explosion;
 
 @SuppressWarnings("restriction")
 public class Rocket extends Missile implements DestructibleObject {
@@ -12,14 +13,17 @@ public class Rocket extends Missile implements DestructibleObject {
 	public Rocket(String name, SpaceShuttle emitter, int size) {
 		super(name, emitter, size);
 		color=Color.FIREBRICK;
-		System.out.println("Rocket shot! " + toString());
-		// TODO Auto-generated constructor stub
 	}
-
+	
+	public Rocket(String name, SpaceShuttle emitter, int size,double rotation, int speed) {
+		super(name, emitter, size,rotation,speed);
+		color=Color.FIREBRICK;
+	}
+	
 	@Override
 	public void destruct(CollidingObject other) {
 		System.out.println(name+" collided with " + other.toString());
-		//ToDo: Explosion here
+		new Explosion("Explosion from "+name, x, y,1000, size*3, 1.02, Color.FIREBRICK);
 		remove();
 	}
 	
