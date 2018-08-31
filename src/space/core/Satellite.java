@@ -17,6 +17,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		super.move(parentX, parentY);
 		//ToDo: Change my Rotation
 	}
+
 	@Override
 	public void remove() {
 		parent.removeTrabant(this);
