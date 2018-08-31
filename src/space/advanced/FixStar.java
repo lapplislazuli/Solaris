@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import interfaces.CollidingObject;
 import interfaces.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Glow;
 
 @SuppressWarnings("restriction")
 public class FixStar extends Star implements TimerObject {
