@@ -10,7 +10,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "unused" })
 public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {
 	
 	
@@ -47,9 +47,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 					new Stop(0.0, color),
 					new Stop(1.0, color.darker())));
 		}
-		
-		//gc.setFill(color);
-		
+
 		//change so the center is drawn, not the corner
 		gc.fillOval(x-size/2, y-size/2, size, size);
 		super.draw(gc);

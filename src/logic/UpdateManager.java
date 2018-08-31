@@ -18,8 +18,6 @@ public class UpdateManager implements TimerObject{
 	public List<UpdatingObject> toUpdate;
 	public List<DrawingObject> toDraw;
 	private GraphicsContext gc;
-	private CollisionManager cm;
-	private EffectManager em;
 	private Timer timer;
 	
 	private static final UpdateManager INSTANCE = new UpdateManager();
@@ -33,9 +31,8 @@ public class UpdateManager implements TimerObject{
 	public void initUpdateManager(int updateIntervall, GraphicsContext gc) {
 		this.gc = gc;
 		CollisionManager.getInstance().initCollisionManager(1000, this);
-		cm = CollisionManager.getInstance();
-		EffectManager.getInstance().initEffectManager(1000, this);
-		em = EffectManager.getInstance();
+		toUpdate.add(CollisionManager.getInstance());
+		toUpdate.add(EffectManager.getInstance());
 		setTimer(updateIntervall);
 	}
 	
@@ -47,21 +44,18 @@ public class UpdateManager implements TimerObject{
 	private void updateAll() {
 		for(UpdatingObject updateMe : toUpdate)
 			updateMe.update();
-		cm.update();
-		em.update();
 	}
 	private void drawAll() {
 		for(DrawingObject drawMe : toDraw)
 			drawMe.draw(gc);
-		em.draw(gc);
+		EffectManager.getInstance().draw(gc);
 	}
 	
 	public void addSpaceObject(SpaceObject o) {
 		toUpdate.add(o);
 		toDraw.add(o);
-		
 		for(SpaceObject child : o.getChildren())
-			cm.addCollidable(child);
+			CollisionManager.getInstance().addCollidable(child);
 	}
 	
 	@Override

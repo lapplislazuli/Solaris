@@ -17,7 +17,6 @@ import space.effect.Explosion;
  */
 @SuppressWarnings("restriction")
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
-
 	private boolean orbiting; 
 	private SpaceObject target;
 	private SpaceObject parent;
@@ -44,11 +43,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 			//Distance+Degree relative to new Parent
 			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
-			
-			//TestLaser
-			new Laserbeam("TestLaser",this);
-			//TestRocket
-			new Rocket("Test Rocket from " + name,this,2);
 		}
 		//Else?	
 	}
@@ -81,7 +75,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void destruct(CollidingObject other) {
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
 		if(parent!=null) {
-			Explosion explosion = new Explosion("Explosion from" + name,x,y,1000,20,Color.MEDIUMVIOLETRED);
+			new Explosion("Explosion from" + name,x,y,1500,size*2,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.getSize(),speed,Asteroid.Type.TRASH);
 			remove();

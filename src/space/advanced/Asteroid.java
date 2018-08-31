@@ -75,15 +75,13 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		y+=(Math.random()+1)*3;
 	}
 	
-	public void destruct(CollidingObject other) {		
-		System.out.println("Asteroid: " + name + " collided with " + other.toString());
+	public void destruct(CollidingObject other) {
 		if(parent!=null) {
 			remove();
 		}
 	}	
 	
 	public void remove() {
-		System.out.println("Remove " + name + " from " + parent.toString());
 		parent.removeTrabant(this);
 		parent=null;
 	}

@@ -54,19 +54,19 @@ public class Program extends Application{
 	}
 	
 	private void initSpace() {
-		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,500);
+		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,250);
 		
 		//Sun Will be centered in the first update
 		Star sun = new Star("Sun",Color.ORANGE,60);
 		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/200);
 		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/100);
-		Planet moon = new Planet("Moon", earth, Color.GRAY,10,10,Math.PI/80);
+		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,10,30,Math.PI/80);
 		
 		Planet saturn = (new Planet.Builder("Saturn", sun))
 							.size(45)
 							.color(Color.LIGHTGOLDENRODYELLOW)
 							.speed(Math.PI/1000)
-							.distance(500)
+							.distance(480)
 							.build();
 		
 		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/2000,200);
@@ -76,15 +76,28 @@ public class Program extends Application{
 				.idlingTurns(2)
 				.doesRespawn(true)
 				.shuttlesize(4)
-				.shuttleOrbitingDistance(15)
-				.shuttleSpeed(Math.PI/100)
+				.shuttleOrbitingDistance(40)
+				.shuttleSpeed(Math.PI/85)
 				.start(earth)
 				.next(mars)
 				.build();
 		
-		Satellite sat1 = new Satellite("sat1", saturn, 10, 70, -Math.PI/200);
-		Satellite sat2 = new Satellite("sat2", saturn, 10, 50, -Math.PI/50);
-		Satellite sat3 = new Satellite("sat3", saturn, 10, 60, -Math.PI/100);
+		ShuttleNavigator AlienOverlord = new ShuttleNavigator.Builder("AlienOverlord")
+				.shuttleName("Aliens")
+				.doesRespawn(true)
+				.shuttlesize(6)
+				.shuttleOrbitingDistance(30)
+				.shuttleSpeed(Math.PI/125)
+				.start(mars)
+				.next(earth)
+				.next(sun)
+				.next(earth)
+				.build();
+		
+		Satellite Astra = new Satellite("Astra",earth,5,20, -Math.PI/100);
+		
+		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 8, 70, -Math.PI/200);
+		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 7, 50, Math.PI/50);
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);

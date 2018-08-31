@@ -3,9 +3,9 @@ package space.core;
 import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.paint.Color;
-import space.advanced.Asteroid;
 import space.effect.Explosion;
 
+@SuppressWarnings("restriction")
 public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	private SpaceObject parent;
 	public Satellite(String name, SpaceObject parent, int size, int distance, double speed) {
@@ -17,7 +17,14 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		super.move(parentX, parentY);
 		//ToDo: Change my Rotation
 	}
-
+	
+	@Override 
+	public void rotate() {
+		if(parent!=null) {
+			rotation=degreeTo(parent);
+		}
+	}
+	
 	@Override
 	public void remove() {
 		parent.removeTrabant(this);
@@ -25,8 +32,8 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	}
 	@Override
 	public void destruct(CollidingObject other) {
-		System.out.println("Satelite: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
-		Explosion explosion = new Explosion("Explosion from" + name,x,y,1000,20,Color.MEDIUMVIOLETRED);
+		//System.out.println("Satelite: " + name + " collided with " + other.toString() + " \t @" + x + "|" + y);
+		new Explosion("Explosion from" + name,x,y,800,size*1.5,1.03,Color.FIREBRICK);
 		if(parent!=null)
 			remove();
 	}

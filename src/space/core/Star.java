@@ -1,7 +1,6 @@
 package space.core;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -36,17 +35,13 @@ public class Star extends SpaceObject {
 	public void draw(GraphicsContext gc) {
 		if(isCenter)
 			reCenter(gc);
-
-		gc.setFill(color);
-		if (/*this instanceof Star*/ color == Color.ORANGE) {
+		if (color !=null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),
 					new Stop(1.0, color.darker())));
 			gc.setEffect(new Glow(0.6));
 		}
-		
 		gc.fillOval(x-size/2, y-size/2, size, size);
-		gc.setEffect(null);
 		super.draw(gc);
 	}
 }

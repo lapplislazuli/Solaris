@@ -18,15 +18,14 @@ import space.core.SpaceObject;
 public class DistantGalaxy extends SpaceObject{
 	
 	List<FixStar> stars;
-	int starsCount;
+	Random r;
 	
     public DistantGalaxy(String name, int width, int height, int stars) {
 		super(name, 0, 0, 0);
+		r=new Random();
 		this.stars = new LinkedList<FixStar>();
-		starsCount = 0;
-		
 		for(int i = 1;i<stars;i++) {
-			this.stars.add(produceFixStar());
+			this.stars.add(new FixStar(null,r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
 		}
 	}
     
@@ -42,7 +41,6 @@ public class DistantGalaxy extends SpaceObject{
                 new Stop(0.0, Color.BLUE),
                 new Stop(1.0, Color.DARKBLUE)));          
 		gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-		
     	//Draw Stars
     	for(FixStar star : stars) {
     		star.draw(gc);
@@ -52,31 +50,22 @@ public class DistantGalaxy extends SpaceObject{
     @Override
     public void update() {
     	checkStars();
-    	
 		super.update();
 	};
 	
-	public FixStar produceFixStar() {
-		Random r = new Random();
-		FixStar relativeFixStar  = new FixStar(name+"#"+starsCount++,r.nextDouble(), r.nextDouble());
-		relativeFixStar.setTimer(new Random().nextInt(25));
-		return relativeFixStar;
-	}
 	
     public void checkStars() {
     	List<FixStar> deadStars = new ArrayList<>();
-    	
     	//Check if stars are dead
     	for(FixStar star : stars) {
     		if (star.dead == true) {
     			deadStars.add(star);
     		}
     	}
-    	
     	//Replace dead stars
     	for(FixStar star : deadStars) {
     		stars.remove(star);
-			stars.add(produceFixStar());
+			stars.add(new FixStar(null,r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
     	}
     }
 }

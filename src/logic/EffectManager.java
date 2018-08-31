@@ -2,24 +2,16 @@ package logic;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import interfaces.CollidingObject;
-import interfaces.DestructibleObject;
-import interfaces.TimerObject;
+import interfaces.DrawingObject;
 import interfaces.UpdatingObject;
-import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
-import space.core.SpaceObject;
 import space.effect.Effect;
 
-public class EffectManager implements TimerObject {
+@SuppressWarnings("restriction")
+public class EffectManager implements UpdatingObject, DrawingObject {
 	
-	public List<Effect> effects = new LinkedList<Effect>();
-	
-	private Timer timer;
-	private UpdateManager parent;
+	private List<Effect> effects = new LinkedList<Effect>();
 	
 	private static final EffectManager INSTANCE = new EffectManager();
 	
@@ -29,10 +21,6 @@ public class EffectManager implements TimerObject {
 	
 	public static EffectManager getInstance() {return INSTANCE;}
 	
-	public void initEffectManager(int updateIntervall, UpdateManager parent) {
-		setTimer(updateIntervall);
-		this.parent=parent;
-	}
 	
 	public void addEffect(Effect e){
 		effects.add(e);
@@ -44,11 +32,11 @@ public class EffectManager implements TimerObject {
 	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-	for(Effect e : effects)
-		e.update();
+		for(Effect e : effects)
+			e.update();
 	}
 	
+	@Override
 	public void draw(GraphicsContext gc){
 		for(Effect e : effects)
 			e.draw(gc);
@@ -58,10 +46,6 @@ public class EffectManager implements TimerObject {
 		effects.remove(e);
 	}
 
-	@Override
-	public void setTimer(int updateIntervall) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }
