@@ -81,7 +81,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void destruct(CollidingObject other) {
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
 		if(parent!=null) {
-			Explosion explosion = new Explosion("Explosion from" + name,x,y,100,20,0.0,Color.MEDIUMVIOLETRED);
+			Explosion explosion = new Explosion("Explosion from" + name,x,y,1000,20,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.getSize(),speed,Asteroid.Type.TRASH);
 			remove();

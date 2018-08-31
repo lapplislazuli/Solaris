@@ -21,9 +21,9 @@ public abstract class Effect implements UpdatingObject, DrawingObject, Removable
 	protected String name;
 	protected int x,y;
 	protected int duration;
-	protected int size;
+	protected double size;
 	
-	public Effect(String name, int x, int y, int duration, int size){
+	public Effect(String name, int x, int y, int duration, double size){
 		
 		this.name = name;
 		this.x = x;
@@ -50,7 +50,7 @@ public abstract class Effect implements UpdatingObject, DrawingObject, Removable
 	public int getY() {return y;}
 	public String getName() {return name;}
 	
-	public int getSize() {
+	public double getSize() {
 		return size;
 	}
 	
