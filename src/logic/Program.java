@@ -1,16 +1,17 @@
+/**
+ * @Author Leonhard Applis et Al.
+ * @Created 31.08.2018
+ * @Package logic
+ */
+
 package logic;
 
-import space.*;
 import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
-import space.shuttle.SpaceShuttle;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javafx.application.*;
 import javafx.stage.Stage;

@@ -1,3 +1,8 @@
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package space.core
+ */
 package space.core;
 
 import java.awt.LinearGradientPaint;

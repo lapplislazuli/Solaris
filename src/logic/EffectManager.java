@@ -1,3 +1,9 @@
+/**
+ * @Author Tino Stachel
+ * @Created 31.08.2018
+ * @Package logic
+ */
+
 package logic;
 
 import java.util.LinkedList;
