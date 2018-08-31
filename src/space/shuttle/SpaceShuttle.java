@@ -4,10 +4,12 @@ import interfaces.CollidingObject;
 import interfaces.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import logic.EffectManager;
 import space.advanced.Asteroid;
 import space.advanced.Asteroid.Type;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
+import space.effect.Explosion;
 
 /*
  * The SpaceShuttle orbits a Planet, then gets launched to another planet, and then orbits there
@@ -79,6 +81,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void destruct(CollidingObject other) {
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
 		if(parent!=null) {
+			Explosion explosion = new Explosion("Explosion from" + name,x,y,1000,20,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.getSize(),speed,Asteroid.Type.TRASH);
 			remove();
