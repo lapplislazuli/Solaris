@@ -9,4 +9,5 @@ public class Satellite extends MovingSpaceObject{
 		super.move(parentX, parentY);
 		//ToDo: Change my Rotation
 	}
+	
 }
