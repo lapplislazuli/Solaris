@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import interfaces.ClickableObject;
-import interfaces.CollidingObject;
-import interfaces.UpdatingObject;
+import interfaces.logical.CollidingObject;
+import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")

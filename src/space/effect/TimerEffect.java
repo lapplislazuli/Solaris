@@ -8,7 +8,7 @@ package space.effect;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import interfaces.TimerObject;
+import interfaces.logical.TimerObject;
 import javafx.application.Platform;
 
 @SuppressWarnings("restriction")

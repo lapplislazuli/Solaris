@@ -5,7 +5,7 @@
  */
 package logic;
 
-import interfaces.UpdatingObject;
+import interfaces.logical.UpdatingObject;
 
 public class KeyBoardManager implements UpdatingObject {
 

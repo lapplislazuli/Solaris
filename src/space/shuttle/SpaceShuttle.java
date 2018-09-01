@@ -5,8 +5,8 @@
  */
 package space.shuttle;
 
-import interfaces.CollidingObject;
-import interfaces.DestructibleObject;
+import interfaces.logical.CollidingObject;
+import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import logic.EffectManager;

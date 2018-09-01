@@ -5,8 +5,8 @@
  */
 package space.core;
 
-import interfaces.CollidingObject;
-import interfaces.DestructibleObject;
+import interfaces.logical.CollidingObject;
+import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
 

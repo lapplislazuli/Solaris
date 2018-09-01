@@ -5,7 +5,7 @@
  */
 package space.shuttle;
 
-import interfaces.RemovableObject;
+import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
 
 public abstract class Missile extends MovingSpaceObject implements RemovableObject {

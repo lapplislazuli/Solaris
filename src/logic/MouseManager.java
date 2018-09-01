@@ -9,12 +9,12 @@ package logic;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import space.core.SpaceObject;
-import interfaces.UpdatingObject;
 import javafx.scene.*;
 
 import java.util.LinkedList;
 
 import interfaces.*;
+import interfaces.logical.UpdatingObject;
 @SuppressWarnings("restriction")
 public class MouseManager implements UpdatingObject {
 	

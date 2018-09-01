@@ -6,8 +6,8 @@
 package space.effect;
 
 import interfaces.DrawingObject;
-import interfaces.RemovableObject;
-import interfaces.UpdatingObject;
+import interfaces.logical.RemovableObject;
+import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 import logic.EffectManager;
 

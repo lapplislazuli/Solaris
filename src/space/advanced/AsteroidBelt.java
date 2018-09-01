@@ -8,7 +8,7 @@ package space.advanced;
 import java.util.LinkedList;
 import java.util.List;
 
-import interfaces.CollidingObject;
+import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;

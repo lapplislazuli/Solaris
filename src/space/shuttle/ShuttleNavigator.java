@@ -8,7 +8,7 @@ package space.shuttle;
 import java.util.LinkedList;
 import java.util.List;
 
-import interfaces.UpdatingObject;
+import interfaces.logical.UpdatingObject;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
 import space.core.Planet;

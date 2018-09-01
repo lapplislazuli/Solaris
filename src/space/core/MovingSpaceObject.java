@@ -8,7 +8,7 @@ package space.core;
 import java.awt.LinearGradientPaint;
 import java.util.Random;
 
-import interfaces.MovingObject;
+import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;

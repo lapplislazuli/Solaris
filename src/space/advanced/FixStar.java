@@ -11,8 +11,8 @@ import space.core.Star;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import interfaces.CollidingObject;
-import interfaces.TimerObject;
+import interfaces.logical.CollidingObject;
+import interfaces.logical.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
