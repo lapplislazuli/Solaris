@@ -50,6 +50,7 @@ public class Program extends Application{
         canvas.heightProperty().bind(scene.heightProperty());
 
         MouseManager.getInstance().init(scene);
+        KeyBoardManager.getInstance().init(scene);
         
         primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);
