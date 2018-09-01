@@ -34,6 +34,12 @@ public abstract class Effect implements UpdatingObject, DrawingObject, Removable
 	
 	public void draw(GraphicsContext gc) {}
 	
+	public boolean isCovered(int x, int y) {
+		return
+				y>=this.y-size && y<=this.y+size
+			&&	x>=this.x-size && x<=this.x+size;
+	}
+	
 	@Override
 	public String toString() {return name+"@"+x+"|"+y;}
 	public int getX() {return x;}

@@ -58,6 +58,10 @@ public class DistantGalaxy extends SpaceObject{
 		super.update();
 	};
 	
+	@Override
+	public boolean isCovered(int x, int y) {
+		return false;
+	}
 	
     public void checkStars() {
     	List<FixStar> deadStars = new ArrayList<>();

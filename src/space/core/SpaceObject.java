@@ -8,13 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import interfaces.ClickableObject;
 import interfaces.CollidingObject;
-import interfaces.DrawingObject;
 import interfaces.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
-public abstract class SpaceObject implements UpdatingObject, DrawingObject, CollidingObject{
+public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
 	
 	protected int x,y,size;
 	protected String name;
@@ -95,5 +95,15 @@ public abstract class SpaceObject implements UpdatingObject, DrawingObject, Coll
 			flatChildren.addAll(trabant.getChildren());
 		flatChildren.add(this);
 		return flatChildren;
+	}
+	
+	public void click() {
+		System.out.println("Clicked: " + toString());
+	}
+	
+	public boolean isCovered(int x, int y) {
+		return
+				y>=this.y-size && y<=this.y+size
+			&&	x>=this.x-size && x<=this.x+size;
 	}
 }

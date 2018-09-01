@@ -48,6 +48,8 @@ public class Program extends Application{
 	
         canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
+
+        MouseManager.getInstance().init(scene);
         
         primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);

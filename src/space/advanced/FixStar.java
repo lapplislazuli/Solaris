@@ -27,6 +27,7 @@ public class FixStar extends Star implements TimerObject {
 		setTimer(lifetime);
 	}
 	
+	
 	public FixStar(String name, double relX, double relY, int lifetime) {
 		super(name, Color.WHITESMOKE, 0, 0, 2);
 		relativeX=relX;
@@ -41,7 +42,11 @@ public class FixStar extends Star implements TimerObject {
 		gc.setFill(color);
 		gc.fillOval(x-size/2, y-size/2, size, size);
 	}
-	
+
+	@Override
+	public boolean isCovered(int x, int y) {
+		return false;
+	}
 	@Override
 	public boolean collides(CollidingObject other) {
 		return false;
