@@ -9,11 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import interfaces.logical.UpdatingObject;
-import javafx.scene.paint.Color;
-import space.core.MovingSpaceObject;
-import space.core.Planet;
 import space.core.SpaceObject;
-import space.core.Planet.Builder;
 
 /*
  * Pushes a Shuttle whenever its orbiting to another SpaceObject
@@ -27,9 +23,8 @@ public class ShuttleNavigator implements UpdatingObject{
 	private ArmedSpaceShuttle shuttle;
 	
 	private boolean respawn; //Bool whether new Ships will be spawned
-	private int idlingTime; //Time Spent to Idle on Planet before Relaunch in MS -- NOT USED
 	private double idlingTurns; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
-	private double currentIdlingTime; //Both for Time and Turns
+	private double currentIdle; //measuring idling
 	
 	public ShuttleNavigator(String name, ArmedSpaceShuttle shuttle) {
 		route= new LinkedList<SpaceObject>();
@@ -52,19 +47,20 @@ public class ShuttleNavigator implements UpdatingObject{
 			rebuildShuttle();
 		}
 		
-		if(shuttle.isOrbiting()) {
-			if(currentIdlingTime>=idlingTurns) {
-				
-				if (currentPointer>=route.size())
+		if(shuttle.isOrbiting()) { //SpaceShuttle is not flying around in space
+			if(currentIdle>=idlingTurns) { //SpaceShuttle idled some time
+				//Find next Destination
+				if (currentPointer>=route.size()) 
 					currentPointer=1;
 				else
 					currentPointer++;
+				
 				shuttle.setTarget(route.get(currentPointer-1));
 				shuttle.launch();
-				currentIdlingTime=0;
+				currentIdle=0;
 			}
 			else {
-				currentIdlingTime+=shuttle.getSpeed();
+				currentIdle+=shuttle.getSpeed();
 			}
 		}
 	}
@@ -76,7 +72,6 @@ public class ShuttleNavigator implements UpdatingObject{
 	public static class Builder {
 		private final String name;
 		private String shuttleName;
-		private Color color= Color.BLACK;
 		private int orbitingDistance = 0;
 		private int size = 0;
 		private double speed = 0;
@@ -84,7 +79,6 @@ public class ShuttleNavigator implements UpdatingObject{
 		
 
 		private boolean respawn=false;
-		private int idlingTime=0;
 		private double idlingTurns=0;
 		
 		
@@ -94,9 +88,6 @@ public class ShuttleNavigator implements UpdatingObject{
 			this.name=name;
 			route = new LinkedList<SpaceObject>();
 		}
-		
-		public Builder shuttleColor(Color val)
-		{ color= val; return this;}
 		
 		public Builder start(SpaceObject o) {
 			route.add(0, o);
@@ -119,10 +110,6 @@ public class ShuttleNavigator implements UpdatingObject{
 		public Builder shuttleSpeed(double val)
 		{ speed= val; return this;}
 		
-		public Builder idlingTime(int val) {
-			idlingTime=val;
-			return this;
-		}
 		public Builder idlingTurns(double val) {
 			idlingTurns=val; 
 			return this;
@@ -140,7 +127,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		shuttle = new ArmedSpaceShuttle(builder.shuttleName,builder.route.get(1),builder.size,builder.orbitingDistance,builder.speed);
 		route=builder.route;
 		name=builder.name;
-		idlingTime=builder.idlingTime;
+		currentIdle=0;
 		idlingTurns=builder.idlingTurns;
 		respawn=builder.respawn;
 	}

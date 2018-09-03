@@ -62,26 +62,26 @@ public class Program extends Application{
 		
 		//Sun Will be centered in the first update
 		Star sun = new Star("Sun",Color.ORANGE,60);
-		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/200);
-		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/100);
-		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,10,30,Math.PI/80);
+		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/2000);
+		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/1000);
+		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,10,30,Math.PI/800);
 		
 		Planet saturn = (new Planet.Builder("Saturn", sun))
 							.size(45)
 							.color(Color.LIGHTGOLDENRODYELLOW)
-							.speed(Math.PI/1000)
+							.speed(Math.PI/4000)
 							.distance(480)
 							.build();
 		
-		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/2000,200);
+		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,200);
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
-				.idlingTurns(2)
+				.idlingTurns(Math.PI*2)
 				.doesRespawn(true)
 				.shuttlesize(4)
 				.shuttleOrbitingDistance(40)
-				.shuttleSpeed(Math.PI/85)
+				.shuttleSpeed(Math.PI/70)
 				.start(earth)
 				.next(mars)
 				.build();
@@ -91,17 +91,17 @@ public class Program extends Application{
 				.doesRespawn(true)
 				.shuttlesize(6)
 				.shuttleOrbitingDistance(30)
-				.shuttleSpeed(Math.PI/125)
+				.shuttleSpeed(Math.PI/90)
 				.start(mars)
 				.next(earth)
 				.next(sun)
 				.next(earth)
 				.build();
 		
-		Satellite Astra = new Satellite("Astra",earth,5,20, -Math.PI/100);
+		Satellite Astra = new Satellite("Astra",earth,5,20, -Math.PI/400);
 		
-		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 8, 70, -Math.PI/200);
-		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 7, 50, Math.PI/50);
+		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 8, 70, -Math.PI/600);
+		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 7, 50, Math.PI/500);
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
