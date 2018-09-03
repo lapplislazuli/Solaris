@@ -12,6 +12,7 @@ import interfaces.ClickableObject;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
+import space.advanced.FixStar;
 
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
@@ -78,10 +79,12 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		else
 			return 2*Math.PI-Math.acos((x-other.x)/distanceTo(other));
 	}
+	
 	public boolean collides(CollidingObject other) {
-		if(other instanceof SpaceObject){
-			return (distanceTo((SpaceObject)other)<=size/2+((SpaceObject)other).size/2);
-		}
+		if(other instanceof SpaceObject)	
+			if(other!=this)
+				if(distanceTo((SpaceObject)other)<size/2+((SpaceObject)other).getSize()/2)
+					return true;
 		return false;
 	}
 	

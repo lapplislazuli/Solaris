@@ -6,6 +6,7 @@
 package space.advanced;
 
 import javafx.scene.paint.Color;
+import space.core.SpaceObject;
 import space.core.Star;
 
 import java.util.Timer;
@@ -50,6 +51,11 @@ public class FixStar extends Star implements TimerObject {
 	@Override
 	public boolean collides(CollidingObject other) {
 		return false;
+	}
+	
+	@Override
+	public double distanceTo(SpaceObject other) {
+		return Double.MAX_VALUE;
 	}
 	
 	//if window is resized, put me in the correct position again
