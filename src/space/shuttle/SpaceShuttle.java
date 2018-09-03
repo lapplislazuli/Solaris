@@ -9,9 +9,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import logic.EffectManager;
 import space.advanced.Asteroid;
-import space.advanced.Asteroid.Type;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 import space.effect.Explosion;
@@ -26,12 +24,14 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	private SpaceObject target;
 	protected SpaceObject parent;
 	private double orbitingDistance;
+	protected SensorArray sensor;
 	
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, Color.GHOSTWHITE, size, 0 , speed);
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;
 		distance=orbitingDistance+parent.getSize()/2;
+		sensor = new SensorArray(this,50);
 	}
 	
 	public void setTarget(SpaceObject target) {
@@ -52,6 +52,12 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		//Else?	
 	}
 	
+	@Override
+	public void update() {
+		super.update();
+		sensor.update();
+	}
+	
 	public SpaceObject getParent() { return parent;}
 	public boolean isOrbiting() {return orbiting;}
 
@@ -70,6 +76,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 			else 
 				orbiting=true;
 		}
+		sensor.move(x, y);
 		super.move(parentX, parentY);
 	}
 
