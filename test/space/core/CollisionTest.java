@@ -71,7 +71,7 @@ class CollisionTest {
 	void uncollidables() {
 		FixStar a = new FixStar("a", 1, 1, 1);
 		assertEquals(false,a.collides(anker1));
-		assertEquals(false, anker1.collides(a));
+		assertEquals(true, anker1.collides(a));
 	}
 	
 }
