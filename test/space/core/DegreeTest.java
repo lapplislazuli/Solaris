@@ -33,6 +33,5 @@ public class DegreeTest {
 		Star anker2= new Star("anker2", null, 100, 0, 0);
 		//Expected: One==Other+PI
 		assertEquals(true, anker1.degreeTo(anker2)+Math.PI==anker2.degreeTo(anker1));
-	}
-	
+	}	
 }
