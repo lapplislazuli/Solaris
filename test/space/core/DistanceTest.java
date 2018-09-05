@@ -1,3 +1,8 @@
+/**
+ * @Author Leonhard Applis
+ * @Created 03.09.2018
+ * @Package space.core
+ */
 package space.core;
 
 
