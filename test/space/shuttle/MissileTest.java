@@ -37,7 +37,6 @@ public class MissileTest {
 		assertEquals(true, missile.getRotation()==shuttle.degreeTo(planet));
 	}
 	
-	
 	@Test
 	public void MissileMovement() {
 		shuttle.shootLaser(planet);
@@ -57,7 +56,6 @@ public class MissileTest {
 			}
 		}
 	}
-	
 	
 	@Test
 	public void MissileCollision() {

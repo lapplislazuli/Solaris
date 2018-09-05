@@ -48,7 +48,7 @@ public class CollisionManager implements TimerObject,PausableObject {
 			List<DestructibleObject> destroyed=new LinkedList<DestructibleObject>();
 			for(DestructibleObject destructible : destructibles) {
 				for(CollidingObject collider: collidables) {
-					if(destructible!=collider && destructible.collides(collider)) {
+					if(destructible.collides(collider)&&collider.collides(destructible)) {
 						destructible.destruct(collider);
 						destroyed.add(destructible);
 					}	
