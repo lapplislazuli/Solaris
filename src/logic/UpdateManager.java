@@ -11,7 +11,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import interfaces.DrawingObject;
-import interfaces.logical.PausableObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
@@ -19,7 +18,7 @@ import javafx.scene.canvas.GraphicsContext;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
-public class UpdateManager implements TimerObject,PausableObject{
+public class UpdateManager implements TimerObject{
 
 	public List<UpdatingObject> toUpdate;
 	public List<DrawingObject> toDraw;
@@ -78,13 +77,10 @@ public class UpdateManager implements TimerObject,PausableObject{
         }, 0, updateIntervall);
 	}
 
-	
-	@Override
 	public void pause() {
 		running=false;
 	}
 
-	@Override
 	public void start() {
 		running=true;
 	}

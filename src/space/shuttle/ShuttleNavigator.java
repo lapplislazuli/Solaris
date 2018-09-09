@@ -19,7 +19,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	
 	private String name;
 	private int currentPointer = 1;
-	private List<SpaceObject> route;
+	public List<SpaceObject> route;
 	private ArmedSpaceShuttle shuttle;
 	
 	private boolean respawn; //Bool whether new Ships will be spawned
@@ -33,34 +33,18 @@ public class ShuttleNavigator implements UpdatingObject{
 		this.name=name;
 	}
 	
-	public void addToRoute(SpaceObject next) {
-		route.add(next);
-	}
-	
-	public boolean removeFromRoute(SpaceObject next) {
-		return route.remove(next);
-	}
-	
 	public void update() {
-		//Respawn
 		if(shuttle.isDead()&&respawn) {
 			rebuildShuttle();
 		}
 		
 		if(shuttle.isOrbiting()) { //SpaceShuttle is not flying around in space
-			if(currentIdle>=idlingTurns) { //SpaceShuttle idled some time
-				//Find next Destination
-				if (currentPointer>=route.size()) 
+			if((currentIdle+=shuttle.speed)>=idlingTurns) { //SpaceShuttle idled some time
+				if (currentPointer++>=route.size()) 
 					currentPointer=1;
-				else
-					currentPointer++;
-				
 				shuttle.setTarget(route.get(currentPointer-1));
 				shuttle.launch();
 				currentIdle=0;
-			}
-			else {
-				currentIdle+=shuttle.speed;
 			}
 		}
 	}
@@ -76,8 +60,6 @@ public class ShuttleNavigator implements UpdatingObject{
 		private int size = 0;
 		private double speed = 0;
 		private List<SpaceObject> route;
-		
-
 		private boolean respawn=false;
 		private double idlingTurns=0;
 		

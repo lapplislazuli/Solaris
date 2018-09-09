@@ -6,5 +6,5 @@
 package interfaces.logical;
 
 public interface DestructibleObject extends CollidingObject,RemovableObject{
-	public void destruct(CollidingObject other);
+	void destruct(CollidingObject other);
 }

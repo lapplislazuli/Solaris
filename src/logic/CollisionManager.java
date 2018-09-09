@@ -10,17 +10,15 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import interfaces.DrawingObject;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import interfaces.logical.PausableObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
-import javafx.scene.canvas.GraphicsContext;
 import space.core.SpaceObject;
 
-public class CollisionManager implements TimerObject,PausableObject {
+@SuppressWarnings("restriction")
+public class CollisionManager implements TimerObject{
 	
 	public List<CollidingObject> collidables = new LinkedList<CollidingObject>();
 	public List<DestructibleObject> destructibles = new LinkedList<DestructibleObject>();
@@ -93,7 +91,6 @@ public class CollisionManager implements TimerObject,PausableObject {
 	public void setTimer(int updateIntervall) {
 		timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
-            @SuppressWarnings("restriction")
 			@Override
             public void run() {
             	Platform.runLater ( () ->refresh()); 
@@ -101,12 +98,10 @@ public class CollisionManager implements TimerObject,PausableObject {
         }, 0, updateIntervall);
 	}
 
-	@Override
 	public void pause() {
 		running=false;
 	}
 
-	@Override
 	public void start() {
 		running=true;
 	}

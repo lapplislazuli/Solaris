@@ -6,5 +6,5 @@
 package interfaces.logical;
 
 public interface RemovableObject {
-	public void remove();
+	void remove();
 }

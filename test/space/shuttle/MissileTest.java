@@ -32,9 +32,9 @@ public class MissileTest {
 		shuttle.shootLaser(planet);
 		missile=(Missile)shuttle.getChildren().get(0);
 		
-		assertEquals(true, missile.getRotation()==shuttle.degreeTo(planet));
+		assertEquals(true, missile.rotation==shuttle.degreeTo(planet));
 		missile.rotate();
-		assertEquals(true, missile.getRotation()==shuttle.degreeTo(planet));
+		assertEquals(true, missile.rotation==shuttle.degreeTo(planet));
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class MissileTest {
 		shuttle.shootLaser(planet);
 		missile=(Missile)shuttle.getChildren().get(0);
 		
-		assertEquals(true,missile.getX()==shuttle.getX() && missile.getY()==shuttle.getY());
+		assertEquals(true,missile.x==shuttle.x && missile.y==shuttle.y);
 		assertEquals(true,missile.distanceTo(planet)==planet.distanceTo(shuttle));
 		
 		missile.move(0, 0);

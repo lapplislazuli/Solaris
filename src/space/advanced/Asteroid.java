@@ -24,6 +24,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,null,3,distance,speed);
+		//Asteroid Types are chosen randomly if not in the Constructor
 		int typeHelper=((int)((Math.random()+1)*3)%3);
 		if(typeHelper==0)
 			type=Type.ORE;
@@ -31,8 +32,6 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			type=Type.ROCK;
 		else
 			type=Type.TRASH;
-		//Asteroid Types are chosen randomly
-		
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {
@@ -40,7 +39,6 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		this.type=type;
 		this.parent=parent;
 	}
-	
 	
 	@Override
 	public void draw(GraphicsContext gc) {
@@ -62,10 +60,6 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			gc.fillRect(x-size/2, y-size/2, size, size/2);
 			break;
 		}
-	}
-	@Override
-	public void update() {
-		//i do not have children, i do not need to update children
 	}
 	
 	@Override 
