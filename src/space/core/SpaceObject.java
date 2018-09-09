@@ -17,10 +17,10 @@ import space.advanced.FixStar;
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
 	
-	protected int x,y,size;
-	protected String name;
+	public int x,y,size;
+	public String name;
 	
-	protected List<MovingSpaceObject> trabants;
+	public List<MovingSpaceObject> trabants;
 	protected float rotation; //in radiant-degree
 	
 	public SpaceObject(String name,int x, int y, int size) {
@@ -31,21 +31,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		
 		trabants= new LinkedList<MovingSpaceObject>();
 		rotation=0;
-	}
-	
-	public void addTrabant(MovingSpaceObject newTrabant) {
-		trabants.add(newTrabant);
-	}
-	
-	public MovingSpaceObject getTrabant(String name) {
-		return trabants.stream()
-				.filter(t -> t.name==name)
-				.collect(Collectors.toList())
-				.get(0);
-	}
-	
-	public boolean removeTrabant(MovingSpaceObject trabant) {
-		return trabants.remove(trabant);
 	}
 	
 	public void update() {
@@ -63,9 +48,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	@Override
 	public String toString() {return name+"@"+x+"|"+y;}
-	public int getX() {return x;}
-	public int getY() {return y;}
-	public String getName() {return name;}
 	
 	public double distanceTo(SpaceObject other) {
 		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
@@ -83,13 +65,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	public boolean collides(CollidingObject other) {
 		if(other instanceof SpaceObject)	
 			if(other!=this)
-				if(distanceTo((SpaceObject)other)<size/2+((SpaceObject)other).getSize()/2)
+				if(distanceTo((SpaceObject)other)<size/2+((SpaceObject)other).size/2)
 					return true;
 		return false;
-	}
-	
-	public int getSize() {
-		return size;
 	}
 	
 	public List<SpaceObject> getChildren(){

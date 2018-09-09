@@ -30,7 +30,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		super(name, parent, Color.GHOSTWHITE, size, 0 , speed);
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;
-		distance=orbitingDistance+parent.getSize()/2;
+		distance=orbitingDistance+parent.size/2;
 		sensor = new SensorArray(this,50);
 	}
 	
@@ -39,17 +39,15 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	public void launch() {
-		if(target!=null && parent.removeTrabant(this)) {
-			target.addTrabant(this);
+		if(target!=null && parent.trabants.remove(this)) {
+			target.trabants.add(this);
 			orbiting=false;
 			parent = target;
 			target=null;
 			
-			//Distance+Degree relative to new Parent
 			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
 		}
-		//Else?	
 	}
 	
 	@Override
@@ -71,7 +69,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	@Override 
 	public void move(int parentX, int parentY) {
 		if(!orbiting) {
-			if(distance>=orbitingDistance+parent.getSize()/2) 
+			if(distance>=orbitingDistance+parent.size/2) 
 				distance--;
 			else 
 				orbiting=true;
@@ -89,13 +87,13 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		if(parent!=null) {
 			new Explosion("Explosion from" + name,x,y,1500,size*2,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
-				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.getSize(),speed,Asteroid.Type.TRASH);
+				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.size,speed,Asteroid.Type.TRASH);
 			remove();
 		}
 	}
 	
 	public void remove() {
-		parent.removeTrabant(this);
+		parent.trabants.remove(this);
 		parent=null;
 		target=null;
 	}

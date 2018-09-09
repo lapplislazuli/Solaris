@@ -20,15 +20,14 @@ public class AsteroidBelt extends MovingSpaceObject{
 	
 	public AsteroidBelt(String name, SpaceObject parent, int distance, double speed,int asteroids) {	
 		super(name, parent, null, 0, 0, 0);		
-		x=parent.getX();
-		y=parent.getY();
+		x=parent.x;
+		y=parent.y;
 
 		astroids=new LinkedList<Asteroid>();
 		
 		for(int i = 1; i<=asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,distance,speed);
-			//move them on different points
-			a.setRelativePos(i/Math.PI*2);
+			a.relativePos=(i/Math.PI*2);
 			astroids.add(a);
 		}
 	}
@@ -40,7 +39,6 @@ public class AsteroidBelt extends MovingSpaceObject{
 	
 	@Override
 	public void move(int parentX, int parentY) {
-		//For recentered Items, and moving stuff
 		x=parentX;
 		y=parentY;
 

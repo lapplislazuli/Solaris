@@ -32,7 +32,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	
 	@Override
 	public void remove() {
-		parent.removeTrabant(this);
+		parent.trabants.remove(this);
 		parent=null;		
 	}
 	@Override

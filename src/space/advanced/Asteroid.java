@@ -87,7 +87,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}	
 	
 	public void remove() {
-		parent.removeTrabant(this);
+		parent.trabants.remove(this);
 		parent=null;
 	}
 }

@@ -19,20 +19,21 @@ import javafx.scene.paint.Stop;
 public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {
 	
 	
-	protected int distance;
-	protected double speed, relativePos,rotation; //Pos in radiant-degree to parent
+	public int distance;
+	public double speed, relativePos,rotation; //Pos in radiant-degree to parent
 	protected Color color;
 	//Init Relative to parent
 	//Add to parents Trabants
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
-		super(name,parent.getX(),parent.getY()+distance,size);
+		super(name,parent.x,parent.y+distance,size);
 		rotation=0;
 		this.distance=distance;
 		this.speed=speed;
 		this.color=color;
 		relativePos=degreeTo(parent);
-		parent.addTrabant(this);
+		parent.trabants.add(this);
 	}
+	
 	public void move(int parentX, int parentY) {
 		// rotate relative position
 		relativePos+=speed;
@@ -66,13 +67,4 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 			rotation += Math.PI*2;
 		}
 	}
-	
-	public void setRelativePos(double newPos) {
-		this.relativePos=newPos;
-	}
-	
-	public double getRelativePos() {return relativePos;}
-	public double getRotation() {return rotation;}
-	public int getDistance() {return distance;}
-	public double getSpeed() {return speed;}
 }

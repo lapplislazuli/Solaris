@@ -29,7 +29,7 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	
 	public SensorArray (SpaceShuttle emitter,int radius) {
 		this.emitter=emitter;
-		this.x=emitter.getX(); this.y=emitter.getY();
+		x=emitter.x; y=emitter.y;
 		this.radius=radius;
 		detectedItems=new LinkedList<CollidingObject>();
 	}
@@ -53,7 +53,7 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	}
 	private boolean isCovered(CollidingObject other) {
 		if(other instanceof SpaceObject) {
-			return isCovered(((SpaceObject)other).getX(),((SpaceObject)other).getY());
+			return isCovered(((SpaceObject)other).y,((SpaceObject)other).y);
 		}
 		return false;
 	}

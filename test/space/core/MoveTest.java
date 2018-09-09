@@ -17,19 +17,19 @@ class MoveTest {
 		Star anker1=new Star("Anker1",null,250,250,50);
 		//Stars should not move!
 		anker1.update();
-		assertEquals(250,anker1.getX());assertEquals(250,anker1.getY());
+		assertEquals(250,anker1.x);assertEquals(250,anker1.y);
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
 		Planet a = new Planet("A",anker1,null,50,250,Math.PI/2);
 		Satellite b= new Satellite("B",a,50,250,-Math.PI/2);
 		Planet c= new Planet("C",a,null,50,250,0);
 		//Check X-Y Koords
-		assertEquals(250,a.getX());
-		assertEquals(500,a.getY());
-		assertEquals(250,b.getX());
-		assertEquals(750,b.getY());
-		assertEquals(250,c.getX());
-		assertEquals(750,c.getY());
+		assertEquals(250,a.x);
+		assertEquals(500,a.y);
+		assertEquals(250,b.x);
+		assertEquals(750,b.y);
+		assertEquals(250,c.x);
+		assertEquals(750,c.y);
 		//Check DegreeTo EachOther
 		assertEquals(3*Math.PI/2, a.degreeTo(anker1));
 		assertEquals(3*Math.PI/2, b.degreeTo(anker1));
@@ -43,7 +43,7 @@ class MoveTest {
 		Star anker1=new Star("Anker1",null,250,250,50);
 		//Stars should not move!
 		anker1.update();
-		assertEquals(250,anker1.getX());assertEquals(250,anker1.getY());
+		assertEquals(250,anker1.x);assertEquals(250,anker1.y);
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
 		Planet a = new Planet("A",anker1,null,50,250,Math.PI/2);
@@ -52,29 +52,29 @@ class MoveTest {
 		//Move all Items, if they are movable
 		anker1.update();
 		//Star not moved, Planet right to Star, Satellite Left to Planet in Star
-		assertEquals(250,anker1.getX());
-		assertEquals(250,anker1.getY());
-		assertEquals(500,a.getX());
-		assertEquals(250,a.getY());
-		assertEquals(250,b.getX());
-		assertEquals(250,b.getY());
+		assertEquals(250,anker1.x);
+		assertEquals(250,anker1.y);
+		assertEquals(500,a.x);
+		assertEquals(250,a.y);
+		assertEquals(250,b.x);
+		assertEquals(250,b.y);
 		
 		anker1.update();
 		//Star not moved, Planet beyond Star, Satellite beyond Planet
-		assertEquals(250,anker1.getX());
-		assertEquals(250,anker1.getY());
-		assertEquals(250,a.getX());
-		assertEquals(0,a.getY());
-		assertEquals(250,b.getX());
-		assertEquals(-250,b.getY());
+		assertEquals(250,anker1.x);
+		assertEquals(250,anker1.y);
+		assertEquals(250,a.x);
+		assertEquals(0,a.y);
+		assertEquals(250,b.x);
+		assertEquals(-250,b.y);
 	}
 	@Test
 	void NoSpeed() {
 		Star anker1=new Star("Anker1",null,250,250,50);
 		//Stars should not move!
 		anker1.update();
-		assertEquals(250,anker1.getX());
-		assertEquals(250,anker1.getY());
+		assertEquals(250,anker1.x);
+		assertEquals(250,anker1.y);
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
 		Planet a = new Planet("A",anker1,null,50,250,0);
@@ -82,12 +82,12 @@ class MoveTest {
 		
 		for(int i =0;i<10;i++) {
 			anker1.update();
-			assertEquals(250,anker1.getX());
-			assertEquals(250,anker1.getY());
-			assertEquals(250,a.getX());
-			assertEquals(500,a.getY());
-			assertEquals(250,b.getX());
-			assertEquals(750,b.getY());
+			assertEquals(250,anker1.x);
+			assertEquals(250,anker1.y);
+			assertEquals(250,a.x);
+			assertEquals(500,a.y);
+			assertEquals(250,b.x);
+			assertEquals(750,b.y);
 		}
 	}
 	
@@ -96,7 +96,7 @@ class MoveTest {
 		Star anker1=new Star("Anker1",null,250,250,50);
 		//Stars should not move!
 		anker1.update();
-		assertEquals(250,anker1.getX());assertEquals(250,anker1.getY());
+		assertEquals(250,anker1.x);assertEquals(250,anker1.y);
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
 		Planet a = new Planet("A",anker1,null,50,250,Math.PI/2);

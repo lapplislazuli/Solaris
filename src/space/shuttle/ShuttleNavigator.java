@@ -60,13 +60,13 @@ public class ShuttleNavigator implements UpdatingObject{
 				currentIdle=0;
 			}
 			else {
-				currentIdle+=shuttle.getSpeed();
+				currentIdle+=shuttle.speed;
 			}
 		}
 	}
 	
 	private void rebuildShuttle() {
-		shuttle = new ArmedSpaceShuttle(shuttle.getName(),route.get(0),shuttle.getSize(),shuttle.getOrbitingDistance(),shuttle.getSpeed());
+		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttle.size,shuttle.getOrbitingDistance(),shuttle.speed);
 	}
 
 	public static class Builder {
