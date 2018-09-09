@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")

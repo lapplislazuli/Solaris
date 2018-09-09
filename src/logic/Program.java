@@ -42,10 +42,7 @@ public class Program extends Application{
         updateManager = UpdateManager.getInstance();
         
         initSpace();
-        //Listeners for resize
-        //scene.widthProperty().addListener(evt -> drawAll(gc));
-        //scene.heightProperty().addListener(evt -> drawAll(gc));
-	
+        
         canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
 
@@ -60,7 +57,6 @@ public class Program extends Application{
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,250);
 		
-		//Sun Will be centered in the first update
 		Star sun = new Star("Sun",Color.ORANGE,60);
 		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/2000);
 		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/1000);

@@ -24,6 +24,7 @@ public class Explosion extends TimerEffect {
 		this.growthRate = increaseFactor;
 		this.color = color;
 	}
+	
 	public void update(){
 		if(growthRate!=1)
 			size*=growthRate;

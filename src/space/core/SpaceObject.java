@@ -6,13 +6,11 @@
 package space.core;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import interfaces.ClickableObject;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
-import space.advanced.FixStar;
 
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{

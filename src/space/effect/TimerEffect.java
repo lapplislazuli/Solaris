@@ -38,7 +38,6 @@ public abstract class TimerEffect extends Effect implements TimerObject{
 	public void setTimer(int lifetime) {
 		timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
-            @SuppressWarnings("restriction")
 			@Override
             public void run() {
             	Platform.runLater ( () ->remove()); 

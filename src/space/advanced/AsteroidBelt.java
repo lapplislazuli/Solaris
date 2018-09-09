@@ -5,9 +5,6 @@
  */
 package space.advanced;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.MovingSpaceObject;
@@ -15,20 +12,15 @@ import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
 public class AsteroidBelt extends MovingSpaceObject{
-	
-	private List<Asteroid> astroids;
-	
 	public AsteroidBelt(String name, SpaceObject parent, int distance, double speed,int asteroids) {	
 		super(name, parent, null, 0, 0, 0);		
 		x=parent.x;
 		y=parent.y;
 
-		astroids=new LinkedList<Asteroid>();
-		
 		for(int i = 1; i<=asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,distance,speed);
 			a.relativePos=(i/Math.PI*2);
-			astroids.add(a);
+			trabants.add(a);
 		}
 	}
 	
@@ -42,14 +34,12 @@ public class AsteroidBelt extends MovingSpaceObject{
 		x=parentX;
 		y=parentY;
 
-		for(Asteroid a : astroids)
-			a.move(x, y);
+		for(MovingSpaceObject asteroid : trabants)
+			asteroid.move(x, y);
 	}
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		//Do nothing here, just draw asteroids
-		for(Asteroid a : astroids)
-			a.draw(gc);
+		super.draw(gc);
 	}
 }
