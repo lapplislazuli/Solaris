@@ -3,19 +3,20 @@
  * @Created 31.08.2018
  * @Package space.shuttle
  */
-package space.shuttle;
+package space.shuttle.missiles;
 
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
+import space.shuttle.SpaceShuttle;
 
 @SuppressWarnings("restriction")
 public class Rocket extends Missile implements DestructibleObject {
 
 	public Rocket(String name, SpaceShuttle emitter, int size) {
-		super(name, emitter, size);
+		super(name, emitter, size,emitter.rotation, emitter.speed);
 		color=Color.FIREBRICK;
 	}
 	

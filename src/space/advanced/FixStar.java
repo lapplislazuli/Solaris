@@ -18,16 +18,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public class FixStar extends Star implements TimerObject {
-	//Shows Percentage of screen
-	private double relativeX,relativeY;
+	private double relativeX,relativeY; //Shows Percentage of screen for resize-functions
 	public boolean dead=false;
-	
-	public FixStar(String name, int x, int y,int lifetime) {
-		super(name, Color.WHITESMOKE, x, y, 2);
-		isCenter=false;
-		setTimer(lifetime);
-	}
-	
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
 		super(name, Color.WHITESMOKE, 0, 0, 2);
@@ -43,22 +35,7 @@ public class FixStar extends Star implements TimerObject {
 		gc.setFill(color);
 		gc.fillOval(x-size/2, y-size/2, size, size);
 	}
-
-	@Override
-	public boolean isCovered(int x, int y) {
-		return false;
-	}
-	@Override
-	public boolean collides(CollidingObject other) {
-		return false;
-	}
-	
-	@Override
-	public double distanceTo(SpaceObject other) {
-		return Double.MAX_VALUE;
-	}
-	
-	//if window is resized, put me in the correct position again
+ 
 	protected void fixPosition(GraphicsContext gc) {
 		x=(int) (relativeX*gc.getCanvas().getWidth());
 		y=(int) (relativeY*gc.getCanvas().getHeight());
@@ -74,4 +51,11 @@ public class FixStar extends Star implements TimerObject {
             }
         }, lifetime);
 	}
+
+	@Override
+	public boolean isCovered(int x, int y) {return false;}
+	@Override
+	public boolean collides(CollidingObject other) {return false;}
+	@Override
+	public double distanceTo(SpaceObject other) {return Double.MAX_VALUE;}
 }

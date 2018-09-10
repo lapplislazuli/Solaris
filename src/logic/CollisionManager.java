@@ -83,7 +83,7 @@ public class CollisionManager implements TimerObject{
 		List<SpaceObject> collisionItems=new LinkedList<SpaceObject>();
 		for(UpdatingObject uO : parent.toUpdate)
 			if(uO instanceof SpaceObject)
-				collisionItems.addAll(((SpaceObject) uO).getChildren());
+				collisionItems.addAll(((SpaceObject) uO).getAllChildrenFlat());
 		return collisionItems;
 	}
 	

@@ -20,10 +20,9 @@ import space.effect.Explosion;
  */
 @SuppressWarnings("restriction")
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
-	private boolean orbiting; 
-	private SpaceObject target;
-	protected SpaceObject parent;
-	private double orbitingDistance;
+	boolean orbiting; 
+	SpaceObject target, parent;
+	double orbitingDistance;
 	protected SensorArray sensor;
 	
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -34,17 +33,12 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		sensor = new SensorArray(this,50);
 	}
 	
-	public void setTarget(SpaceObject target) {
-		this.target=target;
-	}
-	
 	public void launch() {
 		if(target!=null && parent.trabants.remove(this)) {
 			target.trabants.add(this);
 			orbiting=false;
 			parent = target;
 			target=null;
-			
 			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
 		}
@@ -56,9 +50,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		sensor.update();
 	}
 	
-	public SpaceObject getParent() { return parent;}
-	public boolean isOrbiting() {return orbiting;}
-
 	@Override
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
@@ -78,24 +69,23 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		super.move(parentX, parentY);
 	}
 
-	public boolean isDead() {
-		return parent==null;
-	}
 	
 	public void destruct(CollidingObject other) {
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
-		if(parent!=null) {
+		if(!isDead()) {
 			new Explosion("Explosion from" + name,x,y,1500,size*2,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.size,speed,Asteroid.Type.TRASH);
 			remove();
 		}
 	}
+
+	public boolean isDead() {
+		return parent==null;
+	}
 	
 	public void remove() {
 		parent.trabants.remove(this);
-		parent=null;
-		target=null;
+		parent=(target=null);
 	}
-	public int getOrbitingDistance() {return (int) orbitingDistance;}
 }

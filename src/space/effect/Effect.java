@@ -14,9 +14,9 @@ import logic.EffectManager;
 @SuppressWarnings("restriction")
 public abstract class Effect implements UpdatingObject, DrawingObject, RemovableObject{
 	
-	protected String name;
-	protected int x,y;
-	protected double size;
+	String name;
+	int x,y;
+	double size;
 	
 	public Effect(String name, int x, int y, double size){
 		this.name = name;
@@ -42,9 +42,4 @@ public abstract class Effect implements UpdatingObject, DrawingObject, Removable
 	
 	@Override
 	public String toString() {return name+"@"+x+"|"+y;}
-	public int getX() {return x;}
-	public int getY() {return y;}
-	public String getName() {return name;}
-	public double getSize() {return size;}
-	
 }

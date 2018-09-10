@@ -14,21 +14,17 @@ import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
-	
 	public int x,y,size;
 	public String name;
 	
-	public List<MovingSpaceObject> trabants;
-	protected float rotation; //in radiant-degree
+	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
+	protected float rotation = 0; //in radiant-degree
 	
 	public SpaceObject(String name,int x, int y, int size) {
 		this.name=name;
 		this.x=x;
 		this.y=y;
 		this.size=size;
-		
-		trabants= new LinkedList<MovingSpaceObject>();
-		rotation=0;
 	}
 	
 	public void update() {
@@ -44,8 +40,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		for (MovingSpaceObject trabant : trabants) 
 			trabant.draw(gc);
 	}
-	@Override
-	public String toString() {return name+"@"+x+"|"+y;}
 	
 	public double distanceTo(SpaceObject other) {
 		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
@@ -59,25 +53,19 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		else
 			return 2*Math.PI-Math.acos((x-other.x)/distanceTo(other));
 	}
-	
 	public boolean collides(CollidingObject other) {
-		if(other instanceof SpaceObject)	
-			if(other!=this)
+		if(other instanceof SpaceObject && other!=this)
 				if(distanceTo((SpaceObject)other)<size/2+((SpaceObject)other).size/2)
 					return true;
 		return false;
 	}
 	
-	public List<SpaceObject> getChildren(){
+	public List<SpaceObject> getAllChildrenFlat(){
 		List<SpaceObject> flatChildren = new LinkedList<SpaceObject>();
 		for(SpaceObject trabant : trabants)
-			flatChildren.addAll(trabant.getChildren());
+			flatChildren.addAll(trabant.getAllChildrenFlat());
 		flatChildren.add(this);
 		return flatChildren;
-	}
-	
-	public void click() {
-		System.out.println("Clicked: " + toString());
 	}
 	
 	public boolean isCovered(int x, int y) {
@@ -85,4 +73,12 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 				y>=this.y-size && y<=this.y+size
 			&&	x>=this.x-size && x<=this.x+size;
 	}
+	
+	public void click() {
+		System.out.println("Clicked: " + toString());
+	}
+	
+	@Override
+	public String toString() {return name+"@"+x+"|"+y;}
+	
 }

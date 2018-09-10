@@ -22,46 +22,38 @@ import space.core.SpaceObject;
  */
 public class SensorArray implements UpdatingObject,MovingObject{
 	
-	private int radius;
-	private SpaceShuttle emitter;
-	private int x,y;
-	private List<CollidingObject> detectedItems;
+	int radius,x,y;
+	SpaceShuttle emitter;
+	List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
 	
 	public SensorArray (SpaceShuttle emitter,int radius) {
 		this.emitter=emitter;
-		x=emitter.x; y=emitter.y;
+		x=emitter.x; 
+		y=emitter.y;
 		this.radius=radius;
-		detectedItems=new LinkedList<CollidingObject>();
 	}
-	
-	public List<CollidingObject> getDetectedItems(){return detectedItems;}
 	
 	@Override
 	public void update() {
 		detectedItems=
 				CollisionManager.getInstance().collidables.stream()
+				.filter(c-> c instanceof SpaceObject)
 				.filter(c->!(c instanceof FixStar))
-				.filter(c->isCovered(c))
+				.map(c->(SpaceObject)c)
+				.filter(other -> isCovered(other.x, other.y))
 				.filter(c->!(c == emitter))
 				.collect(Collectors.toList());
 	}
-
-	private boolean isCovered(int otherX, int otherY) {
-		return
-				otherY>=y-radius && otherY<=y+radius
-			&&	otherX>=x-radius && otherX<=x+radius;
-	}
-	private boolean isCovered(CollidingObject other) {
-		if(other instanceof SpaceObject) {
-			return isCovered(((SpaceObject)other).y,((SpaceObject)other).y);
-		}
-		return false;
-	}
-
 	@Override
 	public void move(int x, int y) {
 		this.x=x;
 		this.y=y;
+	}
+	
+	private boolean isCovered(int otherX, int otherY) {
+		return
+				otherY>=y-radius && otherY<=y+radius
+			&&	otherX>=x-radius && otherX<=x+radius;
 	}
 
 }

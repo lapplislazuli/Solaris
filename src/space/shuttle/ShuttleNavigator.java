@@ -17,32 +17,29 @@ import space.core.SpaceObject;
 
 public class ShuttleNavigator implements UpdatingObject{
 	
-	private String name;
+	String name;
 	private int currentPointer = 1;
 	public List<SpaceObject> route;
 	private ArmedSpaceShuttle shuttle;
 	
-	private boolean respawn; //Bool whether new Ships will be spawned
-	private double idlingTurns; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
-	private double currentIdle; //measuring idling
+	boolean respawn; //Bool whether new Ships will be spawned
+	double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	
 	public ShuttleNavigator(String name, ArmedSpaceShuttle shuttle) {
 		route= new LinkedList<SpaceObject>();
-		route.add(shuttle.getParent());
+		route.add(shuttle.parent);
 		this.shuttle=shuttle;
 		this.name=name;
 	}
 	
 	public void update() {
-		if(shuttle.isDead()&&respawn) {
+		if(shuttle.isDead()&&respawn)
 			rebuildShuttle();
-		}
-		
-		if(shuttle.isOrbiting()) { //SpaceShuttle is not flying around in space
+		else if(shuttle.orbiting) {
 			if((currentIdle+=shuttle.speed)>=idlingTurns) { //SpaceShuttle idled some time
 				if (currentPointer++>=route.size()) 
 					currentPointer=1;
-				shuttle.setTarget(route.get(currentPointer-1));
+				shuttle.target=route.get(currentPointer-1);
 				shuttle.launch();
 				currentIdle=0;
 			}
@@ -50,7 +47,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	}
 	
 	private void rebuildShuttle() {
-		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttle.size,shuttle.getOrbitingDistance(),shuttle.speed);
+		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttle.size,(int) shuttle.orbitingDistance,shuttle.speed);
 	}
 
 	public static class Builder {

@@ -22,8 +22,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public int distance;
 	public double speed, relativePos,rotation; //Pos in radiant-degree to parent
 	protected Color color;
-	//Init Relative to parent
-	//Add to parents Trabants
+	
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
 		super(name,parent.x,parent.y+distance,size);
 		rotation=0;
@@ -35,30 +34,14 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	}
 	
 	public void move(int parentX, int parentY) {
-		// rotate relative position
-		relativePos+=speed;
-		if (relativePos >= Math.PI*2)
+		if ((relativePos+=speed) >= Math.PI*2)
 			relativePos -=  Math.PI*2;
 		//Change my Koords, according to parent, distance and speed
 		x = (parentX+ (int)(Math.cos(relativePos)*distance));
 		y = (parentY- (int)(Math.sin(relativePos)*distance));
-		
 		rotate();
 	};
-	
-	@Override
-	public void draw(GraphicsContext gc) {
-		if (color != null) {
-			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-					new Stop(0.0, color),
-					new Stop(1.0, color.darker())));
-		}
 
-		//change so the center is drawn, not the corner
-		gc.fillOval(x-size/2, y-size/2, size, size);
-		super.draw(gc);
-	}
-	
 	public void rotate() {
 		rotation+=speed;
 		if (rotation >= Math.PI*2)
@@ -67,4 +50,15 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 			rotation += Math.PI*2;
 		}
 	}
+	@Override
+	public void draw(GraphicsContext gc) {
+		if (color != null) {
+			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
+					new Stop(0.0, color),
+					new Stop(1.0, color.darker())));
+		}
+		gc.fillOval(x-size/2, y-size/2, size, size);
+		super.draw(gc);
+	}
+	
 }

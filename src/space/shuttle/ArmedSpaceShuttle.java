@@ -5,32 +5,30 @@
  */
 package space.shuttle;
 
-import java.util.List;
 import interfaces.logical.DestructibleObject;
 import space.core.SpaceObject;
+import space.shuttle.missiles.Laserbeam;
+import space.shuttle.missiles.Rocket;
 
 public class ArmedSpaceShuttle extends SpaceShuttle{
-
-	int rocketsLeft;
-	int laserCoolDown=0;
+	
+	int rocketsLeft=6, laserCoolDown=0;
 	
 	public ArmedSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
-		rocketsLeft=6;
 	}
 	
 	@Override
 	public void update() {
-		if(parent!=null) {
+		if(parent!=null)
 			shootNextDestructible();
-		}
 		laserCoolDown--;
 		super.update();
 	}
 	
 	public void shootNextDestructible() {
-		if(!sensor.getDetectedItems().isEmpty())
-			sensor.getDetectedItems().stream()
+		if(!sensor.detectedItems.isEmpty())
+			sensor.detectedItems.stream()
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
 				.forEach(c-> shootLaser((SpaceObject)c));
@@ -40,7 +38,7 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 		if(laserCoolDown<=0) {
 			new Laserbeam("Laser from " + name, this,degreeTo(target),5);
 			System.out.println(name + " shoot laser at " + target.toString());
-			//@UpdateRatio 25ms i would say every 3 Seconds:
+			//@UpdateRatio 25ms its every 3 Seconds:
 			laserCoolDown= 3000/25;
 		}
 	}

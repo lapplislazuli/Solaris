@@ -5,7 +5,6 @@
  */
 package space.advanced;
 
-
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,10 +16,7 @@ import space.core.SpaceObject;
 public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	SpaceObject parent;
-	public enum Type            
-	{
-	   ORE, ROCK, TRASH;  
-	}
+	public enum Type{ORE, ROCK, TRASH;}
 	Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,null,3,distance,speed);
@@ -75,9 +71,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	public void destruct(CollidingObject other) {
-		if(parent!=null) {
+		if(parent!=null)
 			remove();
-		}
 	}	
 	
 	public void remove() {

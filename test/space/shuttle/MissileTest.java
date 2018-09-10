@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import space.core.Planet;
 import space.core.Star;
+import space.shuttle.missiles.Missile;
 
 public class MissileTest {
 	
@@ -30,7 +31,7 @@ public class MissileTest {
 	@Test
 	public void MissileRotation() {
 		shuttle.shootLaser(planet);
-		missile=(Missile)shuttle.getChildren().get(0);
+		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
 		
 		assertEquals(true, missile.rotation==shuttle.degreeTo(planet));
 		missile.rotate();
@@ -40,7 +41,7 @@ public class MissileTest {
 	@Test
 	public void MissileMovement() {
 		shuttle.shootLaser(planet);
-		missile=(Missile)shuttle.getChildren().get(0);
+		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
 		
 		assertEquals(true,missile.x==shuttle.x && missile.y==shuttle.y);
 		assertEquals(true,missile.distanceTo(planet)==planet.distanceTo(shuttle));
@@ -60,7 +61,7 @@ public class MissileTest {
 	@Test
 	public void MissileCollision() {
 		shuttle.shootLaser(planet);
-		missile=(Missile)shuttle.getChildren().get(0);
+		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
 		
 		assertTrue(shuttle.collides(missile));
 		assertFalse(missile.collides(missile));

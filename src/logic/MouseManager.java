@@ -48,7 +48,7 @@ public class MouseManager implements UpdatingObject {
 		UpdateManager.getInstance().toDraw.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
-			.flatMap(space -> ((SpaceObject)space).getChildren().stream())
+			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())
 			.filter(item -> item.isCovered((int)evt.getSceneX(),(int)evt.getSceneY()))
 			.forEach(clicked -> clicked.click());
 	}
