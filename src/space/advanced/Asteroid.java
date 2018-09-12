@@ -1,8 +1,12 @@
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package space.advanced
+ */
 package space.advanced;
 
-
-import interfaces.CollidingObject;
-import interfaces.DestructibleObject;
+import interfaces.logical.CollidingObject;
+import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
@@ -12,13 +16,11 @@ import space.core.SpaceObject;
 public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	SpaceObject parent;
-	public enum Type            
-	{
-	   ORE, ROCK, TRASH;  
-	}
+	public enum Type{ORE, ROCK, TRASH;}
 	Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,null,3,distance,speed);
+		//Asteroid Types are chosen randomly if not in the Constructor
 		int typeHelper=((int)((Math.random()+1)*3)%3);
 		if(typeHelper==0)
 			type=Type.ORE;
@@ -26,8 +28,6 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			type=Type.ROCK;
 		else
 			type=Type.TRASH;
-		//Asteroid Types are chosen randomly
-		
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {
@@ -36,9 +36,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		this.parent=parent;
 	}
 	
-	
 	@Override
-	public void draw(GraphicsContext gc) {
+	public void drawThisItem(GraphicsContext gc) {
 		switch(type) {
 		case ORE:
 			gc.setFill(Color.DARKSLATEGRAY);
@@ -58,10 +57,6 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			break;
 		}
 	}
-	@Override
-	public void update() {
-		//i do not have children, i do not need to update children
-	}
 	
 	@Override 
 	public void move(int parentX, int parentY) {
@@ -76,13 +71,12 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	public void destruct(CollidingObject other) {
-		if(parent!=null) {
+		if(parent!=null)
 			remove();
-		}
 	}	
 	
 	public void remove() {
-		parent.removeTrabant(this);
+		parent.trabants.remove(this);
 		parent=null;
 	}
 }

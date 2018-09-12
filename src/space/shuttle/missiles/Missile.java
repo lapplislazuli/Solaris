@@ -1,41 +1,34 @@
-package space.shuttle;
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package space.shuttle
+ */
+package space.shuttle.missiles;
 
-import interfaces.RemovableObject;
+import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
+import space.shuttle.SpaceShuttle;
 
 public abstract class Missile extends MovingSpaceObject implements RemovableObject {
 	
-	SpaceShuttle emitter; //Attribute who shot me
+	SpaceShuttle emitter; //who shot me
 	/*
 	 * Rotation will be used as the direction of the missile
 	 * speed will be used to move in direction, this will be an absolute value not relative to parents location
 	 * Distance will be used to measure the flown distance, for remove logic
 	 */
-	
-	
-	/*
-	 * For relative-speeded Missiles like rockets
-	 */
-	public Missile(String name, SpaceShuttle emitter, int size) {
-		super(name, emitter, null, size, 0,emitter.getSpeed()*emitter.getDistance()*2);
+
+	public Missile(String name, SpaceShuttle emitter, int size,double direction, double speed) {
+		super(name, emitter, null, size, 0,speed);
 		this.emitter=emitter;
-		rotation=emitter.getRotation();
+		rotation=direction;
 	}
 	
-	/*
-	 * For Absolute speeded Missiles like lasers
-	 */
-	public Missile(String name, SpaceShuttle emitter, int size, double speed) {
-		super(name, emitter, null, size, 0, speed);
-		this.emitter=emitter;
-		rotation=emitter.getRotation();
-	}
 	@Override
 	public void update() {
-		super.update();
-		if(distance>=150 || x<=0 || y <=0) {
+		move(0,0);
+		if(distance>=150 || x<=0 || y <=0) 
 			remove();
-		}
 	}
 	
 	@Override
@@ -44,17 +37,14 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		x= (int) (x+Math.cos(rotation)*speed);
 		y= (int) (y+Math.sin(rotation)*speed);
 		distance += Math.sqrt((oldX-x)*(oldX-x)+(oldY-y)*(oldY-y));
-		//System.out.println(speed);
 	}
 	
 	@Override
 	public void remove() {
 		if(emitter!=null)
-			emitter.removeTrabant(this);
+			emitter.trabants.remove(this);
 		emitter=null;
 	}
 	@Override 
-	public void rotate() {
-		//Normal Missiles don't Rotate!
-	}
+	public void rotate() {}
 }

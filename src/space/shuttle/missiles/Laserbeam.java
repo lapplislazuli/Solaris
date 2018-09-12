@@ -1,4 +1,9 @@
-package space.shuttle;
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package space.shuttle
+ */
+package space.shuttle.missiles;
 
 
 import java.util.LinkedList;
@@ -6,6 +11,7 @@ import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import space.shuttle.SpaceShuttle;
 
 @SuppressWarnings("restriction")
 public class Laserbeam extends Missile{
@@ -13,13 +19,19 @@ public class Laserbeam extends Missile{
 	private List<Integer> xTrail,yTrail;
 	
 	public Laserbeam(String name, SpaceShuttle emitter) {
-		super(name, emitter, 2, 3);
+		super(name, emitter, 2, emitter.rotation, 3);
 		color = Color.LIGHTGREEN;
 		xTrail=new LinkedList<Integer>();
 		yTrail=new LinkedList<Integer>();
-		System.out.println("Laser Shot!"+toString());
 	}
 	
+	public Laserbeam(String name, SpaceShuttle emitter,  double direction, int speed) {
+		super(name, emitter, 2,direction, speed);
+		color = Color.LIGHTGREEN;
+		xTrail=new LinkedList<Integer>();
+		yTrail=new LinkedList<Integer>();
+	}
+
 	@Override
 	public void move(int parentX, int parentY) {
 		xTrail.add(x);yTrail.add(y);

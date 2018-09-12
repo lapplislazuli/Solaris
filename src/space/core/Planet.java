@@ -1,3 +1,8 @@
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package space.core
+ */
 package space.core;
 
 import javafx.scene.paint.Color;
@@ -14,12 +19,12 @@ public class Planet extends MovingSpaceObject {
 	
 	public static class Builder {
 		private final String name;
+		private SpaceObject parent;
 		private Color color= Color.BLACK;
 		private int distance = 0;
 		private int size = 0;
 		private double speed = 0;
-		private SpaceObject parent;
-		private List<MovingSpaceObject> trabants;
+		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
@@ -28,7 +33,6 @@ public class Planet extends MovingSpaceObject {
 				throw new IllegalArgumentException("Parent cannot be null");
 			this.name=name;
 			this.parent=parent;
-			trabants = new LinkedList<MovingSpaceObject>();
 		}
 		
 		public Builder color(Color val)

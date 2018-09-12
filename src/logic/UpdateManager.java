@@ -1,3 +1,8 @@
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package logic
+ */
 package logic;
 
 import java.util.LinkedList;
@@ -6,8 +11,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import interfaces.DrawingObject;
-import interfaces.TimerObject;
-import interfaces.UpdatingObject;
+import interfaces.logical.TimerObject;
+import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.SpaceObject;
@@ -19,6 +24,7 @@ public class UpdateManager implements TimerObject{
 	public List<DrawingObject> toDraw;
 	private GraphicsContext gc;
 	private Timer timer;
+	private boolean running=true;
 	
 	private static final UpdateManager INSTANCE = new UpdateManager();
 	
@@ -37,8 +43,10 @@ public class UpdateManager implements TimerObject{
 	}
 	
 	public void update() {
-		updateAll();
-		drawAll();
+		if(running) {
+			updateAll();
+			drawAll();
+		}
 	}
 	
 	private void updateAll() {
@@ -54,7 +62,7 @@ public class UpdateManager implements TimerObject{
 	public void addSpaceObject(SpaceObject o) {
 		toUpdate.add(o);
 		toDraw.add(o);
-		for(SpaceObject child : o.getChildren())
+		for(SpaceObject child : o.getAllChildrenFlat())
 			CollisionManager.getInstance().addCollidable(child);
 	}
 	
@@ -69,4 +77,11 @@ public class UpdateManager implements TimerObject{
         }, 0, updateIntervall);
 	}
 
+	public void pause() {
+		running=false;
+	}
+
+	public void start() {
+		running=true;
+	}
 }

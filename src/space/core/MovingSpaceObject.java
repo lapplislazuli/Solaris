@@ -1,73 +1,70 @@
+/**
+ * @Author Leonhard Applis
+ * @Created 31.08.2018
+ * @Package space.core
+ */
 package space.core;
 
 import java.awt.LinearGradientPaint;
+import java.awt.geom.Point2D;
 import java.util.Random;
 
-import interfaces.MovingObject;
+import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.transform.Affine;
 
 @SuppressWarnings({ "restriction", "unused" })
-public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {
-	
-	
-	protected int distance;
-	protected double speed, relativePos,rotation; //Pos in radiant-degree to parent
+public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {	
+	public int distance;
+	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	protected Color color;
-	//Init Relative to parent
-	//Add to parents Trabants
+	
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
-		super(name,parent.getX(),parent.getY()+distance,size);
+		super(name,parent.x,parent.y+distance,size);
 		rotation=0;
 		this.distance=distance;
 		this.speed=speed;
+		rotationSpeed=speed*2;
 		this.color=color;
 		relativePos=degreeTo(parent);
-		parent.addTrabant(this);
+		parent.trabants.add(this);
 	}
+	
 	public void move(int parentX, int parentY) {
-		// rotate relative position
-		relativePos+=speed;
-		if (relativePos >= Math.PI*2)
+		if ((relativePos+=speed) >= Math.PI*2)
 			relativePos -=  Math.PI*2;
 		//Change my Koords, according to parent, distance and speed
 		x = (parentX+ (int)(Math.cos(relativePos)*distance));
 		y = (parentY- (int)(Math.sin(relativePos)*distance));
-		
 		rotate();
 	};
-	
-	@Override
-	public void draw(GraphicsContext gc) {
-		if (color != null) {
-			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-					new Stop(0.0, color),
-					new Stop(1.0, color.darker())));
-		}
 
-		//change so the center is drawn, not the corner
-		gc.fillOval(x-size/2, y-size/2, size, size);
-		super.draw(gc);
-	}
-	
 	public void rotate() {
-		rotation+=speed;
+		rotation+=rotationSpeed;
 		if (rotation >= Math.PI*2)
 			rotation -=  Math.PI*2;
 		else if (rotation <= -Math.PI*2) {
 			rotation += Math.PI*2;
 		}
 	}
-	
-	public void setRelativePos(double newPos) {
-		this.relativePos=newPos;
+
+	@Override
+	public void drawThisItem(GraphicsContext gc) {
+		gc.save();
+		Affine transformRotation= new Affine();
+		transformRotation.appendRotation(Math.toDegrees(rotation), x ,y);	
+		if (color != null) {
+			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
+					new Stop(0.0, color),
+					new Stop(1.0, color.darker())));
+		}
+		gc.transform(transformRotation);	
+		gc.fillOval(x-size/2, y-size/2, size, size);
+		gc.restore();
 	}
 	
-	public double getRelativePos() {return relativePos;}
-	public double getRotation() {return rotation;}
-	public int getDistance() {return distance;}
-	public double getSpeed() {return speed;}
 }
