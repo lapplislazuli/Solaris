@@ -20,7 +20,7 @@ import space.effect.Explosion;
  */
 @SuppressWarnings("restriction")
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
-	boolean orbiting; 
+	boolean orbiting = true; 
 	SpaceObject target, parent;
 	double orbitingDistance;
 	protected SensorArray sensor;
