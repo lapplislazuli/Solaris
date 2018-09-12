@@ -53,20 +53,17 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	}
 	@Override
 	public void draw(GraphicsContext gc) {
+		gc.save();
 		Affine transformRotation= new Affine();
-		transformRotation.appendRotation(Math.toDegrees(rotation), x ,y);
-		Affine clearRotation= new Affine();
-		clearRotation.appendRotation(-Math.toDegrees(rotation), x, y);
-		
+		transformRotation.appendRotation(Math.toDegrees(rotation), x ,y);	
 		if (color != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),
 					new Stop(1.0, color.darker())));
 		}
-		gc.transform(transformRotation);
-		
+		gc.transform(transformRotation);	
 		gc.fillOval(x-size/2, y-size/2, size, size);
-		gc.transform(clearRotation);
+		gc.restore();
 		super.draw(gc);
 	}
 	
