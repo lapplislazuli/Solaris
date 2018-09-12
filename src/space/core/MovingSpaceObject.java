@@ -6,6 +6,7 @@
 package space.core;
 
 import java.awt.LinearGradientPaint;
+import java.awt.geom.Point2D;
 import java.util.Random;
 
 import interfaces.logical.MovingObject;
@@ -14,13 +15,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.transform.Affine;
 
 @SuppressWarnings({ "restriction", "unused" })
-public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {
-	
-	
+public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {	
 	public int distance;
-	public double speed, relativePos,rotation; //Pos in radiant-degree to parent
+	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	protected Color color;
 	
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
@@ -28,6 +28,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		rotation=0;
 		this.distance=distance;
 		this.speed=speed;
+		rotationSpeed=speed*2;
 		this.color=color;
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
@@ -43,7 +44,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	};
 
 	public void rotate() {
-		rotation+=speed;
+		rotation+=rotationSpeed;
 		if (rotation >= Math.PI*2)
 			rotation -=  Math.PI*2;
 		else if (rotation <= -Math.PI*2) {
@@ -52,12 +53,20 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	}
 	@Override
 	public void draw(GraphicsContext gc) {
+		Affine transformRotation= new Affine();
+		transformRotation.appendRotation(Math.toDegrees(rotation), x ,y);
+		Affine clearRotation= new Affine();
+		clearRotation.appendRotation(-Math.toDegrees(rotation), x, y);
+		
 		if (color != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),
 					new Stop(1.0, color.darker())));
 		}
+		gc.transform(transformRotation);
+		
 		gc.fillOval(x-size/2, y-size/2, size, size);
+		gc.transform(clearRotation);
 		super.draw(gc);
 	}
 	
