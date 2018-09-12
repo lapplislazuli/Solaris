@@ -51,8 +51,9 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 			rotation += Math.PI*2;
 		}
 	}
+
 	@Override
-	public void draw(GraphicsContext gc) {
+	public void drawThisItem(GraphicsContext gc) {
 		gc.save();
 		Affine transformRotation= new Affine();
 		transformRotation.appendRotation(Math.toDegrees(rotation), x ,y);	
@@ -64,7 +65,6 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		gc.transform(transformRotation);	
 		gc.fillOval(x-size/2, y-size/2, size, size);
 		gc.restore();
-		super.draw(gc);
 	}
 	
 }

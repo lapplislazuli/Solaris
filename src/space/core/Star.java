@@ -35,14 +35,15 @@ public class Star extends SpaceObject {
 	public void draw(GraphicsContext gc) {
 		if(isCenter)
 			reCenter(gc); 
-		createGlowingFill(gc);
-		gc.fillOval(x-size/2, y-size/2, size, size);
+		drawGlowingCircle(gc);
 		super.draw(gc);
 	}
-	private void createGlowingFill(GraphicsContext gc) {
+	
+	void drawGlowingCircle(GraphicsContext gc) {
 		gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 				new Stop(0.0, color),
 				new Stop(1.0, color.darker())));
 		gc.setEffect(new Glow(0.6));
+		gc.fillOval(x-size/2, y-size/2, size, size);
 	}
 }

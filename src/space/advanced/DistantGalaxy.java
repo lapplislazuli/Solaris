@@ -36,7 +36,7 @@ public class DistantGalaxy extends SpaceObject{
 	public boolean isCovered(int x, int y) {return false;}
 	 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void drawThisItem(GraphicsContext gc) {
     	//Fill Background
 		gc.setFill(new LinearGradient(0, 0, 0.2, 0.2, true, CycleMethod.REFLECT, 
                 new Stop(0.0, Color.BLUE),

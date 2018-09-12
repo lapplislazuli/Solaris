@@ -37,7 +37,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	@Override
-	public void draw(GraphicsContext gc) {
+	public void drawThisItem(GraphicsContext gc) {
 		switch(type) {
 		case ORE:
 			gc.setFill(Color.DARKSLATEGRAY);

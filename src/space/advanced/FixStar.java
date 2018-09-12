@@ -30,7 +30,7 @@ public class FixStar extends Star implements TimerObject {
 	}
 	
 	@Override
-	public void draw(GraphicsContext gc) {
+	public void drawThisItem(GraphicsContext gc) {
 		fixPosition(gc);
 		gc.setFill(color);
 		gc.fillOval(x-size/2, y-size/2, size, size);

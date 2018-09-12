@@ -35,8 +35,19 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	};
 	
 	public void draw(GraphicsContext gc) {
+		drawThisItem(gc);
+		resetGraphicsContext(gc);
+		drawTrabants(gc);
+	}
+	public void drawThisItem(GraphicsContext gc) {
+		// Do Nothing in veryAbstract SpaceObject, just placeholder for inheritance
+	}
+	protected void resetGraphicsContext(GraphicsContext gc) {
 		gc.setEffect(null);
 		gc.setFill(null);
+	}
+	
+	protected void drawTrabants(GraphicsContext gc){
 		for (MovingSpaceObject trabant : trabants) 
 			trabant.draw(gc);
 	}
@@ -80,5 +91,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	
 	@Override
 	public String toString() {return name+"@"+x+"|"+y;}
+	
 	
 }

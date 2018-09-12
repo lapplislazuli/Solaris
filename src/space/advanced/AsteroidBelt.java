@@ -38,8 +38,4 @@ public class AsteroidBelt extends MovingSpaceObject{
 			asteroid.move(x, y);
 	}
 	
-	@Override
-	public void draw(GraphicsContext gc) {
-		super.draw(gc);
-	}
 }

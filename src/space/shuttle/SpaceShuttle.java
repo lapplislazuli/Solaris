@@ -51,10 +51,9 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	@Override
-	public void draw(GraphicsContext gc) {
+	public void drawThisItem(GraphicsContext gc) {
 		gc.setFill(color);
 		gc.fillRect(x-size/2, y-size/2, size, size);
-		super.draw(gc);
 	}
 	
 	@Override 
