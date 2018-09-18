@@ -35,14 +35,20 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	}
 	
 	public void move(int parentX, int parentY) {
-		if ((relativePos+=speed) >= Math.PI*2)
-			relativePos -=  Math.PI*2;
-		//Change my Koords, according to parent, distance and speed
+		moveRelativePos();
 		x = (parentX+ (int)(Math.cos(relativePos)*distance));
 		y = (parentY- (int)(Math.sin(relativePos)*distance));
 		rotate();
 	};
-
+	
+	public void moveRelativePos() {
+		relativePos+=speed;
+		if (relativePos >= Math.PI*2)
+			relativePos -=  Math.PI*2;
+		else if(relativePos<= Math.PI*2)
+			relativePos+= Math.PI*2;
+	}
+	
 	public void rotate() {
 		rotation+=rotationSpeed;
 		if (rotation >= Math.PI*2)

@@ -39,9 +39,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		resetGraphicsContext(gc);
 		drawTrabants(gc);
 	}
-	public void drawThisItem(GraphicsContext gc) {
-		// Do Nothing in veryAbstract SpaceObject, just placeholder for inheritance
-	}
+	
+	public abstract void drawThisItem(GraphicsContext gc);
+	
 	protected void resetGraphicsContext(GraphicsContext gc) {
 		gc.setEffect(null);
 		gc.setFill(null);

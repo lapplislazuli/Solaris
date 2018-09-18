@@ -24,9 +24,8 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	
 	@Override 
 	public void rotate() {
-		if(parent!=null) {
+		if(parent!=null)
 			rotation=degreeTo(parent);
-		}
 	}
 	
 	@Override

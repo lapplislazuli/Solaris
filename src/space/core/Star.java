@@ -34,8 +34,7 @@ public class Star extends SpaceObject {
 	@Override
 	public void draw(GraphicsContext gc) {
 		if(isCenter)
-			reCenter(gc); 
-		drawGlowingCircle(gc);
+			reCenter(gc);
 		super.draw(gc);
 	}
 	
@@ -45,5 +44,12 @@ public class Star extends SpaceObject {
 				new Stop(1.0, color.darker())));
 		gc.setEffect(new Glow(0.6));
 		gc.fillOval(x-size/2, y-size/2, size, size);
+	}
+	/* (non-Javadoc)
+	 * @see space.core.SpaceObject#drawThisItem(javafx.scene.canvas.GraphicsContext)
+	 */
+	@Override
+	public void drawThisItem(GraphicsContext gc) {
+		drawGlowingCircle(gc);
 	}
 }
