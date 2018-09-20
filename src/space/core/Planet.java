@@ -21,8 +21,7 @@ public class Planet extends MovingSpaceObject {
 		private final String name;
 		private SpaceObject parent;
 		private Color color= Color.BLACK;
-		private int distance = 0;
-		private int size = 0;
+		private int distance = 0,size = 0;
 		private double speed = 0;
 		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
 		

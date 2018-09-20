@@ -17,10 +17,6 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		super(name, parent,null, size, distance, speed);
 		this.parent=parent;
 	}
-	@Override
-	public void move(int parentX, int parentY) {
-		super.move(parentX, parentY);
-	}
 	
 	@Override 
 	public void rotate() {
@@ -35,8 +31,9 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	}
 	@Override
 	public void destruct(CollidingObject other) {
-		new Explosion("Explosion from" + name,x,y,800,size*1.5,1.03,Color.FIREBRICK);
+		new Explosion("Explosion from" + name,center.x,center.y,800,size*1.5,1.03,Color.FIREBRICK);
 		if(parent!=null)
 			remove();
 	}
+
 }

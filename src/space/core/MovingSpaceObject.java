@@ -24,20 +24,20 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	protected Color color;
 	
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
-		super(name,parent.x,parent.y+distance,size);
-		rotation=0;
+		super(name,parent.center.clone(),size);
 		this.distance=distance;
 		this.speed=speed;
 		rotationSpeed=speed*2;
 		this.color=color;
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
+		center.move(0, distance);;
 	}
 	
-	public void move(int parentX, int parentY) {
+	public void move(Point parentCenter) {
 		moveRelativePos();
-		x = (parentX+ (int)(Math.cos(relativePos)*distance));
-		y = (parentY- (int)(Math.sin(relativePos)*distance));
+		center.x= parentCenter.x+(int)(Math.cos(relativePos)*distance);
+		center.y= parentCenter.y-(int)(Math.sin(relativePos)*distance);
 		rotate();
 	};
 	
@@ -62,14 +62,14 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public void drawThisItem(GraphicsContext gc) {
 		gc.save();
 		Affine transformRotation= new Affine();
-		transformRotation.appendRotation(Math.toDegrees(rotation), x ,y);	
+		transformRotation.appendRotation(Math.toDegrees(rotation), center.x ,center.y);	
 		if (color != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),
 					new Stop(1.0, color.darker())));
 		}
 		gc.transform(transformRotation);	
-		gc.fillOval(x-size/2, y-size/2, size, size);
+		gc.fillOval(center.x-size/2, center.y-size/2, size, size);
 		gc.restore();
 	}
 	

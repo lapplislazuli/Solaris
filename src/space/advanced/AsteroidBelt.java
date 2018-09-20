@@ -8,14 +8,14 @@ package space.advanced;
 import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.MovingSpaceObject;
+import space.core.Point;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
 public class AsteroidBelt extends MovingSpaceObject{
 	public AsteroidBelt(String name, SpaceObject parent, int distance, double speed,int asteroids) {	
 		super(name, parent, null, 0, 0, 0);		
-		x=parent.x;
-		y=parent.y;
+		center=parent.center;
 
 		for(int i = 1; i<=asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,distance,speed);
@@ -30,12 +30,11 @@ public class AsteroidBelt extends MovingSpaceObject{
 	}
 	
 	@Override
-	public void move(int parentX, int parentY) {
-		x=parentX;
-		y=parentY;
+	public void move(Point parentCenter) {
+		center=parentCenter;
 
 		for(MovingSpaceObject asteroid : trabants)
-			asteroid.move(x, y);
+			asteroid.move(center);
 	}
 	
 }

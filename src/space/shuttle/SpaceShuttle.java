@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
+import space.core.Point;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 
@@ -53,26 +54,26 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	@Override
 	public void drawThisItem(GraphicsContext gc) {
 		gc.setFill(color);
-		gc.fillRect(x-size/2, y-size/2, size, size);
+		gc.fillRect(center.x-size/2, center.y-size/2, size, size);
 	}
 	
 	@Override 
-	public void move(int parentX, int parentY) {
+	public void move(Point parentCenter) {
 		if(!orbiting) {
 			if(distance>=orbitingDistance+parent.size/2) 
 				distance--;
 			else 
 				orbiting=true;
 		}
-		sensor.move(x, y);
-		super.move(parentX, parentY);
+		sensor.move(center);
+		super.move(parentCenter);
 	}
 
 	
 	public void destruct(CollidingObject other) {
-		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + x + "|" + y);
+		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + center.x + "|" + center.y);
 		if(!isDead()) {
-			new Explosion("Explosion from" + name,x,y,1500,size*2,1.02,Color.MEDIUMVIOLETRED);
+			new Explosion("Explosion from" + name,center.x,center.y,1500,size*2,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.size,speed,Asteroid.Type.TRASH);
 			remove();

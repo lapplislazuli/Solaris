@@ -14,22 +14,22 @@ import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
-	public int x,y,size;
+	public int size;
 	public String name;
+	public Point center;
 	
 	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,int x, int y, int size) {
+	public SpaceObject(String name,Point center, int size) {
 		this.name=name;
-		this.x=x;
-		this.y=y;
+		this.center=center;
 		this.size=size;
 	}
 	
 	public void update() {
 		for (MovingSpaceObject trabant : trabants){
-			trabant.move(x,y);
+			trabant.move(center);
 			trabant.update();
 		}
 	};
@@ -53,16 +53,11 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public double distanceTo(SpaceObject other) {
-		return Math.sqrt((x-other.x)*(x-other.x)+(y-other.y)*(y-other.y));
+		return center.distanceTo(other.center);
 	}
 	
 	public double degreeTo(SpaceObject other) {
-		if(distanceTo(other)==0) 
-			return 0;
-		if(y<other.y)
-			return Math.acos((x-other.x)/distanceTo(other));
-		else
-			return 2*Math.PI-Math.acos((x-other.x)/distanceTo(other));
+		return center.degreeTo(other.center);
 	}
 	public boolean collides(CollidingObject other) {
 		if(other instanceof SpaceObject && other!=this)
@@ -81,8 +76,8 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	
 	public boolean isCovered(int x, int y) {
 		return
-				y>=this.y-size && y<=this.y+size
-			&&	x>=this.x-size && x<=this.x+size;
+				y>=center.y-size && y<=center.y+size
+			&&	x>=center.x-size && x<=center.x+size;
 	}
 	
 	public void click() {
@@ -90,7 +85,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	@Override
-	public String toString() {return name+"@"+x+"|"+y;}
+	public String toString() {return name+"@"+center.toString();}
 	
 	
 }

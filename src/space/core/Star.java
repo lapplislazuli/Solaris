@@ -15,25 +15,25 @@ import javafx.scene.effect.Glow;
 @SuppressWarnings("restriction")
 public class Star extends SpaceObject {
 	protected Color color;
-	public boolean isCenter=true;
+	public boolean isCentered=true;
 	
-	public Star(String name, Color color, int x, int y, int size) {
-		super(name, x, y, size);
+	public Star(String name, Color color,Point center, int size) {
+		super(name,center,size);
 		this.color=color;
 	}
 	public Star(String name, Color color,int size) {
-		super(name, 0, 0, size);
+		super(name,new Point(0,0), size);
 		this.color=color;
 	}
 	
 	private void reCenter(GraphicsContext gc) {
-		x=(int) (gc.getCanvas().getWidth()-size)/2;
-		y=(int) (gc.getCanvas().getHeight()-size)/2;
+		center.x=(int) (gc.getCanvas().getWidth()-size)/2;
+		center.y=(int) (gc.getCanvas().getHeight()-size)/2;
 	}
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		if(isCenter)
+		if(isCentered)
 			reCenter(gc);
 		super.draw(gc);
 	}
@@ -43,7 +43,7 @@ public class Star extends SpaceObject {
 				new Stop(0.0, color),
 				new Stop(1.0, color.darker())));
 		gc.setEffect(new Glow(0.6));
-		gc.fillOval(x-size/2, y-size/2, size, size);
+		gc.fillOval(center.x-size/2, center.y-size/2, size, size);
 	}
 	/* (non-Javadoc)
 	 * @see space.core.SpaceObject#drawThisItem(javafx.scene.canvas.GraphicsContext)

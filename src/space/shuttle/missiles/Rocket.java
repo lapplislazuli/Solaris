@@ -28,13 +28,13 @@ public class Rocket extends Missile implements DestructibleObject {
 	@Override
 	public void destruct(CollidingObject other) {
 		System.out.println(name+" collided with " + other.toString());
-		new Explosion("Explosion from "+name, x, y,1000, size*3, 1.02, Color.FIREBRICK);
+		new Explosion("Explosion from "+name, center.x, center.y,1000, size*3, 1.02, Color.FIREBRICK);
 		remove();
 	}
 	
 	@Override
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
-		gc.fillRect(x-size/2,y-size/2, size, size);
+		gc.fillRect(center.x-size/2,center.y-size/2, size, size);
 	}
 }

@@ -10,6 +10,7 @@ import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
+import space.core.Point;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
@@ -41,33 +42,32 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		switch(type) {
 		case ORE:
 			gc.setFill(Color.DARKSLATEGRAY);
-			gc.fillOval(x-size/2, y-size/2, size, size/3);
+			gc.fillOval(center.x-size/2, center.y-size/2, size, size/3);
 			break;
 		case ROCK:
 			gc.setFill(Color.LIGHTGRAY);
-			gc.fillOval(x-size/2, y-size/2, size/2, size);
+			gc.fillOval(center.x-size/2, center.y-size/2, size/2, size);
 			break;
 		case TRASH:
 			gc.setFill(Color.GRAY);
-			gc.fillRect(x-size/2, y-size/2, size, size);
+			gc.fillRect(center.x-size/2, center.y-size/2, size, size);
 			break;
 		default:
 			gc.setFill(Color.BLACK);
-			gc.fillRect(x-size/2, y-size/2, size, size/2);
+			gc.fillRect(center.x-size/2, center.y-size/2, size, size/2);
 			break;
 		}
 	}
 	
 	@Override 
-	public void move(int parentX, int parentY) {
-		super.move(parentX, parentY);
+	public void move(Point parentCenter) {
+		super.move(parentCenter);
 		shake();
 	}
 	
 	//Change my koords by a little noise, so its not a perfect circle
 	private void shake() {
-		x+=(Math.random()+1)*3;
-		y+=(Math.random()+1)*3;
+		center.move((int)(Math.random()+1)*3,(int)(Math.random()+1)*3);
 	}
 	
 	public void destruct(CollidingObject other) {

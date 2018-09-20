@@ -4,8 +4,10 @@
  * @Package interfaces
  */
 package interfaces.logical;
- 
+
+import space.core.Point;
 
 public interface MovingObject {
-	public void move(int x, int y);
+	
+	public void move(Point point);
 }

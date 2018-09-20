@@ -7,6 +7,7 @@ package space.shuttle.missiles;
 
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
+import space.core.Point;
 import space.shuttle.SpaceShuttle;
 
 public abstract class Missile extends MovingSpaceObject implements RemovableObject {
@@ -26,17 +27,17 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	
 	@Override
 	public void update() {
-		move(0,0);
-		if(distance>=150 || x<=0 || y <=0) 
+		move(center);
+		if(distance>=150 || center.x<=0 || center.y <=0) 
 			remove();
 	}
 	
 	@Override
-	public void move(int parentX, int parentY){
-		int oldX=x; int oldY=y;
-		x= (int) (x+Math.cos(rotation)*speed);
-		y= (int) (y+Math.sin(rotation)*speed);
-		distance += Math.sqrt((oldX-x)*(oldX-x)+(oldY-y)*(oldY-y));
+	public void move(Point oldPosition){
+		Point oldCenter=center.clone();
+		center.x= (int) (center.x+Math.cos(rotation)*speed);
+		center.y= (int) (center.y+Math.sin(rotation)*speed);
+		distance += oldCenter.distanceTo(center);
 	}
 	
 	@Override

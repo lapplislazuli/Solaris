@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import space.core.Point;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
@@ -25,7 +26,7 @@ public class DistantGalaxy extends SpaceObject{
 	Random r =new Random();;
 	
     public DistantGalaxy(String name, int width, int height, int stars) {
-		super(name, 0, 0, 0); 
+		super(name, new Point( 0, 0), 0); 
 		maxStars=stars;
 		fillStars();
 	}

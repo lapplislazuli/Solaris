@@ -6,6 +6,7 @@
 package space.advanced;
 
 import javafx.scene.paint.Color;
+import space.core.Point;
 import space.core.SpaceObject;
 import space.core.Star;
 
@@ -22,10 +23,10 @@ public class FixStar extends Star implements TimerObject {
 	public boolean dead=false;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
-		super(name, Color.WHITESMOKE, 0, 0, 2);
+		super(name, Color.WHITESMOKE, new Point(0, 0), 2);
 		relativeX=relX;
 		relativeY=relY;
-		isCenter=false;
+		isCentered=false;
 		setTimer(lifetime);
 	}
 	
@@ -33,12 +34,12 @@ public class FixStar extends Star implements TimerObject {
 	public void drawThisItem(GraphicsContext gc) {
 		fixPosition(gc);
 		gc.setFill(color);
-		gc.fillOval(x-size/2, y-size/2, size, size);
+		gc.fillOval(center.x-size/2, center.y-size/2, size, size);
 	}
  
 	protected void fixPosition(GraphicsContext gc) {
-		x=(int) (relativeX*gc.getCanvas().getWidth());
-		y=(int) (relativeY*gc.getCanvas().getHeight());
+		center.x=(int) (relativeX*gc.getCanvas().getWidth());
+		center.y=(int) (relativeY*gc.getCanvas().getHeight());
 	}
 
 	@Override
