@@ -10,9 +10,14 @@ import javafx.scene.canvas.GraphicsContext;
 @SuppressWarnings("restriction")
 public class Circle extends BaseArea{
 
-	int radious;
+	public int radious;
 	
-	protected Circle(Point center, int radious) {
+	public Circle(int radious) {
+		super();
+		this.radious=radious;
+	}
+	
+	public Circle(Point center, int radious) {
 		super(center);
 		this.radious=radious;
 		// TODO Auto-generated constructor stub
@@ -20,14 +25,12 @@ public class Circle extends BaseArea{
 
 	@Override
 	public boolean contains(Point p) {
-		// TODO Auto-generated method stub
-		return false;
+		return (center.distanceTo(p)<radious);
 	}
 
 	@Override
 	public boolean intersects(Area other) {
-		// TODO Auto-generated method stub
-		return false;
+		return other.contains(center);
 	}
 
 	@Override

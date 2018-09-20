@@ -5,6 +5,7 @@
  */
 package space.core;
 
+import geom.Circle;
 import geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -16,18 +17,21 @@ import javafx.scene.effect.Glow;
 @SuppressWarnings("restriction")
 public class Star extends SpaceObject {
 	protected Color color;
+	private int size;
 	public boolean isCentered=true;
 	
-	public Star(String name, Color color,Point center, int size) {
-		super(name,center,size);
+	public Star(String name, Color color,Point center, Circle body) {
+		super(name,center,body);
+		size=body.radious;
 		this.color=color;
 	}
 	public Star(String name, Color color,int size) {
-		super(name,new Point(0,0), size);
+		super(name,new Point(0,0), new Circle(size));
 		this.color=color;
 	}
 	
 	private void reCenter(GraphicsContext gc) {
+		this.size=size;
 		center.x=(int) (gc.getCanvas().getWidth()-size)/2;
 		center.y=(int) (gc.getCanvas().getHeight()-size)/2;
 	}
@@ -44,7 +48,7 @@ public class Star extends SpaceObject {
 				new Stop(0.0, color),
 				new Stop(1.0, color.darker())));
 		gc.setEffect(new Glow(0.6));
-		gc.fillOval(center.x-size/2, center.y-size/2, size, size);
+		area.draw(gc);
 	}
 	/* (non-Javadoc)
 	 * @see space.core.SpaceObject#drawThisItem(javafx.scene.canvas.GraphicsContext)

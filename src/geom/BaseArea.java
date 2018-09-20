@@ -11,4 +11,7 @@ public abstract class BaseArea implements Area{
 		this.center=center;
 	}
 	
+	protected BaseArea() {
+		center= new Point(0,0);
+	}
 }

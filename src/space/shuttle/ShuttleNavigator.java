@@ -47,7 +47,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	}
 	
 	private void rebuildShuttle() {
-		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttle.size,(int) shuttle.orbitingDistance,shuttle.speed);
+		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),4,(int) shuttle.orbitingDistance,shuttle.speed);
 	}
 
 	public static class Builder {

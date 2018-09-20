@@ -7,6 +7,7 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import geom.BaseArea;
 import geom.Point;
 import interfaces.ClickableObject;
 import interfaces.logical.CollidingObject;
@@ -15,17 +16,18 @@ import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
-	public int size;
+	public BaseArea area;
 	public String name;
 	public Point center;
 	
 	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,Point center, int size) {
+	public SpaceObject(String name,Point center, BaseArea area) {
 		this.name=name;
 		this.center=center;
-		this.size=size;
+		this.area=area;
+		area.center=center;
 	}
 	
 	public void update() {
@@ -41,7 +43,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		drawTrabants(gc);
 	}
 	
-	public abstract void drawThisItem(GraphicsContext gc);
+	public void drawThisItem(GraphicsContext gc) {
+		area.draw(gc);
+	};
 	
 	protected void resetGraphicsContext(GraphicsContext gc) {
 		gc.setEffect(null);
@@ -62,8 +66,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	public boolean collides(CollidingObject other) {
 		if(other instanceof SpaceObject && other!=this)
-				if(distanceTo((SpaceObject)other)<size/2+((SpaceObject)other).size/2)
-					return true;
+				return area.intersects(((SpaceObject)other).area);
 		return false;
 	}
 	
@@ -76,9 +79,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public boolean isCovered(int x, int y) {
-		return
-				y>=center.y-size && y<=center.y+size
-			&&	x>=center.x-size && x<=center.x+size;
+		return area.isCovered(x, y);
 	}
 	
 	public void click() {

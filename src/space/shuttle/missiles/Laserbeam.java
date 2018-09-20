@@ -9,6 +9,7 @@ package space.shuttle.missiles;
 import java.util.LinkedList;
 import java.util.List;
 
+import geom.Circle;
 import geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -20,12 +21,12 @@ public class Laserbeam extends Missile{
 	private List<Point> trail=new LinkedList<Point>();
 	
 	public Laserbeam(String name, SpaceShuttle emitter) {
-		super(name, emitter, 2, emitter.rotation, 3);
+		super(name, emitter, new Circle(emitter.center,2), emitter.rotation, 3);
 		color = Color.LIGHTGREEN;
 	}
 	
 	public Laserbeam(String name, SpaceShuttle emitter,  double direction, int speed) {
-		super(name, emitter, 2,direction, speed);
+		super(name, emitter, new Circle(emitter.center,2),direction, speed);
 		color = Color.LIGHTGREEN;
 	}
 
@@ -39,7 +40,7 @@ public class Laserbeam extends Missile{
 	public void draw(GraphicsContext gc) {
 		gc.setFill(color);
 		for(int i=0; i<trail.size(); i++) {
-			gc.fillOval(trail.get(i).x,trail.get(i).y, size, size);
+			gc.fillOval(trail.get(i).x,trail.get(i).y, 2, 2);
 		}
 	}
 }

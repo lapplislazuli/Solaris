@@ -12,6 +12,7 @@ import space.core.Star;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import geom.Circle;
 import geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
@@ -23,7 +24,7 @@ public class FixStar extends Star implements TimerObject {
 	public boolean dead=false;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
-		super(name, Color.WHITESMOKE, new Point(0, 0), 2);
+		super(name, Color.WHITESMOKE, new Point(0, 0), new Circle(2));
 		relativeX=relX;
 		relativeY=relY;
 		isCentered=false;
@@ -34,7 +35,7 @@ public class FixStar extends Star implements TimerObject {
 	public void drawThisItem(GraphicsContext gc) {
 		fixPosition(gc);
 		gc.setFill(color);
-		gc.fillOval(center.x-size/2, center.y-size/2, size, size);
+		area.draw(gc);
 	}
  
 	protected void fixPosition(GraphicsContext gc) {

@@ -5,16 +5,16 @@
  */
 package space.advanced;
 
+import geom.Circle;
 import geom.Point;
 import interfaces.logical.CollidingObject;
-import javafx.scene.canvas.GraphicsContext;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
 public class AsteroidBelt extends MovingSpaceObject{
 	public AsteroidBelt(String name, SpaceObject parent, int distance, double speed,int asteroids) {	
-		super(name, parent, null, 0, 0, 0);		
+		super(name, parent, null, new Circle(0), 0, 0);		
 		center=parent.center;
 
 		for(int i = 1; i<=asteroids;i++) {

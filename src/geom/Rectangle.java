@@ -12,7 +12,13 @@ public class Rectangle extends BaseArea{
 	
 	int xSize,ySize;
 	
-	protected Rectangle(Point center, int xSize, int ySize) {
+	public Rectangle(int xSize, int ySize) {
+		super();
+		this.xSize=xSize;
+		this.ySize=ySize;
+	}
+	
+	public Rectangle(Point center, int xSize, int ySize) {
 		super(center);
 		this.xSize=xSize;
 		this.ySize=ySize;
@@ -20,8 +26,9 @@ public class Rectangle extends BaseArea{
 
 	@Override
 	public boolean contains(Point p) {
-		return (center.x+xSize/2>p.x || center.x-xSize/2<p.x)
-				&&(center.y+ySize/2>p.y || center.y-ySize/2<p.y);
+		return 
+				(center.x+xSize/2 < p.x && center.x-xSize/2 > p.x) &&
+				(center.y+ySize/2 > p.y && center.y-ySize/2 < p.y);
 	}
 
 	@Override
@@ -36,7 +43,7 @@ public class Rectangle extends BaseArea{
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		
+		gc.fillRect(center.x-xSize/2, center.y-ySize/2, xSize, ySize);
 	}
 
 	@Override

@@ -9,6 +9,8 @@ import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+import geom.Area;
+import geom.BaseArea;
 import geom.Point;
 import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,8 +26,8 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	protected Color color;
 	
-	public MovingSpaceObject(String name,SpaceObject parent,Color color, int size,int distance, double speed) {
-		super(name,parent.center.clone(),size);
+	public MovingSpaceObject(String name,SpaceObject parent,Color color, BaseArea area,int distance, double speed) {
+		super(name,parent.center.clone(),area);
 		this.distance=distance;
 		this.speed=speed;
 		rotationSpeed=speed*2;
@@ -70,7 +72,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 					new Stop(1.0, color.darker())));
 		}
 		gc.transform(transformRotation);	
-		gc.fillOval(center.x-size/2, center.y-size/2, size, size);
+		super.drawThisItem(gc);
 		gc.restore();
 	}
 	

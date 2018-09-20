@@ -6,6 +6,7 @@
 package space.shuttle;
 
 import geom.Point;
+import geom.Rectangle;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,10 +28,10 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	protected SensorArray sensor;
 	
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, Color.GHOSTWHITE, size, 0 , speed);
+		super(name, parent, Color.GHOSTWHITE, new Rectangle(size,size+1), 0 , speed);
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;
-		distance=orbitingDistance+parent.size/2;
+		distance=(int) (orbitingDistance+distanceTo(parent));
 		sensor = new SensorArray(this,50);
 	}
 	
@@ -50,17 +51,17 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		super.update();
 		sensor.update();
 	}
-	
+	/*
 	@Override
 	public void drawThisItem(GraphicsContext gc) {
 		gc.setFill(color);
-		gc.fillRect(center.x-size/2, center.y-size/2, size, size);
-	}
+		area.draw(gc);
+	}*/
 	
 	@Override 
 	public void move(Point parentCenter) {
 		if(!orbiting) {
-			if(distance>=orbitingDistance+parent.size/2) 
+			if(distance>=orbitingDistance+distanceTo(parent)) 
 				distance--;
 			else 
 				orbiting=true;
@@ -73,9 +74,9 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void destruct(CollidingObject other) {
 		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + center.x + "|" + center.y);
 		if(!isDead()) {
-			new Explosion("Explosion from" + name,center.x,center.y,1500,size*2,1.02,Color.MEDIUMVIOLETRED);
+			new Explosion("Explosion from" + name,center.x,center.y,1500,5,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
-				new Asteroid("Trash from " + name,(SpaceObject) other,(int)orbitingDistance+parent.size,speed,Asteroid.Type.TRASH);
+				new Asteroid("Trash from " + name,(SpaceObject) other,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);
 			remove();
 		}
 	}
