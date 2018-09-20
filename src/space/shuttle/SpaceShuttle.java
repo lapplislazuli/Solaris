@@ -51,12 +51,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		super.update();
 		sensor.update();
 	}
-	/*
-	@Override
-	public void drawThisItem(GraphicsContext gc) {
-		gc.setFill(color);
-		area.draw(gc);
-	}*/
 	
 	@Override 
 	public void move(Point parentCenter) {
@@ -69,10 +63,9 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		sensor.move(center);
 		super.move(parentCenter);
 	}
-
 	
 	public void destruct(CollidingObject other) {
-		System.out.println("Spaceship: " + name + " collided with " + other.toString() + " @" + center.x + "|" + center.y);
+		System.out.println("Spaceship: " + toString() + " collided with " + other.toString() + " @" + center.x + "|" + center.y);
 		if(!isDead()) {
 			new Explosion("Explosion from" + name,center.x,center.y,1500,5,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)

@@ -86,6 +86,10 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		System.out.println("Clicked: " + toString());
 	}
 	
+	public void updateHitbox() {
+		area.initOutline();
+	}
+	
 	@Override
 	public String toString() {return name+"@"+center.toString();}
 	

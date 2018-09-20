@@ -43,10 +43,13 @@ public class CollisionManager implements TimerObject{
 	
 	public void update() {
 		if(running) {
+			collidables.stream().forEach(e->e.updateHitbox());
+			
 			List<DestructibleObject> destroyed=new LinkedList<DestructibleObject>();
 			for(DestructibleObject destructible : destructibles) {
 				for(CollidingObject collider: collidables) {
-					if(destructible.collides(collider)&&collider.collides(destructible)) {
+					//if(destructible.collides(collider)&&collider.collides(destructible)) {
+					if(collider.collides(destructible)) {
 						destructible.destruct(collider);
 						destroyed.add(destructible);
 					}	

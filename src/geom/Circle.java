@@ -9,7 +9,6 @@ import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public class Circle extends BaseArea{
-
 	public int radious;
 	
 	public Circle(int radious) {
@@ -20,25 +19,12 @@ public class Circle extends BaseArea{
 	public Circle(Point center, int radious) {
 		super(center);
 		this.radious=radious;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean contains(Point p) {
-		return (center.distanceTo(p)<radious);
+		return (center.distanceTo(p) <= radious);
 	}
-
-	@Override
-	public boolean intersects(Area other) {
-		return other.contains(center);
-	}
-
-	@Override
-	public boolean covers(Area other) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 
 	@Override
 	public void draw(GraphicsContext gc) {
@@ -46,8 +32,14 @@ public class Circle extends BaseArea{
 	}
 
 	@Override
-	public boolean isCovered(int x, int y) {
-		return contains(new Point(x,y));
+	public void initOutline() {
+		outLine.removeIf(p->true);
+		int detail=16;
+		for(int i=0;i<detail;i++) {
+			Point outLinePoint=center.clone();
+			outLinePoint.move((int)(Math.cos(i*Math.PI*2/detail)*radious), -(int)(Math.sin(i*Math.PI*2/detail)*radious));
+			outLine.add(outLinePoint);
+		}
 	}
 	
 }

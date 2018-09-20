@@ -27,18 +27,8 @@ public class Rectangle extends BaseArea{
 	@Override
 	public boolean contains(Point p) {
 		return 
-				(center.x+xSize/2 < p.x && center.x-xSize/2 > p.x) &&
-				(center.y+ySize/2 > p.y && center.y-ySize/2 < p.y);
-	}
-
-	@Override
-	public boolean intersects(Area other) {
-		return other.contains(center);
-	}
-
-	@Override
-	public boolean covers(Area other) {
-		return false;
+				( p.x <= center.x+xSize/2	&&  p.x >=center.x-xSize/2) &&
+				( p.y <= center.y+ySize/2  	&&  p.y >=center.y-ySize/2);
 	}
 
 	@Override
@@ -47,8 +37,14 @@ public class Rectangle extends BaseArea{
 	}
 
 	@Override
-	public boolean isCovered(int x, int y) {
-		return contains(new Point(x,y));
+	public void initOutline() {
+		outLine.removeIf(p->true);
+		int detail=4;
+		for(int i=-detail/2;i<detail/2;i++) {
+			Point outLinePoint=center.clone();
+			outLinePoint.move(i*xSize/detail,i*ySize/detail);
+			outLine.add(outLinePoint);
+		}
 	}
 	
 }
