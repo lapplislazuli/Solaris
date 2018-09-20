@@ -7,6 +7,7 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import geom.Point;
 import interfaces.ClickableObject;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;

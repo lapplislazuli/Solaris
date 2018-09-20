@@ -9,6 +9,7 @@ import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+import geom.Point;
 import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

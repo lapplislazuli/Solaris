@@ -9,12 +9,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingObject;
 import interfaces.logical.UpdatingObject;
 import logic.CollisionManager;
 import space.advanced.FixStar;
-import space.core.Point;
 import space.core.SpaceObject;
 
 /*

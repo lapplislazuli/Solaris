@@ -9,9 +9,9 @@ package space.shuttle.missiles;
 import java.util.LinkedList;
 import java.util.List;
 
+import geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import space.core.Point;
 import space.shuttle.SpaceShuttle;
 
 @SuppressWarnings("restriction")

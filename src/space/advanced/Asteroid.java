@@ -5,12 +5,12 @@
  */
 package space.advanced;
 
+import geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
-import space.core.Point;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")

@@ -5,7 +5,7 @@
  */
 package interfaces.logical;
 
-import space.core.Point;
+import geom.Point;
 
 public interface MovingObject {
 	

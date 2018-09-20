@@ -5,10 +5,10 @@
  */
 package space.advanced;
 
+import geom.Point;
 import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import space.core.MovingSpaceObject;
-import space.core.Point;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")

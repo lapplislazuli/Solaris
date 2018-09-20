@@ -5,6 +5,7 @@
  */
 package space.core;
 
+import geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;

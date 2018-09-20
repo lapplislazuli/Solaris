@@ -6,13 +6,13 @@
 package space.advanced;
 
 import javafx.scene.paint.Color;
-import space.core.Point;
 import space.core.SpaceObject;
 import space.core.Star;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
 import javafx.scene.canvas.GraphicsContext;

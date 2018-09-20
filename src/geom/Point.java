@@ -3,7 +3,7 @@
  * @Created 20.09.2018
  * @Package space.core
  */
-package space.core;
+package geom;
 
 public class Point {
 	public int x,y,z;

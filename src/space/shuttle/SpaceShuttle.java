@@ -5,13 +5,13 @@
  */
 package space.shuttle;
 
+import geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
-import space.core.Point;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 
