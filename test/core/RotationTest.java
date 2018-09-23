@@ -1,15 +1,15 @@
-/**
- * @Author Leonhard Applis
- * @Created 12.09.2018
- * @Package space.core
- */
-package space.core;
+package core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import geom.Circle;
+import geom.Point;
+import space.core.Planet;
+import space.core.Star;
 
 class RotationTest {
 	
@@ -18,7 +18,7 @@ class RotationTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		anker=new Star("AnkerPoint",null,250,250,250);
+		anker= new Star("anker", null, new Point(250, 250), new Circle(new Point(250,250), 250));
 		slow= new Planet("SlowPlanet",anker,null,250,250,0);
 		fast= new Planet("FastPlanet",anker,null,2500,250,0);
 		reverse= new Planet("FastPlanet",anker,null,2500,250,0);
