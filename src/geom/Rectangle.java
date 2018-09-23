@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Rectangle extends BaseArea{
 	
 	int xSize,ySize;
+	int levelOfDetail=1;
 	
 	public Rectangle(int xSize, int ySize) {
 		super();
@@ -39,10 +40,9 @@ public class Rectangle extends BaseArea{
 	@Override
 	public void initOutline() {
 		outLine.removeIf(p->true);
-		int detail=4;
-		for(int i=-detail/2;i<detail/2;i++) {
+		for(int i=-levelOfDetail/2;i<levelOfDetail/2;i++) {
 			Point outLinePoint=center.clone();
-			outLinePoint.move(i*xSize/detail,i*ySize/detail);
+			outLinePoint.move(i*xSize/levelOfDetail,i*ySize/levelOfDetail);
 			outLine.add(outLinePoint);
 		}
 	}

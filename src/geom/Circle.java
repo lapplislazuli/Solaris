@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 20.09.2018
- * @Package geom
- */
 package geom;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -10,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 @SuppressWarnings("restriction")
 public class Circle extends BaseArea{
 	public int radious;
+	public int levelOfDetail=4;
 	
 	public Circle(int radious) {
 		super();
@@ -34,10 +30,9 @@ public class Circle extends BaseArea{
 	@Override
 	public void initOutline() {
 		outLine.removeIf(p->true);
-		int detail=16;
-		for(int i=0;i<detail;i++) {
+		for(int i=0;i<levelOfDetail;i++) {
 			Point outLinePoint=center.clone();
-			outLinePoint.move((int)(Math.cos(i*Math.PI*2/detail)*radious), -(int)(Math.sin(i*Math.PI*2/detail)*radious));
+			outLinePoint.move((int)(Math.cos(i*Math.PI*2/levelOfDetail)*radious), -(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
 			outLine.add(outLinePoint);
 		}
 	}
