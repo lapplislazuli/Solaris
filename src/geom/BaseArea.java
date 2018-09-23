@@ -11,6 +11,7 @@ import java.util.List;
 public abstract class BaseArea implements Area{
 	public Point center;
 	public List<Point> outLine= new LinkedList<Point>();
+	public int levelOfDetail=10;
 	
 	protected BaseArea(Point center) {
 		this.center=center;
@@ -24,8 +25,8 @@ public abstract class BaseArea implements Area{
 	
 	public boolean intersects(Area other) {
 		if(other != this && other instanceof BaseArea) {
-			return //((BaseArea)other).outLine.stream().anyMatch(oP->contains(oP))
-					 outLine.stream().anyMatch(p->other.contains(p));
+			return other.covers(this)
+					|| ((BaseArea)other).outLine.stream().anyMatch(p->contains(p));
 		}
 		return false;
 	}

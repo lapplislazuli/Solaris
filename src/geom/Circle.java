@@ -5,7 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 @SuppressWarnings("restriction")
 public class Circle extends BaseArea{
 	public int radious;
-	public int levelOfDetail=4;
 	
 	public Circle(int radious) {
 		super();

@@ -11,7 +11,6 @@ import javafx.scene.canvas.GraphicsContext;
 public class Rectangle extends BaseArea{
 	
 	int xSize,ySize;
-	int levelOfDetail=1;
 	
 	public Rectangle(int xSize, int ySize) {
 		super();
