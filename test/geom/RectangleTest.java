@@ -22,7 +22,7 @@ class RectangleTest {
 
 	@Test
 	void testInitOutline() {
-		testObject.levelOfDetail=4; //4 OutlinePoints!
+		testObject.levelOfDetail=2; //4 OutlinePoints!
 		testObject.initOutline(); 
 		for (int i=0;i<4;i++) {
 			Point testOutlinePoint=testObject.outLine.get(i);

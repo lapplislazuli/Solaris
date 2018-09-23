@@ -1,9 +1,4 @@
-/**
- * @Author Leonhard Applis
- * @Created 12.09.2018
- * @Package space.shuttle
- */
-package space.shuttle;
+package shuttle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +6,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import geom.Circle;
+import geom.Point;
 import space.core.Star;
+import space.shuttle.SpaceShuttle;
 
 class LaunchTest {
 	
@@ -20,32 +18,26 @@ class LaunchTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		origin = new Star("star",null,250,250,250);
-		target = new Star("star",null,1250,250,250);
+		origin = new Star("star",null,new Point(250,250),new Circle(new Point(250,250),250));
+		target = new Star("star",null,new Point(1250,250),new Circle(new Point(250,250),250));
 	}
 
 	@BeforeEach
 	void setUp() throws Exception {
-		System.out.println("Reset Shuttle!");
 		shuttle= new SpaceShuttle("shuttle",origin,0,0,0);
 		shuttle.target=target;
 	}
 
-	/**
-	 * Test method for {@link space.shuttle.SpaceShuttle#SpaceShuttle(java.lang.String, space.core.SpaceObject, int, int, double)}.
-	 */
 	@Test
-	void Constructor() {
+	void ConstructorTest() {
 		assertEquals(shuttle.degreeTo(origin),shuttle.relativePos);
 		assertTrue(shuttle.orbiting);
-		assertEquals(shuttle.distance,origin.size/2);
+		//There is no more Size at the Moment
+		//assertEquals(shuttle.distance,origin.size/2);
 	}
 
-	/**
-	 * Test method for {@link space.shuttle.SpaceShuttle#launch()}.
-	 */
 	@Test
-	void Launch() {
+	void correctLaunchTest() {
 		shuttle.launch();
 		
 		assertEquals(shuttle.parent,target);
@@ -57,7 +49,7 @@ class LaunchTest {
 	}
 	
 	@Test
-	void faultyLaunch() {
+	void faultyLaunchTest() {
 		shuttle.launch(); //Now its like in TestCase Launch()
 		
 		shuttle.launch(); // does nothing!assertEquals(shuttle.parent,target);

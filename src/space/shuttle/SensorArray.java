@@ -26,7 +26,7 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	int radius;
 	Point center;
 	SpaceShuttle emitter;
-	List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
+	public List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
 	
 	public SensorArray (SpaceShuttle emitter,int radius) {
 		this.emitter=emitter;

@@ -1,17 +1,15 @@
-/**
- * @Author Leonhard Applis
- * @Created 05.09.2018
- * @Package space.shuttle
- */
-package space.shuttle;
+package shuttle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import geom.Circle;
+import geom.Point;
 import space.core.Planet;
 import space.core.Star;
+import space.shuttle.ArmedSpaceShuttle;
 import space.shuttle.missiles.Missile;
 
 public class MissileTest {
@@ -23,7 +21,7 @@ public class MissileTest {
 	
 	@BeforeEach
 	public void resetEnv() {
-		star = new Star("star",null,250,250,25);
+		star = new Star("star",null,new Point(250,250), new Circle(new Point(250,250),25));
 		planet = new Planet("planet", star,null,10,100,0);
 		shuttle= new ArmedSpaceShuttle("shuttle",planet,5,10,0);
 	}
@@ -43,14 +41,14 @@ public class MissileTest {
 		shuttle.shootLaser(planet);
 		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
 		
-		assertEquals(true,missile.x==shuttle.x && missile.y==shuttle.y);
+		assertEquals(true,missile.center.x==shuttle.center.x && missile.center.y==shuttle.center.y);
 		assertEquals(true,missile.distanceTo(planet)==planet.distanceTo(shuttle));
 		
-		missile.move(0, 0);
+		missile.move(new Point(0,0));
 		assertEquals(true,missile.distanceTo(planet)>planet.distanceTo(shuttle));
 		
 		while(true) {
-			missile.move(0,0);
+			missile.move(new Point(0,0));
 			if(missile.distanceTo(planet)==0) {
 				assertEquals(true,true);
 				return;
@@ -67,7 +65,7 @@ public class MissileTest {
 		assertFalse(missile.collides(missile));
 		
 		while(true) {
-			missile.move(0,0);
+			missile.move(new Point(0,0));
 			if(missile.distanceTo(planet)==0) {
 				assertEquals(true,missile.collides(planet));
 				assertEquals(true,planet.collides(missile));

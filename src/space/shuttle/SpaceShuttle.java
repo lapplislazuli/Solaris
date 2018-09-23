@@ -1,15 +1,9 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.shuttle
- */
 package space.shuttle;
 
 import geom.Point;
 import geom.Rectangle;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
@@ -22,8 +16,9 @@ import space.effect.Explosion;
  */
 @SuppressWarnings("restriction")
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
-	boolean orbiting = true; 
-	SpaceObject target, parent;
+	public boolean orbiting = true; 
+	public SpaceObject target;
+	public SpaceObject parent;
 	double orbitingDistance;
 	protected SensorArray sensor;
 	
