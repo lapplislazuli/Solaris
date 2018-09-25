@@ -21,16 +21,19 @@ public class ArrayDetectionTest {
 	
 	@BeforeAll
 	public static void initVariables() {
-		hitStar = new Star("star",null,new Point(250,250),new Circle(new Point(250,250),250));
-		notHitStar = new Star("star",null,new Point(1250,250),new Circle(new Point(1250,250),250));
-		notHittableStar = new Star("star",null,new Point(250,1250), new Circle(new Point(250,1250),0)); //no Size!
+		hitStar = new Star("hit",null,new Point(250,250),250);
+		notHitStar = new Star("noHit",null,new Point(1250,250),250);
+		notHittableStar = new Star("noHitEver",null,new Point(250,1250),0); //no Size!
 		
 		SpaceShuttle shuttle= new SpaceShuttle("shuttle",hitStar,0,0,0);
 		
 		sensor= new SensorArray(shuttle,50);
 		
 		cm=CollisionManager.getInstance();
-		cm.addCollidable(hitStar); cm.addCollidable(notHitStar);cm.addCollidable(notHittableStar);cm.addCollidable(shuttle);
+		cm.addCollidable(hitStar); 
+		cm.addCollidable(notHitStar);
+		cm.addCollidable(notHittableStar);
+		cm.addCollidable(shuttle);
 	}
 	
 	@Test

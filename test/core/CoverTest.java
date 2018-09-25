@@ -15,7 +15,7 @@ class CoverTest {
 	static int xHit,yHit,xNoHit,yNoHit;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		anker= new Star("anker1", null, new Point(250, 250), new Circle(new Point(250,250), 250));
+		anker= new Star("anker1", null, new Point(250, 250),250);
 		xHit=250;
 		yHit=250;
 		xNoHit=12500;

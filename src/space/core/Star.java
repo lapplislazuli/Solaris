@@ -20,13 +20,21 @@ public class Star extends SpaceObject {
 	private int size;
 	public boolean isCentered=true;
 	
-	public Star(String name, Color color,Point center, Circle body) {
-		super(name,center,body);
-		size=body.radious;
+	public Star(String name, Color color,Point center, int size) {
+		super(name,center,new Circle(center,size));
+		area.levelOfDetail=100;
+		this.size=size;
+		this.color=color;
+	}
+	public Star(String name, Color color,Circle body) {
+		super(name,body.center,body);
+		area.levelOfDetail=100;
+		this.size=body.radious;
 		this.color=color;
 	}
 	public Star(String name, Color color,int size) {
 		super(name,new Point(0,0), new Circle(size));
+		area.levelOfDetail=100;
 		this.size=size;
 		this.color=color;
 	}

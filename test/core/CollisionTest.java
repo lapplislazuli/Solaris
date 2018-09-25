@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import geom.Circle;
 import geom.Point;
 import space.advanced.FixStar;
 import space.core.Planet;
@@ -17,8 +16,8 @@ class CollisionTest {
 	static Star starOne, starTwo;
 	@BeforeAll
 	static void initAnkers() {
-		starOne= new Star("anker1", null, new Point(0, 0),new Circle( new Point(0, 0), 25));
-		starTwo= new Star("anker2", null,new Point(100, 0),new Circle( new Point(100, 0),25));
+		starOne= new Star("anker1", null, new Point(0, 0),25);
+		starTwo= new Star("anker2", null,new Point(100, 0),25);
 		starOne.area.initOutline();
 		starTwo.area.initOutline();
 	}
@@ -68,7 +67,7 @@ class CollisionTest {
 	
 	@Test
 	void multipleCollisions() {
-		Star collidingStar = new Star("Collider",null,new Point(50,0), new Circle(new Point(50,0),150));
+		Star collidingStar = new Star("Collider",null,new Point(50,0),150);
 		collidingStar.updateHitbox();
 		assertTrue(starOne.collides(collidingStar));
 		assertTrue(collidingStar.collides(starOne)&&collidingStar.collides(starTwo));

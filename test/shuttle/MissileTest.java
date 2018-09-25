@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.Circle;
 import geom.Point;
 import space.core.Planet;
 import space.core.Star;
@@ -21,7 +20,7 @@ public class MissileTest {
 	
 	@BeforeEach
 	public void resetEnv() {
-		star = new Star("star",null,new Point(250,250), new Circle(new Point(250,250),25));
+		star = new Star("star",null,new Point(250,250), 25);
 		planet = new Planet("planet", star,null,10,100,0);
 		shuttle= new ArmedSpaceShuttle("shuttle",planet,5,10,0);
 	}

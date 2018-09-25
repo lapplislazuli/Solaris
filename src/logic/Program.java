@@ -1,12 +1,5 @@
-/**
- * @Author Leonhard Applis et Al.
- * @Created 31.08.2018
- * @Package logic
- */
-
 package logic;
 
-import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.core.Planet;
 import space.core.Satellite;

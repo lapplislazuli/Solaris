@@ -18,7 +18,7 @@ class RotationTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		anker= new Star("anker", null, new Point(250, 250), new Circle(new Point(250,250), 250));
+		anker= new Star("anker", null, new Point(250, 250), 250);
 		slow= new Planet("SlowPlanet",anker,null,250,250,0);
 		fast= new Planet("FastPlanet",anker,null,2500,250,0);
 		reverse= new Planet("FastPlanet",anker,null,2500,250,0);
@@ -27,9 +27,6 @@ class RotationTest {
 		reverse.rotationSpeed=-Math.PI/2;
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		slow.rotation=0;
@@ -37,9 +34,6 @@ class RotationTest {
 		reverse.rotation=0;
 	}
 
-	/**
-	 * Test method for {@link space.core.MovingSpaceObject#rotate()}.
-	 */
 	@Test
 	void rotate() {
 		slow.rotate(); 

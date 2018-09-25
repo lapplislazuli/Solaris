@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.advanced
- */
 package space.advanced;
 
 import javafx.scene.paint.Color;
@@ -12,7 +7,6 @@ import space.core.Star;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import geom.Circle;
 import geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
@@ -24,7 +18,7 @@ public class FixStar extends Star implements TimerObject {
 	public boolean dead=false;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
-		super(name, Color.WHITESMOKE, new Point(0, 0), new Circle(2));
+		super(name, Color.WHITESMOKE, new Point(0, 0),2);
 		relativeX=relX;
 		relativeY=relY;
 		isCentered=false;

@@ -1,15 +1,9 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.advanced
- */
 package space.advanced;
 
 import geom.Point;
 import geom.Rectangle;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
@@ -31,6 +25,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		else
 			type=Type.TRASH;
 		setColorFromType();
+		area.levelOfDetail=2;
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {

@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 03.09.2018
- * @Package space.shuttle
- */
 package space.shuttle;
 
 import java.util.LinkedList;

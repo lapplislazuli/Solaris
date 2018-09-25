@@ -59,6 +59,7 @@ public class Planet extends MovingSpaceObject {
 	private Planet(Builder builder) {
 		super(builder.name,builder.parent,builder.color,new Circle(builder.size),builder.distance,builder.speed);
 		trabants=builder.trabants;
+		area.levelOfDetail=builder.size/5;
 	}
 	
 	

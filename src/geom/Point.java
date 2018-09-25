@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 20.09.2018
- * @Package space.core
- */
 package geom;
 
 public class Point {
