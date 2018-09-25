@@ -20,6 +20,8 @@ class RectangleTest {
 		testObject = new Rectangle(centerTestObject,200,200);
 	}
 
+	
+	//TODO: Check this why its not working?
 	@Test
 	void testInitOutline() {
 		testObject.levelOfDetail=2; //4 OutlinePoints!

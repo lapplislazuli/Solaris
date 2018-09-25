@@ -69,7 +69,7 @@ public class Program extends Application{
 							.distance(480)
 							.build();
 		
-		//AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,200);
+		//AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,50);
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
