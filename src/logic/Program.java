@@ -1,5 +1,6 @@
 package logic;
 
+import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.core.Planet;
 import space.core.Satellite;
@@ -50,19 +51,19 @@ public class Program extends Application{
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,250);
 		
-		Star sun = new Star("Sun",Color.ORANGE,60);
-		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/2000);
-		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/1000);
-		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,10,30,Math.PI/800);
+		Star sun = new Star("Sun",Color.ORANGE,30);
+		Planet earth = new Planet("Earth", sun, Color.CYAN, 13, 150, Math.PI/2000);
+		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 19, 250, Math.PI/1000);
+		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,5,30,Math.PI/800);
 		
 		Planet saturn = (new Planet.Builder("Saturn", sun))
-							.size(45)
+							.size(20)
 							.color(Color.LIGHTGOLDENRODYELLOW)
 							.speed(Math.PI/4000)
 							.distance(480)
 							.build();
 		
-		//AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,50);
+		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,150);
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
@@ -87,10 +88,10 @@ public class Program extends Application{
 				.next(earth)
 				.build();
 		
-		Satellite Astra = new Satellite("Astra",earth,5,20, -Math.PI/400);
+		Satellite Astra = new Satellite("Astra",earth,3,20, -Math.PI/400);
 		
-		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 8, 70, -Math.PI/600);
-		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 7, 50, Math.PI/500);
+		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 4, 70, -Math.PI/600);
+		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 3, 50, Math.PI/500);
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);

@@ -18,7 +18,7 @@ public class FixStar extends Star implements TimerObject {
 	public boolean dead=false;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
-		super(name, Color.WHITESMOKE, new Point(0, 0),2);
+		super(name, Color.WHITESMOKE, new Point(0, 0),1);
 		relativeX=relX;
 		relativeY=relY;
 		isCentered=false;

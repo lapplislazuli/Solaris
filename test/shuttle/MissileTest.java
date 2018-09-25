@@ -12,7 +12,6 @@ import space.shuttle.ArmedSpaceShuttle;
 import space.shuttle.missiles.Missile;
 
 public class MissileTest {
-	
 	Star star;
 	Planet planet;
 	ArmedSpaceShuttle shuttle;

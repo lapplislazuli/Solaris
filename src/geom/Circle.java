@@ -23,7 +23,7 @@ public class Circle extends BaseArea{
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.fillOval(center.x-radious/2, center.y-radious/2, radious, radious);
+		gc.fillOval(center.x-radious, center.y-radious, radious*2, radious*2);
 	}
 
 	@Override
@@ -31,7 +31,9 @@ public class Circle extends BaseArea{
 		outLine.removeIf(p->true);
 		for(int i=0;i<levelOfDetail;i++) {
 			Point outLinePoint=center.clone();
-			outLinePoint.move((int)(Math.cos(i*Math.PI*2/levelOfDetail)*radious), -(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
+			outLinePoint.move(
+					(int)(Math.cos(i*Math.PI*2/levelOfDetail)*radious), 
+					(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
 			outLine.add(outLinePoint);
 		}
 	}
