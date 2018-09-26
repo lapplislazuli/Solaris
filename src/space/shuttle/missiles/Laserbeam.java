@@ -1,10 +1,4 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.shuttle
- */
 package space.shuttle.missiles;
-
 
 import java.util.LinkedList;
 import java.util.List;

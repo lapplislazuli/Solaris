@@ -48,6 +48,7 @@ public class Program extends Application{
         primaryStage.show();
 	}
 	
+	@SuppressWarnings("unused")
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		

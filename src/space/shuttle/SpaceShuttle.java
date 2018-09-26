@@ -10,10 +10,6 @@ import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 
-/*
- * The SpaceShuttle orbits a Planet, then gets launched to another planet, and then orbits there
- * The whole "flying" Process will be displayed in the move
- */
 @SuppressWarnings("restriction")
 public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
 	public boolean orbiting = true; 

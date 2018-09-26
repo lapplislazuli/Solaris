@@ -1,11 +1,5 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.shuttle
- */
 package space.shuttle.missiles;
 
-import geom.Area;
 import geom.BaseArea;
 import geom.Point;
 import interfaces.logical.RemovableObject;
