@@ -20,7 +20,10 @@ public class MissileTest {
 	@BeforeEach
 	public void resetEnv() {
 		star = new Star("star",null,new Point(250,250), 25);
-		planet = new Planet("planet", star,null,10,100,0);
+		planet = (new Planet.Builder("planet", star))
+				.size(10)
+				.distance(100)
+				.build();
 		shuttle= new ArmedSpaceShuttle("shuttle",planet,5,10,0);
 	}
 	

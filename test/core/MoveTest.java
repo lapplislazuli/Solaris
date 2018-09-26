@@ -27,20 +27,33 @@ class MoveTest {
 		assertEquals(250,sun.center.x);assertEquals(250,sun.center.y);
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
-		Planet a = new Planet("A",sun,null,50,250,Math.PI/2);
-		Satellite b= new Satellite("B",a,50,250,-Math.PI/2);
-		Planet c= new Planet("C",a,null,50,250,0);
+		Planet planet = (new Planet.Builder("A", sun))
+				.size(50)
+				.distance(250)
+				.speed(Math.PI/2)
+				.build();
+		Satellite satellite= (new Satellite.Builder("B", planet))
+				.size(50,50)
+				.distance(250)
+				.speed(-Math.PI/2)
+				.build();
+		
+		Planet noSpeedPlanet= (new Planet.Builder("A", sun))
+				.size(50)
+				.distance(250)
+				.speed(0)
+				.build();
 		//Check X-Y Koords
-		assertEquals(250,a.center.x);
-		assertEquals(500,a.center.y);
-		assertEquals(250,b.center.x);
-		assertEquals(750,b.center.y);
-		assertEquals(250,c.center.x);
-		assertEquals(750,c.center.y);
+		assertEquals(250,planet.center.x);
+		assertEquals(500,planet.center.y);
+		assertEquals(250,satellite.center.x);
+		assertEquals(750,satellite.center.y);
+		assertEquals(250,noSpeedPlanet.center.x);
+		assertEquals(500,noSpeedPlanet.center.y);
 		//Check DegreeTo EachOther
-		assertEquals(3*Math.PI/2, a.degreeTo(sun));
-		assertEquals(3*Math.PI/2, b.degreeTo(sun));
-		assertEquals(3*Math.PI/2, c.degreeTo(sun));
+		assertEquals(3*Math.PI/2, planet.degreeTo(sun));
+		assertEquals(3*Math.PI/2, satellite.degreeTo(sun));
+		assertEquals(3*Math.PI/2, noSpeedPlanet.degreeTo(sun));
 		//assertEquals(3*Math.PI/2, a.degreeTo(b));
 		
 	}
@@ -51,8 +64,17 @@ class MoveTest {
 		assertEquals(250,sun.center.x);assertEquals(250,sun.center.y);
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
-		Planet planet = new Planet("A",sun,null,50,250,Math.PI/2);
-		Satellite satellite= new Satellite("B",planet,50,250,-Math.PI/2);
+		Planet planet = (new Planet.Builder("A", sun))
+				.size(50)
+				.distance(250)
+				.speed(Math.PI/2)
+				.build();
+		
+		Satellite satellite= (new Satellite.Builder("B", planet))
+				.size(50,50)
+				.distance(250)
+				.speed(-Math.PI/2)
+				.build();
 		
 		//Move all Items, if they are movable
 		sun.update();
@@ -76,16 +98,24 @@ class MoveTest {
 	@Test
 	void NoSpeed() {
 		//Add a Planet to move with 90° per update
-		Planet a = new Planet("A",sun,null,50,250,0);
+		Planet planet = (new Planet.Builder("A", sun))
+				.size(50)
+				.distance(250)
+				.speed(0)
+				.build();
 		//Add a Satellite to Planet to move with -90° per update
-		Satellite b= new Satellite("B",a,50,250,0);
+		Satellite b= (new Satellite.Builder("B", planet))
+				.size(50,50)
+				.distance(250)
+				.speed(0)
+				.build();
 		
 		for(int i =0;i<10;i++) {
 			sun.update();
 			assertEquals(250,sun.center.x);
 			assertEquals(250,sun.center.y);
-			assertEquals(500,a.center.x);
-			assertEquals(250,a.center.y);
+			assertEquals(500,planet.center.x);
+			assertEquals(250,planet.center.y);
 			assertEquals(750,b.center.x);
 			assertEquals(250,b.center.y);
 		}
@@ -94,9 +124,17 @@ class MoveTest {
 	@Test
 	public void RelativePosition() {
 		//Add a Planet to move with 90° per update
-		Planet planet = new Planet("A",sun,null,50,250,Math.PI/2);
+		Planet planet = (new Planet.Builder("A", sun))
+				.size(50)
+				.distance(250)
+				.speed(Math.PI/2)
+				.build();
 		//Add a Satellite to Planet to move with -90° per update
-		Satellite satellite= new Satellite("B",planet,50,50,-Math.PI/2);
+		Satellite satellite=(new Satellite.Builder("B", planet))
+				.size(50,50)
+				.distance(250)
+				.speed(-Math.PI/2)
+				.build();
 		
 		//Move all Items, if they are movable
 		sun.update();

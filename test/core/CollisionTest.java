@@ -26,7 +26,13 @@ class CollisionTest {
 	@Test
 	void negativeCollision() {
 		assertFalse(starOne.collides(starTwo));
-		Planet planet = new Planet("NoCollider",starOne,null,15,1000,0);
+		Planet planet = (new Planet.Builder("NoCollider", starOne))
+				.size(15)
+				.distance(1000)
+				.levelOfDetail(20)
+				.speed(0)
+				.build();
+		
 		planet.updateHitbox();
 		assertFalse(starOne.collides(planet));
 		assertFalse(starTwo.collides(planet));
@@ -37,7 +43,12 @@ class CollisionTest {
 	
 	@Test
 	void positiveCollision() {
-		Planet planet = new Planet("Collider",starOne,null,150,10,0);
+		Planet planet = (new Planet.Builder("NoCollider", starOne))
+				.size(150)
+				.distance(10)
+				.levelOfDetail(20)
+				.speed(0)
+				.build();
 		planet.updateHitbox();
 		assertTrue(starOne.collides(planet));
 		assertTrue(starTwo.collides(planet));
@@ -45,7 +56,11 @@ class CollisionTest {
 	
 	@Test
 	void pointBlankCollision() {
-		Planet planet = new Planet("Collider",starOne,null,25,0,0);
+		Planet planet = (new Planet.Builder("Collider", starOne))
+				.size(25)
+				.distance(0)
+				.levelOfDetail(20)
+				.build();
 		planet.updateHitbox();
 		assertTrue(starOne.collides(planet));
 		assertFalse(starTwo.collides(planet));
@@ -59,7 +74,11 @@ class CollisionTest {
 	
 	@Test
 	void exactTangenting() {
-		Planet planet = new Planet("Collider",starOne,null,50,50,0);
+		Planet planet = (new Planet.Builder("NoCollider", starOne))
+				.size(50)
+				.distance(50)
+				.levelOfDetail(20)
+				.build();
 		planet.updateHitbox();
 		
 		assertTrue(starOne.collides(planet));

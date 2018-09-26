@@ -14,10 +14,19 @@ class DistanceTest {
 	@Test
 	void positiveDistance() {
 		Star anker= new Star("anker", null, new Point( 0, 0),0);
-		Planet closeStar = new Planet("a", anker, null, 0, 0, 0);
-		Planet mediumStar = new Planet("b", anker, null, 0, 50, 0);
-		Planet farStar = new Planet("c", anker, null, 0, 100, 0);
-		
+		Planet closeStar = (new Planet.Builder("a", anker))
+				.size(0)
+				.distance(0)
+				.build();
+		Planet mediumStar =(new Planet.Builder("b", anker))
+				.size(0)
+				.distance(50)
+				.build();
+		Planet farStar = (new Planet.Builder("c", anker))
+				.size(0)
+				.distance(100)
+				.build();
+
 		assertEquals(50, closeStar.distanceTo(mediumStar));
 		assertEquals(50, mediumStar.distanceTo(farStar));
 		assertEquals(true, closeStar.distanceTo(mediumStar)==mediumStar.distanceTo(closeStar));
@@ -27,10 +36,19 @@ class DistanceTest {
 	@Test
 	void negativeDistance() {
 		Star anker= new Star("anker", null, new Point(150, 0),0);
-		Planet closeStar = new Planet("a", anker, null, 0, 0, 0);
-		Planet mediumStar = new Planet("b", anker, null, 0, -50, 0);
-		Planet farStar = new Planet("c", anker, null, 0, -100, 0);
-		
+		Planet closeStar = (new Planet.Builder("a", anker))
+				.size(0)
+				.distance(0)
+				.build();
+		Planet mediumStar =(new Planet.Builder("b", anker))
+				.size(0)
+				.distance(-50)
+				.build();
+		Planet farStar = (new Planet.Builder("c", anker))
+				.size(0)
+				.distance(-100)
+				.build();
+
 		assertEquals(50, closeStar.distanceTo(mediumStar));
 		assertEquals(50, mediumStar.distanceTo(farStar));
 		assertEquals(true, closeStar.distanceTo(mediumStar)==mediumStar.distanceTo(closeStar));

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.Circle;
 import geom.Point;
 import space.core.Planet;
 import space.core.Star;
@@ -19,12 +18,22 @@ class RotationTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		anker= new Star("anker", null, new Point(250, 250), 250);
-		slow= new Planet("SlowPlanet",anker,null,250,250,0);
-		fast= new Planet("FastPlanet",anker,null,2500,250,0);
-		reverse= new Planet("FastPlanet",anker,null,2500,250,0);
-		slow.rotationSpeed=Math.PI/360; //1 Degree per rotate
-		fast.rotationSpeed=Math.PI/2;
-		reverse.rotationSpeed=-Math.PI/2;
+		slow= (new Planet.Builder("SlowPlanet", anker))
+				.size(250)
+				.distance(250)
+				.rotationSpeed(Math.PI/360) //1 Degree per rotate()
+				.build();
+				
+		fast= (new Planet.Builder("FastPlanet", anker))
+				.size(250)
+				.distance(250)
+				.rotationSpeed(Math.PI/2) //90 Degree per rotate()
+				.build();
+		reverse= (new Planet.Builder("ReversePlanet", anker))
+				.size(250)
+				.distance(250)
+				.rotationSpeed(-Math.PI/2) //-90 Degree per rotate()
+				.build();
 	}
 
 	@BeforeEach

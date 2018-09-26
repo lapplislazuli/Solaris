@@ -52,14 +52,36 @@ public class Program extends Application{
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,250);
 		
 		Star sun = new Star("Sun",Color.ORANGE,30);
-		Planet earth = new Planet("Earth", sun, Color.CYAN, 13, 150, Math.PI/2000);
-		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 19, 250, Math.PI/1000);
-		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,5,30,Math.PI/800);
-		
+		Planet earth = (new Planet.Builder("Earth", sun))
+					.size(13)
+					.distance(150)
+					.levelOfDetail(10)
+					.speed(Math.PI/2000)
+					.rotationSpeed(Math.PI*2/365)
+					.color(Color.DARKCYAN)
+					.build();
+		Planet mars = (new Planet.Builder("Mars", sun))
+					.size(19)
+					.distance(250)
+					.levelOfDetail(20)
+					.speed(Math.PI/1000)
+					.rotationSpeed(Math.PI*2/800)
+					.color(Color.INDIANRED)
+					.build();
+		Planet moon = (new Planet.Builder("Moon", earth))
+					.size(5)
+					.distance(30)
+					.levelOfDetail(8)
+					.speed(Math.PI/800)
+					.rotationSpeed(Math.PI*2/30)
+					.color(Color.LIGHTGRAY)
+					.build();
+				
 		Planet saturn = (new Planet.Builder("Saturn", sun))
 							.size(20)
 							.color(Color.LIGHTGOLDENRODYELLOW)
 							.speed(Math.PI/4000)
+							.rotationSpeed(Math.PI/10000)
 							.distance(480)
 							.build();
 		
@@ -88,10 +110,30 @@ public class Program extends Application{
 				.next(earth)
 				.build();
 		
-		Satellite Astra = new Satellite("Astra",earth,3,20, -Math.PI/400);
+		Satellite astra = (new Satellite.Builder("Astra", earth))
+				.size(3,3)
+				.distance(20)
+				.levelOfDetail(8)
+				.speed(-Math.PI/400)
+				.color(Color.LIGHTGRAY)
+				.build();
 		
-		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 4, 70, -Math.PI/600);
-		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 3, 50, Math.PI/500);
+		Planet phobos = (new Planet.Builder("Phobos", saturn))
+				.size(4)
+				.distance(70)
+				.levelOfDetail(4)
+				.speed(-Math.PI/300)
+				.rotationSpeed(-Math.PI/400)
+				.color(Color.LIGHTGRAY)
+				.build();
+		Planet deimos = (new Planet.Builder("Deimos", saturn))
+				.size(3)
+				.distance(50)
+				.levelOfDetail(4)
+				.speed(Math.PI/600)
+				.rotationSpeed(Math.PI*2/800)
+				.color(Color.GRAY)
+				.build();
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
