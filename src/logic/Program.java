@@ -54,43 +54,44 @@ public class Program extends Application{
 		
 		Star sun = new Star("Sun",Color.ORANGE,30);
 		Planet earth = (new Planet.Builder("Earth", sun))
-					.size(13)
-					.distance(150)
-					.levelOfDetail(10)
-					.speed(Math.PI/2000)
-					.rotationSpeed(Math.PI*2/365)
-					.color(Color.DARKCYAN)
-					.build();
+				.size(13)
+				.distance(150)
+				.levelOfDetail(10)
+				.speed(Math.PI/2000)
+				.rotationSpeed(Math.PI*2/365)
+				.color(Color.DARKCYAN)
+				.build();
 		Planet mars = (new Planet.Builder("Mars", sun))
-					.size(19)
-					.distance(250)
-					.levelOfDetail(20)
-					.speed(Math.PI/1000)
-					.rotationSpeed(Math.PI*2/800)
-					.color(Color.INDIANRED)
-					.build();
+				.size(19)
+				.distance(250)
+				.levelOfDetail(20)
+				.speed(Math.PI/1000)
+				.rotationSpeed(Math.PI*2/800)
+				.color(Color.INDIANRED)
+				.build();
+		
 		Planet moon = (new Planet.Builder("Moon", earth))
-					.size(5)
-					.distance(30)
-					.levelOfDetail(8)
-					.speed(Math.PI/800)
-					.rotationSpeed(Math.PI*2/30)
-					.color(Color.LIGHTGRAY)
-					.build();
+				.size(5)
+				.distance(30)
+				.levelOfDetail(8)
+				.speed(Math.PI/800)
+				.rotationSpeed(Math.PI*2/30)
+				.color(Color.LIGHTGRAY)
+				.build();
 				
 		Planet saturn = (new Planet.Builder("Saturn", sun))
-							.size(20)
-							.color(Color.LIGHTGOLDENRODYELLOW)
-							.speed(Math.PI/4000)
-							.rotationSpeed(Math.PI/10000)
-							.distance(480)
-							.build();
+				.size(20)
+				.color(Color.LIGHTGOLDENRODYELLOW)
+				.speed(Math.PI/4000)
+				.rotationSpeed(Math.PI/10000)
+				.distance(480)
+				.build();
 		
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
-									.distance(350)
-									.speed(Math.PI/4000)
-									.asteroids(150)
-									.build();
+				.distance(350)
+				.speed(Math.PI/4000)
+				.asteroids(150)
+				.build();
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")

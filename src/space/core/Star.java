@@ -24,12 +24,7 @@ public class Star extends SpaceObject {
 		this.size=size;
 		this.color=color;
 	}
-	public Star(String name, Color color,Circle body) {
-		super(name,body.center,body);
-		area.levelOfDetail=100;
-		this.size=body.radious;
-		this.color=color;
-	}
+	
 	public Star(String name, Color color,int size) {
 		super(name,new Point(0,0), new Circle(size));
 		area.levelOfDetail=100;
@@ -37,7 +32,7 @@ public class Star extends SpaceObject {
 		this.color=color;
 	}
 	
-	public Star(Builder builder) {
+	private Star(Builder builder) {
 		super(builder.name,builder.center,new Circle(builder.radious));
 		area.levelOfDetail=builder.levelOfDetail;
 		color=builder.color;

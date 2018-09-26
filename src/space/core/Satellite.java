@@ -13,9 +13,10 @@ import space.effect.Explosion;
 public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	private SpaceObject parent;
 	
-	protected Satellite(String name, SpaceObject parent, int size, int distance, double speed) {
-		super(name, parent,null, new Rectangle(size,size), distance, speed);
-		this.parent=parent;
+	private Satellite(Builder builder) {
+		super(builder.name,builder.parent,builder.color,new Rectangle(builder.xSize,builder.ySize),builder.distance,builder.speed);
+		trabants=builder.trabants;
+		area.levelOfDetail=builder.levelOfDetail;
 	}
 	
 	@Override 
@@ -95,9 +96,4 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		}
 	}
 	
-	private Satellite(Builder builder) {
-		super(builder.name,builder.parent,builder.color,new Rectangle(builder.xSize,builder.ySize),builder.distance,builder.speed);
-		trabants=builder.trabants;
-		area.levelOfDetail=builder.levelOfDetail;
-	}
 }
