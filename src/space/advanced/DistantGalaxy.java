@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.advanced
- */
 package space.advanced;
 
 import java.util.LinkedList;
@@ -26,7 +21,7 @@ public class DistantGalaxy extends SpaceObject{
 	int maxStars;
 	Random r =new Random();;
 	
-    public DistantGalaxy(String name, int width, int height, int stars) {
+    public DistantGalaxy(String name,int stars) {
 		super(name, new Point( 0, 0), new Circle(0)); 
 		maxStars=stars;
 		fillStars();
@@ -44,6 +39,7 @@ public class DistantGalaxy extends SpaceObject{
                 new Stop(0.0, Color.BLUE),
                 new Stop(1.0, Color.DARKBLUE)));          
 		gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+		
     	for(FixStar star : stars)
     		star.draw(gc);
     }

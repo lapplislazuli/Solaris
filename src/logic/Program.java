@@ -49,7 +49,7 @@ public class Program extends Application{
 	}
 	
 	private void initSpace() {
-		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,250);
+		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
 		Star sun = new Star("Sun",Color.ORANGE,30);
 		Planet earth = (new Planet.Builder("Earth", sun))
@@ -85,7 +85,11 @@ public class Program extends Application{
 							.distance(480)
 							.build();
 		
-		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,150);
+		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
+									.distance(350)
+									.speed(Math.PI/4000)
+									.asteroids(150)
+									.build();
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")

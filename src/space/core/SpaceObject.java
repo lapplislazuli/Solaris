@@ -22,7 +22,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		this.name=name;
 		this.center=center;
 		this.area=area;
-		area.center=center;
+		area.center=center; //To center the Area around this object - improvement possible
 	}
 	
 	public void update() {
