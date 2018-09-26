@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package logic
- */
 package logic;
 
 import interfaces.logical.UpdatingObject;

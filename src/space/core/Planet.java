@@ -10,20 +10,21 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import geom.Circle;
+
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
 
-	public Planet(String name, SpaceObject parent, Color color, int size, int distance, double speed) {
-		super(name, parent, color, size, distance, speed);
+	protected Planet(String name, SpaceObject parent, Color color, int size, int distance, double speed) {
+		super(name, parent, color, new Circle(size), distance, speed);
 	}
 	
 	public static class Builder {
 		private final String name;
 		private SpaceObject parent;
 		private Color color= Color.BLACK;
-		private int distance = 0;
-		private int size = 0;
-		private double speed = 0;
+		private int distance = 0,size = 0, levelOfDetail=2;
+		private double speed = 0,rotationSpeed=0;
 		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
@@ -35,20 +36,38 @@ public class Planet extends MovingSpaceObject {
 			this.parent=parent;
 		}
 		
-		public Builder color(Color val)
-		{ color= val; return this;}
+		public Builder color(Color val){ 
+			color= val; 
+			return this;
+		}
 		
-		public Builder distance(int val)
-		{ distance= val; return this;}
+		public Builder distance(int val){ 
+			distance= val; 
+			return this;
+		}
 		
-		public Builder size(int val)
-		{ size= val; return this;}
+		public Builder size(int val){
+			size= val; 
+			return this;
+		}
 		
-		public Builder speed(double val)
-		{ speed= val; return this;}
+		public Builder speed(double val){
+			speed= val; 
+			return this;
+		}
+		public Builder rotationSpeed(double val){
+			rotationSpeed= val; 
+			return this;
+		}
+		public Builder levelOfDetail(int val){ 
+			levelOfDetail= val; 
+			return this;
+		}
 		
-		public Builder trabant(MovingSpaceObject val)
-		{ trabants.add(val); return this;}
+		public Builder trabant(MovingSpaceObject val){ 
+			trabants.add(val); 
+			return this;
+		}
 		
 		public Planet build() {
 			return new Planet(this);
@@ -56,8 +75,10 @@ public class Planet extends MovingSpaceObject {
 	}
 	
 	private Planet(Builder builder) {
-		super(builder.name,builder.parent,builder.color,builder.size,builder.distance,builder.speed);
+		super(builder.name,builder.parent,builder.color,new Circle(builder.size),builder.distance,builder.speed);
 		trabants=builder.trabants;
+		area.levelOfDetail=builder.levelOfDetail;
+		rotationSpeed=builder.rotationSpeed;
 	}
 	
 	

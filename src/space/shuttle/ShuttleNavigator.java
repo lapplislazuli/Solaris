@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.shuttle
- */
 package space.shuttle;
 
 import java.util.LinkedList;
@@ -10,10 +5,6 @@ import java.util.List;
 
 import interfaces.logical.UpdatingObject;
 import space.core.SpaceObject;
-
-/*
- * Pushes a Shuttle whenever its orbiting to another SpaceObject
- */
 
 public class ShuttleNavigator implements UpdatingObject{
 	
@@ -47,7 +38,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	}
 	
 	private void rebuildShuttle() {
-		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttle.size,(int) shuttle.orbitingDistance,shuttle.speed);
+		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),4,(int) shuttle.orbitingDistance,shuttle.speed);
 	}
 
 	public static class Builder {

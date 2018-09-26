@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package logic
- */
 package logic;
 
 
@@ -11,9 +6,6 @@ import javafx.scene.input.MouseEvent;
 import space.core.SpaceObject;
 import javafx.scene.*;
 
-import java.util.LinkedList;
-
-import interfaces.*;
 import interfaces.logical.UpdatingObject;
 @SuppressWarnings("restriction")
 public class MouseManager implements UpdatingObject {

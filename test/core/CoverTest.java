@@ -1,14 +1,12 @@
-/**
- * @Author Leonhard Applis
- * @Created 12.09.2018
- * @Package space.core
- */
-package space.core;
+package core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import geom.Point;
+import space.core.Star;
 
 class CoverTest {
 
@@ -16,7 +14,7 @@ class CoverTest {
 	static int xHit,yHit,xNoHit,yNoHit;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		anker=new Star("AnkerPoint",null,250,250,250);
+		anker= new Star("anker1", null, new Point(250, 250),250);
 		xHit=250;
 		yHit=250;
 		xNoHit=12500;

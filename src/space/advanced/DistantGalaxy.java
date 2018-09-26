@@ -1,14 +1,11 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.advanced
- */
 package space.advanced;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import geom.Circle;
+import geom.Point;
 import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -24,8 +21,8 @@ public class DistantGalaxy extends SpaceObject{
 	int maxStars;
 	Random r =new Random();;
 	
-    public DistantGalaxy(String name, int width, int height, int stars) {
-		super(name, 0, 0, 0); 
+    public DistantGalaxy(String name,int stars) {
+		super(name, new Point( 0, 0), new Circle(0)); 
 		maxStars=stars;
 		fillStars();
 	}
@@ -42,6 +39,7 @@ public class DistantGalaxy extends SpaceObject{
                 new Stop(0.0, Color.BLUE),
                 new Stop(1.0, Color.DARKBLUE)));          
 		gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+		
     	for(FixStar star : stars)
     		star.draw(gc);
     }

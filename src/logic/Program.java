@@ -1,9 +1,3 @@
-/**
- * @Author Leonhard Applis et Al.
- * @Created 31.08.2018
- * @Package logic
- */
-
 package logic;
 
 import space.advanced.AsteroidBelt;
@@ -54,22 +48,50 @@ public class Program extends Application{
         primaryStage.show();
 	}
 	
+	@SuppressWarnings("unused")
 	private void initSpace() {
-		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",1200,800,250);
+		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
-		Star sun = new Star("Sun",Color.ORANGE,60);
-		Planet earth = new Planet("Earth", sun, Color.CYAN, 25, 150, Math.PI/2000);
-		Planet mars = new Planet("Mars", sun, Color.INDIANRED, 35, 250, Math.PI/1000);
-		Planet moon = new Planet("Moon", earth, Color.LIGHTGRAY,10,30,Math.PI/800);
+		Star sun = new Star("Sun",Color.ORANGE,30);
+		Planet earth = (new Planet.Builder("Earth", sun))
+				.size(13)
+				.distance(150)
+				.levelOfDetail(10)
+				.speed(Math.PI/2000)
+				.rotationSpeed(Math.PI*2/365)
+				.color(Color.DARKCYAN)
+				.build();
+		Planet mars = (new Planet.Builder("Mars", sun))
+				.size(19)
+				.distance(250)
+				.levelOfDetail(20)
+				.speed(Math.PI/1000)
+				.rotationSpeed(Math.PI*2/800)
+				.color(Color.INDIANRED)
+				.build();
 		
+		Planet moon = (new Planet.Builder("Moon", earth))
+				.size(5)
+				.distance(30)
+				.levelOfDetail(8)
+				.speed(Math.PI/800)
+				.rotationSpeed(Math.PI*2/30)
+				.color(Color.LIGHTGRAY)
+				.build();
+				
 		Planet saturn = (new Planet.Builder("Saturn", sun))
-							.size(45)
-							.color(Color.LIGHTGOLDENRODYELLOW)
-							.speed(Math.PI/4000)
-							.distance(480)
-							.build();
+				.size(20)
+				.color(Color.LIGHTGOLDENRODYELLOW)
+				.speed(Math.PI/4000)
+				.rotationSpeed(Math.PI/10000)
+				.distance(480)
+				.build();
 		
-		AsteroidBelt andromeda = new AsteroidBelt("Andromeda",sun,350,Math.PI/4000,200);
+		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
+				.distance(350)
+				.speed(Math.PI/4000)
+				.asteroids(150)
+				.build();
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
@@ -94,10 +116,30 @@ public class Program extends Application{
 				.next(earth)
 				.build();
 		
-		Satellite Astra = new Satellite("Astra",earth,5,20, -Math.PI/400);
+		Satellite astra = (new Satellite.Builder("Astra", earth))
+				.size(3,3)
+				.distance(20)
+				.levelOfDetail(8)
+				.speed(-Math.PI/400)
+				.color(Color.LIGHTGRAY)
+				.build();
 		
-		Planet phobos = new Planet("Phobos", saturn, Color.LIGHTGRAY, 8, 70, -Math.PI/600);
-		Planet deimos = new Planet("Deimos", saturn, Color.GRAY, 7, 50, Math.PI/500);
+		Planet phobos = (new Planet.Builder("Phobos", saturn))
+				.size(4)
+				.distance(70)
+				.levelOfDetail(4)
+				.speed(-Math.PI/300)
+				.rotationSpeed(-Math.PI/400)
+				.color(Color.LIGHTGRAY)
+				.build();
+		Planet deimos = (new Planet.Builder("Deimos", saturn))
+				.size(3)
+				.distance(50)
+				.levelOfDetail(4)
+				.speed(Math.PI/600)
+				.rotationSpeed(Math.PI*2/800)
+				.color(Color.GRAY)
+				.build();
 
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
