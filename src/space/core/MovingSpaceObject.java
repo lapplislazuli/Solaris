@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 import geom.Shape;
+import geom.TShape;
 import geom.BaseShape;
 import geom.Point;
 import interfaces.logical.MovingObject;
@@ -21,8 +22,8 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	protected Color color;
 	
-	public MovingSpaceObject(String name,SpaceObject parent,Color color, BaseShape area,int distance, double speed) {
-		super(name,parent.center.clone(),area);
+	public MovingSpaceObject(String name,SpaceObject parent,Color color, Shape shape,int distance, double speed) {
+		super(name,parent.center.clone(),shape);
 		this.distance=distance;
 		this.speed=speed;
 		rotationSpeed=speed*2;

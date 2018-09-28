@@ -14,6 +14,7 @@ public abstract class CombinedShape implements Shape{
 	
 	public CombinedShape() {
 		parts=new LinkedList<Shape>();
+		center=new Point(0,0);
 	}
 	
 	public double area() {
@@ -24,22 +25,26 @@ public abstract class CombinedShape implements Shape{
 	}
 
 	public boolean intersects(Shape other) {
-		return parts.stream().anyMatch(r->intersects(other));
+		for(Shape part : parts)
+			if(part.intersects(other))
+				return true;
+		return false;
 	}
 
 	public boolean isCovered(int x, int y) {
-			return parts.stream().anyMatch(r->isCovered(x,y));
+		return parts.size()>0 ?	parts.stream().anyMatch(r->isCovered(x,y)) : false;
 	}
 	
 	public boolean covers(Shape other) {
-		return parts.stream().anyMatch(p->p.covers(other));
+		return parts.size()>0 ? parts.stream().anyMatch(p->p.covers(other)) : false;
 	}
 	
 	public boolean contains(Point p) {
-		return parts.stream().anyMatch(r->contains(p));
+		return parts.size()>0 ? parts.stream().anyMatch(r->contains(p)) : false;
 	}
 	
 	public void initOutline() {
+		System.out.println("Init Combined Outline");
 		for(Shape part : parts)
 			part.initOutline();
 	}
@@ -51,6 +56,8 @@ public abstract class CombinedShape implements Shape{
 	
 	public void setCenter(Point p) {
 		center=p;
+		for(Shape part : parts)
+			part.setCenter(p);
 	}
 	
 	public int getLevelOfDetail() {
