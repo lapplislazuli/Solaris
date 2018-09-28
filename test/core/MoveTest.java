@@ -55,7 +55,6 @@ class MoveTest {
 		assertEquals(3*Math.PI/2, satellite.degreeTo(sun));
 		assertEquals(3*Math.PI/2, noSpeedPlanet.degreeTo(sun));
 		//assertEquals(3*Math.PI/2, a.degreeTo(b));
-		
 	}
 	
 	@Test

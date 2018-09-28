@@ -3,6 +3,9 @@ package geom;
 import java.util.LinkedList;
 import java.util.List;
 
+import interfaces.geom.Point;
+import interfaces.geom.Shape;
+
 public abstract class BaseShape implements Shape{
 	public Point center;
 	public List<Point> outLine= new LinkedList<Point>();
@@ -35,6 +38,11 @@ public abstract class BaseShape implements Shape{
 			return ((BaseShape)other).outLine.stream().allMatch(p->contains(p));
 		return false;
 	}
+	
+	public void updateOrInitOutline() {
+		if(outLine.size()<levelOfDetail)
+			initOutline();
+	};
 	
 	public abstract void initOutline();
 	

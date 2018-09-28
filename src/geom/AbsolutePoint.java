@@ -1,5 +1,7 @@
 package geom;
 
+import interfaces.geom.Point;
+
 public class AbsolutePoint implements Point {
 	protected int x,y,z;
 	

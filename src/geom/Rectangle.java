@@ -1,5 +1,6 @@
 package geom;
 
+import interfaces.geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
@@ -13,7 +14,7 @@ public class Rectangle extends BaseShape{
 		this.ySize=ySize;
 	}
 	
-	public Rectangle(AbsolutePoint center, int xSize, int ySize) {
+	public Rectangle(Point center, int xSize, int ySize) {
 		super(center);
 		this.xSize=xSize;
 		this.ySize=ySize;
@@ -31,14 +32,15 @@ public class Rectangle extends BaseShape{
 		gc.fillRect(center.getX()-xSize/2, center.getY()-ySize/2, xSize, ySize);
 	}
 
-	@Override
 	public void initOutline() {
-		outLine.removeIf(p->true);
-		for(int i=-levelOfDetail/2;i<levelOfDetail/2;i++) {
-			//TODO: Make relative Points here
-			AbsolutePoint outLinePoint=(AbsolutePoint)center.clone();
-			outLinePoint.move(i*xSize/levelOfDetail,i*ySize/levelOfDetail);
-			outLine.add(outLinePoint);
+		outLine.clear();
+		
+		outLine.add(new RelativePoint(center,-(xSize)/2,-(ySize)/2));
+		outLine.add(new RelativePoint(center,(xSize)/2,(ySize)/2));
+		
+		for(int i=-levelOfDetail/2;i<=levelOfDetail/2;i++) {
+			outLine.add(new RelativePoint(center,i*(xSize/levelOfDetail),0));
+			outLine.add(new RelativePoint(center,0,i*(ySize/levelOfDetail)));
 		}
 	}
 

@@ -1,4 +1,4 @@
-package geom;
+package interfaces.geom;
 
 import interfaces.DrawingObject;
 
@@ -11,7 +11,7 @@ public interface Shape extends DrawingObject{
 	
 	public void setCenter(Point p);
 	
-	public void initOutline();
+	public void updateOrInitOutline();
 	public int getLevelOfDetail();
 	public void setLevelOfDetail(int levelOfDetail);
 }

@@ -1,5 +1,6 @@
 package geom;
 
+import interfaces.geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
@@ -26,15 +27,13 @@ public class Circle extends BaseShape{
 		gc.fillOval(center.getX()-radious, center.getY()-radious, radious*2, radious*2);
 	}
 
-	@Override
 	public void initOutline() {
 		outLine.removeIf(p->true);
 		for(int i=0;i<levelOfDetail;i++) {
-			//TODO: Make Relative Points
-			AbsolutePoint outLinePoint=(AbsolutePoint)center.clone();
-			outLinePoint.move(
-					(int)(Math.cos(i*Math.PI*2/levelOfDetail)*radious), 
-					(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
+			RelativePoint outLinePoint= 
+					new RelativePoint(center,
+							(int)(Math.cos(i*Math.PI*2/levelOfDetail)*radious),
+							(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
 			outLine.add(outLinePoint);
 		}
 	}

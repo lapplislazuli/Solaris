@@ -27,10 +27,10 @@ class BaseGeomCollisionTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		smallCircle.initOutline();
-		bigCircle.initOutline();
-		rect.initOutline();
-		distantRect.initOutline();
+		smallCircle.updateOrInitOutline();
+		bigCircle.updateOrInitOutline();
+		rect.updateOrInitOutline();
+		distantRect.updateOrInitOutline();
 	}
 
 	@Test

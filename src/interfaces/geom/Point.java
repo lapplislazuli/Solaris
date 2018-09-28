@@ -1,4 +1,4 @@
-package geom;
+package interfaces.geom;
 
 public interface Point {
 	public int getX() ;

@@ -18,8 +18,8 @@ class CollisionTest {
 	static void initAnkers() {
 		starOne= new Star("anker1", null, new AbsolutePoint(0, 0),25);
 		starTwo= new Star("anker2", null,new AbsolutePoint(100, 0),25);
-		starOne.shape.initOutline();
-		starTwo.shape.initOutline();
+		starOne.shape.updateOrInitOutline();
+		starTwo.shape.updateOrInitOutline();
 	}
 	
 	
@@ -97,7 +97,7 @@ class CollisionTest {
 	@Test
 	void uncollidables() {
 		FixStar uncollidableFixStar = new FixStar("a", 1, 1, 1);
-		uncollidableFixStar.shape.initOutline();
+		uncollidableFixStar.shape.updateOrInitOutline();
 		assertFalse(uncollidableFixStar.collides(starOne));
 		assertTrue(starOne.collides(uncollidableFixStar));
 	}

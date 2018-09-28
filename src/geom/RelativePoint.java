@@ -1,5 +1,7 @@
 package geom;
 
+import interfaces.geom.Point;
+
 public class RelativePoint implements Point{
 	protected Point anker;
 	protected int xDif,yDif,zDif;
@@ -17,16 +19,6 @@ public class RelativePoint implements Point{
 		this.yDif=yDif;
 		this.zDif=zDif;
 	}
-	/*
-	public void move(int xDif, int yDif) {
-		x+=xDif;
-		y+=yDif;
-	}
-	public void move(int xDif, int yDif,int zDif) {
-		move(xDif,yDif);
-		z+=zDif;
-	}
-	*/
 	
 	public int getX() {return anker.getX()+xDif;}
 	public int getY() {return anker.getY()+yDif;}

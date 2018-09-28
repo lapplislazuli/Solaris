@@ -3,6 +3,8 @@ package geom;
 import java.util.LinkedList;
 import java.util.List;
 
+import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
@@ -43,10 +45,10 @@ public abstract class CombinedShape implements Shape{
 		return parts.size()>0 ? parts.stream().anyMatch(r->contains(p)) : false;
 	}
 	
-	public void initOutline() {
+	public void updateOrInitOutline() {
 		//System.out.println("Init Combined Outline");
 		for(Shape part : parts)
-			part.initOutline();
+			part.updateOrInitOutline();
 	}
 	
 	public void draw(GraphicsContext gc) {

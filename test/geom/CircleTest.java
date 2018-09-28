@@ -6,8 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import interfaces.geom.Point;
 
 class CircleTest {
 	
@@ -23,7 +24,7 @@ class CircleTest {
 	@Test
 	void testInitOutline() {
 		testObject.levelOfDetail=4; //4 OutlinePoints!
-		testObject.initOutline(); 
+		testObject.updateOrInitOutline(); 
 		for (int i=0;i<4;i++) {
 			Point testOutlinePoint=testObject.outLine.get(i);
 			assertTrue(
@@ -34,7 +35,7 @@ class CircleTest {
 			);
 		}
 		testObject.levelOfDetail=100;
-		testObject.initOutline();
+		testObject.updateOrInitOutline();
 		assertEquals(100,testObject.outLine.size());
 	}
 

@@ -3,10 +3,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geom.BaseShape;
-import geom.Point;
 import geom.AbsolutePoint;
-import geom.Shape;
 import interfaces.ClickableObject;
+import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -84,7 +84,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public void updateHitbox() {
-		shape.initOutline();
+		shape.updateOrInitOutline();
 	}
 	
 	@Override
