@@ -14,7 +14,7 @@ public abstract class CombinedShape implements Shape{
 	
 	public CombinedShape() {
 		parts=new LinkedList<Shape>();
-		center=new Point(0,0);
+		center=new AbsolutePoint(0,0);
 	}
 	
 	public double area() {
@@ -44,7 +44,7 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public void initOutline() {
-		System.out.println("Init Combined Outline");
+		//System.out.println("Init Combined Outline");
 		for(Shape part : parts)
 			part.initOutline();
 	}

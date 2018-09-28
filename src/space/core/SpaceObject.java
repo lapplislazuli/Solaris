@@ -4,6 +4,7 @@ import java.util.List;
 
 import geom.BaseShape;
 import geom.Point;
+import geom.AbsolutePoint;
 import geom.Shape;
 import interfaces.ClickableObject;
 import interfaces.logical.CollidingObject;
@@ -14,12 +15,12 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
 	public Shape shape;
 	public String name;
-	public Point center;
+	public AbsolutePoint center;
 	
 	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,Point center, Shape shape) {
+	public SpaceObject(String name,AbsolutePoint center, Shape shape) {
 		this.name=name;
 		this.center=center;
 		this.shape=shape;

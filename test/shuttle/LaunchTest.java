@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import space.core.Star;
 import space.shuttle.SpaceShuttle;
 
@@ -17,8 +17,8 @@ class LaunchTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		origin = new Star("star",null,new Point(250,250),250);
-		target = new Star("star",null,new Point(1250,250),250);
+		origin = new Star("star",null,new AbsolutePoint(250,250),250);
+		target = new Star("star",null,new AbsolutePoint(1250,250),250);
 	}
 
 	@BeforeEach

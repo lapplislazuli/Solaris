@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import geom.Circle;
-import geom.Point;
+import geom.AbsolutePoint;
 import logic.CollisionManager;
 import space.core.Star;
 import space.shuttle.SensorArray;
@@ -21,9 +21,9 @@ public class ArrayDetectionTest {
 	
 	@BeforeAll
 	public static void initVariables() {
-		hitStar = new Star("hit",null,new Point(250,250),250);
-		notHitStar = new Star("noHit",null,new Point(1250,250),250);
-		notHittableStar = new Star("noHitEver",null,new Point(250,1250),0); //no Size!
+		hitStar = new Star("hit",null,new AbsolutePoint(250,250),250);
+		notHitStar = new Star("noHit",null,new AbsolutePoint(1250,250),250);
+		notHittableStar = new Star("noHitEver",null,new AbsolutePoint(250,1250),0); //no Size!
 		
 		SpaceShuttle shuttle= new SpaceShuttle("shuttle",hitStar,0,0,0);
 		

@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 class PointTest {
 	
 	
-	private static Point a,b; 
-	private static Point c; //3 Dimensional Point
+	private static AbsolutePoint a,b; 
+	private static AbsolutePoint c; //3 Dimensional Point
 
 	@BeforeEach
 	void setUp() throws Exception {
-		a= new Point(0,0);
-		b= new Point(50,50);
-		c= new Point(0,0,100);
+		a= new AbsolutePoint(0,0);
+		b= new AbsolutePoint(50,50);
+		c= new AbsolutePoint(0,0,100);
 	}
 
 	@Test
@@ -74,7 +74,7 @@ class PointTest {
 
 	@Test
 	void testClone() {
-		Point clone= a.clone();
+		AbsolutePoint clone= a.clone();
 		a.move(50, 50);
 		assertEquals(0,clone.x);
 		assertEquals(0,clone.y);

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Star;
 
@@ -17,7 +17,7 @@ class RotationTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		anker= new Star("anker", null, new Point(250, 250), 250);
+		anker= new Star("anker", null, new AbsolutePoint(250, 250), 250);
 		slow= (new Planet.Builder("SlowPlanet", anker))
 				.size(250)
 				.distance(250)

@@ -1,7 +1,7 @@
 package space.shuttle.missiles;
 
 import geom.BaseShape;
-import geom.Point;
+import geom.AbsolutePoint;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
 import space.shuttle.SpaceShuttle;
@@ -24,15 +24,15 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	@Override
 	public void update() {
 		move(center);
-		if(distance>=150 || center.x<=0 || center.y <=0) 
+		if(distance>=150 || center.getX()<=0 || center.getY() <=0) 
 			remove();
 	}
 	
 	@Override
-	public void move(Point oldPosition){
-		Point oldCenter=center.clone();
-		center.x= (int) (center.x+Math.cos(rotation)*speed);
-		center.y= (int) (center.y+Math.sin(rotation)*speed);
+	public void move(AbsolutePoint oldPosition){
+		AbsolutePoint oldCenter=center.clone();
+		center.setX((int) (center.getX()+Math.cos(rotation)*speed));
+		center.setY((int) (center.getY()+Math.sin(rotation)*speed));
 		distance += oldCenter.distanceTo(center);
 	}
 	

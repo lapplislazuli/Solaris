@@ -14,7 +14,7 @@ public abstract class BaseShape implements Shape{
 	}
 	
 	protected BaseShape() {
-		center= new Point(0,0);
+		center= new AbsolutePoint(0,0);
 		outLine.add(center);
 	}
 	
@@ -27,7 +27,7 @@ public abstract class BaseShape implements Shape{
 	}
 
 	public boolean isCovered(int x, int y) {
-		return contains(new Point(x,y));
+		return contains(new AbsolutePoint(x,y));
 	}
 	
 	public boolean covers(Shape other) {

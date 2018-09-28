@@ -1,6 +1,6 @@
 package space.advanced;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import geom.Rectangle;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
@@ -53,7 +53,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	@Override 
-	public void move(Point parentCenter) {
+	public void move(AbsolutePoint parentCenter) {
 		super.move(parentCenter);
 		shake();
 	}

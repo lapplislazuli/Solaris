@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Star;
 import space.shuttle.ArmedSpaceShuttle;
@@ -19,7 +19,7 @@ public class MissileTest {
 	
 	@BeforeEach
 	public void resetEnv() {
-		star = new Star("star",null,new Point(250,250), 25);
+		star = new Star("star",null,new AbsolutePoint(250,250), 25);
 		planet = (new Planet.Builder("planet", star))
 				.size(10)
 				.distance(100)
@@ -42,14 +42,14 @@ public class MissileTest {
 		shuttle.shootLaser(planet);
 		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
 		
-		assertEquals(true,missile.center.x==shuttle.center.x && missile.center.y==shuttle.center.y);
+		assertEquals(true,missile.center.getX()==shuttle.center.getX() && missile.center.getY()==shuttle.center.getY());
 		assertEquals(true,missile.distanceTo(planet)==planet.distanceTo(shuttle));
 		
-		missile.move(new Point(0,0));
+		missile.move(new AbsolutePoint(0,0));
 		assertEquals(true,missile.distanceTo(planet)>planet.distanceTo(shuttle));
 		
 		while(true) {
-			missile.move(new Point(0,0));
+			missile.move(new AbsolutePoint(0,0));
 			if(missile.distanceTo(planet)==0) {
 				assertEquals(true,true);
 				return;
@@ -66,7 +66,7 @@ public class MissileTest {
 		assertFalse(missile.collides(missile));
 		
 		while(true) {
-			missile.move(new Point(0,0));
+			missile.move(new AbsolutePoint(0,0));
 			if(missile.distanceTo(planet)==0) {
 				assertEquals(true,missile.collides(planet));
 				assertEquals(true,planet.collides(missile));

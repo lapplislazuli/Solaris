@@ -7,7 +7,7 @@ import java.util.Random;
 import geom.Shape;
 import geom.TShape;
 import geom.BaseShape;
-import geom.Point;
+import geom.AbsolutePoint;
 import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -33,10 +33,10 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		center.move(0, distance);;
 	}
 	
-	public void move(Point parentCenter) {
+	public void move(AbsolutePoint parentCenter) {
 		moveRelativePos();
-		center.x= parentCenter.x+(int)(Math.cos(relativePos)*distance);
-		center.y= parentCenter.y-(int)(Math.sin(relativePos)*distance);
+		center.setX(parentCenter.getX()+(int)(Math.cos(relativePos)*distance));
+		center.setY(parentCenter.getY()-(int)(Math.sin(relativePos)*distance));
 		rotate();
 	};
 	
@@ -61,7 +61,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public void drawThisItem(GraphicsContext gc) {
 		gc.save();
 		Affine transformRotation= new Affine();
-		transformRotation.appendRotation(Math.toDegrees(rotation), center.x ,center.y);	
+		transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
 		if (color != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),

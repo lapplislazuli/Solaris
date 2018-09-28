@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Test;
 class RectangleTest {
 	
 	private static Rectangle testObject;
-	private static Point centerTestObject;
+	private static AbsolutePoint centerTestObject;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		centerTestObject= new Point(100,100);
+		centerTestObject= new AbsolutePoint(100,100);
 		testObject = new Rectangle(centerTestObject,200,200);
 	}
 
@@ -29,10 +29,10 @@ class RectangleTest {
 		for (int i=0;i<4;i++) {
 			Point testOutlinePoint=testObject.outLine.get(i);
 			assertTrue(
-				testOutlinePoint.distanceTo(new Point(0,200))==0
-				|| testOutlinePoint.distanceTo(new Point(200,200))==0
-				|| testOutlinePoint.distanceTo(new Point(200,0))==0
-				|| testOutlinePoint.distanceTo(new Point(0,0))==0
+				testOutlinePoint.distanceTo(new AbsolutePoint(0,200))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(200,200))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(200,0))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(0,0))==0
 			);
 		}
 		testObject.levelOfDetail=100;
@@ -42,18 +42,18 @@ class RectangleTest {
 
 	@Test
 	void testContains() {
-		List<Point> inPoints = new LinkedList<Point>();
-		inPoints.add(new Point(65,50)); //definitive in Circle 
-		inPoints.add(new Point(125,100)); //definitive in Circle
-		inPoints.add(new Point(200,200)); //Edgepoint
+		List<AbsolutePoint> inPoints = new LinkedList<AbsolutePoint>();
+		inPoints.add(new AbsolutePoint(65,50)); //definitive in Circle 
+		inPoints.add(new AbsolutePoint(125,100)); //definitive in Circle
+		inPoints.add(new AbsolutePoint(200,200)); //Edgepoint
 		inPoints.add(centerTestObject);
-		for(Point inPoint : inPoints)
+		for(AbsolutePoint inPoint : inPoints)
 			assertTrue(testObject.contains(inPoint));
-		List<Point> outPoints = new LinkedList<Point>();
-		outPoints.add(new Point(0,300));  
-		outPoints.add(new Point(0,-10)); 
+		List<AbsolutePoint> outPoints = new LinkedList<AbsolutePoint>();
+		outPoints.add(new AbsolutePoint(0,300));  
+		outPoints.add(new AbsolutePoint(0,-10)); 
 		//outPoints.add(new Point(0,0,400)); 
-		for(Point outPoint : outPoints)
+		for(AbsolutePoint outPoint : outPoints)
 			assertFalse(testObject.contains(outPoint));
 		
 	}

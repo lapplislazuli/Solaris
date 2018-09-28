@@ -16,7 +16,7 @@ class CircleTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		centerTestObject= new Point(100,100);
+		centerTestObject= new AbsolutePoint(100,100);
 		testObject = new Circle(centerTestObject,100);
 	}
 
@@ -27,10 +27,10 @@ class CircleTest {
 		for (int i=0;i<4;i++) {
 			Point testOutlinePoint=testObject.outLine.get(i);
 			assertTrue(
-					testOutlinePoint.distanceTo(new Point(0,100))==0
-				|| testOutlinePoint.distanceTo(new Point(200,100))==0
-				|| testOutlinePoint.distanceTo(new Point(100,0))==0
-				|| testOutlinePoint.distanceTo(new Point(100,200))==0
+					testOutlinePoint.distanceTo(new AbsolutePoint(0,100))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(200,100))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(100,0))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(100,200))==0
 			);
 		}
 		testObject.levelOfDetail=100;
@@ -41,16 +41,16 @@ class CircleTest {
 	@Test
 	void testContains() {
 		List<Point> inPoints = new LinkedList<Point>();
-		inPoints.add(new Point(65,50)); //definitive in Circle 
-		inPoints.add(new Point(125,100)); //definitive in Circle
-		inPoints.add(new Point(200,100)); //Edgepoint
+		inPoints.add(new AbsolutePoint(65,50)); //definitive in Circle 
+		inPoints.add(new AbsolutePoint(125,100)); //definitive in Circle
+		inPoints.add(new AbsolutePoint(200,100)); //Edgepoint
 		inPoints.add(centerTestObject);
 		for(Point inPoint : inPoints)
 			assertTrue(testObject.contains(inPoint));
 		List<Point> outPoints = new LinkedList<Point>();
-		outPoints.add(new Point(0,0));  
-		outPoints.add(new Point(0,120)); 
-		outPoints.add(new Point(0,0,200)); 
+		outPoints.add(new AbsolutePoint(0,0));  
+		outPoints.add(new AbsolutePoint(0,120)); 
+		outPoints.add(new AbsolutePoint(0,0,200)); 
 		for(Point outPoint : outPoints)
 			assertFalse(testObject.contains(outPoint));
 		

@@ -1,6 +1,6 @@
 package space.shuttle;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import geom.Rectangle;
 import geom.TShape;
 import interfaces.logical.CollidingObject;
@@ -49,7 +49,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	@Override 
-	public void move(Point parentCenter) {
+	public void move(AbsolutePoint parentCenter) {
 		if(!orbiting) {
 			if(distance>=orbitingDistance+distanceTo(parent)) 
 				distance--;
@@ -61,9 +61,9 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	public void destruct(CollidingObject other) {
-		System.out.println("Spaceship: " + toString() + " collided with " + other.toString() + " @" + center.x + "|" + center.y);
+		System.out.println("Spaceship: " + toString() + " collided with " + other.toString() + " @" +center.toString());
 		if(!isDead()) {
-			new Explosion("Explosion from" + name,center.x,center.y,1500,5,1.02,Color.MEDIUMVIOLETRED);
+			new Explosion("Explosion from" + name,center.getX(),center.getY(),1500,5,1.02,Color.MEDIUMVIOLETRED);
 			if(other instanceof SpaceObject)
 				new Asteroid("Trash from " + name,(SpaceObject) other,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);
 			remove();

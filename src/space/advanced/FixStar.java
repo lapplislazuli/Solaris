@@ -7,7 +7,7 @@ import space.core.Star;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,7 +18,7 @@ public class FixStar extends Star implements TimerObject {
 	public boolean dead=false;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
-		super(name, Color.WHITESMOKE, new Point(0, 0),1);
+		super(name, Color.WHITESMOKE, new AbsolutePoint(0, 0),1);
 		shape.setLevelOfDetail(0);
 		relativeX=relX;
 		relativeY=relY;
@@ -34,8 +34,8 @@ public class FixStar extends Star implements TimerObject {
 	}
  
 	protected void fixPosition(GraphicsContext gc) {
-		center.x=(int) (relativeX*gc.getCanvas().getWidth());
-		center.y=(int) (relativeY*gc.getCanvas().getHeight());
+		center.setX((int) (relativeX*gc.getCanvas().getWidth()));
+		center.setY((int) (relativeY*gc.getCanvas().getHeight()));
 	}
 
 	@Override

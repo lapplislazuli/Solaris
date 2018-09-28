@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
@@ -16,7 +16,7 @@ class MoveTest {
 	
 	@BeforeAll
 	static void initSun() {
-		sun=new Star("Sun",null,new Point(250,250),50);
+		sun=new Star("Sun",null,new AbsolutePoint(250,250),50);
 	}
 	
 	@Test
@@ -24,7 +24,7 @@ class MoveTest {
 		
 		//Stars should not move!
 		sun.update();
-		assertEquals(250,sun.center.x);assertEquals(250,sun.center.y);
+		assertEquals(250,sun.center.getX());assertEquals(250,sun.center.getY());
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
 		Planet planet = (new Planet.Builder("A", sun))
@@ -44,12 +44,12 @@ class MoveTest {
 				.speed(0)
 				.build();
 		//Check X-Y Koords
-		assertEquals(250,planet.center.x);
-		assertEquals(500,planet.center.y);
-		assertEquals(250,satellite.center.x);
-		assertEquals(750,satellite.center.y);
-		assertEquals(250,noSpeedPlanet.center.x);
-		assertEquals(500,noSpeedPlanet.center.y);
+		assertEquals(250,planet.center.getX());
+		assertEquals(500,planet.center.getY());
+		assertEquals(250,satellite.center.getX());
+		assertEquals(750,satellite.center.getY());
+		assertEquals(250,noSpeedPlanet.center.getX());
+		assertEquals(500,noSpeedPlanet.center.getY());
 		//Check DegreeTo EachOther
 		assertEquals(3*Math.PI/2, planet.degreeTo(sun));
 		assertEquals(3*Math.PI/2, satellite.degreeTo(sun));
@@ -61,7 +61,7 @@ class MoveTest {
 	@Test
 	void SimpleMove() {
 		sun.update();
-		assertEquals(250,sun.center.x);assertEquals(250,sun.center.y);
+		assertEquals(250,sun.center.getX());assertEquals(250,sun.center.getY());
 		//Add a Planet to move with 90° per update
 		//Add a Satellite to Planet to move with -90° per update
 		Planet planet = (new Planet.Builder("A", sun))
@@ -79,21 +79,21 @@ class MoveTest {
 		//Move all Items, if they are movable
 		sun.update();
 		//Star not moved, Planet right to Star, Satellite Left to Planet in Star
-		assertEquals(250,sun.center.x);
-		assertEquals(250,sun.center.y);
-		assertEquals(250,planet.center.x);
-		assertEquals(0,planet.center.y);
-		assertEquals(250,satellite.center.x);
-		assertEquals(250,satellite.center.y);
+		assertEquals(250,sun.center.getX());
+		assertEquals(250,sun.center.getY());
+		assertEquals(250,planet.center.getX());
+		assertEquals(0,planet.center.getY());
+		assertEquals(250,satellite.center.getX());
+		assertEquals(250,satellite.center.getY());
 		
 		sun.update();
 		//Star not moved, Planet beyond Star, Satellite beyond Planet
-		assertEquals(250,sun.center.x);
-		assertEquals(250,sun.center.y);
-		assertEquals(0,planet.center.x);
-		assertEquals(250,planet.center.y);
-		assertEquals(-250,satellite.center.x);
-		assertEquals(250,satellite.center.y);
+		assertEquals(250,sun.center.getX());
+		assertEquals(250,sun.center.getY());
+		assertEquals(0,planet.center.getX());
+		assertEquals(250,planet.center.getY());
+		assertEquals(-250,satellite.center.getX());
+		assertEquals(250,satellite.center.getY());
 	}
 	@Test
 	void NoSpeed() {
@@ -112,12 +112,12 @@ class MoveTest {
 		
 		for(int i =0;i<10;i++) {
 			sun.update();
-			assertEquals(250,sun.center.x);
-			assertEquals(250,sun.center.y);
-			assertEquals(500,planet.center.x);
-			assertEquals(250,planet.center.y);
-			assertEquals(750,b.center.x);
-			assertEquals(250,b.center.y);
+			assertEquals(250,sun.center.getX());
+			assertEquals(250,sun.center.getY());
+			assertEquals(500,planet.center.getX());
+			assertEquals(250,planet.center.getY());
+			assertEquals(750,b.center.getX());
+			assertEquals(250,b.center.getY());
 		}
 	}
 	
