@@ -19,7 +19,7 @@ public class FixStar extends Star implements TimerObject {
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
 		super(name, Color.WHITESMOKE, new Point(0, 0),1);
-		area.levelOfDetail=0;
+		shape.setLevelOfDetail(0);
 		relativeX=relX;
 		relativeY=relY;
 		isCentered=false;
@@ -30,7 +30,7 @@ public class FixStar extends Star implements TimerObject {
 	public void drawThisItem(GraphicsContext gc) {
 		fixPosition(gc);
 		gc.setFill(color);
-		area.draw(gc);
+		shape.draw(gc);
 	}
  
 	protected void fixPosition(GraphicsContext gc) {

@@ -20,21 +20,21 @@ public class Star extends SpaceObject {
 	
 	public Star(String name, Color color,Point center, int size) {
 		super(name,center,new Circle(center,size));
-		area.levelOfDetail=100;
+		shape.setLevelOfDetail(100);
 		this.size=size;
 		this.color=color;
 	}
 	
 	public Star(String name, Color color,int size) {
 		super(name,new Point(0,0), new Circle(size));
-		area.levelOfDetail=100;
+		shape.setLevelOfDetail(100);
 		this.size=size;
 		this.color=color;
 	}
 	
 	private Star(Builder builder) {
 		super(builder.name,builder.center,new Circle(builder.radious));
-		area.levelOfDetail=builder.levelOfDetail;
+		shape.setLevelOfDetail(builder.levelOfDetail);
 		color=builder.color;
 		trabants=builder.trabants;
 		isCentered=builder.reCentering;
@@ -58,7 +58,7 @@ public class Star extends SpaceObject {
 				new Stop(0.0, color),
 				new Stop(1.0, color.darker())));
 		gc.setEffect(new Glow(0.6));
-		area.draw(gc);
+		shape.draw(gc);
 	}
 	@Override
 	public void drawThisItem(GraphicsContext gc) {

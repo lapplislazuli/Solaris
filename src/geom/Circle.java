@@ -3,7 +3,7 @@ package geom;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
-public class Circle extends BaseArea{
+public class Circle extends BaseShape{
 	public int radious;
 	
 	public Circle(int radious) {
@@ -36,6 +36,10 @@ public class Circle extends BaseArea{
 					(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
 			outLine.add(outLinePoint);
 		}
+	}
+
+	public double area() {
+		return Math.PI*Math.pow(radious, 2);
 	}
 	
 }

@@ -3,7 +3,7 @@ package geom;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
-public class Rectangle extends BaseArea{
+public class Rectangle extends BaseShape{
 	
 	int xSize,ySize;
 	
@@ -40,5 +40,8 @@ public class Rectangle extends BaseArea{
 			outLine.add(outLinePoint);
 		}
 	}
-	
+
+	public double area() {
+		return xSize*ySize;
+	}
 }

@@ -24,7 +24,8 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		this.orbitingDistance=orbitingDistance;
 		distance=(int) (orbitingDistance+distanceTo(parent));
 		sensor = new SensorArray(this,50);
-		area.levelOfDetail=size/2;
+
+		shape.setLevelOfDetail(size/2);
 	}
 	
 	public void launch() {

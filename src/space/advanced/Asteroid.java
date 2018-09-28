@@ -25,7 +25,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		else
 			type=Type.TRASH;
 		setColorFromType();
-		area.levelOfDetail=2;
+
+		shape.setLevelOfDetail(2);
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {

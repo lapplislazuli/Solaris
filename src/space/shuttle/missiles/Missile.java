@@ -1,6 +1,6 @@
 package space.shuttle.missiles;
 
-import geom.BaseArea;
+import geom.BaseShape;
 import geom.Point;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
@@ -15,7 +15,7 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	 * Distance will be used to measure the flown distance, for remove logic
 	 */
 
-	public Missile(String name, SpaceShuttle emitter, BaseArea area,double direction, double speed) {
+	public Missile(String name, SpaceShuttle emitter, BaseShape area,double direction, double speed) {
 		super(name, emitter, null, area, 0,speed);
 		this.emitter=emitter;
 		rotation=direction;
