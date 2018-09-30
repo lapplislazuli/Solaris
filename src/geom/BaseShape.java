@@ -22,9 +22,8 @@ public abstract class BaseShape implements Shape{
 	}
 	
 	public boolean intersects(Shape other) {
-		if(other != this && other instanceof BaseShape) {
-			return other.covers(this)
-					|| ((BaseShape)other).outLine.stream().anyMatch(p->contains(p));
+		if(other != this && other instanceof Shape) {
+			return outLine.stream().anyMatch(p->other.contains(p));
 		}
 		return false;
 	}

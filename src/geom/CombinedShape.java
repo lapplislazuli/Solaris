@@ -34,15 +34,24 @@ public abstract class CombinedShape implements Shape{
 	}
 
 	public boolean isCovered(int x, int y) {
-		return parts.size()>0 ?	parts.stream().anyMatch(r->isCovered(x,y)) : false;
+		for(Shape part:parts)
+			if(part.isCovered(x,y))
+				return true;
+		return false;
 	}
 	
 	public boolean covers(Shape other) {
-		return parts.size()>0 ? parts.stream().anyMatch(p->p.covers(other)) : false;
+		for(Shape part:parts)
+			if(part.covers(other))
+				return true;
+		return false;
 	}
 	
 	public boolean contains(Point p) {
-		return parts.size()>0 ? parts.stream().anyMatch(r->contains(p)) : false;
+		for(Shape part:parts)
+			if(part.contains(p))
+				return true;
+		return false;
 	}
 	
 	public void updateOrInitOutline() {
