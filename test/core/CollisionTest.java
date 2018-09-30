@@ -22,9 +22,8 @@ class CollisionTest {
 		starTwo.shape.updateOrInitOutline();
 	}
 	
-	
 	@Test
-	void negativeCollision() {
+	void testNegativeCollision() {
 		assertFalse(starOne.collides(starTwo));
 		Planet planet = (new Planet.Builder("NoCollider", starOne))
 				.size(15)
@@ -32,22 +31,28 @@ class CollisionTest {
 				.levelOfDetail(20)
 				.speed(0)
 				.build();
-		
 		planet.updateHitbox();
 		assertFalse(starOne.collides(planet));
 		assertFalse(starTwo.collides(planet));
-		//SymetryCheck
+		
+	}
+	@Test
+	void testNegativeCollisionSymmetrie() {
+		Planet planet = (new Planet.Builder("NoCollider", starOne))
+				.size(15)
+				.distance(1000)
+				.levelOfDetail(20)
+				.build();
+		planet.updateHitbox();
 		assertTrue(starOne.collides(planet)==planet.collides(starOne));
 		assertTrue(starOne.collides(starTwo)==starTwo.collides(starOne));
 	}
-	
 	@Test
-	void positiveCollision() {
+	void testPositiveCollision() {
 		Planet planet = (new Planet.Builder("NoCollider", starOne))
 				.size(150)
 				.distance(10)
 				.levelOfDetail(20)
-				.speed(0)
 				.build();
 		planet.updateHitbox();
 		assertTrue(starOne.collides(planet));
@@ -55,7 +60,7 @@ class CollisionTest {
 	}
 	
 	@Test
-	void pointBlankCollision() {
+	void testPointBlankCollision() {
 		Planet planet = (new Planet.Builder("Collider", starOne))
 				.size(25)
 				.distance(0)
@@ -63,17 +68,15 @@ class CollisionTest {
 				.build();
 		planet.updateHitbox();
 		assertTrue(starOne.collides(planet));
-		assertFalse(starTwo.collides(planet));
 	}
 	
 	@Test
-	void noSelfCollision() {
+	void testSelfCollision() {
 		assertFalse(starOne.collides(starOne));
-		assertFalse(starTwo.collides(starTwo));
 	}
 	
 	@Test
-	void exactTangenting() {
+	void testExactTangenting() {
 		Planet planet = (new Planet.Builder("NoCollider", starOne))
 				.size(50)
 				.distance(50)
@@ -85,7 +88,7 @@ class CollisionTest {
 	}
 	
 	@Test
-	void multipleCollisions() {
+	void testMultipleCollisions() {
 		Star collidingStar = new Star("Collider",null,new AbsolutePoint(50,0),150);
 		collidingStar.updateHitbox();
 		assertTrue(starOne.collides(collidingStar));
@@ -93,9 +96,8 @@ class CollisionTest {
 		assertTrue(starTwo.collides(collidingStar));
 	}
 	
-	//Check Fixstars and Distant Galaxy
 	@Test
-	void uncollidables() {
+	void testUncollidables() {
 		FixStar uncollidableFixStar = new FixStar("a", 1, 1, 1);
 		uncollidableFixStar.shape.updateOrInitOutline();
 		assertFalse(uncollidableFixStar.collides(starOne));

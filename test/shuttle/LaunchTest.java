@@ -31,8 +31,6 @@ class LaunchTest {
 	void ConstructorTest() {
 		assertEquals(shuttle.degreeTo(origin),shuttle.relativePos);
 		assertTrue(shuttle.orbiting);
-		//There is no more Size at the Moment
-		//assertEquals(shuttle.distance,origin.size/2);
 	}
 
 	@Test
@@ -49,12 +47,11 @@ class LaunchTest {
 	
 	@Test
 	void faultyLaunchTest() {
-		shuttle.launch(); //Now its like in TestCase Launch()
+		shuttle.target=null;
 		
 		shuttle.launch(); // does nothing!assertEquals(shuttle.parent,target);
 		assertEquals(null, shuttle.target);
 		
-		assertEquals(shuttle.degreeTo(target),shuttle.relativePos);
 		assertFalse(shuttle.orbiting);
 		assertEquals(shuttle.distance,shuttle.distanceTo(target));
 	}

@@ -23,7 +23,7 @@ public abstract class BaseShape implements Shape{
 	
 	public boolean intersects(Shape other) {
 		if(other != this && other instanceof Shape) {
-			return outLine.stream().anyMatch(p->other.contains(p));
+			return outLine.stream().anyMatch(p->other.contains(p)) || covers(other);
 		}
 		return false;
 	}

@@ -25,27 +25,32 @@ public class MissileTest {
 				.distance(100)
 				.build();
 		shuttle= new ArmedSpaceShuttle("shuttle",planet,5,10,0);
+		
+		shuttle.shootLaser(planet);
+		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
 	}
 	
 	@Test
-	public void MissileRotation() {
-		shuttle.shootLaser(planet);
-		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
+	public void testMissileRotation() {
+		double oldRotation=missile.rotation;
+		for(int i=0;i<10;i++)
+			missile.rotate(); //Missiles do not Rotate
 		
-		assertEquals(true, missile.rotation==shuttle.degreeTo(planet));
-		missile.rotate();
-		assertEquals(true, missile.rotation==shuttle.degreeTo(planet));
+		assertTrue(missile.rotation==oldRotation);
 	}
 	
 	@Test
-	public void MissileMovement() {
-		shuttle.shootLaser(planet);
-		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
+	public void testMissileInitialisation() {
+		assertTrue(missile.center.getX()==shuttle.center.getX() && missile.center.getY()==shuttle.center.getY());
+		assertTrue(missile.distanceTo(planet)==planet.distanceTo(shuttle));
+		assertTrue(missile.rotation==shuttle.degreeTo(planet));
 		
-		assertEquals(true,missile.center.getX()==shuttle.center.getX() && missile.center.getY()==shuttle.center.getY());
-		assertEquals(true,missile.distanceTo(planet)==planet.distanceTo(shuttle));
-		
+	}
+	
+	@Test
+	public void testMissileMovement() {
 		missile.move(new AbsolutePoint(0,0));
+		
 		assertEquals(true,missile.distanceTo(planet)>planet.distanceTo(shuttle));
 		
 		while(true) {
@@ -58,18 +63,14 @@ public class MissileTest {
 	}
 	
 	@Test
-	public void MissileCollision() {
-		shuttle.shootLaser(planet);
-		missile=(Missile)shuttle.getAllChildrenFlat().get(0);
-		
+	public void testMissileCollision() {
 		assertTrue(shuttle.collides(missile));
-		assertFalse(missile.collides(missile));
 		
 		while(true) {
 			missile.move(new AbsolutePoint(0,0));
 			if(missile.distanceTo(planet)==0) {
-				assertEquals(true,missile.collides(planet));
-				assertEquals(true,planet.collides(missile));
+				assertTrue(missile.collides(planet));
+				assertTrue(planet.collides(missile));
 				return;
 			}
 		}

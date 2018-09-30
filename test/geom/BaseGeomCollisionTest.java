@@ -34,7 +34,16 @@ class BaseGeomCollisionTest {
 	}
 
 	@Test
-	void testIntersects() {
+	void testNegativeIntersection() {
+		
+		assertFalse(rect.intersects(distantRect));
+		assertFalse(distantRect.intersects(rect));
+		assertFalse(bigCircle.intersects(distantRect));
+		assertFalse(distantRect.intersects(bigCircle));
+	}
+	
+	@Test
+	void testPostiveIntersection() {
 		assertTrue(bigCircle.intersects(smallCircle));
 		assertTrue(smallCircle.intersects(bigCircle));
 		
@@ -42,19 +51,29 @@ class BaseGeomCollisionTest {
 		assertTrue(bigCircle.intersects(rect));
 		assertTrue(rect.intersects(smallCircle));
 		assertTrue(smallCircle.intersects(rect));
-		
-		assertFalse(rect.intersects(distantRect));
-		assertFalse(distantRect.intersects(rect));
-		assertFalse(bigCircle.intersects(distantRect));
-		assertFalse(distantRect.intersects(bigCircle));
 	}
-
+	
 	@Test
-	void testCovers() {
-		assertTrue(bigCircle.covers(smallCircle));
+	void testSelfIntersection() {
+		assertFalse(smallCircle.intersects(smallCircle));
+
+		assertFalse(rect.intersects(rect));
+	}
+	@Test
+	void testSelfCoverage() {
+		assertTrue(smallCircle.covers(smallCircle));
+
+		assertTrue(rect.covers(rect));
+	}
+	@Test
+	void testPositiveCovers() {
 		assertFalse(smallCircle.covers(bigCircle));
-		
 		assertTrue(rect.covers(smallCircle));
+	}
+	
+	@Test
+	void testNegativeCovers() {
+		assertTrue(bigCircle.covers(smallCircle));
 		assertFalse(rect.covers(bigCircle));
 	}
 }

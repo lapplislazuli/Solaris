@@ -22,17 +22,17 @@ class CoverTest {
 	}
 
 	@Test
-	void Hit() {
+	void testHit() {
 		assertTrue(anker.isCovered(xHit, yHit));
 	}
 	
 	@Test 
-	void notHit() {
+	void testNotHit() {
 		assertFalse(anker.isCovered(xNoHit, yNoHit));
 	}
 	
 	@Test
-	void oneNoHit() {
+	void testOneVariableNoHit() {
 		assertFalse(anker.isCovered(xNoHit, yHit));
 		assertFalse(anker.isCovered(xHit, yNoHit));
 	}

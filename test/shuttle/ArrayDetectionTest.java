@@ -1,12 +1,11 @@
 package shuttle;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import geom.Circle;
 import geom.AbsolutePoint;
 import logic.CollisionManager;
 import space.core.Star;
@@ -37,21 +36,11 @@ public class ArrayDetectionTest {
 	}
 	
 	@Test
-	public void detectHit() {
-		assertEquals(true, sensor.detectedItems.isEmpty());
-		
+	public void testDetectHit() {
 		sensor.update();
 		
-		assertEquals(true, sensor.detectedItems.contains(hitStar));
-		
-		assertEquals(1, sensor.detectedItems.size());
-		sensor.update();
-		assertEquals(true, sensor.detectedItems.contains(hitStar));
+		assertTrue(sensor.detectedItems.contains(hitStar));	
 		assertEquals(1, sensor.detectedItems.size());
 	}
-	@Ignore //Sensor cannot move like that anymore
-	public void notHitable() {
-		sensor.update();
-		assertEquals(true,sensor.detectedItems.isEmpty());
-	}
+	
 }
