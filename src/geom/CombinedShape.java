@@ -18,7 +18,10 @@ public abstract class CombinedShape implements Shape{
 		parts=new LinkedList<Shape>();
 		center=new AbsolutePoint(0,0);
 	}
-	
+	public CombinedShape(Point center) {
+		parts=new LinkedList<Shape>();
+		this.center=center;
+	}
 	public double area() {
 		double sum=0;
 		for(Shape part:parts)
@@ -55,7 +58,6 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public void updateOrInitOutline() {
-		//System.out.println("Init Combined Outline");
 		for(Shape part : parts)
 			part.updateOrInitOutline();
 	}
@@ -66,6 +68,7 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public void setCenter(Point p) {
+		System.out.println("Set Center of Combined Shape to:"+p.toString());
 		center=p;
 		for(Shape part : parts)
 			part.setCenter(p);

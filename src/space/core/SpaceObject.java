@@ -2,10 +2,8 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
-import geom.BaseShape;
 import geom.AbsolutePoint;
 import interfaces.ClickableObject;
-import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;

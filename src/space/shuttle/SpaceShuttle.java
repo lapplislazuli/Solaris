@@ -1,6 +1,7 @@
 package space.shuttle;
 
 import geom.AbsolutePoint;
+import geom.HShape;
 import geom.Rectangle;
 import geom.TShape;
 import interfaces.logical.CollidingObject;
@@ -20,8 +21,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	protected SensorArray sensor;
 	
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		//super(name, parent, Color.GHOSTWHITE, new Rectangle(size,size+1), 0 , speed);
-		super(name, parent, Color.GHOSTWHITE, new TShape(5,10,5,10), 0 , speed);
+		super(name, parent, Color.GHOSTWHITE, new HShape(5,10,3), 0 , speed);
 		
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;

@@ -46,7 +46,10 @@ public abstract class BaseShape implements Shape{
 	public abstract void initOutline();
 	
 	public void setCenter(Point p) {
-		center=p;
+		if(center instanceof RelativePoint)
+			((RelativePoint)center).anker=p;
+		else
+			center=p;
 	}
 	
 	public int getLevelOfDetail() {

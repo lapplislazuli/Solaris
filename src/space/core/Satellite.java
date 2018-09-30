@@ -3,7 +3,7 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
-import geom.Rectangle;
+import geom.TShape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
@@ -14,7 +14,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	private SpaceObject parent;
 	
 	private Satellite(Builder builder) {
-		super(builder.name,builder.parent,builder.color,new Rectangle(builder.xSize,builder.ySize),builder.distance,builder.speed);
+		super(builder.name,builder.parent,builder.color,new TShape(builder.xSize,builder.ySize,3),builder.distance,builder.speed);
 		trabants=builder.trabants;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 	}
