@@ -12,7 +12,7 @@ public class MouseManager implements UpdatingObject {
 	
 	private Scene scene;
 	
-	private static final MouseManager INSTANCE = new MouseManager();
+	private static MouseManager INSTANCE;
 	
 	private MouseManager() {
 		
@@ -20,6 +20,8 @@ public class MouseManager implements UpdatingObject {
 	};
 	
 	public static MouseManager getInstance() {
+		if(INSTANCE==null)
+			INSTANCE=new MouseManager();
 		return INSTANCE;
 	}
 

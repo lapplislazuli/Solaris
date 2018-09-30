@@ -22,14 +22,18 @@ public class CollisionManager implements TimerObject{
 	private UpdateManager parent;
 	private boolean running=true;
 	
-	private static final CollisionManager INSTANCE = new CollisionManager();
+	private static CollisionManager INSTANCE;
 	
 	private CollisionManager() {
 		collidables = new LinkedList<CollidingObject>();
 		destructibles = new LinkedList<DestructibleObject>();
 	}
 	
-	public static CollisionManager getInstance() {return INSTANCE;}
+	public static CollisionManager getInstance() {
+		if(INSTANCE==null)
+			INSTANCE=new CollisionManager();
+		return INSTANCE;
+	}
 	
 	public void initCollisionManager(int updateIntervall, UpdateManager parent) {
 		setTimer(updateIntervall);

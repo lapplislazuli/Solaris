@@ -21,13 +21,17 @@ public class UpdateManager implements TimerObject{
 	private Timer timer;
 	private boolean running=true;
 	
-	private static final UpdateManager INSTANCE = new UpdateManager();
+	private static UpdateManager INSTANCE;
 	
 	private UpdateManager() {
 		toUpdate=new LinkedList<UpdatingObject>();
 		toDraw=new LinkedList<DrawingObject>();
 	}
-	public static UpdateManager getInstance() {return INSTANCE;}
+	public static UpdateManager getInstance() {
+		if(INSTANCE==null)
+			INSTANCE= new UpdateManager();
+		return INSTANCE;
+	}
 	
 	public void initUpdateManager(int updateIntervall, GraphicsContext gc) {
 		this.gc = gc;

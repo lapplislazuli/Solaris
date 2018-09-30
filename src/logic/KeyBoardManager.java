@@ -10,11 +10,15 @@ public class KeyBoardManager implements UpdatingObject {
 	
 	private char currentPressed;
 
-	private static final KeyBoardManager INSTANCE = new KeyBoardManager();
+	private static KeyBoardManager INSTANCE;
 	
 	private KeyBoardManager() {};
 	
-	public static KeyBoardManager getInstance() {return INSTANCE;}
+	public static KeyBoardManager getInstance() {
+		if(INSTANCE==null)
+			INSTANCE=new KeyBoardManager();
+		return INSTANCE;
+	}
 
 	@Override
 	public void update() {
