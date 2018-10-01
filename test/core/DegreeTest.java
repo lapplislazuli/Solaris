@@ -9,21 +9,22 @@ import geom.AbsolutePoint;
 import space.core.Star;
 
 public class DegreeTest {
-	static Star starOne,starTwo,starAboveTwo;
+	static Star starOne,starTwo,starAboveTwo, starFarAway;
 	
 	@BeforeAll
 	static void initStars() {
 		starOne= new Star("anker1", null, new AbsolutePoint(0, 0),0);
 		starTwo= new Star("anker2", null, new AbsolutePoint(100, 0),0);
 		starAboveTwo = new Star("anker3", null, new AbsolutePoint(100, -50),0);
+		starFarAway= new Star("Anker4", null, new AbsolutePoint(1000,1000),0);
 	}
 	
 	@Test
 	void testBasicDegree() {		
 		//Expected: 180°
-		assertEquals(Math.PI,starOne.degreeTo(starTwo));
+		assertEquals(0,starOne.degreeTo(starTwo));
 		//Expected: 360°=0°
-		assertEquals(2*Math.PI,starTwo.degreeTo(starOne));
+		assertEquals(Math.PI,starTwo.degreeTo(starOne));
 	}
 	
 	@Test
@@ -33,10 +34,17 @@ public class DegreeTest {
 		//Expected: 270°
 		assertEquals(3*Math.PI/2, starTwo.degreeTo(starAboveTwo));
 	}
+	@Test
+	void testDegreesFarAwayItem() {
+		//Expected: 45°
+		assertEquals(Math.PI/4+0.0000000000000001, starOne.degreeTo(starFarAway));
+		//Expected: 215°
+		assertEquals(5*Math.PI/4+0.0000000000000001, starFarAway.degreeTo(starOne));
+	}
 	
 	@Test
 	void testDegreeSymetry() {
 		//Expected: One==Other+PI
 		assertTrue(starOne.degreeTo(starTwo)+Math.PI==starTwo.degreeTo(starOne));
-	}	
+	}
 }

@@ -2,8 +2,6 @@ package space.shuttle;
 
 import geom.AbsolutePoint;
 import geom.HShape;
-import geom.Rectangle;
-import geom.TShape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
@@ -33,10 +31,14 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	
 	public void launch() {
 		if(target!=null && parent.trabants.remove(this)) {
+			System.out.println("Launch "+ toString() + " from "+ parent.toString()+ " at " + target.toString());
 			target.trabants.add(this);
 			orbiting=false;
 			parent = target;
 			target=null;
+			
+			System.out.println("Set relative Pos from " + relativePos + " to " + degreeTo(parent));
+			
 			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
 		}

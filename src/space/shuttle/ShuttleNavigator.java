@@ -9,7 +9,7 @@ import space.core.SpaceObject;
 public class ShuttleNavigator implements UpdatingObject{
 	
 	String name;
-	private int currentPointer = 1;
+	private int currentPointer;
 	public List<SpaceObject> route;
 	private ArmedSpaceShuttle shuttle;
 	
@@ -21,16 +21,20 @@ public class ShuttleNavigator implements UpdatingObject{
 		route.add(shuttle.parent);
 		this.shuttle=shuttle;
 		this.name=name;
+		currentPointer=1;
 	}
 	
 	public void update() {
-		if(shuttle.isDead()&&respawn)
+		if(shuttle.isDead() && respawn)
 			rebuildShuttle();
 		else if(shuttle.orbiting) {
 			if((currentIdle+=shuttle.speed)>=idlingTurns) { //SpaceShuttle idled some time
-				if (currentPointer++>=route.size()) 
+				System.out.println("Launch from Station " + currentPointer + " with maxPoints " + route.size() );
+				if (currentPointer==route.size()) 
 					currentPointer=1;
-				shuttle.target=route.get(currentPointer-1);
+				
+				shuttle.target=route.get(currentPointer);
+				currentPointer++;
 				shuttle.launch();
 				currentIdle=0;
 			}

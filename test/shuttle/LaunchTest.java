@@ -52,8 +52,7 @@ class LaunchTest {
 		shuttle.launch(); // does nothing!assertEquals(shuttle.parent,target);
 		assertEquals(null, shuttle.target);
 		
-		assertFalse(shuttle.orbiting);
-		assertEquals(shuttle.distance,shuttle.distanceTo(target));
+		assertTrue(shuttle.orbiting);
 	}
 	
 }

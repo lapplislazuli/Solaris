@@ -10,12 +10,17 @@ public interface Point {
 	public void setZ(int val);
 	
 	default public double degreeTo(Point other) {
+		double degree;
 		if(distanceTo(other)==0) 
-			return 0;
-		if(getY()<other.getY())
-			return Math.acos((getX()-other.getX())/distanceTo(other));
-		else
-			return 2*Math.PI-Math.acos((getX()-other.getX())/distanceTo(other));
+			degree= 0;
+		else if(getY()<other.getY())
+			degree=Math.acos((other.getX()-getX())/distanceTo(other));
+		else 
+			degree=2*Math.PI-Math.acos((other.getX()-getX())/distanceTo(other));
+		
+		if(degree>=2*Math.PI)
+			degree-=2*Math.PI;
+		return degree;
 	}
 	
 	default public double distanceTo(Point other) {

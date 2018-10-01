@@ -68,7 +68,6 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public void setCenter(Point p) {
-		System.out.println("Set Center of Combined Shape to:"+p.toString());
 		center=p;
 		for(Shape part : parts)
 			part.setCenter(p);

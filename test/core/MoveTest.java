@@ -112,8 +112,9 @@ class MoveTest {
 		assertEquals(Math.PI/2,planet.degreeTo(sun));
 		
 		sun.update();
-		assertEquals(Math.PI,planet.degreeTo(sun));
+		assertEquals(0,planet.degreeTo(sun));
 		assertEquals(Math.PI,planet.relativePos);
+		assertEquals(Math.PI, sun.degreeTo(planet));
 	}
 	
 	@Test
@@ -122,7 +123,7 @@ class MoveTest {
 		assertEquals(3*Math.PI/2,satellite.degreeTo(planet));
 		assertEquals(3*Math.PI/2,satellite.relativePos);
 		sun.update();
-		assertEquals(Math.PI,satellite.degreeTo(planet));
+		assertEquals(0,satellite.degreeTo(planet));
 		assertEquals(3*Math.PI,satellite.relativePos);
 	}
 }

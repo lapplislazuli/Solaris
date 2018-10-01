@@ -71,9 +71,9 @@ public class Program extends Application{
 				.build();
 		
 		Planet moon = (new Planet.Builder("Moon", earth))
-				.size(5)
-				.distance(30)
-				.levelOfDetail(8)
+				.size(4)
+				.distance(28)
+				.levelOfDetail(7)
 				.speed(Math.PI/800)
 				.rotationSpeed(Math.PI*2/30)
 				.color(Color.LIGHTGRAY)
@@ -90,30 +90,18 @@ public class Program extends Application{
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
 				.distance(350)
 				.speed(Math.PI/4000)
-				.asteroids(150)
+				.asteroids(100)
 				.build();
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
-				.idlingTurns(Math.PI*2)
+				.idlingTurns(Math.PI*4)
 				.doesRespawn(true)
-				.shuttlesize(4)
+				.shuttlesize(2)
 				.shuttleOrbitingDistance(40)
 				.shuttleSpeed(Math.PI/70)
 				.start(earth)
 				.next(mars)
-				.build();
-		
-		ShuttleNavigator AlienOverlord = new ShuttleNavigator.Builder("AlienOverlord")
-				.shuttleName("Aliens")
-				.doesRespawn(true)
-				.shuttlesize(6)
-				.shuttleOrbitingDistance(30)
-				.shuttleSpeed(Math.PI/90)
-				.start(mars)
-				.next(earth)
-				.next(sun)
-				.next(earth)
 				.build();
 		
 		Satellite astra = (new Satellite.Builder("Astra", earth))

@@ -24,10 +24,13 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	
 	public MovingSpaceObject(String name,SpaceObject parent,Color color, Shape shape,int distance, double speed) {
 		super(name,parent.center.clone(),shape);
+		
 		this.distance=distance;
 		this.speed=speed;
 		rotationSpeed=speed*2;
+		
 		this.color=color;
+		
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
 		center.move(0, distance);;
@@ -44,7 +47,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		relativePos+=speed;
 		if (relativePos >= Math.PI*2)
 			relativePos -=  Math.PI*2;
-		else if(relativePos<= Math.PI*2)
+		else if(relativePos< 0 )
 			relativePos+= Math.PI*2;
 	}
 	
@@ -52,7 +55,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		rotation+=rotationSpeed;
 		if (rotation >= Math.PI*2)
 			rotation -=  Math.PI*2;
-		else if (rotation <= -Math.PI*2) {
+		else if (rotation < 0) {
 			rotation += Math.PI*2;
 		}
 	}

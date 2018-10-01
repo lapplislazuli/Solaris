@@ -25,8 +25,8 @@ class PointTest {
 		assertEquals(3*Math.PI/2,second2D.degreeTo(first2D));
 		
 		second2D.move(50, -50);
-		assertEquals(Math.PI,first2D.degreeTo(second2D));
-		assertEquals(2*Math.PI, second2D.degreeTo(first2D));
+		assertEquals(0,first2D.degreeTo(second2D));
+		assertEquals(Math.PI, second2D.degreeTo(first2D));
 	}
 
 	@Test
