@@ -67,9 +67,9 @@ class RotationTest {
 	void reverseRotation() {
 		reverse.rotate(); 
 		reverse.rotate();
-		assertEquals(-Math.PI, reverse.rotation);
+		assertEquals(Math.PI, reverse.rotation);
 		for(int i=0;i<4;i++)
 			reverse.rotate();
-		assertEquals(-Math.PI, reverse.rotation);
+		assertEquals(Math.PI, reverse.rotation);
 	}
 }

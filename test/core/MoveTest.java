@@ -68,7 +68,7 @@ class MoveTest {
 		assertEquals(250,sun.center.getX());
 		assertEquals(250,sun.center.getY());
 		assertEquals(250,planet.center.getX());
-		assertEquals(0,planet.center.getY());
+		assertEquals(500,planet.center.getY());
 		
 		sun.update();
 		//Star not moved, Planet beyond Star
@@ -107,9 +107,9 @@ class MoveTest {
 	public void testRelativePosition() {
 		sun.update();
 		
-		assertEquals(Math.PI/2,planet.degreeTo(sun));
-		assertEquals(5*Math.PI/2,planet.relativePos);
-		assertEquals(Math.PI/2,planet.degreeTo(sun));
+		assertEquals(3*Math.PI/2,planet.degreeTo(sun));
+		assertEquals(Math.PI/2,planet.relativePos);
+		assertEquals(3*Math.PI/2,planet.degreeTo(sun));
 		
 		sun.update();
 		assertEquals(0,planet.degreeTo(sun));
@@ -120,10 +120,10 @@ class MoveTest {
 	@Test
 	void testNegativeRelativePosition() {		
 		sun.update();
-		assertEquals(3*Math.PI/2,satellite.degreeTo(planet));
+		assertEquals(Math.PI/2,satellite.degreeTo(planet));
 		assertEquals(3*Math.PI/2,satellite.relativePos);
 		sun.update();
 		assertEquals(0,satellite.degreeTo(planet));
-		assertEquals(3*Math.PI,satellite.relativePos);
+		assertEquals(Math.PI,satellite.relativePos);
 	}
 }

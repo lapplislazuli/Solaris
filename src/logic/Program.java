@@ -95,7 +95,7 @@ public class Program extends Application{
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
-				.idlingTurns(Math.PI*4)
+				.idlingTurns(5*Math.PI/2)
 				.doesRespawn(true)
 				.shuttlesize(2)
 				.shuttleOrbitingDistance(40)

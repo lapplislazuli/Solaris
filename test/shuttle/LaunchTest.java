@@ -7,52 +7,114 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
+import interfaces.geom.Point;
 import space.core.Star;
 import space.shuttle.SpaceShuttle;
 
 class LaunchTest {
 	
-	static Star origin,target;
-	static SpaceShuttle shuttle;
+	static Star origin,targetOne, targetTwo, targetAboveShuttleOne;
+	static SpaceShuttle shuttleOne, shuttleTwo;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		origin = new Star("star",null,new AbsolutePoint(250,250),250);
-		target = new Star("star",null,new AbsolutePoint(1250,250),250);
+		targetOne = new Star("One",null,new AbsolutePoint(1250,250),250);
+		targetTwo = new Star("Two",null,new AbsolutePoint(699,394),250);
+		targetAboveShuttleOne = new Star("Three",null,new AbsolutePoint(300,500),250);
 	}
 
 	@BeforeEach
 	void setUp() throws Exception {
-		shuttle= new SpaceShuttle("shuttle",origin,0,0,0);
-		shuttle.target=target;
+		shuttleOne= new SpaceShuttle("shuttleOne",origin,0,50,-Math.PI/400);
+		shuttleOne.target=targetOne;
+		
+		shuttleTwo= new SpaceShuttle("shuttleTwo",origin,0,50,Math.PI/880);
+		shuttleTwo.target=targetTwo; 
+		
+		shuttleTwo.relativePos=Math.PI/35;
+		
+		origin.update();
 	}
 
 	@Test
-	void ConstructorTest() {
-		assertEquals(shuttle.degreeTo(origin),shuttle.relativePos);
-		assertTrue(shuttle.orbiting);
+	void testConstructor() {
+		assertTrue(origin.degreeTo(shuttleOne)-shuttleOne.relativePos <0.2);
+		assertEquals(origin.center.getX()+shuttleOne.getOrbitingDistance(), shuttleOne.center.getX()+1);
+		assertTrue(shuttleOne.orbiting);
 	}
+	
+	@Test
+	void testParentAndTargetAfterLaunch() {
+		shuttleOne.launch();
+		
+		assertEquals(shuttleOne.parent,targetOne);
+		assertEquals(null, shuttleOne.target);
+		assertFalse(shuttleOne.orbiting);
+	}
+	
+	@Test
+	void testDistanceAfterLaunch() {
+		shuttleOne.launch();
+			
+		assertEquals(shuttleOne.distance,(int)shuttleOne.distanceTo(targetOne));
+	}
+	
+	@Test
+	void testDegreeAfterLaunch() {
+		shuttleOne.launch();
+		
+		assertEquals(targetOne.degreeTo(shuttleOne),shuttleOne.relativePos);
+	}
+	
+	@Test
+	void TestFixDegree() {
+		shuttleOne.target=targetAboveShuttleOne;
+		
+		shuttleOne.launch();
+		
+		assertTrue(3*Math.PI/2-shuttleOne.relativePos<0.2);
+	}
+	
+	@Test
+	void testCorrectLaunchShuttleTwo() {
+		shuttleTwo.launch();
+		
+		assertEquals(shuttleTwo.parent,targetTwo);
+		assertEquals(null, shuttleTwo.target);
+		
+		assertEquals(targetTwo.degreeTo(shuttleTwo),shuttleTwo.relativePos);
+		assertFalse(shuttleTwo.orbiting);
+		assertEquals(shuttleTwo.distance,(int)shuttleTwo.distanceTo(targetTwo));
+	}
+	
+	@Test
+	void testNoTargetLaunch() {
+		shuttleOne.target=null;
+		
+		shuttleOne.launch(); // does nothing!assertEquals(shuttle.parent,target);
+		assertEquals(null, shuttleOne.target);
+		
+		assertTrue(shuttleOne.orbiting);
+	}
+	
+	@Test
+	void testNoTeleport() {
+		Point oldPos= shuttleOne.center.clone();
 
-	@Test
-	void correctLaunchTest() {
-		shuttle.launch();
+		shuttleOne.launch();
+		targetOne.update();
 		
-		assertEquals(shuttle.parent,target);
-		assertEquals(null, shuttle.target);
-		
-		assertEquals(shuttle.degreeTo(target),shuttle.relativePos);
-		assertFalse(shuttle.orbiting);
-		assertEquals(shuttle.distance,shuttle.distanceTo(target));
+		assertTrue(oldPos.distanceTo(shuttleOne.center)<=20);
 	}
 	
 	@Test
-	void faultyLaunchTest() {
-		shuttle.target=null;
+	void testNoTeleportShuttleTwo() {
+		Point oldPos= shuttleTwo.center.clone();
+
+		shuttleTwo.launch();
+		targetTwo.update();
 		
-		shuttle.launch(); // does nothing!assertEquals(shuttle.parent,target);
-		assertEquals(null, shuttle.target);
-		
-		assertTrue(shuttle.orbiting);
+		assertTrue(oldPos.distanceTo(shuttleTwo.center)<=10);
 	}
-	
 }

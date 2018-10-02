@@ -15,7 +15,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public boolean orbiting = true; 
 	public SpaceObject target;
 	public SpaceObject parent;
-	double orbitingDistance;
+	protected double orbitingDistance;
 	protected SensorArray sensor;
 	
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -31,16 +31,16 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	
 	public void launch() {
 		if(target!=null && parent.trabants.remove(this)) {
-			System.out.println("Launch "+ toString() + " from "+ parent.toString()+ " at " + target.toString());
+			System.out.println("Launch "+ toString() + " from "+ parent.toString()+ " at " + target.toString() +  " distance: " + target.distanceTo(this) + " degree: " + degreeTo(target));
+			
+
 			target.trabants.add(this);
 			orbiting=false;
 			parent = target;
 			target=null;
 			
-			System.out.println("Set relative Pos from " + relativePos + " to " + degreeTo(parent));
-			
-			relativePos=degreeTo(parent);
 			distance=(int)distanceTo(parent);
+			relativePos=parent.degreeTo(this);
 		}
 	}
 	
@@ -80,4 +80,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		parent.trabants.remove(this);
 		parent=(target=null);
 	}
+	
+	public double getOrbitingDistance() {return orbitingDistance;}
 }
