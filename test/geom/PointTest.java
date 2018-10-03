@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import interfaces.geom.Point;
+
 class PointTest {
 	
 	
@@ -88,6 +90,27 @@ class PointTest {
 		first2D.move(50, 50);
 		assertEquals(0,clone.x);
 		assertEquals(0,clone.y);
+	}
+	
+	@Test 
+	void testPositiveSamePosition() {
+		Point samePoint = first2D.clone();
+		
+		assertTrue(samePoint.samePosition(first2D));
+	}
+	
+	void testNegativeSamePosition() {
+		assertFalse(second2D.samePosition(first2D));
+	}
+	
+	
+	@Test
+	void testSamePointSymetry() {
+		Point samePoint = first2D.clone();
+		
+		assertTrue(samePoint.samePosition(first2D)== first2D.samePosition(samePoint));
+		
+		assertTrue(first2D.samePosition(second2D) == second2D.samePosition(first2D));
 	}
 
 }

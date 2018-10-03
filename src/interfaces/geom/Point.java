@@ -27,5 +27,12 @@ public interface Point {
 		return Math.sqrt((getX()-other.getX())*(getX()-other.getX())+(getY()-other.getY())*(getY()-other.getY())+(getZ()-other.getZ())*(getZ()-other.getZ()));
 	}
 	
+	default public boolean samePosition(Point other) {
+		return
+				   getX()==other.getX()
+				&& getY()==other.getY()
+				&& getZ()==other.getZ();
+	}
+	
 	public Point clone();
 }

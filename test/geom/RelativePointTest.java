@@ -120,5 +120,17 @@ class RelativePointTest {
 		assertEquals(100,absAnkered.getZ());
 		assertEquals(100,relAnkered.getZ());
 	}
-
+	
+	
+	@Test
+	void testSamePosition() {
+		RelativePoint onParent = new RelativePoint(absAnkered,0,0);
+		
+		assertTrue(onParent.samePosition(absAnkered));
+	}
+	
+	@Test
+	void testNegativeSamePosition() {
+		assertFalse(absAnkered.samePosition(relAnkered));
+	}
 }
