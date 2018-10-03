@@ -92,15 +92,22 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	public boolean equals(Object o) {
 		if(!(o instanceof SpaceObject)) 
 			return false;
-		
 		SpaceObject sO = (SpaceObject) o;
 		if(sO == this)
 			return true;
 		return
 			name==sO.name 
 			&& rotation==sO.rotation
-			&&	center.samePosition(sO.center)
+			&& center.samePosition(sO.center)
 			&& shape.sameShape(sO.shape);
 	}
 	
+	@Override
+	public int hashCode() {
+		int	result=name.hashCode();
+		result=31*result+Double.hashCode(rotation);
+		result=31*result+center.hashCode();
+	
+		return result;
+	}
 }

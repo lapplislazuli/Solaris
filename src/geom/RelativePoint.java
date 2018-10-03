@@ -42,4 +42,11 @@ public class RelativePoint implements Point{
 		return new RelativePoint(anker,xDif,yDif,zDif);
 	}
 
+	@Override
+	public int hashCode() {
+		int result= Integer.hashCode(getX());
+		result = 31 * result + Integer.hashCode(getY());
+		result = 31 * result + Integer.hashCode(getZ());
+		return result;
+	}
 }

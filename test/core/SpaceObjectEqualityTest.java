@@ -100,7 +100,7 @@ class SpaceObjectEqualityTest {
 	}
 	
 	@Test
-	void addSameItemToSet() {
+	void testAddSameItemToSet() {
 		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
 		sOs.add(aOne); 
 		sOs.add(aOne);
@@ -108,7 +108,7 @@ class SpaceObjectEqualityTest {
 	}
 	
 	@Test
-	void addSimiliarItemToSet() {
+	void testAddSimiliarItemToSet() {
 		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
 		sOs.add(aOne); 
 		sOs.add(aTwo);
@@ -116,7 +116,7 @@ class SpaceObjectEqualityTest {
 	}
 	
 	@Test
-	void addDifferentItemsToSet() {
+	void testAddDifferentItemsToSet() {
 		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
 		sOs.add(aOne); 
 		sOs.add(cOne);

@@ -98,11 +98,21 @@ class PointTest {
 		
 		assertTrue(samePoint.samePosition(first2D));
 	}
-	
+	@Test
 	void testNegativeSamePosition() {
 		assertFalse(second2D.samePosition(first2D));
 	}
 	
+	@Test 
+	void testPositiveHashCode() {
+		Point samePoint = first2D.clone();
+		
+		assertEquals(first2D.hashCode(),samePoint.hashCode());
+	}
+	@Test
+	void testNegativeHashCode() {
+		assertFalse(second2D.hashCode()==first2D.hashCode());
+	}
 	
 	@Test
 	void testSamePointSymetry() {
