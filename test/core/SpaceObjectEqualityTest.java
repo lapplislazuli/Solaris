@@ -7,12 +7,16 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
 import space.core.Planet;
+import space.core.SpaceObject;
 import space.core.Star;
 
 class SpaceObjectEqualityTest {
@@ -82,16 +86,40 @@ class SpaceObjectEqualityTest {
 	}
 	
 	@Test
-	void TestTransitity() {
+	void testTransitity() {
 		assertTrue(aOne.equals(aTwo)==aTwo.equals(aThree));
 	}
 	
 	@Test
-	void TestEqualityAfterMove() {
+	void testEqualityAfterMove() {
 		cOne.speed = 0;
 		
 		aOne.update(); // c#s moved
 		
 		assertFalse(cOne.equals(cTwo));
+	}
+	
+	@Test
+	void addSameItemToSet() {
+		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
+		sOs.add(aOne); 
+		sOs.add(aOne);
+		assertEquals(1,sOs.size());
+	}
+	
+	@Test
+	void addSimiliarItemToSet() {
+		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
+		sOs.add(aOne); 
+		sOs.add(aTwo);
+		assertEquals(1,sOs.size());
+	}
+	
+	@Test
+	void addDifferentItemsToSet() {
+		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
+		sOs.add(aOne); 
+		sOs.add(cOne);
+		assertEquals(2,sOs.size());
 	}
 }
