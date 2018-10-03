@@ -9,9 +9,12 @@ public interface Shape extends DrawingObject{
 	
 	public double area();
 	
+	public Point getCenter();
 	public void setCenter(Point p);
 	
 	public void updateOrInitOutline();
 	public int getLevelOfDetail();
 	public void setLevelOfDetail(int levelOfDetail);
+	
+	public boolean sameShape(Shape shape);
 }

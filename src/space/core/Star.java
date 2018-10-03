@@ -74,7 +74,7 @@ public class Star extends SpaceObject {
 		
 		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
 		
-		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
+		public Builder(String name) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
 				throw new IllegalArgumentException("Name cannot be null or empty");
 			this.name=name;

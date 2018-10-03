@@ -72,6 +72,18 @@ public abstract class CombinedShape implements Shape{
 		for(Shape part : parts)
 			part.setCenter(p);
 	}
+	public Point getCenter() {return center;}
+	
+	public boolean sameShape(Shape other) {
+		if(!(other instanceof CombinedShape))
+			return false;
+		CombinedShape otherCasted=(CombinedShape)other;
+		if(otherCasted==this)
+			return true;
+		return 
+			center.samePosition(otherCasted.getCenter())
+			&& area()==otherCasted.area();
+	}
 	
 	public int getLevelOfDetail() {
 		return levelOfDetail;

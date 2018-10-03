@@ -51,6 +51,7 @@ public abstract class BaseShape implements Shape{
 		else
 			center=p;
 	}
+	public Point getCenter() { return center;}
 	
 	public int getLevelOfDetail() {
 		return levelOfDetail;
@@ -58,5 +59,13 @@ public abstract class BaseShape implements Shape{
 	
 	public void setLevelOfDetail(int lod) {
 		levelOfDetail=lod;
+	}
+	
+	public boolean sameShape(Shape other) {
+		if(!(other instanceof BaseShape))
+			return false;
+		return 
+			center.samePosition(other.getCenter())
+			&& area()==other.area();
 	}
 }

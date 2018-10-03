@@ -88,4 +88,19 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	@Override
 	public String toString() {return name+"@"+center.toString();}
 	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof SpaceObject)) 
+			return false;
+		
+		SpaceObject sO = (SpaceObject) o;
+		if(sO == this)
+			return true;
+		return
+			name==sO.name 
+			&& rotation==sO.rotation
+			&&	center.samePosition(sO.center)
+			&& shape.sameShape(sO.shape);
+	}
+	
 }
