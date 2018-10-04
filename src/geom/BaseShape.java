@@ -17,7 +17,6 @@ public abstract class BaseShape implements Shape{
 	
 	protected BaseShape() {
 		center= new AbsolutePoint(0,0);
-		outLine.add(center);
 	}
 	
 	public boolean intersects(Shape other) {
@@ -66,5 +65,6 @@ public abstract class BaseShape implements Shape{
 		return 
 			center.samePosition(other.getCenter())
 			&& area()==other.area();
+		//TODO: Further Checks with Outline?
 	}
 }

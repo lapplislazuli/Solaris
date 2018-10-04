@@ -4,19 +4,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.TimerObject;
-import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
 public class CollisionManager implements TimerObject{
 	
-	public List<CollidingObject> collidables = new LinkedList<CollidingObject>();
-	public List<DestructibleObject> destructibles = new LinkedList<DestructibleObject>();
+	public final List<CollidingObject> collidables;
+	public final List<DestructibleObject> destructibles;
 	
 	private Timer timer;
 	private UpdateManager parent;
@@ -59,12 +59,12 @@ public class CollisionManager implements TimerObject{
 		}	
 	}
 	
-	public void emptyCollisions() {
-		collidables = new LinkedList<CollidingObject>();
-		destructibles = new LinkedList<DestructibleObject>();
+	public void empty() {
+		collidables.clear();
+		destructibles.clear();
 	}
 	
-	public void addCollidable(CollidingObject o){
+	public void add(CollidingObject o){
 		collidables.add(o);
 		if(o instanceof DestructibleObject)
 			destructibles.add((DestructibleObject)o);
@@ -72,21 +72,18 @@ public class CollisionManager implements TimerObject{
 	
 	public void refresh() {
 		if(running) {
-			collidables = new LinkedList<CollidingObject>();
-			destructibles = new LinkedList<DestructibleObject>();
-			
-			for(SpaceObject o : getCurrentObjects())
-				addCollidable(o);
+			empty();
+			for(SpaceObject o : getAllActiveSpaceObjects())
+				add(o);
 		}	
 	}
 	
-	public List<SpaceObject> getCurrentObjects() {
-		//Read current toUpdate Objects, whether new ones are spawned somewhere
-		List<SpaceObject> collisionItems=new LinkedList<SpaceObject>();
-		for(UpdatingObject uO : parent.toUpdate)
-			if(uO instanceof SpaceObject)
-				collisionItems.addAll(((SpaceObject) uO).getAllChildrenFlat());
-		return collisionItems;
+	public List<SpaceObject> getAllActiveSpaceObjects() {	
+		return parent.toUpdate.stream()
+				.filter(updatingObject -> updatingObject instanceof SpaceObject)
+				.map(spaceObject -> (SpaceObject)spaceObject)
+				.flatMap(spaceObject -> spaceObject.getAllChildrenFlat().stream())
+				.collect(Collectors.toList());
 	}
 	
 	@Override
