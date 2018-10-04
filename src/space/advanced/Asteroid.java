@@ -63,7 +63,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		center.move((int)(Math.random()+1)*3,(int)(Math.random()+1)*3);
 	}
 	
-	public void destruct(CollidingObject other) {
+	public void destruct() {
+		System.out.println(toString() + " got destroyed");
 		if(parent!=null)
 			remove();
 	}	
