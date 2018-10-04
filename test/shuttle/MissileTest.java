@@ -110,8 +110,6 @@ public class MissileTest {
 	}
 	@Test
 	public void testMissileCollision() {
-		assertTrue(shuttle.collides(missileOne));
-		
 		for(int i=0;i<10000;i++){
 			missileOne.move(new AbsolutePoint(0,0));
 			if(missileOne.distanceTo(targetOne)==0) {

@@ -62,7 +62,7 @@ public class UpdateManager implements TimerObject{
 		toUpdate.add(o);
 		toDraw.add(o);
 		for(SpaceObject child : o.getAllChildrenFlat())
-			CollisionManager.getInstance().addCollidable(child);
+			CollisionManager.getInstance().add(child);
 	}
 	
 	@Override

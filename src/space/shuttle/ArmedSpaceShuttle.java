@@ -1,8 +1,10 @@
 package space.shuttle;
 
+import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import space.core.SpaceObject;
 import space.shuttle.missiles.Laserbeam;
+import space.shuttle.missiles.Missile;
 import space.shuttle.missiles.Rocket;
 
 public class ArmedSpaceShuttle extends SpaceShuttle{
@@ -32,10 +34,7 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 	public void shootLaser(SpaceObject target) {
 		if(laserCoolDown<=0) {
 			new Laserbeam("Laser from " + name, this,degreeTo(target),5);
-			
-			System.out.println(toString()+" shoot laser at " + target.toString()+ " ; Distance:"+ distanceTo(target));
-			//System.out.println("Degree:"+degreeTo(target) + ", InverseDegree:" + target.degreeTo(this));
-			//System.out.println("CorrectDegree:"+(degreeTo(target)-Math.PI/2) + ", CorrectInverseDegree:" + (target.degreeTo(this)-Math.PI/2));
+			System.out.println(toString()+" shoot laser at " + target.toString());
 			
 			//@UpdateRatio 25ms its every 3 Seconds:
 			laserCoolDown= 3000/25;
@@ -47,4 +46,11 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 			new Rocket("Rocket from " + name, this,3,degreeTo(target),10);
 	}
 
+	@Override
+	public boolean collides(CollidingObject other) {
+		if(other instanceof Missile && trabants.contains((Missile)other))
+			return false;
+		return super.collides(other);
+	}
+	
 }

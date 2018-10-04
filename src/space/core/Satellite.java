@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geom.TShape;
-import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
@@ -31,10 +30,13 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		parent=null;		
 	}
 	@Override
-	public void destruct(CollidingObject other) {
+	public void destruct() {
+		System.out.println(toString() + " got destroyed");
 		new Explosion("Explosion from" + name,center,6,800,1.03,Color.FIREBRICK);
-		if(parent!=null)
+		if(parent!=null) {
 			remove();
+			System.out.println(toString() + " removed!");
+		}
 	}
 	
 	public static class Builder {
