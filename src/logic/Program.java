@@ -6,7 +6,7 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
-
+import geom.AbsolutePoint;
 import javafx.application.*;
 import javafx.stage.Stage;
 import javafx.scene.*;
@@ -58,7 +58,7 @@ public class Program extends Application{
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
-		Star sun = new Star("Sun",Color.ORANGE,30);
+		Star sun = new Star("Sun",Color.ORANGE,new AbsolutePoint(600,400),30);
 		Planet earth = (new Planet.Builder("Earth", sun))
 				.size(13)
 				.distance(150)
