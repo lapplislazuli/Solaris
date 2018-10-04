@@ -48,6 +48,12 @@ public class Program extends Application{
         primaryStage.show();
 	}
 	
+	@Override
+	public void stop() {
+		System.out.println("Closing Solaris");
+		System.exit(0);
+	}
+	
 	@SuppressWarnings("unused")
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
