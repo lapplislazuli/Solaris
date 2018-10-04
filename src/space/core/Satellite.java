@@ -32,7 +32,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	}
 	@Override
 	public void destruct(CollidingObject other) {
-		new Explosion("Explosion from" + name,center.getX(),center.getY(),800,6,1.03,Color.FIREBRICK);
+		new Explosion("Explosion from" + name,center,6,800,1.03,Color.FIREBRICK);
 		if(parent!=null)
 			remove();
 	}

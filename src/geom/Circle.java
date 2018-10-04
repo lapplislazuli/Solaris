@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public class Circle extends BaseShape{
-	public int radious;
+	public double radious;
 	
 	public Circle(int radious) {
 		super();
