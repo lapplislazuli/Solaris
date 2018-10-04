@@ -2,6 +2,7 @@ package shuttle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,12 @@ class LaunchTest {
 		
 		origin.update();
 	}
-
+	
+	@AfterEach
+	void emptyOriginsShuttles() throws Exception {
+		origin.trabants.clear();
+	}
+	
 	@Test
 	void testConstructor() {
 		assertTrue(origin.degreeTo(shuttleOne)-shuttleOne.relativePos <0.2);
@@ -108,6 +114,14 @@ class LaunchTest {
 		assertTrue(oldPos.distanceTo(shuttleOne.center)<=20);
 	}
 	
+	@Test
+	void testRemoval() {
+		shuttleOne.remove();
+		assertEquals(1,origin.trabants.size());
+		
+		shuttleTwo.remove();
+		assertEquals(0,origin.trabants.size());
+	}
 	@Test
 	void testNoTeleportShuttleTwo() {
 		Point oldPos= shuttleTwo.center.clone();

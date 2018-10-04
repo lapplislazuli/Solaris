@@ -13,7 +13,6 @@ public abstract class BaseShape implements Shape{
 	
 	protected BaseShape(Point center) {
 		this.center=center;
-		outLine.add(center);
 	}
 	
 	protected BaseShape() {
@@ -22,7 +21,7 @@ public abstract class BaseShape implements Shape{
 	}
 	
 	public boolean intersects(Shape other) {
-		if(other != this && other instanceof Shape) {
+		if(other != this) {
 			return outLine.stream().anyMatch(p->other.contains(p)) || covers(other);
 		}
 		return false;
