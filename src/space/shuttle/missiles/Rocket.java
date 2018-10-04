@@ -24,7 +24,7 @@ public class Rocket extends Missile implements DestructibleObject {
 	@Override
 	public void destruct(CollidingObject other) {
 		System.out.println(name+" collided with " + other.toString());
-		new Explosion("Explosion from "+name, center.getX(), center.getY(),1000, 5, 1.02, Color.FIREBRICK);
+		new Explosion("Explosion from "+name, center, 5,1000, 1.02, Color.FIREBRICK);
 		remove();
 	}
 	

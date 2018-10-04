@@ -1,6 +1,9 @@
 package space.effect;
 
+import geom.AbsolutePoint;
 import interfaces.DrawingObject;
+import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import interfaces.logical.RemovableObject;
 import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,14 +13,13 @@ import logic.EffectManager;
 public abstract class Effect implements UpdatingObject, DrawingObject, RemovableObject{
 	
 	String name;
-	int x,y;
-	double size;
+	Point center;
+	Shape shape;
 	
-	public Effect(String name, int x, int y, double size){
+	public Effect(String name,Point p, Shape s){
 		this.name = name;
-		this.x = x;
-		this.y = y;
-		this.size = size;
+		center=p;
+		shape=s;
 		EffectManager.getInstance().addEffect(this);
 	}
 	
@@ -27,14 +29,15 @@ public abstract class Effect implements UpdatingObject, DrawingObject, Removable
 	
 	public void update() {}
 	
-	public void draw(GraphicsContext gc) {}
+	public void draw(GraphicsContext gc) {
+		shape.draw(gc);
+	}
+	
 	
 	public boolean isCovered(int x, int y) {
-		return
-				y>=this.y-size && y<=this.y+size
-			&&	x>=this.x-size && x<=this.x+size;
+		return shape.contains(new AbsolutePoint(x,y));
 	}
 	
 	@Override
-	public String toString() {return name+"@"+x+"|"+y;}
+	public String toString() {return name+"@"+center.toString();}
 }
