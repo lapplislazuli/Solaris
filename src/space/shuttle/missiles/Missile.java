@@ -2,6 +2,7 @@ package space.shuttle.missiles;
 
 import geom.BaseShape;
 import geom.AbsolutePoint;
+import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
 import space.shuttle.SpaceShuttle;
@@ -44,4 +45,11 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	}
 	@Override 
 	public void rotate() {}
+	
+	@Override
+	public boolean collides(CollidingObject other) {
+		if(other == emitter)
+			return false;
+		return super.collides(other);
+	}
 }
