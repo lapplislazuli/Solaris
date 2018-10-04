@@ -1,32 +1,28 @@
 package logic;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import interfaces.logical.TimerObject;
-import javafx.application.Platform;
+import interfaces.logical.UpdatingObject;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
-public class CollisionManager implements TimerObject{
+public class CollisionManager implements UpdatingObject{
 	
-	public final List<CollidingObject> collidables;
-	public final List<DestructibleObject> destructibles;
-	
-	private Timer timer;
+	public final Set<CollidingObject> collidables;
+	public final Set<DestructibleObject> destructibles;
+
 	private UpdateManager parent;
 	private boolean running=true;
 	
 	private static CollisionManager INSTANCE;
 	
 	private CollisionManager() {
-		collidables = new LinkedList<CollidingObject>();
-		destructibles = new LinkedList<DestructibleObject>();
+		collidables = new HashSet<CollidingObject>();
+		destructibles = new HashSet<DestructibleObject>();
 	}
 	
 	public static CollisionManager getInstance() {
@@ -36,15 +32,15 @@ public class CollisionManager implements TimerObject{
 	}
 	
 	public void initCollisionManager(int updateIntervall, UpdateManager parent) {
-		setTimer(updateIntervall);
 		this.parent=parent;
 	}
 	
 	public void update() {
 		if(running) {
+			refresh();
 			collidables.stream().forEach(e->e.updateHitbox());
 			
-			List<DestructibleObject> destroyed=new LinkedList<DestructibleObject>();
+			Set<DestructibleObject> destroyed=new HashSet<DestructibleObject>();
 			for(DestructibleObject destructible : destructibles) {
 				for(CollidingObject collider: collidables) {
 					//if(destructible.collides(collider)&&collider.collides(destructible)) {
@@ -78,23 +74,12 @@ public class CollisionManager implements TimerObject{
 		}	
 	}
 	
-	public List<SpaceObject> getAllActiveSpaceObjects() {	
+	public Set<SpaceObject> getAllActiveSpaceObjects() {	
 		return parent.toUpdate.stream()
 				.filter(updatingObject -> updatingObject instanceof SpaceObject)
 				.map(spaceObject -> (SpaceObject)spaceObject)
 				.flatMap(spaceObject -> spaceObject.getAllChildrenFlat().stream())
-				.collect(Collectors.toList());
-	}
-	
-	@Override
-	public void setTimer(int updateIntervall) {
-		timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-            public void run() {
-            	Platform.runLater ( () ->refresh()); 
-            }
-        }, 0, updateIntervall);
+				.collect(Collectors.toSet());
 	}
 
 	public void pause() {
