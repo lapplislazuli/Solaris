@@ -15,6 +15,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	private Satellite(Builder builder) {
 		super(builder.name,builder.parent,builder.color,new TShape(builder.xSize,builder.ySize,3),builder.distance,builder.speed);
 		trabants=builder.trabants;
+		parent=builder.parent;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 	}
 	
