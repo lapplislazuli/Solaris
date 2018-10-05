@@ -118,6 +118,15 @@ public class Program extends Application{
 				.color(Color.LIGHTGRAY)
 				.build();
 		
+		Satellite hubble = (new Satellite.Builder("Hubble-Telescope", sun))
+				.size(5,5)
+				.distance(70)
+				.levelOfDetail(8)
+				.speed(-Math.PI/800)
+				.color(Color.CADETBLUE)
+				.build();
+		
+		
 		Planet phobos = (new Planet.Builder("Phobos", saturn))
 				.size(4)
 				.distance(70)
