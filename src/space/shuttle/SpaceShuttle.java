@@ -66,7 +66,12 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 			remove();
 		}
 	}
-
+	
+	@Override
+	public void rotate() {
+		rotation=degreeTo(parent);
+	}
+	
 	public boolean isDead() {
 		return parent==null;
 	}
