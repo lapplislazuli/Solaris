@@ -13,6 +13,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	public List<SpaceObject> route;
 	private ArmedSpaceShuttle shuttle;
 	
+	boolean isPlayer;
 	boolean respawn; //Bool whether new Ships will be spawned
 	double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	
@@ -42,6 +43,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	
 	private void rebuildShuttle() {
 		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),4,(int) shuttle.orbitingDistance,shuttle.speed);
+		shuttle.setPlayer(isPlayer);
 	}
 
 	public static class Builder {
@@ -125,6 +127,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		currentIdle=0;
 		idlingTurns=builder.idlingTurns;
 		respawn=builder.respawn;
+		isPlayer=builder.isPlayer;
 		shuttle.setPlayer(builder.isPlayer);
 	}
 }

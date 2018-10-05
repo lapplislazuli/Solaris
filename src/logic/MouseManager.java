@@ -7,6 +7,7 @@ import space.core.SpaceObject;
 import space.shuttle.ArmedSpaceShuttle;
 import javafx.scene.*;
 import geom.AbsolutePoint;
+import interfaces.geom.Point;
 import interfaces.logical.UpdatingObject;
 @SuppressWarnings("restriction")
 public class MouseManager implements UpdatingObject {
@@ -43,29 +44,28 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	private void mouseClicked(MouseEvent evt) {
+		AbsolutePoint clickedPosition = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
+		
 		if(evt.getButton().equals(MouseButton.PRIMARY))
-			shootAtClickedPoint(evt);
+			shootAtClickedPoint(clickedPosition);
 		else if (evt.getButton().equals(MouseButton.SECONDARY))
-			showInformationOnClick(evt);
+			showInformationOnClick(clickedPosition);
 		else
 			System.out.println("You pressed something strange!");
 	}
 
-	private void shootAtClickedPoint(MouseEvent evt) {
-		AbsolutePoint clickedPosition = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
-		System.out.println("Gotta Shoot");
+	private void shootAtClickedPoint(Point clickedPosition) {
 		
 		if(player!=null)
-			System.out.println("Gotta Shoot at  " + clickedPosition.toString());
-			//player.shootRocket(target);
+			player.shootRocket(clickedPosition);
 	}
 	
-	private void showInformationOnClick(MouseEvent evt) {
+	private void showInformationOnClick(Point clickedPosition) {
 		UpdateManager.getInstance().toDraw.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
 			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())
-			.filter(item -> item.isCovered((int)evt.getSceneX(),(int)evt.getSceneY()))
+			.filter(item -> item.shape.contains(clickedPosition))
 			.forEach(clicked -> clicked.click());
 	}
 	
