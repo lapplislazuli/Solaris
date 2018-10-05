@@ -56,11 +56,4 @@ public class EffectManager implements UpdatingObject, DrawingObject {
 		effects.remove(e);
 	}
 
-	@Override
-	public boolean isCovered(int x, int y) {
-		return false;
-	}
-
-
-
 }

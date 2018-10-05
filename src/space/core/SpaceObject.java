@@ -73,9 +73,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return flatChildren;
 	}
 	
-	public boolean isCovered(int x, int y) {
-		return shape.isCovered(x, y);
-	}
 	
 	public void click() {
 		System.out.println("Clicked: " + toString());

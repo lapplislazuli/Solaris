@@ -50,8 +50,6 @@ public class FixStar extends Star implements TimerObject {
 	}
 
 	@Override
-	public boolean isCovered(int x, int y) {return false;}
-	@Override
 	public boolean collides(CollidingObject other) {return false;}
 	@Override
 	public double distanceTo(SpaceObject other) {return Double.MAX_VALUE;}

@@ -35,13 +35,6 @@ public abstract class CombinedShape implements Shape{
 				return true;
 		return false;
 	}
-
-	public boolean isCovered(int x, int y) {
-		for(Shape part:parts)
-			if(part.isCovered(x,y))
-				return true;
-		return false;
-	}
 	
 	public boolean covers(Shape other) {
 		for(Shape part:parts)

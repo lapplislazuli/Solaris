@@ -29,8 +29,6 @@ public class DistantGalaxy extends SpaceObject{
     
     @Override
 	public boolean collides(CollidingObject other) {return false;}
-	@Override
-	public boolean isCovered(int x, int y) {return false;}
 	 
     @Override
     public void drawThisItem(GraphicsContext gc) {

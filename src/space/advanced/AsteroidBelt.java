@@ -24,11 +24,6 @@ public class AsteroidBelt extends MovingSpaceObject{
 		return false;
 	}
 	
-	@Override 
-	public boolean isCovered(int x, int y) {
-		return false;
-	}
-	
 	@Override
 	public void move(AbsolutePoint parentCenter) {
 		center=parentCenter;

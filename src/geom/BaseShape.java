@@ -25,10 +25,6 @@ public abstract class BaseShape implements Shape{
 		}
 		return false;
 	}
-
-	public boolean isCovered(int x, int y) {
-		return contains(new AbsolutePoint(x,y));
-	}
 	
 	public boolean covers(Shape other) {
 		if(other instanceof BaseShape)
