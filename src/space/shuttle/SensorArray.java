@@ -41,10 +41,7 @@ public class SensorArray implements UpdatingObject,MovingObject{
 				.collect(Collectors.toList());
 	}
 	@Override
-	public void move(AbsolutePoint parentCenter) {
-		//Should work without anything?
-		//center=parentCenter;
-	}
+	public void move(AbsolutePoint parentCenter) {}
 	
 	private boolean isCovered(int otherX, int otherY) {
 		return

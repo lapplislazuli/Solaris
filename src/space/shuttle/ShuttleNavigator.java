@@ -29,7 +29,6 @@ public class ShuttleNavigator implements UpdatingObject{
 			rebuildShuttle();
 		else if(shuttle.orbiting) {
 			if((currentIdle+=shuttle.speed)>=idlingTurns) { //SpaceShuttle idled some time
-				System.out.println("Launch from Station " + currentPointer + " with maxPoints " + route.size() );
 				if (currentPointer==route.size()) 
 					currentPointer=1;
 				

@@ -30,9 +30,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	
 	public void launch() {
 		if(target!=null && parent.trabants.remove(this)) {
-			System.out.println("Launch "+ toString() + " from "+ parent.toString()+ " at " + target.toString() +  " distance: " + target.distanceTo(this) + " degree: " + degreeTo(target));
-			
-
 			target.trabants.add(this);
 			orbiting=false;
 			parent = target;

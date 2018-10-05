@@ -119,4 +119,20 @@ public class MissileTest {
 			}
 		}
 	}
+	@Test
+ 	public void testMissileRemove() {
+ 		missileOne.remove();
+ 		assertEquals(3,shuttle.trabants.size());
+ 	}
+ 	
+ 	@Test
+ 	public void testLifeTime() {
+ 		int timer=0;
+ 		while(timer <10000) {
+ 			missileThree.update();
+ 			timer++;	
+ 		}
+ 		
+ 		assertEquals(3, shuttle.trabants.size());
+}
 }

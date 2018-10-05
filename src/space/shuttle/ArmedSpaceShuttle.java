@@ -34,8 +34,6 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 	public void shootLaser(SpaceObject target) {
 		if(laserCoolDown<=0) {
 			new Laserbeam("Laser from " + name, this,degreeTo(target),5);
-			System.out.println(toString()+" shoot laser at " + target.toString());
-			
 			//@UpdateRatio 25ms its every 3 Seconds:
 			laserCoolDown= 3000/25;
 		}
