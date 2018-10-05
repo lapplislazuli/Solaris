@@ -6,7 +6,4 @@ import javafx.scene.canvas.GraphicsContext;
 public interface DrawingObject {
 	
 	public void draw(GraphicsContext gc);
-	
-	//Tells whether XY is beneath me
-	public boolean isCovered(int x, int y);
 }

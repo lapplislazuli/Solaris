@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geom.Circle;
-import geom.Point;
+import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -18,23 +18,23 @@ public class Star extends SpaceObject {
 	private int size;
 	public boolean isCentered=true;
 	
-	public Star(String name, Color color,Point center, int size) {
+	public Star(String name, Color color,AbsolutePoint center, int size) {
 		super(name,center,new Circle(center,size));
-		area.levelOfDetail=100;
+		shape.setLevelOfDetail(100);
 		this.size=size;
 		this.color=color;
 	}
 	
 	public Star(String name, Color color,int size) {
-		super(name,new Point(0,0), new Circle(size));
-		area.levelOfDetail=100;
+		super(name,new AbsolutePoint(0,0), new Circle(size));
+		shape.setLevelOfDetail(100);
 		this.size=size;
 		this.color=color;
 	}
 	
 	private Star(Builder builder) {
 		super(builder.name,builder.center,new Circle(builder.radious));
-		area.levelOfDetail=builder.levelOfDetail;
+		shape.setLevelOfDetail(builder.levelOfDetail);
 		color=builder.color;
 		trabants=builder.trabants;
 		isCentered=builder.reCentering;
@@ -42,8 +42,8 @@ public class Star extends SpaceObject {
 	}
 	
 	private void reCenter(GraphicsContext gc) {
-		center.x=(int) (gc.getCanvas().getWidth()-size)/2;
-		center.y=(int) (gc.getCanvas().getHeight()-size)/2;
+		center.setX((int) (gc.getCanvas().getWidth()-size)/2);
+		center.setY((int) (gc.getCanvas().getHeight()-size)/2);
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class Star extends SpaceObject {
 				new Stop(0.0, color),
 				new Stop(1.0, color.darker())));
 		gc.setEffect(new Glow(0.6));
-		area.draw(gc);
+		shape.draw(gc);
 	}
 	@Override
 	public void drawThisItem(GraphicsContext gc) {
@@ -69,12 +69,12 @@ public class Star extends SpaceObject {
 		private final String name;
 		private Color color= Color.ORANGE;
 		private int levelOfDetail=50, radious=0;
-		private Point center=new Point(0,0);
+		private AbsolutePoint center=new AbsolutePoint(0,0);
 		private boolean reCentering=false;
 		
 		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
 		
-		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
+		public Builder(String name) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
 				throw new IllegalArgumentException("Name cannot be null or empty");
 			this.name=name;
@@ -86,11 +86,11 @@ public class Star extends SpaceObject {
 		}
 		
 		public Builder center(int xCoord, int yCoord){
-			center=new Point(xCoord,yCoord);
+			center=new AbsolutePoint(xCoord,yCoord);
 			return this;
 		}
 		
-		public Builder center(Point val) {
+		public Builder center(AbsolutePoint val) {
 			center=val;
 			return this;
 		}

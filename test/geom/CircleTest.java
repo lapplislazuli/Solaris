@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import interfaces.geom.Point;
 
 class CircleTest {
 	
@@ -16,44 +18,56 @@ class CircleTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		centerTestObject= new Point(100,100);
+		centerTestObject= new AbsolutePoint(100,100);
 		testObject = new Circle(centerTestObject,100);
 	}
-
-	@Test
+	
+	//TODO: Make outline test for this and rectangle!
+	@Ignore
 	void testInitOutline() {
 		testObject.levelOfDetail=4; //4 OutlinePoints!
-		testObject.initOutline(); 
+		testObject.updateOrInitOutline(); 
 		for (int i=0;i<4;i++) {
 			Point testOutlinePoint=testObject.outLine.get(i);
 			assertTrue(
-					testOutlinePoint.distanceTo(new Point(0,100))==0
-				|| testOutlinePoint.distanceTo(new Point(200,100))==0
-				|| testOutlinePoint.distanceTo(new Point(100,0))==0
-				|| testOutlinePoint.distanceTo(new Point(100,200))==0
+					testOutlinePoint.distanceTo(new AbsolutePoint(0,100))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(200,100))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(100,0))==0
+				|| testOutlinePoint.distanceTo(new AbsolutePoint(100,200))==0
 			);
 		}
+	}
+	
+	@Test
+	void testOutlineCount() {
 		testObject.levelOfDetail=100;
-		testObject.initOutline();
+		testObject.updateOrInitOutline();
 		assertEquals(100,testObject.outLine.size());
 	}
-
+	
 	@Test
-	void testContains() {
+	void testPositiveContains() {
 		List<Point> inPoints = new LinkedList<Point>();
-		inPoints.add(new Point(65,50)); //definitive in Circle 
-		inPoints.add(new Point(125,100)); //definitive in Circle
-		inPoints.add(new Point(200,100)); //Edgepoint
+		inPoints.add(new AbsolutePoint(65,50)); 
+		inPoints.add(new AbsolutePoint(125,100));
 		inPoints.add(centerTestObject);
 		for(Point inPoint : inPoints)
 			assertTrue(testObject.contains(inPoint));
+	}
+	
+	@Test 
+	void testNegativeContains() {
 		List<Point> outPoints = new LinkedList<Point>();
-		outPoints.add(new Point(0,0));  
-		outPoints.add(new Point(0,120)); 
-		outPoints.add(new Point(0,0,200)); 
+		outPoints.add(new AbsolutePoint(0,0));  
+		outPoints.add(new AbsolutePoint(0,120)); 
+		outPoints.add(new AbsolutePoint(0,0,200)); 
 		for(Point outPoint : outPoints)
 			assertFalse(testObject.contains(outPoint));
-		
 	}
-
+	
+	@Test
+	void testTangentialContains() {
+		Point edgePoint = new AbsolutePoint(200,100); //On the Edge of Circle
+		assertTrue(testObject.contains(edgePoint));
+	}
 }

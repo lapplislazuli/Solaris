@@ -19,13 +19,17 @@ public class EffectManager implements UpdatingObject, DrawingObject {
 	
 	private List<Effect> effects = new LinkedList<Effect>();
 	
-	private static final EffectManager INSTANCE = new EffectManager();
+	private static EffectManager INSTANCE;
 	
 	private EffectManager() {
 		effects = new LinkedList<Effect>();
 	}
 	
-	public static EffectManager getInstance() {return INSTANCE;}
+	public static EffectManager getInstance() {
+		if(INSTANCE==null)
+			INSTANCE=new EffectManager();
+		return INSTANCE;
+	}
 	
 	
 	public void addEffect(Effect e){
@@ -51,12 +55,5 @@ public class EffectManager implements UpdatingObject, DrawingObject {
 	public void removeEffect(Effect e){
 		effects.remove(e);
 	}
-
-	@Override
-	public boolean isCovered(int x, int y) {
-		return false;
-	}
-
-
 
 }

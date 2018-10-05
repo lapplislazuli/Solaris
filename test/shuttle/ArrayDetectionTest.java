@@ -1,13 +1,12 @@
 package shuttle;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import geom.Circle;
-import geom.Point;
+import geom.AbsolutePoint;
 import logic.CollisionManager;
 import space.core.Star;
 import space.shuttle.SensorArray;
@@ -21,37 +20,27 @@ public class ArrayDetectionTest {
 	
 	@BeforeAll
 	public static void initVariables() {
-		hitStar = new Star("hit",null,new Point(250,250),250);
-		notHitStar = new Star("noHit",null,new Point(1250,250),250);
-		notHittableStar = new Star("noHitEver",null,new Point(250,1250),0); //no Size!
+		hitStar = new Star("hit",null,new AbsolutePoint(250,250),250);
+		notHitStar = new Star("noHit",null,new AbsolutePoint(1250,250),250);
+		notHittableStar = new Star("noHitEver",null,new AbsolutePoint(250,1250),0); //no Size!
 		
 		SpaceShuttle shuttle= new SpaceShuttle("shuttle",hitStar,0,0,0);
 		
 		sensor= new SensorArray(shuttle,50);
 		
 		cm=CollisionManager.getInstance();
-		cm.addCollidable(hitStar); 
-		cm.addCollidable(notHitStar);
-		cm.addCollidable(notHittableStar);
-		cm.addCollidable(shuttle);
+		cm.add(hitStar); 
+		cm.add(notHitStar);
+		cm.add(notHittableStar);
+		cm.add(shuttle);
 	}
 	
 	@Test
-	public void detectHit() {
-		assertEquals(true, sensor.detectedItems.isEmpty());
-		
+	public void testDetectHit() {
 		sensor.update();
 		
-		assertEquals(true, sensor.detectedItems.contains(hitStar));
-		
-		assertEquals(1, sensor.detectedItems.size());
-		sensor.update();
-		assertEquals(true, sensor.detectedItems.contains(hitStar));
+		assertTrue(sensor.detectedItems.contains(hitStar));	
 		assertEquals(1, sensor.detectedItems.size());
 	}
-	@Ignore //Sensor cannot move like that anymore
-	public void notHitable() {
-		sensor.update();
-		assertEquals(true,sensor.detectedItems.isEmpty());
-	}
+	
 }

@@ -1,6 +1,6 @@
 package space.advanced;
 
-import geom.Point;
+import geom.AbsolutePoint;
 import geom.Rectangle;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
@@ -25,7 +25,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		else
 			type=Type.TRASH;
 		setColorFromType();
-		area.levelOfDetail=2;
+
+		shape.setLevelOfDetail(2);
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {
@@ -52,7 +53,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	@Override 
-	public void move(Point parentCenter) {
+	public void move(AbsolutePoint parentCenter) {
 		super.move(parentCenter);
 		shake();
 	}
@@ -62,7 +63,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		center.move((int)(Math.random()+1)*3,(int)(Math.random()+1)*3);
 	}
 	
-	public void destruct(CollidingObject other) {
+	public void destruct() {
+		System.out.println(toString() + " got destroyed");
 		if(parent!=null)
 			remove();
 	}	

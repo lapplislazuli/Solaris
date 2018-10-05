@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import geom.Circle;
-import geom.Point;
+import geom.AbsolutePoint;
 import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -22,15 +22,13 @@ public class DistantGalaxy extends SpaceObject{
 	Random r =new Random();;
 	
     public DistantGalaxy(String name,int stars) {
-		super(name, new Point( 0, 0), new Circle(0)); 
+		super(name, new AbsolutePoint( 0, 0), new Circle(0)); 
 		maxStars=stars;
 		fillStars();
 	}
     
     @Override
 	public boolean collides(CollidingObject other) {return false;}
-	@Override
-	public boolean isCovered(int x, int y) {return false;}
 	 
     @Override
     public void drawThisItem(GraphicsContext gc) {

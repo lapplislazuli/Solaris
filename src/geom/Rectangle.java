@@ -1,9 +1,10 @@
 package geom;
 
+import interfaces.geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
-public class Rectangle extends BaseArea{
+public class Rectangle extends BaseShape{
 	
 	int xSize,ySize;
 	
@@ -22,23 +23,28 @@ public class Rectangle extends BaseArea{
 	@Override
 	public boolean contains(Point p) {
 		return 
-				( p.x <= center.x+xSize/2	&&  p.x >=center.x-xSize/2) &&
-				( p.y <= center.y+ySize/2  	&&  p.y >=center.y-ySize/2);
+				( p.getX() <= center.getX()+xSize/2	&&  p.getX() >=center.getX()-xSize/2) &&
+				( p.getY() <= center.getY()+ySize/2 &&  p.getY() >=center.getY()-ySize/2);
 	}
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.fillRect(center.x-xSize/2, center.y-ySize/2, xSize, ySize);
+		gc.fillRect(center.getX()-xSize/2, center.getY()-ySize/2, xSize, ySize);
 	}
 
-	@Override
 	public void initOutline() {
-		outLine.removeIf(p->true);
-		for(int i=-levelOfDetail/2;i<levelOfDetail/2;i++) {
-			Point outLinePoint=center.clone();
-			outLinePoint.move(i*xSize/levelOfDetail,i*ySize/levelOfDetail);
-			outLine.add(outLinePoint);
+		outLine.clear();
+		
+		outLine.add(new RelativePoint(center,-(xSize)/2,-(ySize)/2));
+		outLine.add(new RelativePoint(center,(xSize)/2,(ySize)/2));
+		
+		for(int i=-levelOfDetail/2;i<=levelOfDetail/2;i++) {
+			outLine.add(new RelativePoint(center,i*(xSize/levelOfDetail),0));
+			outLine.add(new RelativePoint(center,0,i*(ySize/levelOfDetail)));
 		}
 	}
-	
+
+	public double area() {
+		return xSize*ySize;
+	}
 }

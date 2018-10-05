@@ -6,7 +6,7 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
-
+import geom.AbsolutePoint;
 import javafx.application.*;
 import javafx.stage.Stage;
 import javafx.scene.*;
@@ -48,11 +48,17 @@ public class Program extends Application{
         primaryStage.show();
 	}
 	
+	@Override
+	public void stop() {
+		System.out.println("Closing Solaris");
+		System.exit(0);
+	}
+	
 	@SuppressWarnings("unused")
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
-		Star sun = new Star("Sun",Color.ORANGE,30);
+		Star sun = new Star("Sun",Color.ORANGE,new AbsolutePoint(600,400),30);
 		Planet earth = (new Planet.Builder("Earth", sun))
 				.size(13)
 				.distance(150)
@@ -71,9 +77,9 @@ public class Program extends Application{
 				.build();
 		
 		Planet moon = (new Planet.Builder("Moon", earth))
-				.size(5)
-				.distance(30)
-				.levelOfDetail(8)
+				.size(4)
+				.distance(28)
+				.levelOfDetail(7)
 				.speed(Math.PI/800)
 				.rotationSpeed(Math.PI*2/30)
 				.color(Color.LIGHTGRAY)
@@ -90,30 +96,19 @@ public class Program extends Application{
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
 				.distance(350)
 				.speed(Math.PI/4000)
-				.asteroids(150)
+				.asteroids(100)
 				.build();
 		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
-				.idlingTurns(Math.PI*2)
+				.idlingTurns(5*Math.PI/2)
 				.doesRespawn(true)
-				.shuttlesize(4)
+				.isPlayer(true)
+				.shuttlesize(2)
 				.shuttleOrbitingDistance(40)
 				.shuttleSpeed(Math.PI/70)
 				.start(earth)
 				.next(mars)
-				.build();
-		
-		ShuttleNavigator AlienOverlord = new ShuttleNavigator.Builder("AlienOverlord")
-				.shuttleName("Aliens")
-				.doesRespawn(true)
-				.shuttlesize(6)
-				.shuttleOrbitingDistance(30)
-				.shuttleSpeed(Math.PI/90)
-				.start(mars)
-				.next(earth)
-				.next(sun)
-				.next(earth)
 				.build();
 		
 		Satellite astra = (new Satellite.Builder("Astra", earth))
@@ -123,6 +118,15 @@ public class Program extends Application{
 				.speed(-Math.PI/400)
 				.color(Color.LIGHTGRAY)
 				.build();
+		
+		Satellite hubble = (new Satellite.Builder("Hubble-Telescope", sun))
+				.size(5,5)
+				.distance(70)
+				.levelOfDetail(8)
+				.speed(-Math.PI/800)
+				.color(Color.CADETBLUE)
+				.build();
+		
 		
 		Planet phobos = (new Planet.Builder("Phobos", saturn))
 				.size(4)

@@ -10,11 +10,15 @@ public class KeyBoardManager implements UpdatingObject {
 	
 	private char currentPressed;
 
-	private static final KeyBoardManager INSTANCE = new KeyBoardManager();
+	private static KeyBoardManager INSTANCE;
 	
 	private KeyBoardManager() {};
 	
-	public static KeyBoardManager getInstance() {return INSTANCE;}
+	public static KeyBoardManager getInstance() {
+		if(INSTANCE==null)
+			INSTANCE=new KeyBoardManager();
+		return INSTANCE;
+	}
 
 	@Override
 	public void update() {
@@ -39,6 +43,7 @@ public class KeyBoardManager implements UpdatingObject {
 			case 's': UpdateManager.getInstance().start();break;
 			case 'v': CollisionManager.getInstance().pause();break;
 			case 'c': CollisionManager.getInstance().start();break;
+			case 'q': System.exit(0);break;
 			//ToDo: Case Escape to close Game
 			default: System.out.println("You pressed: " + currentPressed + " ... nothing happened");
 			}

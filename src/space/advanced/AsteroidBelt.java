@@ -1,7 +1,7 @@
 package space.advanced;
 
 import geom.Circle;
-import geom.Point;
+import geom.AbsolutePoint;
 import interfaces.logical.CollidingObject;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
@@ -24,13 +24,8 @@ public class AsteroidBelt extends MovingSpaceObject{
 		return false;
 	}
 	
-	@Override 
-	public boolean isCovered(int x, int y) {
-		return false;
-	}
-	
 	@Override
-	public void move(Point parentCenter) {
+	public void move(AbsolutePoint parentCenter) {
 		center=parentCenter;
 
 		for(MovingSpaceObject asteroid : trabants)

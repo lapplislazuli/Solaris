@@ -13,10 +13,10 @@ class BaseGeomCollisionTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		smallCircle=new Circle(new Point(100,100),25);
-		bigCircle=new Circle(new Point(100,100),50);
-		rect=new Rectangle(new Point(50,100),150,100);
-		distantRect=new Rectangle(new Point(1500,1000),10,10);
+		smallCircle=new Circle(new AbsolutePoint(100,100),25);
+		bigCircle=new Circle(new AbsolutePoint(100,100),50);
+		rect=new Rectangle(new AbsolutePoint(50,100),150,100);
+		distantRect=new Rectangle(new AbsolutePoint(1500,1000),10,10);
 		
 		smallCircle.levelOfDetail=10;
 		bigCircle.levelOfDetail=10;
@@ -27,14 +27,23 @@ class BaseGeomCollisionTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		smallCircle.initOutline();
-		bigCircle.initOutline();
-		rect.initOutline();
-		distantRect.initOutline();
+		smallCircle.updateOrInitOutline();
+		bigCircle.updateOrInitOutline();
+		rect.updateOrInitOutline();
+		distantRect.updateOrInitOutline();
 	}
 
 	@Test
-	void testIntersects() {
+	void testNegativeIntersection() {
+		
+		assertFalse(rect.intersects(distantRect));
+		assertFalse(distantRect.intersects(rect));
+		assertFalse(bigCircle.intersects(distantRect));
+		assertFalse(distantRect.intersects(bigCircle));
+	}
+	
+	@Test
+	void testPostiveIntersection() {
 		assertTrue(bigCircle.intersects(smallCircle));
 		assertTrue(smallCircle.intersects(bigCircle));
 		
@@ -42,19 +51,29 @@ class BaseGeomCollisionTest {
 		assertTrue(bigCircle.intersects(rect));
 		assertTrue(rect.intersects(smallCircle));
 		assertTrue(smallCircle.intersects(rect));
-		
-		assertFalse(rect.intersects(distantRect));
-		assertFalse(distantRect.intersects(rect));
-		assertFalse(bigCircle.intersects(distantRect));
-		assertFalse(distantRect.intersects(bigCircle));
 	}
-
+	
 	@Test
-	void testCovers() {
-		assertTrue(bigCircle.covers(smallCircle));
+	void testSelfIntersection() {
+		assertFalse(smallCircle.intersects(smallCircle));
+
+		assertFalse(rect.intersects(rect));
+	}
+	@Test
+	void testSelfCoverage() {
+		assertTrue(smallCircle.covers(smallCircle));
+
+		assertTrue(rect.covers(rect));
+	}
+	@Test
+	void testPositiveCovers() {
 		assertFalse(smallCircle.covers(bigCircle));
-		
 		assertTrue(rect.covers(smallCircle));
+	}
+	
+	@Test
+	void testNegativeCovers() {
+		assertTrue(bigCircle.covers(smallCircle));
 		assertFalse(rect.covers(bigCircle));
 	}
 }

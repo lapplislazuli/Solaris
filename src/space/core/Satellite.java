@@ -3,8 +3,7 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
-import geom.Rectangle;
-import interfaces.logical.CollidingObject;
+import geom.TShape;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
@@ -14,9 +13,10 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	private SpaceObject parent;
 	
 	private Satellite(Builder builder) {
-		super(builder.name,builder.parent,builder.color,new Rectangle(builder.xSize,builder.ySize),builder.distance,builder.speed);
+		super(builder.name,builder.parent,builder.color,new TShape(builder.xSize,builder.ySize,3),builder.distance,builder.speed);
 		trabants=builder.trabants;
-		area.levelOfDetail=builder.levelOfDetail;
+		parent=builder.parent;
+		shape.setLevelOfDetail(builder.levelOfDetail);
 	}
 	
 	@Override 
@@ -31,10 +31,13 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		parent=null;		
 	}
 	@Override
-	public void destruct(CollidingObject other) {
-		new Explosion("Explosion from" + name,center.x,center.y,800,6,1.03,Color.FIREBRICK);
-		if(parent!=null)
+	public void destruct() {
+		System.out.println(toString() + " got destroyed");
+		new Explosion("Explosion from" + name,center,6,800,1.03,Color.FIREBRICK);
+		if(parent!=null) {
 			remove();
+			System.out.println(toString() + " removed!");
+		}
 	}
 	
 	public static class Builder {

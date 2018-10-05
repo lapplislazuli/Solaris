@@ -1,7 +1,8 @@
 package space.shuttle.missiles;
 
-import geom.BaseArea;
-import geom.Point;
+import geom.BaseShape;
+import geom.AbsolutePoint;
+import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
 import space.shuttle.SpaceShuttle;
@@ -15,7 +16,7 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	 * Distance will be used to measure the flown distance, for remove logic
 	 */
 
-	public Missile(String name, SpaceShuttle emitter, BaseArea area,double direction, double speed) {
+	public Missile(String name, SpaceShuttle emitter, BaseShape area,double direction, double speed) {
 		super(name, emitter, null, area, 0,speed);
 		this.emitter=emitter;
 		rotation=direction;
@@ -24,15 +25,15 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	@Override
 	public void update() {
 		move(center);
-		if(distance>=150 || center.x<=0 || center.y <=0) 
+		if(distance>=250 || center.getX()<=0 || center.getY() <=0) 
 			remove();
 	}
 	
 	@Override
-	public void move(Point oldPosition){
-		Point oldCenter=center.clone();
-		center.x= (int) (center.x+Math.cos(rotation)*speed);
-		center.y= (int) (center.y+Math.sin(rotation)*speed);
+	public void move(AbsolutePoint oldPosition){
+		AbsolutePoint oldCenter=center.clone();
+		center.setX((int) (center.getX()+Math.cos(rotation)*speed));
+		center.setY((int) (center.getY()+Math.sin(rotation)*speed));
 		distance += oldCenter.distanceTo(center);
 	}
 	
@@ -44,4 +45,11 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	}
 	@Override 
 	public void rotate() {}
+	
+	@Override
+	public boolean collides(CollidingObject other) {
+		if(other == emitter)
+			return false;
+		return super.collides(other);
+	}
 }

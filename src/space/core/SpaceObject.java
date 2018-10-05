@@ -2,27 +2,27 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
-import geom.BaseArea;
-import geom.Point;
+import geom.AbsolutePoint;
 import interfaces.ClickableObject;
+import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 
 @SuppressWarnings("restriction")
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
-	public BaseArea area;
+	public Shape shape;
 	public String name;
-	public Point center;
+	public AbsolutePoint center;
 	
 	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,Point center, BaseArea area) {
+	public SpaceObject(String name,AbsolutePoint center, Shape shape) {
 		this.name=name;
 		this.center=center;
-		this.area=area;
-		area.center=center; //To center the Area around this object - improvement possible
+		this.shape=shape;
+		this.shape.setCenter(center); //To center the Area around this object - improvement possible
 	}
 	
 	public void update() {
@@ -39,7 +39,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public void drawThisItem(GraphicsContext gc) {
-		area.draw(gc);
+		shape.draw(gc);
 	};
 	
 	protected void resetGraphicsContext(GraphicsContext gc) {
@@ -61,7 +61,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	public boolean collides(CollidingObject other) {
 		if(other instanceof SpaceObject && other!=this)
-				return area.intersects(((SpaceObject)other).area);
+				return shape.intersects(((SpaceObject)other).shape);
 		return false;
 	}
 	
@@ -73,20 +73,38 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return flatChildren;
 	}
 	
-	public boolean isCovered(int x, int y) {
-		return area.isCovered(x, y);
-	}
 	
 	public void click() {
 		System.out.println("Clicked: " + toString());
 	}
 	
 	public void updateHitbox() {
-		area.initOutline();
+		shape.updateOrInitOutline();
 	}
 	
 	@Override
 	public String toString() {return name+"@"+center.toString();}
 	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof SpaceObject)) 
+			return false;
+		SpaceObject sO = (SpaceObject) o;
+		if(sO == this)
+			return true;
+		return
+			name==sO.name 
+			&& rotation==sO.rotation
+			&& center.samePosition(sO.center)
+			&& shape.sameShape(sO.shape);
+	}
 	
+	@Override
+	public int hashCode() {
+		int	result=name.hashCode();
+		result=31*result+Double.hashCode(rotation);
+		result=31*result+center.hashCode();
+	
+		return result;
+	}
 }

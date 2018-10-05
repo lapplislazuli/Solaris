@@ -4,9 +4,10 @@ import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-import geom.Area;
-import geom.BaseArea;
-import geom.Point;
+import geom.TShape;
+import geom.BaseShape;
+import geom.AbsolutePoint;
+import interfaces.geom.Shape;
 import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -21,21 +22,24 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	protected Color color;
 	
-	public MovingSpaceObject(String name,SpaceObject parent,Color color, BaseArea area,int distance, double speed) {
-		super(name,parent.center.clone(),area);
+	public MovingSpaceObject(String name,SpaceObject parent,Color color, Shape shape,int distance, double speed) {
+		super(name,parent.center.clone(),shape);
+		
 		this.distance=distance;
 		this.speed=speed;
 		rotationSpeed=speed*2;
+		
 		this.color=color;
+		
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
 		center.move(0, distance);;
 	}
 	
-	public void move(Point parentCenter) {
+	public void move(AbsolutePoint parentCenter) {
 		moveRelativePos();
-		center.x= parentCenter.x+(int)(Math.cos(relativePos)*distance);
-		center.y= parentCenter.y-(int)(Math.sin(relativePos)*distance);
+		center.setX(parentCenter.getX()+(int)(Math.cos(relativePos)*distance));
+		center.setY(parentCenter.getY()+(int)(Math.sin(relativePos)*distance));
 		rotate();
 	};
 	
@@ -43,7 +47,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		relativePos+=speed;
 		if (relativePos >= Math.PI*2)
 			relativePos -=  Math.PI*2;
-		else if(relativePos<= Math.PI*2)
+		else if(relativePos< 0 )
 			relativePos+= Math.PI*2;
 	}
 	
@@ -51,7 +55,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		rotation+=rotationSpeed;
 		if (rotation >= Math.PI*2)
 			rotation -=  Math.PI*2;
-		else if (rotation <= -Math.PI*2) {
+		else if (rotation < 0) {
 			rotation += Math.PI*2;
 		}
 	}
@@ -60,7 +64,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	public void drawThisItem(GraphicsContext gc) {
 		gc.save();
 		Affine transformRotation= new Affine();
-		transformRotation.appendRotation(Math.toDegrees(rotation), center.x ,center.y);	
+		transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
 		if (color != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),

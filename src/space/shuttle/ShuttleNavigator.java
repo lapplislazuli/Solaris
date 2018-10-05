@@ -9,10 +9,11 @@ import space.core.SpaceObject;
 public class ShuttleNavigator implements UpdatingObject{
 	
 	String name;
-	private int currentPointer = 1;
+	private int currentPointer;
 	public List<SpaceObject> route;
 	private ArmedSpaceShuttle shuttle;
 	
+	boolean isPlayer;
 	boolean respawn; //Bool whether new Ships will be spawned
 	double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	
@@ -21,16 +22,19 @@ public class ShuttleNavigator implements UpdatingObject{
 		route.add(shuttle.parent);
 		this.shuttle=shuttle;
 		this.name=name;
+		currentPointer=1;
 	}
 	
 	public void update() {
-		if(shuttle.isDead()&&respawn)
+		if(shuttle.isDead() && respawn)
 			rebuildShuttle();
 		else if(shuttle.orbiting) {
 			if((currentIdle+=shuttle.speed)>=idlingTurns) { //SpaceShuttle idled some time
-				if (currentPointer++>=route.size()) 
+				if (currentPointer==route.size()) 
 					currentPointer=1;
-				shuttle.target=route.get(currentPointer-1);
+				
+				shuttle.target=route.get(currentPointer);
+				currentPointer++;
 				shuttle.launch();
 				currentIdle=0;
 			}
@@ -39,6 +43,7 @@ public class ShuttleNavigator implements UpdatingObject{
 	
 	private void rebuildShuttle() {
 		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),4,(int) shuttle.orbitingDistance,shuttle.speed);
+		shuttle.setPlayer(isPlayer);
 	}
 
 	public static class Builder {
@@ -51,6 +56,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		private boolean respawn=false;
 		private double idlingTurns=0;
 		
+		private boolean isPlayer=false;
 		
 		public Builder(String name) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
@@ -60,25 +66,42 @@ public class ShuttleNavigator implements UpdatingObject{
 		}
 		
 		public Builder start(SpaceObject o) {
+			if(o==null)
+				throw new IllegalArgumentException("Cannot add Null-SpaceObject to Route!");
 			route.add(0, o);
 			return this;
 		}
 		public Builder next(SpaceObject o) {
+			if(o==null)
+				throw new IllegalArgumentException("Cannot add Null-SpaceObject to Route!");
 			route.add(o);
 			return this;
 		}
 		public Builder shuttleName(String val) {
+			if(val==null||val.isEmpty())
+				throw new IllegalArgumentException("Name of the Shuttle cannot be null or empty");
+			
 			shuttleName=val;
 			return this;
 		}
-		public Builder shuttleOrbitingDistance(int val)
-		{ orbitingDistance= val; return this;}
+		public Builder shuttleOrbitingDistance(int val){ 
+			if(val<0)
+				throw new IllegalArgumentException("Orbiting Distance cannot be null!");	
+			orbitingDistance= val;
+			return this;
+		}
 		
-		public Builder shuttlesize(int val)
-		{ size= val; return this;}
+		public Builder shuttlesize(int val){ 
+			if(val<0)
+				throw new IllegalArgumentException("Size cannot be null!");
+			
+			size= val; 
+			return this;}
 		
-		public Builder shuttleSpeed(double val)
-		{ speed= val; return this;}
+		public Builder shuttleSpeed(double val){
+			speed= val; 
+			return this;
+		}
 		
 		public Builder idlingTurns(double val) {
 			idlingTurns=val; 
@@ -86,6 +109,10 @@ public class ShuttleNavigator implements UpdatingObject{
 		}
 		public Builder doesRespawn(boolean val) {
 			respawn=val;
+			return this;
+		}
+		public Builder isPlayer(boolean val) {
+			isPlayer=val;
 			return this;
 		}
 		public ShuttleNavigator build() {
@@ -100,5 +127,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		currentIdle=0;
 		idlingTurns=builder.idlingTurns;
 		respawn=builder.respawn;
+		isPlayer=builder.isPlayer;
+		shuttle.setPlayer(builder.isPlayer);
 	}
 }
