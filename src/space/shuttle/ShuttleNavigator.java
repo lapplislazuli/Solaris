@@ -54,6 +54,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		private boolean respawn=false;
 		private double idlingTurns=0;
 		
+		private boolean isPlayer=false;
 		
 		public Builder(String name) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
@@ -63,25 +64,42 @@ public class ShuttleNavigator implements UpdatingObject{
 		}
 		
 		public Builder start(SpaceObject o) {
+			if(o==null)
+				throw new IllegalArgumentException("Cannot add Null-SpaceObject to Route!");
 			route.add(0, o);
 			return this;
 		}
 		public Builder next(SpaceObject o) {
+			if(o==null)
+				throw new IllegalArgumentException("Cannot add Null-SpaceObject to Route!");
 			route.add(o);
 			return this;
 		}
 		public Builder shuttleName(String val) {
+			if(val==null||val.isEmpty())
+				throw new IllegalArgumentException("Name of the Shuttle cannot be null or empty");
+			
 			shuttleName=val;
 			return this;
 		}
-		public Builder shuttleOrbitingDistance(int val)
-		{ orbitingDistance= val; return this;}
+		public Builder shuttleOrbitingDistance(int val){ 
+			if(val<0)
+				throw new IllegalArgumentException("Orbiting Distance cannot be null!");	
+			orbitingDistance= val;
+			return this;
+		}
 		
-		public Builder shuttlesize(int val)
-		{ size= val; return this;}
+		public Builder shuttlesize(int val){ 
+			if(val<0)
+				throw new IllegalArgumentException("Size cannot be null!");
+			
+			size= val; 
+			return this;}
 		
-		public Builder shuttleSpeed(double val)
-		{ speed= val; return this;}
+		public Builder shuttleSpeed(double val){
+			speed= val; 
+			return this;
+		}
 		
 		public Builder idlingTurns(double val) {
 			idlingTurns=val; 
@@ -89,6 +107,10 @@ public class ShuttleNavigator implements UpdatingObject{
 		}
 		public Builder doesRespawn(boolean val) {
 			respawn=val;
+			return this;
+		}
+		public Builder isPlayer(boolean val) {
+			isPlayer=val;
 			return this;
 		}
 		public ShuttleNavigator build() {
@@ -103,5 +125,6 @@ public class ShuttleNavigator implements UpdatingObject{
 		currentIdle=0;
 		idlingTurns=builder.idlingTurns;
 		respawn=builder.respawn;
+		shuttle.setPlayer(builder.isPlayer);
 	}
 }

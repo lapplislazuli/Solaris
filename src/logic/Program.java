@@ -103,6 +103,7 @@ public class Program extends Application{
 				.shuttleName("Ikarus")
 				.idlingTurns(5*Math.PI/2)
 				.doesRespawn(true)
+				.isPlayer(true)
 				.shuttlesize(2)
 				.shuttleOrbitingDistance(40)
 				.shuttleSpeed(Math.PI/70)

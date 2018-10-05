@@ -16,7 +16,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public SpaceObject parent;
 	protected double orbitingDistance;
 	protected SensorArray sensor;
-	
+
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, Color.GHOSTWHITE, new HShape(5,10,3), 0 , speed);
 		
@@ -80,6 +80,6 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		parent.trabants.remove(this);
 		parent=(target=null);
 	}
-	
+
 	public double getOrbitingDistance() {return orbitingDistance;}
 }

@@ -2,6 +2,7 @@ package space.shuttle;
 
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
+import logic.MouseManager;
 import space.core.SpaceObject;
 import space.shuttle.missiles.Laserbeam;
 import space.shuttle.missiles.Missile;
@@ -10,9 +11,12 @@ import space.shuttle.missiles.Rocket;
 public class ArmedSpaceShuttle extends SpaceShuttle{
 	
 	public int rocketsLeft=6, laserCoolDown=0;
+
+	protected boolean isPlayer;
 	
 	public ArmedSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
+		
 	}
 	
 	@Override
@@ -51,4 +55,10 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 		return super.collides(other);
 	}
 	
+	public void setPlayer(boolean val) { 
+		isPlayer=val;
+		if(val)
+			MouseManager.getInstance().signupPlayer(this);
+	}
+	public boolean isPlayer() {return isPlayer;}
 }
