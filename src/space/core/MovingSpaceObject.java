@@ -59,7 +59,25 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 			rotation += Math.PI*2;
 		}
 	}
-
+	
+	public boolean isFasterThanMe(SpaceObject other) {
+		if(other instanceof MovingSpaceObject) {
+			MovingSpaceObject otherCasted= (MovingSpaceObject) other;
+			return 	speed!=0
+					&&otherCasted.speed!=0
+					&&Math.abs(otherCasted.speed)>Math.abs(speed);
+		}
+		return false;
+	}
+	
+	public boolean movesInSameDirection(SpaceObject other) {
+		if(other instanceof MovingSpaceObject) {
+			MovingSpaceObject otherCasted= (MovingSpaceObject) other;
+			return 	otherCasted.speed>0&&speed>0 || otherCasted.speed<0&&speed<0;
+		}
+		return false;
+	}
+	
 	@Override
 	public void drawThisItem(GraphicsContext gc) {
 		gc.save();

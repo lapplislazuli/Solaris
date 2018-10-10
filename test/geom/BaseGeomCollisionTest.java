@@ -18,11 +18,11 @@ class BaseGeomCollisionTest {
 		rect=new Rectangle(new AbsolutePoint(50,100),150,100);
 		distantRect=new Rectangle(new AbsolutePoint(1500,1000),10,10);
 		
-		smallCircle.levelOfDetail=10;
-		bigCircle.levelOfDetail=10;
-		rect.levelOfDetail=10;
+		smallCircle.setLevelOfDetail(10);
+		bigCircle.setLevelOfDetail(10);
+		rect.setLevelOfDetail(10);
 
-		distantRect.levelOfDetail=10;
+		distantRect.setLevelOfDetail(10);
 	}
 
 	@BeforeEach

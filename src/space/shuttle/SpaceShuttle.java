@@ -29,15 +29,38 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	public void launch() {
-		if(target!=null && parent.trabants.remove(this)) {
-			target.trabants.add(this);
-			orbiting=false;
-			parent = target;
-			target=null;
-			
-			distance=(int)distanceTo(parent);
-			relativePos=parent.degreeTo(this);
+		if(isAliveAndRegistered()) {
+			changeHierarchy();
+			changeMovementAndPositionAttributes();
 		}
+	}
+
+	protected void changeMovementAndPositionAttributes() {
+		distance=(int)distanceTo(parent);
+		relativePos=parent.degreeTo(this);
+		evaluateBestSpeed();
+	}
+
+	protected void evaluateBestSpeed() {
+		if(isFasterThanMe(parent)) {
+			if(!movesInSameDirection(parent))
+				speed=-speed;
+		}
+		else {
+			if(movesInSameDirection(parent))
+				speed=-speed;
+		}
+	}
+
+	protected void changeHierarchy() {
+		target.trabants.add(this);
+		orbiting=false;
+		parent = target;
+		target=null;
+	}
+
+	protected boolean isAliveAndRegistered() {
+		return target!=null && parent.trabants.remove(this);
 	}
 	
 	@Override

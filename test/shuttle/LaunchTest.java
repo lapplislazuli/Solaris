@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
+import space.core.Planet;
 import space.core.Star;
 import space.shuttle.SpaceShuttle;
 
@@ -16,6 +17,7 @@ class LaunchTest {
 	
 	static Star origin,targetOne, targetTwo, targetAboveShuttleOne;
 	static SpaceShuttle shuttleOne, shuttleTwo;
+	static Planet launchedTowards,launchedAway;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -23,6 +25,9 @@ class LaunchTest {
 		targetOne = new Star("One",null,new AbsolutePoint(1250,250),250);
 		targetTwo = new Star("Two",null,new AbsolutePoint(699,394),250);
 		targetAboveShuttleOne = new Star("Three",null,new AbsolutePoint(300,500),250);
+		
+		launchedTowards=new Planet.Builder("Forward", origin).speed(Math.PI/2000).distance(300).build();
+		launchedAway = new Planet.Builder("Flip", origin).speed(Math.PI/80).distance(250).build();
 	}
 
 	@BeforeEach
@@ -130,5 +135,27 @@ class LaunchTest {
 		targetTwo.update();
 		
 		assertTrue(oldPos.distanceTo(shuttleTwo.center)<=10);
+	}
+	
+	@Test
+	void testNoSpeedFlip() {
+		origin.update();//To move Planets
+		double oldSpeed=shuttleOne.speed;
+		
+		shuttleOne.target=launchedTowards;		
+		shuttleOne.launch();
+		
+		assertEquals(oldSpeed,shuttleOne.speed);
+	}
+	
+	@Test
+	void testSpeedFlip() {
+		origin.update();//To move Planets
+		double oldSpeed=shuttleOne.speed;
+		
+		shuttleOne.target=launchedAway;		
+		shuttleOne.launch();
+		
+		assertEquals(oldSpeed,-shuttleOne.speed);
 	}
 }

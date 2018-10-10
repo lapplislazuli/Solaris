@@ -126,4 +126,57 @@ class MoveTest {
 		assertEquals(0,satellite.degreeTo(planet));
 		assertEquals(Math.PI,satellite.relativePos);
 	}
+	
+	@Test
+	void testPositiveIsFasterThanMe() {
+		Planet fasterPlanet = (new Planet.Builder("Faster", sun))
+				.size(50)
+				.distance(250)
+				.speed(Math.PI)
+				.build();
+		
+		assertTrue(planet.isFasterThanMe(fasterPlanet));
+	}
+	
+	@Test
+	void testNegativeIsFasterThanMe() {
+		Planet slowerPlanet = (new Planet.Builder("Slower", sun))
+				.size(50)
+				.distance(250)
+				.speed(Math.PI/4)
+				.build();
+		
+		assertFalse(planet.isFasterThanMe(slowerPlanet));
+	}
+	
+	@Test
+	void testIsFasterThanMeWithSpaceObject() {
+		assertFalse(planet.isFasterThanMe(sun));
+		assertFalse(satellite.isFasterThanMe(sun));
+	}
+	
+	@Test
+	void testPositivemovesInSameDirection() {
+		Planet sameDirectionPlanet = (new Planet.Builder("Faster", sun))
+				.size(50)
+				.distance(250)
+				.speed(Math.PI)
+				.build();
+		
+		assertTrue(planet.movesInSameDirection(sameDirectionPlanet));
+	}
+	
+	@Test
+	void testNegativeMovesInSameDirection() {
+		assertFalse(planet.movesInSameDirection(satellite));
+	}
+	
+	@Test
+	void testMovesInSameDirectionWithSpaceObject() {
+		assertFalse(planet.movesInSameDirection(sun));
+		assertFalse(satellite.movesInSameDirection(sun));
+	}
+	
+	
+	
 }
