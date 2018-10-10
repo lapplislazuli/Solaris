@@ -144,10 +144,25 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.GRAY)
 				.build();
-
+		
+		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Overlord")
+				.shuttleName("Martians")
+				.idlingTurns(Math.PI)
+				.doesRespawn(true)
+				.isPlayer(false)
+				.shuttlesize(3)
+				.shuttleOrbitingDistance(50)
+				.shuttleSpeed(Math.PI/50)
+				.start(mars)
+				.next(saturn)
+				.next(sun)
+				.build();
+		
+		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
 		updateManager.toUpdate.add(nasa);
+		updateManager.toUpdate.add(aliens);
 	}
 	
 }
