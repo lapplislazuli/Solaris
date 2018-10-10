@@ -29,19 +29,30 @@ public class ShuttleNavigator implements UpdatingObject{
 			rebuildShuttle();
 		else if(shuttle.orbiting) {
 			currentIdle+=Math.abs(shuttle.speed);
-			if(currentIdle>=idlingTurns) { //SpaceShuttle idled some time
+			if(currentIdle>=idlingTurns && !targetsCloseTogether(getNextTarget())) { //SpaceShuttle idled some time
 				shuttle.target=getNextTarget();
 				shuttle.launch();
 				currentIdle=0;
+				incrementPointer();
 			}
 		}
 	}
 	
+	public boolean targetsCloseTogether(SpaceObject target) {
+		//This is an approximation of the possible collision with parent
+		//The Idea is to check whether the degreeTo my currentParent and the possible nextTarget are to related
+		double delta = Math.abs(shuttle.relativePos - shuttle.degreeTo(target));
+		return delta<=Math.PI/3;
+	}
+	
 	private SpaceObject getNextTarget() {
+		return route.get(currentPointer);
+	}
+	
+	private void incrementPointer() {
 		currentPointer++;
 		if (currentPointer>=route.size()) 
 			currentPointer=0;
-		return route.get(currentPointer);
 	}
 	
 	private void rebuildShuttle() {

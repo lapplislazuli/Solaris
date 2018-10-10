@@ -106,7 +106,7 @@ public class Program extends Application{
 				.isPlayer(true)
 				.shuttlesize(2)
 				.shuttleOrbitingDistance(40)
-				.shuttleSpeed(Math.PI/70)
+				.shuttleSpeed(Math.PI/140)
 				.start(earth)
 				.next(mars)
 				.build();
@@ -152,17 +152,29 @@ public class Program extends Application{
 				.isPlayer(false)
 				.shuttlesize(3)
 				.shuttleOrbitingDistance(50)
-				.shuttleSpeed(Math.PI/50)
+				.shuttleSpeed(Math.PI/100)
 				.start(mars)
 				.next(saturn)
 				.next(sun)
 				.build();
 		
+		ShuttleNavigator chinesePeople = new ShuttleNavigator.Builder("Xin Ping")
+				.shuttleName("Chinese")
+				.idlingTurns(Math.PI)
+				.doesRespawn(true)
+				.isPlayer(false)
+				.shuttlesize(3)
+				.shuttleOrbitingDistance(55)
+				.shuttleSpeed(Math.PI/90)
+				.start(sun)
+				.next(mars)
+				.build();
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
 		updateManager.toUpdate.add(nasa);
 		updateManager.toUpdate.add(aliens);
+		updateManager.toUpdate.add(chinesePeople);
 	}
 	
 }
