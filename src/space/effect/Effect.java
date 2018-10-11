@@ -1,7 +1,7 @@
 package space.effect;
 
 import geom.AbsolutePoint;
-import interfaces.DrawingObject;
+import interfaces.drawing.DrawingObject;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.RemovableObject;

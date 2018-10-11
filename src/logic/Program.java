@@ -6,7 +6,9 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
+import drawing.JavaFXDrawingContext;
 import geom.AbsolutePoint;
+import interfaces.drawing.DrawingContext;
 import javafx.application.*;
 import javafx.stage.Stage;
 import javafx.scene.*;
@@ -24,22 +26,20 @@ public class Program extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Group root = new Group();
-        Canvas canvas = new Canvas();
-        root.getChildren().add(canvas);
-       
-        Scene scene = new Scene(root,1200 , 600);
-        
-        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        UpdateManager.getInstance().initUpdateManager(25, gc);
+		Group root = new Group();
+		
+		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
+		
+        UpdateManager.getInstance().initUpdateManager(25, jfx);
         updateManager = UpdateManager.getInstance();
         
         initSpace();
         
-        canvas.widthProperty().bind(scene.widthProperty());
-        canvas.heightProperty().bind(scene.heightProperty());
-
+        Scene scene = new Scene(root,1200 , 600);
+        
+        jfx.bindSizeProperties(scene);
+        
         MouseManager.getInstance().init(scene);
         KeyBoardManager.getInstance().init(scene);
         

@@ -9,13 +9,12 @@ package logic;
 import java.util.LinkedList;
 import java.util.List;
 
-import interfaces.DrawingObject;
+import interfaces.drawing.DrawingContext;
 import interfaces.logical.UpdatingObject;
-import javafx.scene.canvas.GraphicsContext;
 import space.effect.Effect;
 
 @SuppressWarnings("restriction")
-public class EffectManager implements UpdatingObject, DrawingObject {
+public class EffectManager implements UpdatingObject {
 	
 	private List<Effect> effects = new LinkedList<Effect>();
 	
@@ -46,14 +45,13 @@ public class EffectManager implements UpdatingObject, DrawingObject {
 			e.update();
 	}
 	
-	@Override
-	public void draw(GraphicsContext gc){
-		for(Effect e : effects)
-			e.draw(gc);
-	}
-	
 	public void removeEffect(Effect e){
 		effects.remove(e);
+	}
+
+	public void drawEffects(DrawingContext dc) {
+		for(Effect e : effects)
+			e.draw(dc);
 	}
 
 }

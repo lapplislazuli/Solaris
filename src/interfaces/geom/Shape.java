@@ -1,6 +1,6 @@
 package interfaces.geom;
 
-import interfaces.DrawingObject;
+import interfaces.drawing.DrawingObject;
 
 public interface Shape extends DrawingObject{
 	public boolean contains(Point p);

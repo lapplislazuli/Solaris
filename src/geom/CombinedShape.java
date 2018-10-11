@@ -3,6 +3,7 @@ package geom;
 import java.util.LinkedList;
 import java.util.List;
 
+import interfaces.drawing.DrawingContext;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import javafx.scene.canvas.GraphicsContext;
@@ -55,9 +56,9 @@ public abstract class CombinedShape implements Shape{
 			part.updateOrInitOutline();
 	}
 	
-	public void draw(GraphicsContext gc) {
+	public void draw(DrawingContext dc) {
 		for(Shape part : parts)
-			part.draw(gc);
+			part.draw(dc);
 	}
 	
 	public void setCenter(Point p) {

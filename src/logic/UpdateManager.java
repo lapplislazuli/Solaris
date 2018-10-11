@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import interfaces.DrawingObject;
+import interfaces.drawing.DrawingContext;
+import interfaces.drawing.DrawingObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
@@ -17,7 +18,7 @@ public class UpdateManager implements TimerObject{
 
 	public List<UpdatingObject> toUpdate;
 	public List<DrawingObject> toDraw;
-	private GraphicsContext gc;
+	private DrawingContext dc;
 	private Timer timer;
 	private boolean running=true;
 	
@@ -33,8 +34,8 @@ public class UpdateManager implements TimerObject{
 		return INSTANCE;
 	}
 	
-	public void initUpdateManager(int updateIntervall, GraphicsContext gc) {
-		this.gc = gc;
+	public void initUpdateManager(int updateIntervall, DrawingContext dc) {
+		this.dc = dc;
 		CollisionManager.getInstance().initCollisionManager(1000, this);
 		toUpdate.add(CollisionManager.getInstance());
 		toUpdate.add(EffectManager.getInstance());
@@ -54,8 +55,8 @@ public class UpdateManager implements TimerObject{
 	}
 	private void drawAll() {
 		for(DrawingObject drawMe : toDraw)
-			drawMe.draw(gc);
-		EffectManager.getInstance().draw(gc);
+			drawMe.draw(dc);
+		EffectManager.getInstance().drawEffects(dc);
 	}
 	
 	public void addSpaceObject(SpaceObject o) {
