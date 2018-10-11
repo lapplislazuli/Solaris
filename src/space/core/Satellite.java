@@ -3,6 +3,7 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingInformation;
 import geom.TShape;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	private SpaceObject parent;
 	
 	private Satellite(Builder builder) {
-		super(builder.name,builder.parent,builder.color,new TShape(builder.xSize,builder.ySize,3),builder.distance,builder.speed);
+		super(builder.name,builder.parent,new JavaFXDrawingInformation(builder.color),new TShape(builder.xSize,builder.ySize,3),builder.distance,builder.speed);
 		trabants=builder.trabants;
 		parent=builder.parent;
 		shape.setLevelOfDetail(builder.levelOfDetail);
@@ -33,7 +34,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	@Override
 	public void destruct() {
 		System.out.println(toString() + " got destroyed");
-		new Explosion("Explosion from" + name,center,6,800,1.03,Color.FIREBRICK);
+		new Explosion("Explosion from" + name,center,6,800,1.03,new JavaFXDrawingInformation(Color.FIREBRICK));
 		if(parent!=null) {
 			remove();
 			System.out.println(toString() + " removed!");

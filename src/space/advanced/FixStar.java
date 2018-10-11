@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.drawing.DrawingContext;
 import interfaces.logical.CollidingObject;
@@ -24,7 +25,7 @@ public class FixStar extends Star implements TimerObject {
 	public boolean dead=false;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
-		super(name, Color.WHITESMOKE, new AbsolutePoint(0, 0),1);
+		super(name, new JavaFXDrawingInformation(Color.WHITESMOKE), new AbsolutePoint(0, 0),1);
 		shape.setLevelOfDetail(0);
 		relativeX=relX;
 		relativeY=relY;
@@ -37,7 +38,6 @@ public class FixStar extends Star implements TimerObject {
 		if(dc instanceof JavaFXDrawingContext) {
 			GraphicsContext gc = ((JavaFXDrawingContext)dc).getGraphicsContext();
 			fixPosition(gc);
-			gc.setFill(color);
 		}
 		
 		shape.draw(dc);

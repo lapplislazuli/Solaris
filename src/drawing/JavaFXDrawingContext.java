@@ -37,6 +37,12 @@ public class JavaFXDrawingContext implements DrawingContext{
 		gc.restore();
 		gc.setEffect(null);
 		gc.setFill(null);
+		gc.setEffect(null);
+	}
+
+	@Override
+	public void saveContext() {
+		gc.save();
 	}
 	
 }

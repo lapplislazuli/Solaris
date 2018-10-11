@@ -1,8 +1,8 @@
 package space.advanced;
 
+import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.Rectangle;
-import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
@@ -38,16 +38,16 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	private void setColorFromType() {
 		switch(type) {
 		case ORE:
-			color=Color.DARKSLATEGRAY;
+			dInfo=new JavaFXDrawingInformation(Color.DARKSLATEGRAY);
 			break;
 		case ROCK:
-			color=Color.LIGHTGRAY;
+			dInfo=new JavaFXDrawingInformation(Color.LIGHTGRAY);
 			break;
 		case TRASH:
-			color=Color.GRAY;
+			dInfo=new JavaFXDrawingInformation(Color.GRAY);
 			break;
 		default:
-			color=Color.BLACK;
+			dInfo=new JavaFXDrawingInformation(Color.BLACK);
 			break;
 		}
 	}

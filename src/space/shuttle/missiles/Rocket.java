@@ -1,6 +1,7 @@
 package space.shuttle.missiles;
 
 import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.Rectangle;
 import interfaces.drawing.DrawingContext;
 import interfaces.logical.DestructibleObject;
@@ -13,29 +14,19 @@ import space.shuttle.SpaceShuttle;
 public class Rocket extends Missile implements DestructibleObject {
 
 	public Rocket(String name, SpaceShuttle emitter, int size) {
-		super(name, emitter,  new Rectangle(emitter.center,size,size*2),emitter.rotation, emitter.speed);
-		color=Color.FIREBRICK;
+		super(name, emitter,  new Rectangle(emitter.center,size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),emitter.rotation, emitter.speed);
 		shape.setLevelOfDetail(2);
 	}
 	
 	public Rocket(String name, SpaceShuttle emitter, int size,double rotation, int speed) {
-		super(name, emitter, new Rectangle(emitter.center,size,size*2),rotation,speed);
-		color=Color.FIREBRICK;
+		super(name, emitter, new Rectangle(emitter.center,size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),rotation,speed);
 		shape.setLevelOfDetail(2);
 	}
 	
 	@Override
 	public void destruct() {
-		new Explosion("Explosion from "+name, center, 5,1000, 1.02, Color.FIREBRICK);
+		new Explosion("Explosion from "+name, center, 5,1000, 1.02, new JavaFXDrawingInformation(Color.FIREBRICK));
 		remove();
 	}
 	
-	@Override
-	public void draw(DrawingContext gc) {
-		if(gc instanceof JavaFXDrawingContext) 
-			((JavaFXDrawingContext)gc).getGraphicsContext().setFill(color);
-	
-		drawShape(gc);
-		gc.resetContext();
-	}
 }

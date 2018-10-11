@@ -16,14 +16,22 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	public String name;
 	public AbsolutePoint center;
 	
+	public DrawingInformation dInfo;
+	
 	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,AbsolutePoint center, Shape shape) {
+	public SpaceObject(String name,AbsolutePoint center, Shape shape, DrawingInformation dInfo) {
+		if(name==null||name.isEmpty())
+			throw new IllegalArgumentException("Requires Name!");
 		this.name=name;
+		
 		this.center=center;
 		this.shape=shape;
 		this.shape.setCenter(center); //To center the Area around this object - improvement possible
+		if(dInfo==null)
+			throw new IllegalArgumentException("Requires DrawingInformation!");
+		this.dInfo=dInfo;
 	}
 	
 	public void update() {
@@ -34,6 +42,10 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	};
 	
 	public void draw(DrawingContext dc) {
+		if(dInfo==null)
+			throw new UnsupportedOperationException("Fuck");
+		dc.saveContext();
+		dInfo.applyDrawingInformation(dc);
 		drawShape(dc);
 		dc.resetContext();
 		drawTrabants(dc);

@@ -7,6 +7,7 @@ import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
 import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.drawing.DrawingContext;
 import javafx.application.*;
@@ -56,9 +57,9 @@ public class Program extends Application{
 	
 	@SuppressWarnings("unused")
 	private void initSpace() {
-		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
+		//DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
-		Star sun = new Star("Sun",Color.ORANGE,new AbsolutePoint(600,400),30);
+		Star sun = new Star("Sun",new JavaFXDrawingInformation(Color.ORANGE),new AbsolutePoint(600,400),30);
 		Planet earth = (new Planet.Builder("Earth", sun))
 				.size(13)
 				.distance(150)
@@ -92,13 +93,13 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI/10000)
 				.distance(480)
 				.build();
-		
+		/*
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
 				.distance(350)
 				.speed(Math.PI/4000)
 				.asteroids(100)
 				.build();
-		
+		*/
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
 				.idlingTurns(5*Math.PI/2)
@@ -144,7 +145,7 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.GRAY)
 				.build();
-		
+		/*
 		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Overlord")
 				.shuttleName("Martians")
 				.idlingTurns(Math.PI)
@@ -169,12 +170,12 @@ public class Program extends Application{
 				.start(sun)
 				.next(mars)
 				.build();
-		
-		updateManager.addSpaceObject(milkyway);
+		*/
+		//updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
 		updateManager.toUpdate.add(nasa);
-		updateManager.toUpdate.add(aliens);
-		updateManager.toUpdate.add(chinesePeople);
+		//updateManager.toUpdate.add(aliens);
+		//updateManager.toUpdate.add(chinesePeople);
 	}
 	
 }

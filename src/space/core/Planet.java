@@ -10,14 +10,15 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import interfaces.drawing.DrawingInformation;
 
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
 
-	protected Planet(String name, SpaceObject parent, Color color, int size, int distance, double speed) {
-		super(name, parent, color, new Circle(size), distance, speed);
+	protected Planet(String name, SpaceObject parent,DrawingInformation dInfo, int size, int distance, double speed) {
+		super(name, parent, dInfo, new Circle(size), distance, speed);
 	}
 	
 	public static class Builder {
@@ -76,7 +77,7 @@ public class Planet extends MovingSpaceObject {
 	}
 	
 	private Planet(Builder builder) {
-		super(builder.name,builder.parent,builder.color,new Circle(builder.size),builder.distance,builder.speed);
+		super(builder.name,builder.parent,new JavaFXDrawingInformation(builder.color),new Circle(builder.size),builder.distance,builder.speed);
 		trabants=builder.trabants;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		rotationSpeed=builder.rotationSpeed;

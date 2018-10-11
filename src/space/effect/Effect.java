@@ -17,10 +17,11 @@ public abstract class Effect implements UpdatingObject, ComplexDrawingObject, Re
 	Shape shape;
 	DrawingInformation dInfo;
 	
-	public Effect(String name,Point p, Shape s){
+	public Effect(String name,Point p, Shape s, DrawingInformation dInfo){
 		this.name = name;
 		center=p;
 		shape=s;
+		this.dInfo=dInfo;
 		EffectManager.getInstance().addEffect(this);
 	}
 	

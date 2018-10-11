@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import geom.AbsolutePoint;
 import interfaces.drawing.DrawingContext;
@@ -24,7 +25,7 @@ public class DistantGalaxy extends SpaceObject{
 	Random r =new Random();;
 	
     public DistantGalaxy(String name,int stars) {
-		super(name, new AbsolutePoint( 0, 0), new Circle(0)); 
+		super(name, new AbsolutePoint( 0, 0), new Circle(0),new JavaFXDrawingInformation(null)); 
 		maxStars=stars;
 		fillStars();
 	}
