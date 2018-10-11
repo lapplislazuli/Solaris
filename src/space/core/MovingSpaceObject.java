@@ -32,7 +32,6 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		this.speed=speed;
 		rotationSpeed=speed*2;
 		
-		
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
 		center.move(0, distance);;

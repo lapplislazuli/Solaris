@@ -18,6 +18,9 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		trabants=builder.trabants;
 		parent=builder.parent;
 		shape.setLevelOfDetail(builder.levelOfDetail);
+		
+		if(dInfo instanceof JavaFXDrawingInformation)
+			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
 	}
 	
 	@Override 

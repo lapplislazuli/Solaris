@@ -12,6 +12,8 @@ import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import javafx.scene.effect.Glow;
+
 @SuppressWarnings("restriction")
 public class Star extends SpaceObject {
 	private int size;
@@ -21,12 +23,14 @@ public class Star extends SpaceObject {
 		super(name,center,new Circle(center,size),dInfo);
 		shape.setLevelOfDetail(100);
 		this.size=size;
+		checkAndAddSunEffects();
 	}
 	
 	public Star(String name,DrawingInformation dInfo,int size) {
 		super(name,new AbsolutePoint(0,0), new Circle(size),dInfo);
 		shape.setLevelOfDetail(100);
 		this.size=size;
+		checkAndAddSunEffects();
 	}
 	
 	private Star(Builder builder) {
@@ -35,6 +39,8 @@ public class Star extends SpaceObject {
 		trabants=builder.trabants;
 		isCentered=builder.reCentering;
 		size=builder.radious;
+		
+		checkAndAddSunEffects();
 	}
 	
 	private void reCenter(GraphicsContext gc) {
@@ -49,21 +55,13 @@ public class Star extends SpaceObject {
 		super.draw(dc);
 	}
 	
-	void drawGlowingCircle(DrawingContext dc) {
-		/*if(dc instanceof JavaFXDrawingContext) {
-			GraphicsContext gc = ((JavaFXDrawingContext)dc).getGraphicsContext();
-			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-					new Stop(0.0, color),
-					new Stop(1.0, color.darker())));
-			gc.setEffect(new Glow(0.6));
-		}
-		*/
-		shape.draw(dc);
-	}
 	
-	@Override
-	public void drawShape(DrawingContext dc) {
-		drawGlowingCircle(dc);
+	private void checkAndAddSunEffects() {
+		if(dInfo instanceof JavaFXDrawingInformation) {
+			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
+			((JavaFXDrawingInformation)dInfo).effects.add(new Glow(0.6));
+		}
+			
 	}
 	
 	public static class Builder {

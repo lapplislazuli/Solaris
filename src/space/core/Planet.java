@@ -81,6 +81,8 @@ public class Planet extends MovingSpaceObject {
 		trabants=builder.trabants;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		rotationSpeed=builder.rotationSpeed;
+		if(dInfo instanceof JavaFXDrawingInformation)
+			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
 	}	
 	
 }

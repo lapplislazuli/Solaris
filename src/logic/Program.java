@@ -9,11 +9,10 @@ import space.shuttle.ShuttleNavigator;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
-import interfaces.drawing.DrawingContext;
 import javafx.application.*;
 import javafx.stage.Stage;
 import javafx.scene.*;
-import javafx.scene.canvas.*;
+
 import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
