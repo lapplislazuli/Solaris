@@ -32,7 +32,7 @@ public abstract class Effect implements UpdatingObject, ComplexDrawingObject, Re
 	public void update() {}
 	
 	public void draw(DrawingContext dc) {
-		
+		dInfo.applyDrawingInformation(dc);
 		drawShape(dc);
 		dc.resetContext();
 	}

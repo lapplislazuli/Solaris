@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.TShape;
 import geom.BaseShape;
 import geom.AbsolutePoint;
@@ -34,7 +35,7 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
-		center.move(0, distance);;
+		center.move(0, distance);
 	}
 	
 	public void move(AbsolutePoint parentCenter) {
@@ -80,18 +81,19 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	}
 	
 	@Override
-	public void drawShape(DrawingContext dc) {
-		
-		if(dc instanceof JavaFXDrawingContext) {
-			GraphicsContext gc = ((JavaFXDrawingContext)dc).getGraphicsContext();
-			gc.save();
+	public void draw(DrawingContext dc) {
+		updateDrawingInformation();
+		super.draw(dc);
+	}
+	
+	protected void updateDrawingInformation() {
+		if(dInfo instanceof JavaFXDrawingInformation) {
 			Affine transformRotation= new Affine();
 			transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
-			
-			gc.transform(transformRotation);	
+			((JavaFXDrawingInformation)dInfo).transformations.clear();
+			((JavaFXDrawingInformation)dInfo).transformations.add(transformRotation);
 		}
-		
-		super.drawShape(dc);
 	}
+
 	
 }
