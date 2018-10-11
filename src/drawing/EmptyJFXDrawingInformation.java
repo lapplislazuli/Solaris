@@ -10,6 +10,9 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class EmptyJFXDrawingInformation extends JavaFXDrawingInformation{
 	
+	public EmptyJFXDrawingInformation() {
+		super(null);
+	}
 	public EmptyJFXDrawingInformation(Color color) {
 		super(color);
 	}

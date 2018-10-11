@@ -25,7 +25,7 @@ public class DistantGalaxy extends SpaceObject{
 	Random r =new Random();;
 	
     public DistantGalaxy(String name,int stars) {
-		super(name, new AbsolutePoint( 0, 0), new Circle(0),new EmptyJFXDrawingInformation(null)); 
+		super(name, new AbsolutePoint( 0, 0), new Circle(0),new EmptyJFXDrawingInformation()); 
 		maxStars=stars;
 		fillStars();
 	}
@@ -64,6 +64,6 @@ public class DistantGalaxy extends SpaceObject{
 	
     public void fillStars() {
     	while(stars.size()<maxStars)
-    		stars.add(new FixStar(null,r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
+    		stars.add(new FixStar("Star#"+stars.size(),r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
     }
 }

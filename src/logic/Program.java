@@ -57,7 +57,7 @@ public class Program extends Application{
 	
 	@SuppressWarnings("unused")
 	private void initSpace() {
-		//DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
+		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
 		Star sun = new Star("Sun",new JavaFXDrawingInformation(Color.ORANGE),new AbsolutePoint(600,400),30);
 		Planet earth = (new Planet.Builder("Earth", sun))
@@ -171,7 +171,7 @@ public class Program extends Application{
 				.next(mars)
 				.build();
 		
-		//updateManager.addSpaceObject(milkyway);
+		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
 		updateManager.toUpdate.add(nasa);
 		updateManager.toUpdate.add(aliens);

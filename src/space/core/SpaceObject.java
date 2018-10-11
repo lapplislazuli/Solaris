@@ -117,7 +117,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 
 	public DrawingInformation getDrawingInformation() {
-		// TODO Auto-generated method stub
-		return null;
+		return dInfo;
 	}
 }

@@ -10,7 +10,7 @@ import space.core.SpaceObject;
 public class AsteroidBelt extends MovingSpaceObject{
 	
 	private AsteroidBelt(Builder builder) {
-		super(builder.name,builder.parent, new EmptyJFXDrawingInformation(null), new Circle(0),0,0);
+		super(builder.name,builder.parent, new EmptyJFXDrawingInformation(), new Circle(0),0,0);
 		center=builder.parent.center;
 		
 		for(int i = 1; i<=builder.asteroids;i++) {
