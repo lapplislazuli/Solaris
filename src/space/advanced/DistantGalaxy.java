@@ -4,8 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import drawing.JavaFXDrawingContext;
 import geom.Circle;
 import geom.AbsolutePoint;
+import interfaces.drawing.DrawingContext;
 import interfaces.logical.CollidingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -31,15 +33,25 @@ public class DistantGalaxy extends SpaceObject{
 	public boolean collides(CollidingObject other) {return false;}
 	 
     @Override
-    public void drawThisItem(GraphicsContext gc) {
-    	//Fill Background
-		gc.setFill(new LinearGradient(0, 0, 0.2, 0.2, true, CycleMethod.REFLECT, 
-                new Stop(0.0, Color.BLUE),
-                new Stop(1.0, Color.DARKBLUE)));          
-		gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+    public void drawShape(DrawingContext dc) {
+    	drawBackGround(dc);
+    	
+    	dc.resetContext();
 		
     	for(FixStar star : stars)
-    		star.draw(gc);
+    		star.draw(dc);
+    }
+    
+    public void drawBackGround(DrawingContext dc) {
+    	if(dc instanceof JavaFXDrawingContext) {
+			GraphicsContext gc = ((JavaFXDrawingContext)dc).getGraphicsContext();
+	    	gc.setFill(new LinearGradient(0, 0, 0.2, 0.2, true, CycleMethod.REFLECT, 
+	                new Stop(0.0, Color.BLUE),
+	                new Stop(1.0, Color.DARKBLUE)));          
+			gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+		}
+    	else
+    		throw new UnsupportedOperationException("Unsupported DrawingContext!");
     }
     
     @Override

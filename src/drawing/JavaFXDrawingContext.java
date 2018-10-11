@@ -32,5 +32,11 @@ public class JavaFXDrawingContext implements DrawingContext{
 		canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
 	};
-
+	
+	public void resetContext() {
+		gc.restore();
+		gc.setEffect(null);
+		gc.setFill(null);
+	}
+	
 }

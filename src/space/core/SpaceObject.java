@@ -4,13 +4,14 @@ import java.util.List;
 
 import geom.AbsolutePoint;
 import interfaces.ClickableObject;
+import interfaces.drawing.ComplexDrawingObject;
+import interfaces.drawing.DrawingContext;
+import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
-import javafx.scene.canvas.GraphicsContext;
 
-@SuppressWarnings("restriction")
-public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
+public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject, ComplexDrawingObject{
 	public Shape shape;
 	public String name;
 	public AbsolutePoint center;
@@ -32,24 +33,19 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		}
 	};
 	
-	public void draw(GraphicsContext gc) {
-		drawThisItem(gc);
-		resetGraphicsContext(gc);
-		drawTrabants(gc);
+	public void draw(DrawingContext dc) {
+		drawShape(dc);
+		dc.resetContext();
+		drawTrabants(dc);
 	}
 	
-	public void drawThisItem(GraphicsContext gc) {
-		shape.draw(gc);
+	public void drawShape(DrawingContext dc) {
+		shape.draw(dc);
 	};
 	
-	protected void resetGraphicsContext(GraphicsContext gc) {
-		gc.setEffect(null);
-		gc.setFill(null);
-	}
-	
-	protected void drawTrabants(GraphicsContext gc){
+	protected void drawTrabants(DrawingContext dc){
 		for (MovingSpaceObject trabant : trabants) 
-			trabant.draw(gc);
+			trabant.draw(dc);
 	}
 	
 	public double distanceTo(SpaceObject other) {
@@ -106,5 +102,10 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		result=31*result+center.hashCode();
 	
 		return result;
+	}
+
+	public DrawingInformation getDrawingInformation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

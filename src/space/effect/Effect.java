@@ -1,15 +1,14 @@
 package space.effect;
 
 import geom.AbsolutePoint;
+import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingObject;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.RemovableObject;
 import interfaces.logical.UpdatingObject;
-import javafx.scene.canvas.GraphicsContext;
 import logic.EffectManager;
 
-@SuppressWarnings("restriction")
 public abstract class Effect implements UpdatingObject, DrawingObject, RemovableObject{
 	
 	String name;
@@ -29,8 +28,8 @@ public abstract class Effect implements UpdatingObject, DrawingObject, Removable
 	
 	public void update() {}
 	
-	public void draw(GraphicsContext gc) {
-		shape.draw(gc);
+	public void draw(DrawingContext dc) {
+		shape.draw(dc);
 	}
 	
 	

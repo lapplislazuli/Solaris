@@ -1,16 +1,22 @@
 package space.advanced;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import space.core.SpaceObject;
 import space.core.Star;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import drawing.JavaFXDrawingContext;
 import geom.AbsolutePoint;
+import interfaces.drawing.DrawingContext;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Glow;
 
 @SuppressWarnings("restriction")
 public class FixStar extends Star implements TimerObject {
@@ -27,10 +33,14 @@ public class FixStar extends Star implements TimerObject {
 	}
 	
 	@Override
-	public void drawThisItem(GraphicsContext gc) {
-		fixPosition(gc);
-		gc.setFill(color);
-		shape.draw(gc);
+	public void drawShape(DrawingContext dc) {
+		if(dc instanceof JavaFXDrawingContext) {
+			GraphicsContext gc = ((JavaFXDrawingContext)dc).getGraphicsContext();
+			fixPosition(gc);
+			gc.setFill(color);
+		}
+		
+		shape.draw(dc);
 	}
  
 	protected void fixPosition(GraphicsContext gc) {

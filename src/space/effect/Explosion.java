@@ -1,9 +1,10 @@
 package space.effect;
 
 import javafx.scene.paint.Color;
+import drawing.JavaFXDrawingContext;
 import geom.Circle;
+import interfaces.drawing.DrawingContext;
 import interfaces.geom.Point;
-import javafx.scene.canvas.GraphicsContext;
 
 
 @SuppressWarnings("restriction")
@@ -30,8 +31,10 @@ public class Explosion extends TimerEffect {
 			c.radious+=0.3;
 	}
 	
-	public void draw(GraphicsContext gc) {
-		gc.setFill(color);
+	@Override
+	public void draw(DrawingContext gc) {
+		if(gc instanceof JavaFXDrawingContext)
+			((JavaFXDrawingContext)gc).getGraphicsContext().setFill(color);
 		super.draw(gc);
 	}
 

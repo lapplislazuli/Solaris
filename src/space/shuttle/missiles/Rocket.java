@@ -1,6 +1,8 @@
 package space.shuttle.missiles;
 
+import drawing.JavaFXDrawingContext;
 import geom.Rectangle;
+import interfaces.drawing.DrawingContext;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -29,8 +31,11 @@ public class Rocket extends Missile implements DestructibleObject {
 	}
 	
 	@Override
-	public void draw(GraphicsContext gc) {
-		gc.setFill(color);
-		drawThisItem(gc);
+	public void draw(DrawingContext gc) {
+		if(gc instanceof JavaFXDrawingContext) 
+			((JavaFXDrawingContext)gc).getGraphicsContext().setFill(color);
+	
+		drawShape(gc);
+		gc.resetContext();
 	}
 }

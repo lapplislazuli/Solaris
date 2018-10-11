@@ -3,7 +3,9 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingContext;
 import geom.Circle;
+import interfaces.drawing.DrawingContext;
 import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -47,22 +49,27 @@ public class Star extends SpaceObject {
 	}
 	
 	@Override
-	public void draw(GraphicsContext gc) {
-		if(isCentered)
-			reCenter(gc);
-		super.draw(gc);
+	public void draw(DrawingContext dc) {
+		if(isCentered && dc instanceof JavaFXDrawingContext)
+			reCenter(((JavaFXDrawingContext)dc).getGraphicsContext());
+		super.draw(dc);
 	}
 	
-	void drawGlowingCircle(GraphicsContext gc) {
-		gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-				new Stop(0.0, color),
-				new Stop(1.0, color.darker())));
-		gc.setEffect(new Glow(0.6));
-		shape.draw(gc);
+	void drawGlowingCircle(DrawingContext dc) {
+		if(dc instanceof JavaFXDrawingContext) {
+			GraphicsContext gc = ((JavaFXDrawingContext)dc).getGraphicsContext();
+			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
+					new Stop(0.0, color),
+					new Stop(1.0, color.darker())));
+			gc.setEffect(new Glow(0.6));
+		}
+		
+		shape.draw(dc);
 	}
+	
 	@Override
-	public void drawThisItem(GraphicsContext gc) {
-		drawGlowingCircle(gc);
+	public void drawShape(DrawingContext dc) {
+		drawGlowingCircle(dc);
 	}
 	
 	public static class Builder {

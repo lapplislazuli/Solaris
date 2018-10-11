@@ -3,7 +3,9 @@ package space.shuttle.missiles;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingContext;
 import geom.Circle;
+import interfaces.drawing.DrawingContext;
 import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -31,10 +33,12 @@ public class Laserbeam extends Missile{
 	}
 	
 	@Override 
-	public void draw(GraphicsContext gc) {
-		gc.setFill(color);
-		for(int i=0; i<trail.size(); i++) {
-			gc.fillOval(trail.get(i).getX(),trail.get(i).getY(), 2, 2);
+	public void draw(DrawingContext gc) {
+		if(gc instanceof JavaFXDrawingContext) {
+			((JavaFXDrawingContext)gc).getGraphicsContext().setFill(color);
+			for(int i=0; i<trail.size(); i++) {
+				((JavaFXDrawingContext)gc).getGraphicsContext().fillOval(trail.get(i).getX(),trail.get(i).getY(), 2, 2);
+			}
 		}
 	}
 }

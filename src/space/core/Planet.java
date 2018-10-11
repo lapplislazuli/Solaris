@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import geom.Circle;
+import interfaces.drawing.DrawingInformation;
 
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
@@ -79,7 +80,6 @@ public class Planet extends MovingSpaceObject {
 		trabants=builder.trabants;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		rotationSpeed=builder.rotationSpeed;
-	}
-	
+	}	
 	
 }
