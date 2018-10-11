@@ -39,6 +39,9 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	}
 	
 	@Override
+	protected void updateDrawingInformation() {}
+	
+	@Override
 	public void remove() {
 		if(emitter!=null)
 			emitter.trabants.remove(this);

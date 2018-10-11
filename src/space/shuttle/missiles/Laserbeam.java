@@ -31,20 +31,11 @@ public class Laserbeam extends Missile{
 	    trail.add(center.clone());
 		super.move(oldPosition);
 	}
+	
 	@Override
 	public void drawShape(DrawingContext dc) {
 		if(dc instanceof JavaFXDrawingContext) 
 			for(int i=0; i<trail.size(); i++) 
 				((JavaFXDrawingContext)dc).getGraphicsContext().fillOval(trail.get(i).getX(),trail.get(i).getY(), 2, 2);
 	}
-	/*
-	@Override 
-	public void draw(DrawingContext gc) {
-		if(gc instanceof JavaFXDrawingContext) {
-			((JavaFXDrawingContext)gc).getGraphicsContext().setFill(color);
-			for(int i=0; i<trail.size(); i++) {
-				((JavaFXDrawingContext)gc).getGraphicsContext().fillOval(trail.get(i).getX(),trail.get(i).getY(), 2, 2);
-			}
-		}
-	}*/
 }
