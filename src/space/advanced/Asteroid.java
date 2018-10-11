@@ -1,5 +1,6 @@
 package space.advanced;
 
+import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.Rectangle;
@@ -15,7 +16,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public enum Type{ORE, ROCK, TRASH;}
 	Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
-		super(name,parent,null,new Rectangle(3,3),distance,speed);
+		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(3,3),distance,speed);
 		//Asteroid Types are chosen randomly if not in the Constructor
 		int typeHelper=((int)((Math.random()+1)*3)%3);
 		if(typeHelper==0)
@@ -30,9 +31,10 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {
-		super(name,parent,null,new Rectangle(4,5),distance,speed);
+		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(4,5),distance,speed);
 		this.type=type;
 		this.parent=parent;
+		setColorFromType();
 	}
 	
 	private void setColorFromType() {

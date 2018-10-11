@@ -1,9 +1,6 @@
 package space.advanced;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import space.core.SpaceObject;
 import space.core.Star;
 
@@ -17,7 +14,6 @@ import interfaces.drawing.DrawingContext;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Glow;
 
 @SuppressWarnings("restriction")
 public class FixStar extends Star implements TimerObject {

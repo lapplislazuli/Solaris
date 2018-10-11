@@ -93,13 +93,13 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI/10000)
 				.distance(480)
 				.build();
-		/*
+		
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
 				.distance(350)
 				.speed(Math.PI/4000)
 				.asteroids(100)
 				.build();
-		*/
+		
 		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
 				.shuttleName("Ikarus")
 				.idlingTurns(5*Math.PI/2)
@@ -128,7 +128,6 @@ public class Program extends Application{
 				.color(Color.CADETBLUE)
 				.build();
 		
-		
 		Planet phobos = (new Planet.Builder("Phobos", saturn))
 				.size(4)
 				.distance(70)
@@ -137,6 +136,7 @@ public class Program extends Application{
 				.rotationSpeed(-Math.PI/400)
 				.color(Color.LIGHTGRAY)
 				.build();
+		
 		Planet deimos = (new Planet.Builder("Deimos", saturn))
 				.size(3)
 				.distance(50)
@@ -145,7 +145,7 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.GRAY)
 				.build();
-		/*
+		
 		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Overlord")
 				.shuttleName("Martians")
 				.idlingTurns(Math.PI)
@@ -170,12 +170,12 @@ public class Program extends Application{
 				.start(sun)
 				.next(mars)
 				.build();
-		*/
+		
 		//updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
 		updateManager.toUpdate.add(nasa);
-		//updateManager.toUpdate.add(aliens);
-		//updateManager.toUpdate.add(chinesePeople);
+		updateManager.toUpdate.add(aliens);
+		updateManager.toUpdate.add(chinesePeople);
 	}
 	
 }
