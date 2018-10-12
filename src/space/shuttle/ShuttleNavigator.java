@@ -39,6 +39,11 @@ public class ShuttleNavigator implements UpdatingObject{
 		}
 	}
 	
+	public void clearRoute() {
+		route= new LinkedList<SpaceObject>();
+		route.add(shuttle.parent);
+	}
+	
 	boolean isInGoodLaunchPosition(SpaceObject target) {
 		double delta = Math.abs(shuttle.degreeTo(shuttle.parent) - shuttle.degreeTo(target));
 		delta = Math.abs(delta-Math.PI);

@@ -41,13 +41,24 @@ public class MouseManager implements UpdatingObject {
 		if(evt.getButton().equals(MouseButton.PRIMARY))
 			shootAtClickedPoint(clickedPosition);
 		else if (evt.getButton().equals(MouseButton.SECONDARY))
-			showInformationOnClick(clickedPosition);
+			registerSpaceObjectToPlayerRoute(clickedPosition);
+			//showInformationOnClick(clickedPosition);
 		else
 			System.out.println("You pressed something strange!");
 	}
 
 	private void shootAtClickedPoint(Point clickedPosition) {
 		PlayerManager.getInstance().getPlayerShuttle().shootRocket(clickedPosition);
+	}
+	
+	private void registerSpaceObjectToPlayerRoute(Point clickedPosition) {
+		DrawingManager.getInstance().registeredItems.
+			stream()
+			.filter( drawable -> drawable instanceof SpaceObject)
+			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())
+			.filter(item -> item.shape.contains(clickedPosition))
+			.forEach(clicked -> PlayerManager.getInstance().getPlayerNavigator().route.add(clicked));
+		System.out.println("New Route:"+PlayerManager.getInstance().getPlayerNavigator().route.toString());
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {
