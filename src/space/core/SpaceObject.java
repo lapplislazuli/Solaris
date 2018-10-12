@@ -2,6 +2,7 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.EmptyJFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.ClickableObject;
 import interfaces.drawing.ComplexDrawingObject;
@@ -30,8 +31,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		this.shape=shape;
 		this.shape.setCenter(center); //To center the Area around this object - improvement possible
 		if(dInfo==null)
-			throw new IllegalArgumentException("Requires DrawingInformation!");
-		this.dInfo=dInfo;
+			dInfo=new EmptyJFXDrawingInformation();
+		else
+			this.dInfo=dInfo;
 	}
 	
 	public void update() {
