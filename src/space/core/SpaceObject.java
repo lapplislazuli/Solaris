@@ -83,7 +83,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return flatChildren;
 	}
 	
-	
 	public void click() {
 		System.out.println("Clicked: " + toString());
 	}
