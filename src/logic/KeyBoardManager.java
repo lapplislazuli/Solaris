@@ -22,7 +22,6 @@ public class KeyBoardManager implements UpdatingObject {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		// Maybe handle stuff that needs longer pressed buttons (like charging a laserbeam)
 	}
 	

@@ -35,12 +35,15 @@ public class Rectangle extends BaseShape{
 	public void initOutline() {
 		outLine.clear();
 		
-		outLine.add(new RelativePoint(center,-(xSize)/2,-(ySize)/2));
-		outLine.add(new RelativePoint(center,(xSize)/2,(ySize)/2));
-		
 		for(int i=-levelOfDetail/2;i<=levelOfDetail/2;i++) {
-			outLine.add(new RelativePoint(center,i*(xSize/levelOfDetail),0));
-			outLine.add(new RelativePoint(center,0,i*(ySize/levelOfDetail)));
+			//Upper Edge
+			outLine.add(new RelativePoint(center,i*(xSize/levelOfDetail),-(ySize)/2));
+			//Lefthand Edge
+			outLine.add(new RelativePoint(center,-(xSize)/2,i*(ySize/levelOfDetail)));
+			//Bottom Edge
+			outLine.add(new RelativePoint(center,i*(xSize/levelOfDetail),(ySize)/2));
+			//Righthand Edge
+			outLine.add(new RelativePoint(center,(xSize)/2,i*(ySize/levelOfDetail)));
 		}
 	}
 

@@ -6,11 +6,13 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
+import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import javafx.application.*;
 import javafx.stage.Stage;
 import javafx.scene.*;
-import javafx.scene.canvas.*;
+
 import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
@@ -24,22 +26,22 @@ public class Program extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Group root = new Group();
-        Canvas canvas = new Canvas();
-        root.getChildren().add(canvas);
-       
-        Scene scene = new Scene(root,1200 , 600);
-        
-        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        UpdateManager.getInstance().initUpdateManager(25, gc);
+		Group root = new Group();
+		
+		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
+		
+        UpdateManager.getInstance().initUpdateManager(25);
         updateManager = UpdateManager.getInstance();
+        
+        DrawingManager.getInstance().initDrawingManager(jfx);
         
         initSpace();
         
-        canvas.widthProperty().bind(scene.widthProperty());
-        canvas.heightProperty().bind(scene.heightProperty());
-
+        Scene scene = new Scene(root,1200 , 600);
+        
+        jfx.bindSizeProperties(scene);
+        
         MouseManager.getInstance().init(scene);
         KeyBoardManager.getInstance().init(scene);
         
@@ -58,7 +60,7 @@ public class Program extends Application{
 	private void initSpace() {
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
-		Star sun = new Star("Sun",Color.ORANGE,new AbsolutePoint(600,400),30);
+		Star sun = new Star("Sun",new JavaFXDrawingInformation(Color.ORANGE),new AbsolutePoint(600,400),30);
 		Planet earth = (new Planet.Builder("Earth", sun))
 				.size(13)
 				.distance(150)
@@ -106,7 +108,7 @@ public class Program extends Application{
 				.isPlayer(true)
 				.shuttlesize(2)
 				.shuttleOrbitingDistance(40)
-				.shuttleSpeed(Math.PI/70)
+				.shuttleSpeed(Math.PI/140)
 				.start(earth)
 				.next(mars)
 				.build();
@@ -127,7 +129,6 @@ public class Program extends Application{
 				.color(Color.CADETBLUE)
 				.build();
 		
-		
 		Planet phobos = (new Planet.Builder("Phobos", saturn))
 				.size(4)
 				.distance(70)
@@ -136,6 +137,7 @@ public class Program extends Application{
 				.rotationSpeed(-Math.PI/400)
 				.color(Color.LIGHTGRAY)
 				.build();
+		
 		Planet deimos = (new Planet.Builder("Deimos", saturn))
 				.size(3)
 				.distance(50)
@@ -144,10 +146,37 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.GRAY)
 				.build();
-
+		
+		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Overlord")
+				.shuttleName("Martians")
+				.idlingTurns(Math.PI)
+				.doesRespawn(true)
+				.isPlayer(false)
+				.shuttlesize(3)
+				.shuttleOrbitingDistance(50)
+				.shuttleSpeed(Math.PI/100)
+				.start(mars)
+				.next(saturn)
+				.next(sun)
+				.build();
+		
+		ShuttleNavigator chinesePeople = new ShuttleNavigator.Builder("Xin Ping")
+				.shuttleName("Chinese")
+				.idlingTurns(Math.PI)
+				.doesRespawn(true)
+				.isPlayer(false)
+				.shuttlesize(3)
+				.shuttleOrbitingDistance(55)
+				.shuttleSpeed(Math.PI/90)
+				.start(sun)
+				.next(mars)
+				.build();
+		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
-		updateManager.toUpdate.add(nasa);
+		updateManager.registeredItems.add(nasa);
+		updateManager.registeredItems.add(aliens);
+		updateManager.registeredItems.add(chinesePeople);
 	}
 	
 }

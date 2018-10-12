@@ -3,42 +3,44 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.Circle;
+import interfaces.drawing.DrawingContext;
+import interfaces.drawing.DrawingInformation;
 import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
+
 import javafx.scene.effect.Glow;
 
 @SuppressWarnings("restriction")
 public class Star extends SpaceObject {
-	protected Color color;
 	private int size;
 	public boolean isCentered=true;
 	
-	public Star(String name, Color color,AbsolutePoint center, int size) {
-		super(name,center,new Circle(center,size));
+	public Star(String name, DrawingInformation dInfo,AbsolutePoint center, int size) {
+		super(name,center,new Circle(center,size),dInfo);
 		shape.setLevelOfDetail(100);
 		this.size=size;
-		this.color=color;
+		checkAndAddSunEffects();
 	}
 	
-	public Star(String name, Color color,int size) {
-		super(name,new AbsolutePoint(0,0), new Circle(size));
+	public Star(String name,DrawingInformation dInfo,int size) {
+		super(name,new AbsolutePoint(0,0), new Circle(size),dInfo);
 		shape.setLevelOfDetail(100);
 		this.size=size;
-		this.color=color;
+		checkAndAddSunEffects();
 	}
 	
 	private Star(Builder builder) {
-		super(builder.name,builder.center,new Circle(builder.radious));
+		super(builder.name,builder.center,new Circle(builder.radious),new JavaFXDrawingInformation(builder.color));
 		shape.setLevelOfDetail(builder.levelOfDetail);
-		color=builder.color;
 		trabants=builder.trabants;
 		isCentered=builder.reCentering;
 		size=builder.radious;
+		
+		checkAndAddSunEffects();
 	}
 	
 	private void reCenter(GraphicsContext gc) {
@@ -47,22 +49,19 @@ public class Star extends SpaceObject {
 	}
 	
 	@Override
-	public void draw(GraphicsContext gc) {
-		if(isCentered)
-			reCenter(gc);
-		super.draw(gc);
+	public void draw(DrawingContext dc) {
+		if(isCentered && dc instanceof JavaFXDrawingContext)
+			reCenter(((JavaFXDrawingContext)dc).getGraphicsContext());
+		super.draw(dc);
 	}
 	
-	void drawGlowingCircle(GraphicsContext gc) {
-		gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-				new Stop(0.0, color),
-				new Stop(1.0, color.darker())));
-		gc.setEffect(new Glow(0.6));
-		shape.draw(gc);
-	}
-	@Override
-	public void drawThisItem(GraphicsContext gc) {
-		drawGlowingCircle(gc);
+	
+	private void checkAndAddSunEffects() {
+		if(dInfo instanceof JavaFXDrawingInformation) {
+			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
+			((JavaFXDrawingInformation)dInfo).effects.add(new Glow(0.6));
+		}
+			
 	}
 	
 	public static class Builder {

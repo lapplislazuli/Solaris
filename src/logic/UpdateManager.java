@@ -5,27 +5,24 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import interfaces.DrawingObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
-import javafx.scene.canvas.GraphicsContext;
+
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
 public class UpdateManager implements TimerObject{
 
-	public List<UpdatingObject> toUpdate;
-	public List<DrawingObject> toDraw;
-	private GraphicsContext gc;
+	public List<UpdatingObject> registeredItems;
+	
 	private Timer timer;
 	private boolean running=true;
 	
 	private static UpdateManager INSTANCE;
 	
 	private UpdateManager() {
-		toUpdate=new LinkedList<UpdatingObject>();
-		toDraw=new LinkedList<DrawingObject>();
+		registeredItems=new LinkedList<UpdatingObject>();
 	}
 	public static UpdateManager getInstance() {
 		if(INSTANCE==null)
@@ -33,36 +30,27 @@ public class UpdateManager implements TimerObject{
 		return INSTANCE;
 	}
 	
-	public void initUpdateManager(int updateIntervall, GraphicsContext gc) {
-		this.gc = gc;
+	public void initUpdateManager(int updateIntervall) {
 		CollisionManager.getInstance().initCollisionManager(1000, this);
-		toUpdate.add(CollisionManager.getInstance());
-		toUpdate.add(EffectManager.getInstance());
+		
+		registeredItems.add(CollisionManager.getInstance());
+		registeredItems.add(DrawingManager.getInstance());
+		registeredItems.add(EffectManager.getInstance());
+		
 		setTimer(updateIntervall);
 	}
 	
 	public void update() {
-		if(running) {
-			updateAll();
-			drawAll();
-		}
-	}
-	
-	private void updateAll() {
-		for(UpdatingObject updateMe : toUpdate)
-			updateMe.update();
-	}
-	private void drawAll() {
-		for(DrawingObject drawMe : toDraw)
-			drawMe.draw(gc);
-		EffectManager.getInstance().draw(gc);
+		if(running) 
+			for(UpdatingObject updateMe : registeredItems)
+				updateMe.update();
 	}
 	
 	public void addSpaceObject(SpaceObject o) {
-		toUpdate.add(o);
-		toDraw.add(o);
+		registeredItems.add(o);
+		DrawingManager.getInstance().registeredItems.add(o);
 		for(SpaceObject child : o.getAllChildrenFlat())
-			CollisionManager.getInstance().add(child);
+			CollisionManager.getInstance().register(child);
 	}
 	
 	@Override

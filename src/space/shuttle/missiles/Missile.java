@@ -2,6 +2,7 @@ package space.shuttle.missiles;
 
 import geom.BaseShape;
 import geom.AbsolutePoint;
+import interfaces.drawing.DrawingInformation;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
@@ -16,8 +17,8 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	 * Distance will be used to measure the flown distance, for remove logic
 	 */
 
-	public Missile(String name, SpaceShuttle emitter, BaseShape area,double direction, double speed) {
-		super(name, emitter, null, area, 0,speed);
+	public Missile(String name, SpaceShuttle emitter, BaseShape area,DrawingInformation dInfo, double direction, double speed) {
+		super(name, emitter, dInfo, area, 0,speed);
 		this.emitter=emitter;
 		rotation=direction;
 	}
@@ -36,6 +37,9 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		center.setY((int) (center.getY()+Math.sin(rotation)*speed));
 		distance += oldCenter.distanceTo(center);
 	}
+	
+	@Override
+	protected void updateDrawingInformation() {}
 	
 	@Override
 	public void remove() {

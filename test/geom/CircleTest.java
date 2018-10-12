@@ -7,42 +7,20 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import interfaces.geom.Point;
 
 class CircleTest {
 	
-	private static Circle testObject;
-	private static Point centerTestObject;
+	private Circle testObject;
+	private Point centerTestObject;
 	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		centerTestObject= new AbsolutePoint(100,100);
 		testObject = new Circle(centerTestObject,100);
-	}
-	
-	//TODO: Make outline test for this and rectangle!
-	@Ignore
-	void testInitOutline() {
-		testObject.levelOfDetail=4; //4 OutlinePoints!
-		testObject.updateOrInitOutline(); 
-		for (int i=0;i<4;i++) {
-			Point testOutlinePoint=testObject.outLine.get(i);
-			assertTrue(
-					testOutlinePoint.distanceTo(new AbsolutePoint(0,100))==0
-				|| testOutlinePoint.distanceTo(new AbsolutePoint(200,100))==0
-				|| testOutlinePoint.distanceTo(new AbsolutePoint(100,0))==0
-				|| testOutlinePoint.distanceTo(new AbsolutePoint(100,200))==0
-			);
-		}
-	}
-	
-	@Test
-	void testOutlineCount() {
-		testObject.levelOfDetail=100;
-		testObject.updateOrInitOutline();
-		assertEquals(100,testObject.outLine.size());
 	}
 	
 	@Test
@@ -69,5 +47,39 @@ class CircleTest {
 	void testTangentialContains() {
 		Point edgePoint = new AbsolutePoint(200,100); //On the Edge of Circle
 		assertTrue(testObject.contains(edgePoint));
+	}
+	
+	/*
+	 * Idea: Make a little smaller Circle and a little bigger circle around the testObject
+	 * Check whether all Points are in one and not in the other. 
+	 * This leaves only to check whether outline distance and outlinepoint-degree are correct
+	 */
+	@Test
+	void testInitOutlineWithRelativeCircles() {
+		Circle biggerCircle = new Circle(centerTestObject,102);
+		Circle smallerCircle = new Circle(centerTestObject,98);
+		testObject.setLevelOfDetail(1000);
+		testObject.initOutline();
+		
+		for(Point p : testObject.outLine) {
+			assertTrue(biggerCircle.contains(p));
+			assertFalse(smallerCircle.contains(p));
+		}
+	}
+	
+	@Test
+	void testOutlineIsTangenting() {
+			testObject.setLevelOfDetail(100);
+			testObject.initOutline();
+			
+			for(Point p : testObject.outLine)
+				testObject.contains(p);
+	}
+	
+	@Test
+	void testOutlineCount() {
+		testObject.levelOfDetail=100;
+		testObject.updateOrInitOutline();
+		assertEquals(100,testObject.outLine.size());
 	}
 }

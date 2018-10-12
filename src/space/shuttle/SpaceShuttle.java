@@ -1,5 +1,6 @@
 package space.shuttle;
 
+import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.HShape;
 import interfaces.logical.DestructibleObject;
@@ -18,7 +19,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	protected SensorArray sensor;
 
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, Color.GHOSTWHITE, new HShape(5,10,3), 0 , speed);
+		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(5,10,3), 0 , speed);
 		
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;
@@ -29,15 +30,38 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	public void launch() {
-		if(target!=null && parent.trabants.remove(this)) {
-			target.trabants.add(this);
-			orbiting=false;
-			parent = target;
-			target=null;
-			
-			distance=(int)distanceTo(parent);
-			relativePos=parent.degreeTo(this);
+		if(isAliveAndRegistered()) {
+			changeHierarchy();
+			changeMovementAndPositionAttributes();
 		}
+	}
+
+	protected void changeMovementAndPositionAttributes() {
+		distance=(int)distanceTo(parent);
+		relativePos=parent.degreeTo(this);
+		evaluateBestSpeed();
+	}
+
+	protected void evaluateBestSpeed() {
+		if(isFasterThanMe(parent)) {
+			if(!movesInSameDirection(parent))
+				speed=-speed;
+		}
+		else {
+			if(movesInSameDirection(parent))
+				speed=-speed;
+		}
+	}
+
+	protected void changeHierarchy() {
+		target.trabants.add(this);
+		orbiting=false;
+		parent = target;
+		target=null;
+	}
+
+	protected boolean isAliveAndRegistered() {
+		return target!=null && parent.trabants.remove(this);
 	}
 	
 	@Override
@@ -61,7 +85,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void destruct() {
 		System.out.println("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
-			new Explosion("Explosion from" + name,center,5,1500,1.02,Color.MEDIUMVIOLETRED);
+			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);
 			remove();
 		}

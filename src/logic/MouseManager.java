@@ -61,7 +61,7 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {
-		UpdateManager.getInstance().toDraw.
+		DrawingManager.getInstance().registeredItems.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
 			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())

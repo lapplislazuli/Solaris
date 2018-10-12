@@ -4,12 +4,17 @@ import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+import drawing.JavaFXDrawingContext;
+import drawing.JavaFXDrawingInformation;
 import geom.TShape;
 import geom.BaseShape;
 import geom.AbsolutePoint;
+import interfaces.drawing.DrawingContext;
+import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
 import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Glow;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -20,20 +25,17 @@ import javafx.scene.transform.Affine;
 public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {	
 	public int distance;
 	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
-	protected Color color;
 	
-	public MovingSpaceObject(String name,SpaceObject parent,Color color, Shape shape,int distance, double speed) {
-		super(name,parent.center.clone(),shape);
+	public MovingSpaceObject(String name,SpaceObject parent,DrawingInformation dInfo, Shape shape,int distance, double speed) {
+		super(name,parent.center.clone(),shape,dInfo);
 		
 		this.distance=distance;
 		this.speed=speed;
 		rotationSpeed=speed*2;
 		
-		this.color=color;
-		
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
-		center.move(0, distance);;
+		center.move(0, distance);
 	}
 	
 	public void move(AbsolutePoint parentCenter) {
@@ -59,20 +61,39 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 			rotation += Math.PI*2;
 		}
 	}
-
-	@Override
-	public void drawThisItem(GraphicsContext gc) {
-		gc.save();
-		Affine transformRotation= new Affine();
-		transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
-		if (color != null) {
-			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-					new Stop(0.0, color),
-					new Stop(1.0, color.darker())));
+	
+	public boolean isFasterThanMe(SpaceObject other) {
+		if(other instanceof MovingSpaceObject) {
+			MovingSpaceObject otherCasted= (MovingSpaceObject) other;
+			return 	speed!=0
+					&&otherCasted.speed!=0
+					&&Math.abs(otherCasted.speed)>Math.abs(speed);
 		}
-		gc.transform(transformRotation);	
-		super.drawThisItem(gc);
-		gc.restore();
+		return false;
 	}
+	
+	public boolean movesInSameDirection(SpaceObject other) {
+		if(other instanceof MovingSpaceObject) {
+			MovingSpaceObject otherCasted= (MovingSpaceObject) other;
+			return 	otherCasted.speed>0&&speed>0 || otherCasted.speed<0&&speed<0;
+		}
+		return false;
+	}
+	
+	@Override
+	public void draw(DrawingContext dc) {
+		updateDrawingInformation();
+		super.draw(dc);
+	}
+	
+	protected void updateDrawingInformation() {
+		if(dInfo instanceof JavaFXDrawingInformation) {
+			Affine transformRotation= new Affine();
+			transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
+			((JavaFXDrawingInformation)dInfo).transformations.clear();
+			((JavaFXDrawingInformation)dInfo).transformations.add(transformRotation);
+		}
+	}
+
 	
 }

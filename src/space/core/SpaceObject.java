@@ -2,27 +2,38 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.EmptyJFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.ClickableObject;
+import interfaces.drawing.ComplexDrawingObject;
+import interfaces.drawing.DrawingContext;
+import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
-import javafx.scene.canvas.GraphicsContext;
 
-@SuppressWarnings("restriction")
-public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject{
+public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject, ComplexDrawingObject{
 	public Shape shape;
 	public String name;
 	public AbsolutePoint center;
 	
+	public DrawingInformation dInfo;
+	
 	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,AbsolutePoint center, Shape shape) {
+	public SpaceObject(String name,AbsolutePoint center, Shape shape, DrawingInformation dInfo) {
+		if(name==null||name.isEmpty())
+			throw new IllegalArgumentException("Requires Name!");
 		this.name=name;
+		
 		this.center=center;
 		this.shape=shape;
 		this.shape.setCenter(center); //To center the Area around this object - improvement possible
+		if(dInfo==null)
+			dInfo=new EmptyJFXDrawingInformation();
+		else
+			this.dInfo=dInfo;
 	}
 	
 	public void update() {
@@ -32,24 +43,23 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		}
 	};
 	
-	public void draw(GraphicsContext gc) {
-		drawThisItem(gc);
-		resetGraphicsContext(gc);
-		drawTrabants(gc);
+	public void draw(DrawingContext dc) {
+		if(dInfo==null)
+			throw new UnsupportedOperationException("Fuck");
+		dc.saveContext();
+		dInfo.applyDrawingInformation(dc);
+		drawShape(dc);
+		dc.resetContext();
+		drawTrabants(dc);
 	}
 	
-	public void drawThisItem(GraphicsContext gc) {
-		shape.draw(gc);
+	public void drawShape(DrawingContext dc) {
+		shape.draw(dc);
 	};
 	
-	protected void resetGraphicsContext(GraphicsContext gc) {
-		gc.setEffect(null);
-		gc.setFill(null);
-	}
-	
-	protected void drawTrabants(GraphicsContext gc){
+	protected void drawTrabants(DrawingContext dc){
 		for (MovingSpaceObject trabant : trabants) 
-			trabant.draw(gc);
+			trabant.draw(dc);
 	}
 	
 	public double distanceTo(SpaceObject other) {
@@ -72,7 +82,6 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		flatChildren.add(this);
 		return flatChildren;
 	}
-	
 	
 	public void click() {
 		System.out.println("Clicked: " + toString());
@@ -106,5 +115,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		result=31*result+center.hashCode();
 	
 		return result;
+	}
+
+	public DrawingInformation getDrawingInformation() {
+		return dInfo;
 	}
 }

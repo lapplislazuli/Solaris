@@ -3,9 +3,14 @@ package geom;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingContext;
+import interfaces.drawing.DrawingContext;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 
+import javafx.scene.canvas.GraphicsContext;
+
+@SuppressWarnings("restriction")
 public abstract class BaseShape implements Shape{
 	public Point center;
 	public List<Point> outLine= new LinkedList<Point>();
@@ -63,4 +68,13 @@ public abstract class BaseShape implements Shape{
 			&& area()==other.area();
 		//TODO: Further Checks with Outline?
 	}
+	
+	public void draw(DrawingContext dc) {
+		if(dc instanceof JavaFXDrawingContext)
+			draw(((JavaFXDrawingContext)dc).getGraphicsContext());
+		else
+			throw new UnsupportedOperationException("Unsupported DrawingContext!");
+	}
+	
+	public abstract void draw(GraphicsContext gc);
 }

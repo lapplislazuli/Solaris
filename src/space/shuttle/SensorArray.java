@@ -32,7 +32,7 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	@Override
 	public void update() {
 		detectedItems=
-				CollisionManager.getInstance().collidables.stream()
+				CollisionManager.getInstance().registeredItems.stream()
 				.filter(c-> c instanceof SpaceObject)
 				.filter(c->!(c instanceof FixStar))
 				.map(c->(SpaceObject)c)

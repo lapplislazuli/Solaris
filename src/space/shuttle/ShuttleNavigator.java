@@ -9,7 +9,7 @@ import space.core.SpaceObject;
 public class ShuttleNavigator implements UpdatingObject{
 	
 	String name;
-	private int currentPointer;
+	private int currentPointer=0,shuttleSize;
 	public List<SpaceObject> route;
 	private ArmedSpaceShuttle shuttle;
 	
@@ -22,27 +22,40 @@ public class ShuttleNavigator implements UpdatingObject{
 		route.add(shuttle.parent);
 		this.shuttle=shuttle;
 		this.name=name;
-		currentPointer=1;
 	}
 	
 	public void update() {
 		if(shuttle.isDead() && respawn)
 			rebuildShuttle();
 		else if(shuttle.orbiting) {
-			if((currentIdle+=shuttle.speed)>=idlingTurns) { //SpaceShuttle idled some time
-				if (currentPointer==route.size()) 
-					currentPointer=1;
-				
-				shuttle.target=route.get(currentPointer);
-				currentPointer++;
+			currentIdle+=Math.abs(shuttle.speed);
+			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextTarget())) { //SpaceShuttle idled some time
+				shuttle.target=getNextTarget();
 				shuttle.launch();
 				currentIdle=0;
+				incrementPointer();
 			}
 		}
 	}
 	
+	boolean isInGoodLaunchPosition(SpaceObject target) {
+		double delta = Math.abs(shuttle.degreeTo(shuttle.parent) - shuttle.degreeTo(target));
+		delta = Math.abs(delta-Math.PI);
+		return delta<=0.1;
+	}
+	
+	private SpaceObject getNextTarget() {
+		return route.get(currentPointer+1);
+	}
+	
+	private void incrementPointer() {
+		currentPointer++;
+		if (currentPointer>=route.size()-1) 
+			currentPointer=0;
+	}
+	
 	private void rebuildShuttle() {
-		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),4,(int) shuttle.orbitingDistance,shuttle.speed);
+		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttleSize,(int) shuttle.orbitingDistance,shuttle.speed);
 		shuttle.setPlayer(isPlayer);
 	}
 
@@ -125,6 +138,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		route=builder.route;
 		name=builder.name;
 		currentIdle=0;
+		shuttleSize=builder.size;
 		idlingTurns=builder.idlingTurns;
 		respawn=builder.respawn;
 		isPlayer=builder.isPlayer;

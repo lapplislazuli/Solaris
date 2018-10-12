@@ -12,8 +12,8 @@ import space.core.SpaceObject;
 @SuppressWarnings("restriction")
 public class CollisionManager implements UpdatingObject{
 	
-	public final Set<CollidingObject> collidables;
-	public final Set<DestructibleObject> destructibles;
+	public final Set<CollidingObject> registeredItems;
+	public final Set<DestructibleObject> registeredDestructibles;
 
 	private UpdateManager parent;
 	private boolean running=true;
@@ -21,8 +21,8 @@ public class CollisionManager implements UpdatingObject{
 	private static CollisionManager INSTANCE;
 	
 	private CollisionManager() {
-		collidables = new HashSet<CollidingObject>();
-		destructibles = new HashSet<DestructibleObject>();
+		registeredItems = new HashSet<CollidingObject>();
+		registeredDestructibles = new HashSet<DestructibleObject>();
 	}
 	
 	public static CollisionManager getInstance() {
@@ -38,44 +38,43 @@ public class CollisionManager implements UpdatingObject{
 	public void update() {
 		if(running) {
 			refresh();
-			collidables.stream().forEach(e->e.updateHitbox());
+			registeredItems.stream().forEach(e->e.updateHitbox());
 			
 			Set<DestructibleObject> destroyed=new HashSet<DestructibleObject>();
-			for(DestructibleObject destructible : destructibles) {
-				for(CollidingObject collider: collidables) {
-					//if(destructible.collides(collider)&&collider.collides(destructible)) {
+			for(DestructibleObject destructible : registeredDestructibles) {
+				for(CollidingObject collider: registeredItems) {
 					if(collider.collides(destructible)) {
 						destructible.destruct();
 						destroyed.add(destructible);
 					}	
 				}
 			}
-			destructibles.removeAll(destroyed);
-			collidables.removeAll(destroyed);
+			registeredDestructibles.removeAll(destroyed);
+			registeredItems.removeAll(destroyed);
 		}	
 	}
 	
 	public void empty() {
-		collidables.clear();
-		destructibles.clear();
+		registeredItems.clear();
+		registeredDestructibles.clear();
 	}
 	
-	public void add(CollidingObject o){
-		collidables.add(o);
+	public void register(CollidingObject o){
+		registeredItems.add(o);
 		if(o instanceof DestructibleObject)
-			destructibles.add((DestructibleObject)o);
+			registeredDestructibles.add((DestructibleObject)o);
 	}
 	
 	public void refresh() {
 		if(running) {
 			empty();
 			for(SpaceObject o : getAllActiveSpaceObjects())
-				add(o);
+				register(o);
 		}	
 	}
 	
 	public Set<SpaceObject> getAllActiveSpaceObjects() {	
-		return parent.toUpdate.stream()
+		return parent.registeredItems.stream()
 				.filter(updatingObject -> updatingObject instanceof SpaceObject)
 				.map(spaceObject -> (SpaceObject)spaceObject)
 				.flatMap(spaceObject -> spaceObject.getAllChildrenFlat().stream())
