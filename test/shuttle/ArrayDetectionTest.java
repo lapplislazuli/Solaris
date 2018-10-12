@@ -29,10 +29,10 @@ public class ArrayDetectionTest {
 		sensor= new SensorArray(shuttle,50);
 		
 		cm=CollisionManager.getInstance();
-		cm.add(hitStar); 
-		cm.add(notHitStar);
-		cm.add(notHittableStar);
-		cm.add(shuttle);
+		cm.register(hitStar); 
+		cm.register(notHitStar);
+		cm.register(notHittableStar);
+		cm.register(shuttle);
 	}
 	
 	@Test

@@ -31,8 +31,10 @@ public class Program extends Application{
 		
 		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
 		
-        UpdateManager.getInstance().initUpdateManager(25, jfx);
+        UpdateManager.getInstance().initUpdateManager(25);
         updateManager = UpdateManager.getInstance();
+        
+        DrawingManager.getInstance().initDrawingManager(jfx);
         
         initSpace();
         
@@ -172,9 +174,9 @@ public class Program extends Application{
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
-		updateManager.toUpdate.add(nasa);
-		updateManager.toUpdate.add(aliens);
-		updateManager.toUpdate.add(chinesePeople);
+		updateManager.registeredItems.add(nasa);
+		updateManager.registeredItems.add(aliens);
+		updateManager.registeredItems.add(chinesePeople);
 	}
 	
 }
