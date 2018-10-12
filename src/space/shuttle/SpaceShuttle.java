@@ -5,7 +5,7 @@ import geom.AbsolutePoint;
 import geom.HShape;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
-import logic.PlayerManager;
+import logic.manager.PlayerManager;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;

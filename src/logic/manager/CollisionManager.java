@@ -1,4 +1,4 @@
-package logic;
+package logic.manager;
 
 import java.util.HashSet;
 import java.util.Set;

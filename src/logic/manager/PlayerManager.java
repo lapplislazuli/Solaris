@@ -1,4 +1,4 @@
-package logic;
+package logic.manager;
 
 import space.shuttle.ArmedSpaceShuttle;
 import space.shuttle.ShuttleNavigator;

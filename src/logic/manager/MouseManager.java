@@ -1,4 +1,4 @@
-package logic;
+package logic.manager;
 
 
 import javafx.scene.input.MouseButton;
