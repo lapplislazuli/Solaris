@@ -4,6 +4,7 @@ import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import logic.MouseManager;
+import logic.PlayerManager;
 import space.core.SpaceObject;
 import space.shuttle.missiles.Laserbeam;
 import space.shuttle.missiles.Missile;
@@ -67,10 +68,19 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 		return super.collides(other);
 	}
 	
+	@Override
+	public void destruct() {
+		if(isPlayer) {
+			PlayerManager.getInstance().deathCount++;
+			System.out.println("PlayerDeath #"+PlayerManager.getInstance().deathCount);
+		}
+		super.destruct();
+	}
+	
 	public void setPlayer(boolean val) { 
 		isPlayer=val;
 		if(val)
-			MouseManager.getInstance().signupPlayer(this);
+			PlayerManager.getInstance().registerPlayerShuttle(this);
 	}
 	public boolean isPlayer() {return isPlayer;}
 }

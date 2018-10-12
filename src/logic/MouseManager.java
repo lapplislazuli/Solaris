@@ -4,7 +4,6 @@ package logic;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import space.core.SpaceObject;
-import space.shuttle.ArmedSpaceShuttle;
 import javafx.scene.*;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
@@ -15,8 +14,6 @@ public class MouseManager implements UpdatingObject {
 	private Scene scene;
 	
 	private static MouseManager INSTANCE;
-	
-	private ArmedSpaceShuttle player;
 	
 	private MouseManager() {};
 	
@@ -33,11 +30,6 @@ public class MouseManager implements UpdatingObject {
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
     }
 	
-	public void signupPlayer(ArmedSpaceShuttle p) {
-		if(player!=null)
-			System.out.println("Overwriting active player...");
-		player=p;
-	}
 	
 	private void mouseMoved(MouseEvent evt) {
 		//toDo
@@ -55,9 +47,7 @@ public class MouseManager implements UpdatingObject {
 	}
 
 	private void shootAtClickedPoint(Point clickedPosition) {
-		
-		if(player!=null)
-			player.shootRocket(clickedPosition);
+		PlayerManager.getInstance().getPlayerShuttle().shootRocket(clickedPosition);
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {

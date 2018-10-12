@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import interfaces.logical.UpdatingObject;
+import logic.PlayerManager;
 import space.core.SpaceObject;
 
 public class ShuttleNavigator implements UpdatingObject{
@@ -143,5 +144,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		respawn=builder.respawn;
 		isPlayer=builder.isPlayer;
 		shuttle.setPlayer(builder.isPlayer);
+		if(isPlayer)
+			PlayerManager.getInstance().registerPlayerNavigator(this);
 	}
 }
