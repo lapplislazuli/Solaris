@@ -81,11 +81,7 @@ public class CollisionManager implements UpdatingObject{
 				.collect(Collectors.toSet());
 	}
 
-	public void pause() {
-		running=false;
-	}
-
-	public void start() {
-		running=true;
+	public void togglePause() {
+		running=!running;
 	}
 }

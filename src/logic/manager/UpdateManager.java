@@ -64,11 +64,7 @@ public class UpdateManager implements TimerObject{
         }, 0, updateIntervall);
 	}
 
-	public void pause() {
-		running=false;
-	}
-
-	public void start() {
-		running=true;
+	public void togglePause() {
+		running=!running;
 	}
 }

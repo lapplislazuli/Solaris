@@ -38,10 +38,8 @@ public class KeyBoardManager implements UpdatingObject {
 		if(currentPressed==Character.UNASSIGNED) {
 			currentPressed = evt.getCharacter().toCharArray()[0];
 			switch (currentPressed) {
-			case 'p': UpdateManager.getInstance().pause(); break;
-			case 's': UpdateManager.getInstance().start();break;
-			case 'v': CollisionManager.getInstance().pause();break;
-			case 'c': CollisionManager.getInstance().start();break;
+			case 'p': UpdateManager.getInstance().togglePause(); break;
+			case 'c': CollisionManager.getInstance().togglePause();break;
 			case 'd': PlayerManager.getInstance().getPlayerNavigator().clearRoute();break;
 			case 'l': PlayerManager.getInstance().forceRespawn();break;
 			case 'q': System.exit(0);break;
