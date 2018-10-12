@@ -43,7 +43,10 @@ public class KeyBoardManager implements UpdatingObject {
 			case 'v': CollisionManager.getInstance().pause();break;
 			case 'c': CollisionManager.getInstance().start();break;
 			case 'd': PlayerManager.getInstance().getPlayerNavigator().clearRoute();break;
+			case 'l': PlayerManager.getInstance().forceRespawn();break;
 			case 'q': System.exit(0);break;
+			case 'k': PlayerManager.getInstance().speedUp();break;
+			case 'j':PlayerManager.getInstance().slowDown();break;
 			//ToDo: Case Escape to close Game
 			default: System.out.println("You pressed: " + currentPressed + " ... nothing happened");
 			}

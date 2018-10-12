@@ -34,4 +34,15 @@ public class PlayerManager {
 	
 	public ArmedSpaceShuttle getPlayerShuttle() {return playerShuttle;}
 	public ShuttleNavigator getPlayerNavigator() {return playerNavigator;}
+
+	public void forceRespawn() {
+		playerShuttle.destruct();
+	}
+	
+	public void speedUp() {
+		playerShuttle.speed*=1.1;
+	}
+	public void slowDown() {
+		playerShuttle.speed*=0.9;
+	}
 }
