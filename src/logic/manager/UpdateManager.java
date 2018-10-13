@@ -1,4 +1,4 @@
-package logic;
+package logic.manager;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -64,11 +64,7 @@ public class UpdateManager implements TimerObject{
         }, 0, updateIntervall);
 	}
 
-	public void pause() {
-		running=false;
-	}
-
-	public void start() {
-		running=true;
+	public void togglePause() {
+		running=!running;
 	}
 }

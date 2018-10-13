@@ -4,11 +4,11 @@ import java.util.List;
 
 import drawing.EmptyJFXDrawingInformation;
 import geom.AbsolutePoint;
-import interfaces.ClickableObject;
 import interfaces.drawing.ComplexDrawingObject;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
+import interfaces.interaction.ClickableObject;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.UpdatingObject;
 

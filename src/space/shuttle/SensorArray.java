@@ -8,7 +8,7 @@ import geom.AbsolutePoint;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingObject;
 import interfaces.logical.UpdatingObject;
-import logic.CollisionManager;
+import logic.manager.CollisionManager;
 import space.advanced.FixStar;
 import space.core.SpaceObject;
 

@@ -8,7 +8,7 @@ import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.RemovableObject;
 import interfaces.logical.UpdatingObject;
-import logic.EffectManager;
+import logic.manager.EffectManager;
 
 public abstract class Effect implements UpdatingObject, ComplexDrawingObject, RemovableObject{
 	

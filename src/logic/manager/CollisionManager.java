@@ -1,4 +1,4 @@
-package logic;
+package logic.manager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -81,11 +81,7 @@ public class CollisionManager implements UpdatingObject{
 				.collect(Collectors.toSet());
 	}
 
-	public void pause() {
-		running=false;
-	}
-
-	public void start() {
-		running=true;
+	public void togglePause() {
+		running=!running;
 	}
 }

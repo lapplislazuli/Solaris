@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
-import logic.CollisionManager;
+import logic.manager.CollisionManager;
 import space.core.Star;
 import space.shuttle.SensorArray;
 import space.shuttle.SpaceShuttle;
