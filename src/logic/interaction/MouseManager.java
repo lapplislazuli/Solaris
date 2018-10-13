@@ -6,6 +6,10 @@ import javafx.scene.input.MouseEvent;
 import logic.manager.DrawingManager;
 import space.core.SpaceObject;
 import javafx.scene.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.UpdatingObject;
@@ -13,11 +17,19 @@ import interfaces.logical.UpdatingObject;
 public class MouseManager implements UpdatingObject {
 	
 	private Scene scene;
+	private AbsolutePoint mousePos;
+	
+	private ActionRegistry actions;
+	private final Map<MouseButton,Action> mouseBindings;
 	
 	private static MouseManager INSTANCE;
 	
-	private MouseManager() {};
-	
+	private MouseManager() {
+		actions=ActionRegistry.getInstance();
+		mouseBindings=new HashMap<MouseButton,Action>();
+		initStandardMouseBindings();
+	};
+
 	public static MouseManager getInstance() {
 		if(INSTANCE==null)
 			INSTANCE=new MouseManager();
@@ -26,26 +38,46 @@ public class MouseManager implements UpdatingObject {
 	
 	public void init(Scene scene) {
 		this.scene=scene;
-		//scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
+		//this.scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
     }
 	
+	private void initStandardMouseBindings() {
+		mouseBindings.put(MouseButton.PRIMARY, actions.getActionByName("ItemInfo"));
+		mouseBindings.put(MouseButton.SECONDARY, actions.getActionByName("Shoot"));
+		mouseBindings.put(MouseButton.MIDDLE, actions.getActionByName("AddToRoute"));
+	}
+	
+	public void registerKeyBinding(MouseButton button, Action action) {
+		if(mouseBindings.get(button)!=null)
+			System.out.println("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
+		mouseBindings.put(button,action);
+	}
+	
 	private void mouseMoved(MouseEvent evt) {
-		//toDo
+		
 	}
 	
 	private void mouseClicked(MouseEvent evt) {
-		AbsolutePoint clickedPosition = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
-		
-		if(evt.getButton().equals(MouseButton.PRIMARY))
-			shootAtClickedPoint(clickedPosition);
-		else if (evt.getButton().equals(MouseButton.SECONDARY))
-			registerSpaceObjectToPlayerRoute(clickedPosition);
-			//showInformationOnClick(clickedPosition);
+		mousePos = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
+		if(mouseBindings.get(evt.getButton())!=null)
+			mouseBindings.get(evt.getButton()).doAction();
 		else
-			System.out.println("You pressed something strange!");
+			System.out.println("No MouseBinding for this Action registered!");
+	}
+	
+	public void shootAtMousePos() {
+		shootAtClickedPoint(mousePos);
+	}
+	
+	public void registerSpaceObjectToPlayerRoute() {
+		registerSpaceObjectToPlayerRoute(mousePos);
 	}
 
+	public void showInformation() {
+		showInformationOnClick(mousePos);
+	}
+	
 	private void shootAtClickedPoint(Point clickedPosition) {
 		PlayerManager.getInstance().getPlayerShuttle().shootRocket(clickedPosition);
 	}
@@ -69,8 +101,7 @@ public class MouseManager implements UpdatingObject {
 			.forEach(clicked -> clicked.click());
 	}
 	
-	@Override
 	public void update() {
-		
+		//Maybe Increase a Timer how long a button has been pressed
 	}
 }

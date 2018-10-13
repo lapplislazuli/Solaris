@@ -37,6 +37,15 @@ public class ActionRegistry {
 		registerAction(
 				new Action("Speed-" ,"Slows players Ship by 10%",
 						()->PlayerManager.getInstance().slowDown()));
+		registerAction(
+				new Action("Shoot", "Shoots at MousePosition",
+						()->MouseManager.getInstance().shootAtMousePos()));
+		registerAction(
+				new Action("AddToRoute", "Adds Planet at MousePosition to Player-Route",
+						()->MouseManager.getInstance().registerSpaceObjectToPlayerRoute()));
+		registerAction(
+				new Action("ItemInfo", "Shows Itemname and Koords at MousePos",
+						()->MouseManager.getInstance().showInformation()));
 	}
 
 	public static ActionRegistry getInstance() {
