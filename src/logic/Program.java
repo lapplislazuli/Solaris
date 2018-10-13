@@ -133,19 +133,19 @@ public class Program extends Application{
 				.color(Color.CADETBLUE)
 				.build();
 		
-		Planet phobos = (new Planet.Builder("Phobos", saturn))
-				.size(4)
-				.distance(70)
-				.levelOfDetail(4)
+		Planet phobos = (new Planet.Builder("Phobos", mars))
+				.size(3)
+				.distance(55)
+				.levelOfDetail(3)
 				.speed(-Math.PI/300)
 				.rotationSpeed(-Math.PI/400)
 				.color(Color.LIGHTGRAY)
 				.build();
 		
-		Planet deimos = (new Planet.Builder("Deimos", saturn))
-				.size(3)
-				.distance(50)
-				.levelOfDetail(4)
+		Planet deimos = (new Planet.Builder("Deimos", mars))
+				.size(2)
+				.distance(35)
+				.levelOfDetail(3)
 				.speed(Math.PI/600)
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.GRAY)
