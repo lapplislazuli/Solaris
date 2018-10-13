@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import interfaces.logical.UpdatingObject;
-import logic.manager.PlayerManager;
+import logic.interaction.PlayerManager;
 import space.core.SpaceObject;
 
 public class ShuttleNavigator implements UpdatingObject{

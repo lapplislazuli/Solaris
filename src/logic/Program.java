@@ -11,9 +11,9 @@ import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import javafx.application.*;
 import javafx.stage.Stage;
+import logic.interaction.KeyBoardManager;
+import logic.interaction.MouseManager;
 import logic.manager.DrawingManager;
-import logic.manager.KeyBoardManager;
-import logic.manager.MouseManager;
 import logic.manager.UpdateManager;
 import javafx.scene.*;
 

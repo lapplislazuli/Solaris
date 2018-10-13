@@ -1,4 +1,4 @@
-package logic.manager;
+package logic.interaction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,8 @@ import interfaces.logical.UpdatingObject;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import logic.manager.CollisionManager;
+import logic.manager.UpdateManager;
 
 @SuppressWarnings("restriction")
 public class KeyBoardManager implements UpdatingObject {
@@ -14,10 +16,12 @@ public class KeyBoardManager implements UpdatingObject {
 	private char currentPressed;
 
 	private static KeyBoardManager INSTANCE;
-	private Map<Character,Runnable> keyBindings;
+	private ActionRegistry actions;
+	private Map<Character,Action> keyBindings;
 	
 	private KeyBoardManager() {
-		keyBindings=new HashMap<Character,Runnable> ();
+		keyBindings=new HashMap<Character,Action> ();
+		actions= ActionRegistry.getInstance();
 		initNormalKeyBindings();
 	};
 	
@@ -42,20 +46,20 @@ public class KeyBoardManager implements UpdatingObject {
 	}
 	
 	private void initNormalKeyBindings() {
-		keyBindings.put('p', ()->UpdateManager.getInstance().togglePause());
-		keyBindings.put('c', ()->CollisionManager.getInstance().togglePause());
-		keyBindings.put('d', ()->PlayerManager.getInstance().getPlayerNavigator().clearRoute());
-		keyBindings.put('l', ()->PlayerManager.getInstance().forceRespawn());
-		keyBindings.put('q', ()->System.exit(0));
-		keyBindings.put('k', ()->PlayerManager.getInstance().speedUp());
-		keyBindings.put('j', ()->PlayerManager.getInstance().slowDown());
+		keyBindings.put('p',actions.getActionByName("TogglePause"));
+		keyBindings.put('c',actions.getActionByName("ToggleCollision"));
+		keyBindings.put('d',actions.getActionByName("RouteClear"));
+		keyBindings.put('f',actions.getActionByName("ForceSpawn"));
+		keyBindings.put('q',actions.getActionByName("Quit"));
+		keyBindings.put('k',actions.getActionByName("Speed+"));
+		keyBindings.put('j',actions.getActionByName("Speed-"));
 	}
 	
 	private void keyTyped(KeyEvent evt) {
 		if(currentPressed==Character.UNASSIGNED) {
 			currentPressed = evt.getCharacter().toCharArray()[0];
 			if(keyBindings.get(currentPressed)!=null)
-				keyBindings.get(currentPressed).run();
+				keyBindings.get(currentPressed).doAction();
 			else
 				System.out.println("You pressed " + currentPressed + " which has no action Bound!");
 		}
@@ -67,9 +71,9 @@ public class KeyBoardManager implements UpdatingObject {
 		
 	}
 	
-	public void registerKeyBinding(Character key, Runnable action) {
+	public void registerKeyBinding(Character key, Action action) {
 		if(keyBindings.get(key)!=null)
-			System.out.println("Overrwrite Keybinding for " + key);
+			System.out.println("Overrwrite Keybinding for " + key + " with Action " + action.getName());
 		keyBindings.put(key,action);
 	}
 	

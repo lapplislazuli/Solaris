@@ -1,8 +1,9 @@
-package logic.manager;
+package logic.interaction;
 
 
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import logic.manager.DrawingManager;
 import space.core.SpaceObject;
 import javafx.scene.*;
 import geom.AbsolutePoint;
@@ -22,14 +23,12 @@ public class MouseManager implements UpdatingObject {
 			INSTANCE=new MouseManager();
 		return INSTANCE;
 	}
-
 	
 	public void init(Scene scene) {
 		this.scene=scene;
 		//scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
     }
-	
 	
 	private void mouseMoved(MouseEvent evt) {
 		//toDo
