@@ -6,6 +6,7 @@
 		paused: false,
 		collision: true
 	},
+	
 	keyBindings :[
 		{key:"q",action:"Quit"},
 		{key:"p",action:"TogglePause"},

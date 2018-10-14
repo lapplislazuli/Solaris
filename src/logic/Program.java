@@ -39,18 +39,19 @@ public class Program extends Application{
 		
 		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
 		
-        UpdateManager.getInstance().initUpdateManager(25);
-        updateManager = UpdateManager.getInstance();
+		updateManager = UpdateManager.getInstance();
+        
+		updateManager.initUpdateManager(config.generalConfig);
         
         DrawingManager.getInstance().initDrawingManager(jfx);
         
         initSpace();
         
-        Scene scene = new Scene(root,1200 , 600);
+        Scene scene = new Scene(root,config.generalConfig.screenWidth , config.generalConfig.screenHeight);
         
         jfx.bindSizeProperties(scene);
         
-        MouseManager.getInstance().init(scene);
+        MouseManager.getInstance().init(scene, config.mouseManagerConfig);
         KeyBoardManager.getInstance().init(scene,config.keyManagerConfig);
         
         primaryStage.setTitle("Solaris");

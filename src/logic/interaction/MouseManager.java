@@ -9,7 +9,9 @@ import javafx.scene.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import config.MouseManagerConfig;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.UpdatingObject;
@@ -27,7 +29,6 @@ public class MouseManager implements UpdatingObject {
 	private MouseManager() {
 		actions=ActionRegistry.getInstance();
 		mouseBindings=new HashMap<MouseButton,Action>();
-		initStandardMouseBindings();
 	};
 
 	public static MouseManager getInstance() {
@@ -36,19 +37,19 @@ public class MouseManager implements UpdatingObject {
 		return INSTANCE;
 	}
 	
-	public void init(Scene scene) {
+	public void init(Scene scene, MouseManagerConfig config) {
 		this.scene=scene;
 		//this.scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
+        initMouseBindings(config);
     }
 	
-	private void initStandardMouseBindings() {
-		mouseBindings.put(MouseButton.PRIMARY, actions.getActionByName("ItemInfo"));
-		mouseBindings.put(MouseButton.SECONDARY, actions.getActionByName("Shoot"));
-		mouseBindings.put(MouseButton.MIDDLE, actions.getActionByName("AddToRoute"));
+	private void initMouseBindings(MouseManagerConfig config) {
+		for(Entry<MouseButton,String> binding : config.getKeyBindings().entrySet())
+			mouseBindings.put(binding.getKey(),  actions.getActionByName(binding.getValue()));
 	}
 	
-	public void registerKeyBinding(MouseButton button, Action action) {
+	public void registerMouseBindings(MouseButton button, Action action) {
 		if(mouseBindings.get(button)!=null)
 			System.out.println("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
 		mouseBindings.put(button,action);
