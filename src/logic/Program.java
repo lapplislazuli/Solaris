@@ -51,7 +51,7 @@ public class Program extends Application{
         jfx.bindSizeProperties(scene);
         
         MouseManager.getInstance().init(scene);
-        KeyBoardManager.getInstance().init(scene);
+        KeyBoardManager.getInstance().init(scene,config.keyManagerConfig);
         
         primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);

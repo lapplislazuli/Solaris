@@ -2,7 +2,10 @@ package logic.interaction;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import config.KeyManagerConfig;
+import config.MouseManagerConfig;
 import interfaces.logical.UpdatingObject;
 
 import javafx.scene.Scene;
@@ -22,7 +25,7 @@ public class KeyBoardManager implements UpdatingObject {
 	private KeyBoardManager() {
 		keyBindings=new HashMap<Character,Action> ();
 		actions= ActionRegistry.getInstance();
-		initNormalKeyBindings();
+		//initNormalKeyBindings();
 	};
 	
 	public static KeyBoardManager getInstance() {
@@ -36,23 +39,19 @@ public class KeyBoardManager implements UpdatingObject {
 		// Maybe handle stuff that needs longer pressed buttons (like charging a laserbeam)
 	}
 	
-	public void init(Scene scene) {
+	public void init(Scene scene, KeyManagerConfig config) {
         scene.addEventHandler(KeyEvent.KEY_TYPED, evt -> keyTyped(evt));
         scene.addEventHandler(KeyEvent.KEY_RELEASED, evt -> keyReleased(evt));
+        initKeyBindings(config);
 	}
 
 	private void keyReleased(KeyEvent evt) {
 		currentPressed = Character.UNASSIGNED;
 	}
 	
-	private void initNormalKeyBindings() {
-		keyBindings.put('p',actions.getActionByName("TogglePause"));
-		keyBindings.put('c',actions.getActionByName("ToggleCollision"));
-		keyBindings.put('d',actions.getActionByName("RouteClear"));
-		keyBindings.put('f',actions.getActionByName("ForceSpawn"));
-		keyBindings.put('q',actions.getActionByName("Quit"));
-		keyBindings.put('k',actions.getActionByName("Speed+"));
-		keyBindings.put('j',actions.getActionByName("Speed-"));
+	public void initKeyBindings(KeyManagerConfig config) {
+		for( Entry<String,String> binding : config.getKeyBindings().entrySet())
+			keyBindings.put(binding.getKey().toCharArray()[0],actions.getActionByName(binding.getValue()));	
 	}
 	
 	private void keyTyped(KeyEvent evt) {
