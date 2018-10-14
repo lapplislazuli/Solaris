@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class ConfigReader {
 	
-	public CompleteConfiguration read(String path) {
+	static public CompleteConfiguration read(String path) {
 		if(!path.endsWith(".json"))
 			throw new IllegalArgumentException("Faulty Path!");
 		try {
@@ -25,7 +25,6 @@ public class ConfigReader {
 				completeFile+=line;
 			JSONObject read = new JSONObject(completeFile);
 			return new CompleteConfiguration(read);
-				
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -33,7 +32,7 @@ public class ConfigReader {
 		return null;
 	}
 	
-	public void save(CompleteConfiguration config, String path) {
+	static public void save(CompleteConfiguration config, String path) {
 		if(!path.endsWith(".json"))
 			path+="/config.json";
 		try {

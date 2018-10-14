@@ -1,18 +1,24 @@
 {
 	generalConfig : {
 		screenWidth: 1200 ,
-		screenHight: 600,
-		pause: false,
-		collide: true
+		screenHeight: 600,
+		updateIntervall: 25,
+		paused: false,
+		collision: true
 	},
-	keyManagerConfig :[
-		{key:"q",action:"quit"},
-		{key:"p",action:"pause"},
-		{key:"c",action:"collide"}
+	keyBindings :[
+		{key:"q",action:"Quit"},
+		{key:"p",action:"TogglePause"},
+		{key:"c",action:"ToggleCollision"},
+		{key:"d",action:"RouteClear"},
+		{key:"k",action:"Speed+"},
+		{key:"j",action:"Speed-"},
+		{key:"f",action:"ForceSpawn"}
 	],
 
-	mouseManagerConfig: [
+	mouseBindings: [
 		{button:"PRIMARY", action: "ItemInfo"},
+		{button:"MIDDLE", action: "AddToRoute"},
 		{button:"SECONDARY", action: "Shoot"}
 	]
 }
