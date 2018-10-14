@@ -6,6 +6,7 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
+import config.ConfigReader;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -31,6 +32,9 @@ public class Program extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+		ConfigReader rd = new ConfigReader();
+		rd.read("./config.json");
+		
 		Group root = new Group();
 		
 		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);

@@ -1,8 +1,13 @@
 package config;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -11,10 +16,21 @@ public class ConfigReader {
 	public CompleteConfiguration read(String path) {
 		if(!path.endsWith(".json"))
 			throw new IllegalArgumentException("Faulty Path!");
-		
-		JSONObject read = new JSONObject(path);
-		
-		return new CompleteConfiguration(read);
+		try {
+			Path castedPath = Paths.get(path);
+			List<String> allLines = Files.readAllLines(castedPath);
+			
+			String completeFile = "";
+			for(String line : allLines)
+				completeFile+=line;
+			JSONObject read = new JSONObject(completeFile);
+			return new CompleteConfiguration(read);
+				
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void save(CompleteConfiguration config, String path) {

@@ -1,0 +1,18 @@
+{
+	generalConfig : {
+		screenWidth: 1200 ,
+		screenHight: 600,
+		pause: false,
+		collide: true
+	},
+	keyManagerConfig :[
+		{key:"q",action:"quit"},
+		{key:"p",action:"pause"},
+		{key:"c",action:"collide"}
+	],
+
+	mouseManagerConfig: [
+		{button:"PRIMARY", action: "ItemInfo"},
+		{button:"SECONDARY", action: "Shoot"}
+	]
+}
