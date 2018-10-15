@@ -8,11 +8,11 @@ import org.json.*;
 import javafx.scene.input.MouseButton;
 
 @SuppressWarnings("restriction")
-public class MouseManagerConfig {
+public class MouseConfig {
 
 	private final Map<MouseButton,String> mouseBindings = new HashMap<MouseButton,String>();
 	
-	public MouseManagerConfig(JSONArray bindings) {
+	public MouseConfig(JSONArray bindings) {
 		for (int i = 0; i < bindings.length(); i++)
 		{
 		    String key = bindings.getJSONObject(i).getString("button");
@@ -35,7 +35,6 @@ public class MouseManagerConfig {
 		return new JSONArray(mouseBindings);
 	}
 	
-
 	private MouseButton parseButtonString(String s) {
 		if(s.equals("PRIMARY"))
 			return MouseButton.PRIMARY;
@@ -44,6 +43,6 @@ public class MouseManagerConfig {
 		else if(s.equals("MIDDLE"))
 			return MouseButton.MIDDLE;
 		else
-			return MouseButton.NONE;
+			return MouseButton.NONE; //Error, but wont be problematic
 	}
 }

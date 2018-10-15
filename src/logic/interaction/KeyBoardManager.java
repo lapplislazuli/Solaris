@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import config.KeyManagerConfig;
-import config.MouseManagerConfig;
+import config.Config;
+import config.KeyConfig;
+import config.MouseConfig;
 import interfaces.logical.UpdatingObject;
 
 import javafx.scene.Scene;
@@ -25,7 +26,6 @@ public class KeyBoardManager implements UpdatingObject {
 	private KeyBoardManager() {
 		keyBindings=new HashMap<Character,Action> ();
 		actions= ActionRegistry.getInstance();
-		//initNormalKeyBindings();
 	};
 	
 	public static KeyBoardManager getInstance() {
@@ -39,17 +39,17 @@ public class KeyBoardManager implements UpdatingObject {
 		// Maybe handle stuff that needs longer pressed buttons (like charging a laserbeam)
 	}
 	
-	public void init(Scene scene, KeyManagerConfig config) {
+	public void init(Scene scene, Config config) {
         scene.addEventHandler(KeyEvent.KEY_TYPED, evt -> keyTyped(evt));
         scene.addEventHandler(KeyEvent.KEY_RELEASED, evt -> keyReleased(evt));
-        initKeyBindings(config);
+        initKeyBindings(config.keyConfig);
 	}
 
 	private void keyReleased(KeyEvent evt) {
 		currentPressed = Character.UNASSIGNED;
 	}
 	
-	public void initKeyBindings(KeyManagerConfig config) {
+	public void initKeyBindings(KeyConfig config) {
 		for( Entry<String,String> binding : config.getKeyBindings().entrySet())
 			keyBindings.put(binding.getKey().toCharArray()[0],actions.getActionByName(binding.getValue()));	
 	}

@@ -1,5 +1,5 @@
 {
-	generalConfig : {
+	settings : {
 		screenWidth: 1200 ,
 		screenHeight: 600,
 		updateIntervall: 25,

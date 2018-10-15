@@ -5,11 +5,11 @@ import java.util.Map;
 
 import org.json.*;
 
-public class KeyManagerConfig {
+public class KeyConfig {
 	
 	private final Map<String,String> keyBindings = new HashMap<String,String>();
 	
-	public KeyManagerConfig(JSONArray bindings) {
+	public KeyConfig(JSONArray bindings) {
 		for (int i = 0; i < bindings.length(); i++)
 		{
 		    String key = bindings.getJSONObject(i).getString("key");

@@ -6,8 +6,8 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
-import config.CompleteConfiguration;
-import config.ConfigReader;
+import config.Config;
+import config.ConfigFactory;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -23,40 +23,46 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
 	
-	private UpdateManager updateManager;
-	
 	public static void main(String[] args) {
 		System.out.println("Starting Solaris");
 		launch(args);
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-		CompleteConfiguration config = ConfigReader.read("./config.json");
-		
+		Config config = ConfigFactory.read("./config.json");
 		Group root = new Group();
 		
-		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
+		Scene scene=initScene(config,root);
 		
-		updateManager = UpdateManager.getInstance();
+        initDrawingContextAndManager(root,scene);
         
-		updateManager.initUpdateManager(config.generalConfig);
-        
-        DrawingManager.getInstance().initDrawingManager(jfx);
-        
+        initManagers(scene,config);
+		
         initSpace();
-        
-        Scene scene = new Scene(root,config.generalConfig.screenWidth , config.generalConfig.screenHeight);
-        
-        jfx.bindSizeProperties(scene);
-        
-        MouseManager.getInstance().init(scene, config.mouseManagerConfig);
-        KeyBoardManager.getInstance().init(scene,config.keyManagerConfig);
-        
-        primaryStage.setTitle("Solaris");
+        initPrimaryStage(primaryStage,scene);
+	}
+	
+	private void initPrimaryStage(Stage primaryStage, Scene scene) {
+		primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);
         primaryStage.show();
+	}
+
+	private Scene initScene(Config config, Group root) {
+        return new Scene(root,config.settings.screenWidth , config.settings.screenHeight);     
+	}
+	
+	private void initDrawingContextAndManager(Group root, Scene scene) {
+		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
+        jfx.bindSizeProperties(scene);
+        DrawingManager.getInstance().initDrawingManager(jfx);
+	}
+	
+	private void initManagers(Scene scene,Config config) {
+		UpdateManager.getInstance().initUpdateManager(config);    
+        MouseManager.getInstance().init(scene, config);
+        KeyBoardManager.getInstance().init(scene,config);   
 	}
 	
 	@Override
@@ -67,6 +73,8 @@ public class Program extends Application{
 	
 	@SuppressWarnings("unused")
 	private void initSpace() {
+		UpdateManager updateManager = UpdateManager.getInstance();
+		
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
 		Star sun = new Star("Sun",new JavaFXDrawingInformation(Color.ORANGE),new AbsolutePoint(600,400),30);

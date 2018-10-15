@@ -10,9 +10,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-public class ConfigReader {
+public class ConfigFactory {
 	
-	static public CompleteConfiguration read(String path) {
+	static public Config read(String path) {
 		if(!path.endsWith(".json"))
 			throw new IllegalArgumentException("Faulty Path!");
 		try {
@@ -23,7 +23,7 @@ public class ConfigReader {
 			for(String line : allLines)
 				completeFile+=line;
 			JSONObject read = new JSONObject(completeFile);
-			return new CompleteConfiguration(read);
+			return new Config(read);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -31,9 +31,9 @@ public class ConfigReader {
 		return null;
 	}
 	
-	static public void save(CompleteConfiguration config, String path) {
+	static public void save(Config config, String path) {
 		if(!path.endsWith(".json"))
-			path+="/config.json";
+			path+="/configSave.json";
 		try {
 			File f = new File(path);
 			FileWriter fW = new FileWriter(f);

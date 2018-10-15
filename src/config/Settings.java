@@ -2,14 +2,14 @@ package config;
 
 import org.json.*;
 
-public class GeneralConfig {
+public class Settings {
 	
 	public int screenWidth, screenHeight;
 	public int updateIntervall;
 	public boolean paused;
 	public boolean collision;
 	
-	public GeneralConfig(JSONObject configJSON) {
+	public Settings(JSONObject configJSON) {
 		screenWidth = configJSON.getInt("screenWidth");
 		screenHeight = configJSON.getInt("screenHeight");
 		updateIntervall = configJSON.getInt("updateIntervall");

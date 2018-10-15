@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import config.MouseManagerConfig;
+import config.Config;
+import config.MouseConfig;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.UpdatingObject;
@@ -37,14 +38,14 @@ public class MouseManager implements UpdatingObject {
 		return INSTANCE;
 	}
 	
-	public void init(Scene scene, MouseManagerConfig config) {
+	public void init(Scene scene, Config config) {
 		this.scene=scene;
 		//this.scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
-        initMouseBindings(config);
+        initMouseBindings(config.mouseConfig);
     }
 	
-	private void initMouseBindings(MouseManagerConfig config) {
+	private void initMouseBindings(MouseConfig config) {
 		for(Entry<MouseButton,String> binding : config.getKeyBindings().entrySet())
 			mouseBindings.put(binding.getKey(),  actions.getActionByName(binding.getValue()));
 	}

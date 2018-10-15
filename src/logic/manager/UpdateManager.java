@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import config.GeneralConfig;
+import config.Config;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
@@ -31,16 +31,15 @@ public class UpdateManager implements TimerObject{
 		return INSTANCE;
 	}
 	
-	public void initUpdateManager(GeneralConfig config) {
-		CollisionManager.getInstance().initCollisionManager(1000, this);
+	public void initUpdateManager(Config config) {
+		CollisionManager.getInstance().initCollisionManager(this);
 		
 		registeredItems.add(CollisionManager.getInstance());
 		registeredItems.add(DrawingManager.getInstance());
 		registeredItems.add(EffectManager.getInstance());
 		
-		setTimer(config.updateIntervall);
-		running = !config.paused;
-		
+		setTimer(config.settings.updateIntervall);
+		running = !config.settings.paused;
 	}
 	
 	public void update() {
