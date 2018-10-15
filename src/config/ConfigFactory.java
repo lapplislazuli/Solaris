@@ -41,7 +41,6 @@ public class ConfigFactory {
 			FileWriter fW = new FileWriter(f);
 			JSONObject myJSON = config.toJSON();
 			config.toJSON().write(fW);
-			//fW.write(config.toJSON().);
 			fW.close();
 		} catch (IOException e) {
 			e.printStackTrace();
