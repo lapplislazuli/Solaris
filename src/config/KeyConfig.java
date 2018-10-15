@@ -2,6 +2,7 @@ package config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.*;
 
@@ -26,7 +27,14 @@ public class KeyConfig {
 		keyBindings.put(key, actionName);
 	}
 	
-	public JSONArray toJson() {
-		return new JSONArray(keyBindings);
+	public JSONArray toJSON() {
+		JSONArray bindings =  new JSONArray();
+		for(Entry<String,String> e : keyBindings.entrySet()) {
+			JSONObject binding = new JSONObject();
+			binding.put("key",e.getKey());
+			binding.put("action", e.getValue());
+			bindings.put(binding);
+		}
+		return bindings;
 	}
 }

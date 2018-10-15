@@ -16,9 +16,15 @@ public class Settings {
 		paused = configJSON.getBoolean("paused");
 		collision = configJSON.getBoolean("collision");
 	}
-	
-	public JSONObject toJson() {
-		return new JSONObject(this);
+
+	public JSONObject toJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("screenWidth", screenWidth);
+		obj.put("screenHeight", screenHeight);
+		obj.put("paused", paused);
+		obj.put("updateIntervall", updateIntervall);
+		obj.put("collision", collision);
+		return obj;
 	}
 	
 }

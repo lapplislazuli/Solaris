@@ -20,6 +20,10 @@ public class Config {
 	}
 	
 	public JSONObject toJSON() {
-		return new JSONObject(this);
+		JSONObject json = new JSONObject();
+		json.put("settings",settings.toJSON());
+		json.put("keyBindings",keyConfig.toJSON());
+		json.put("mouseBindings",mouseConfig.toJSON());
+		return json;
 	}
 }

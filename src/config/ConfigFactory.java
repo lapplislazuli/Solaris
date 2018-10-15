@@ -36,8 +36,12 @@ public class ConfigFactory {
 			path+="/configSave.json";
 		try {
 			File f = new File(path);
+			if(!f.exists())
+				f.createNewFile();
 			FileWriter fW = new FileWriter(f);
-			fW.write(config.toJSON().toString());
+			JSONObject myJSON = config.toJSON();
+			config.toJSON().write(fW);
+			//fW.write(config.toJSON().);
 			fW.close();
 		} catch (IOException e) {
 			e.printStackTrace();

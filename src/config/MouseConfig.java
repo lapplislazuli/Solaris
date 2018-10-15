@@ -2,6 +2,7 @@ package config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.*;
 
@@ -17,7 +18,7 @@ public class MouseConfig {
 		{
 		    String key = bindings.getJSONObject(i).getString("button");
 		    String actionName = bindings.getJSONObject(i).getString("action");
-		    mouseBindings.put(parseButtonString(key), actionName);
+		    mouseBindings.put(parseButtonFromString(key), actionName);
 		}
 	}
 	
@@ -29,13 +30,30 @@ public class MouseConfig {
 		mouseBindings.put(button, actionName);
 	}
 	public void putKeyBinding(String buttonString, String actionName) {
-		mouseBindings.put(parseButtonString(buttonString), actionName);
-	}
-	public JSONArray toJson() {
-		return new JSONArray(mouseBindings);
+		mouseBindings.put(parseButtonFromString(buttonString), actionName);
 	}
 	
-	private MouseButton parseButtonString(String s) {
+	public JSONArray toJSON() {
+		JSONArray bindings =  new JSONArray();
+		for(Entry<MouseButton,String> e : mouseBindings.entrySet()) {
+			JSONObject binding = new JSONObject();
+			binding.put("key", parseButtonToString(e.getKey()));
+			binding.put("action", e.getValue());
+			bindings.put(binding);
+		}
+		return bindings;
+	}
+	private String parseButtonToString(MouseButton b) {
+		if(b == MouseButton.PRIMARY)
+			return "PRIMARY";
+		else if(b == MouseButton.SECONDARY)
+			return "SECONDARY";
+		else if(b == MouseButton.MIDDLE)
+			return "MIDDLE";
+		else
+			return "NONE"; //Error, but wont be problematic
+	}
+	private MouseButton parseButtonFromString(String s) {
 		if(s.equals("PRIMARY"))
 			return MouseButton.PRIMARY;
 		else if(s.equals("SECONDARY"))

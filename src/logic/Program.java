@@ -23,6 +23,8 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
 	
+	Config config;
+	
 	public static void main(String[] args) {
 		System.out.println("Starting Solaris");
 		launch(args);
@@ -30,7 +32,7 @@ public class Program extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Config config = ConfigFactory.read("./config.json");
+		config = ConfigFactory.read("./config.json");
 		Group root = new Group();
 		
 		Scene scene=initScene(config,root);
@@ -41,6 +43,8 @@ public class Program extends Application{
 		
         initSpace();
         initPrimaryStage(primaryStage,scene);
+        
+		ConfigFactory.save(config, "C:/Temp");
 	}
 	
 	private void initPrimaryStage(Stage primaryStage, Scene scene) {
@@ -68,6 +72,7 @@ public class Program extends Application{
 	@Override
 	public void stop() {
 		System.out.println("Closing Solaris");
+		ConfigFactory.save(config, "C:/Temp");
 		System.exit(0);
 	}
 	
