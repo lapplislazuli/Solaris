@@ -6,6 +6,8 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.shuttle.ShuttleNavigator;
+import config.Config;
+import config.ConfigFactory;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -21,47 +23,63 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
 	
-	private UpdateManager updateManager;
+	Config config;
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Solaris");
 		launch(args);
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
+		config = ConfigFactory.read("./config.json");
 		Group root = new Group();
 		
-		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
+		Scene scene=initScene(config,root);
 		
-        UpdateManager.getInstance().initUpdateManager(25);
-        updateManager = UpdateManager.getInstance();
+        initDrawingContextAndManager(root,scene);
         
-        DrawingManager.getInstance().initDrawingManager(jfx);
-        
+        initManagers(scene,config);
+		
         initSpace();
+        initPrimaryStage(primaryStage,scene);
         
-        Scene scene = new Scene(root,1200 , 600);
-        
-        jfx.bindSizeProperties(scene);
-        
-        MouseManager.getInstance().init(scene);
-        KeyBoardManager.getInstance().init(scene);
-        
-        primaryStage.setTitle("Solaris");
+		ConfigFactory.save(config);
+	}
+	
+	private void initPrimaryStage(Stage primaryStage, Scene scene) {
+		primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);
         primaryStage.show();
+	}
+
+	private Scene initScene(Config config, Group root) {
+        return new Scene(root,config.settings.screenWidth , config.settings.screenHeight);     
+	}
+	
+	private void initDrawingContextAndManager(Group root, Scene scene) {
+		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
+        jfx.bindSizeProperties(scene);
+        DrawingManager.getInstance().initDrawingManager(jfx);
+	}
+	
+	private void initManagers(Scene scene,Config config) {
+		UpdateManager.getInstance().initUpdateManager(config);    
+        MouseManager.getInstance().init(scene, config);
+        KeyBoardManager.getInstance().init(scene,config);   
 	}
 	
 	@Override
 	public void stop() {
 		System.out.println("Closing Solaris");
+		ConfigFactory.save(config);
 		System.exit(0);
 	}
 	
 	@SuppressWarnings("unused")
 	private void initSpace() {
+		UpdateManager updateManager = UpdateManager.getInstance();
+		
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		
 		Star sun = new Star("Sun",new JavaFXDrawingInformation(Color.ORANGE),new AbsolutePoint(600,400),30);
@@ -133,19 +151,19 @@ public class Program extends Application{
 				.color(Color.CADETBLUE)
 				.build();
 		
-		Planet phobos = (new Planet.Builder("Phobos", saturn))
-				.size(4)
-				.distance(70)
-				.levelOfDetail(4)
+		Planet phobos = (new Planet.Builder("Phobos", mars))
+				.size(3)
+				.distance(55)
+				.levelOfDetail(3)
 				.speed(-Math.PI/300)
 				.rotationSpeed(-Math.PI/400)
 				.color(Color.LIGHTGRAY)
 				.build();
 		
-		Planet deimos = (new Planet.Builder("Deimos", saturn))
-				.size(3)
-				.distance(50)
-				.levelOfDetail(4)
+		Planet deimos = (new Planet.Builder("Deimos", mars))
+				.size(2)
+				.distance(35)
+				.levelOfDetail(3)
 				.speed(Math.PI/600)
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.GRAY)

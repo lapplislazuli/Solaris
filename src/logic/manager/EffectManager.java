@@ -7,7 +7,6 @@ import interfaces.drawing.DrawingContext;
 import interfaces.logical.UpdatingObject;
 import space.effect.Effect;
 
-@SuppressWarnings("restriction")
 public class EffectManager implements UpdatingObject {
 	
 	private List<Effect> registeredItems = new LinkedList<Effect>();
@@ -33,7 +32,6 @@ public class EffectManager implements UpdatingObject {
 		registeredItems = new LinkedList<Effect>();
 	}
 	
-	@Override
 	public void update() {
 		for(Effect e : registeredItems)
 			e.update();
