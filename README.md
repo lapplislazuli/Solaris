@@ -38,4 +38,4 @@ How do you join the Crew?
 3. Assign yourself to the Issue you want and go ahead!
 
 Not sure if your code is fine? Consider tagging *Help Wanted* or for a deeper review open an pull-request for your changes. 
-There is no bad code - your help is always vital to the sake of our galaxy. 
+**There is no bad code - your help is always vital to the sake of our galaxy.**
