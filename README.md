@@ -6,7 +6,7 @@ This Repository is for training both cooperation with git aswell as a source for
 Feel free to extract code, share your oppinion or contribute!
 
 
-##Currently Implemented:
+## Currently Implemented:
 * Intensive Use of  [Polymorphism](https://en.wikipedia.org/wiki/Polymorphism_(computer_science)) (Follow *SpaceObject -> MovingSpaceObject -> Satellite/SpaceShuttle/Planet*)
 * Use of [Interfaces](https://en.wikipedia.org/wiki/Protocol_(object-oriented_programming)) (See *DrawingObject*'s implementations *SpaceObject* and *Effect* and their use in *UpdateManager*)
 * [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) (e.g. *UpdateManager*)
