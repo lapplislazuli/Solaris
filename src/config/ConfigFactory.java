@@ -23,7 +23,7 @@ public class ConfigFactory {
 			for(String line : allLines)
 				completeFile+=line;
 			JSONObject read = new JSONObject(completeFile);
-			return new Config(read);
+			return new Config(path,read);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -31,7 +31,22 @@ public class ConfigFactory {
 		return null;
 	}
 	
-	static public void save(Config config, String path) {
+	static public void save(Config config) {
+		if(config.path==null||config.path=="")
+			return;
+		try {
+			File f = new File(config.path);
+			if(!f.exists())
+				f.createNewFile();
+			FileWriter fW = new FileWriter(f);
+			config.toJSON().write(fW);
+			fW.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	static public void saveConfigTo(Config config, String path) {
 		if(!path.endsWith(".json"))
 			path+="/configSave.json";
 		try {
@@ -39,7 +54,6 @@ public class ConfigFactory {
 			if(!f.exists())
 				f.createNewFile();
 			FileWriter fW = new FileWriter(f);
-			JSONObject myJSON = config.toJSON();
 			config.toJSON().write(fW);
 			fW.close();
 		} catch (IOException e) {

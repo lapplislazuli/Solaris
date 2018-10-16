@@ -37,12 +37,13 @@ public class MouseConfig {
 		JSONArray bindings =  new JSONArray();
 		for(Entry<MouseButton,String> e : mouseBindings.entrySet()) {
 			JSONObject binding = new JSONObject();
-			binding.put("key", parseButtonToString(e.getKey()));
+			binding.put("button", parseButtonToString(e.getKey()));
 			binding.put("action", e.getValue());
 			bindings.put(binding);
 		}
 		return bindings;
 	}
+	
 	private String parseButtonToString(MouseButton b) {
 		if(b == MouseButton.PRIMARY)
 			return "PRIMARY";
@@ -51,8 +52,9 @@ public class MouseConfig {
 		else if(b == MouseButton.MIDDLE)
 			return "MIDDLE";
 		else
-			return "NONE"; //Error, but wont be problematic
+			return "NONE";  //Catch Mistakes to a Key that does nothing
 	}
+	
 	private MouseButton parseButtonFromString(String s) {
 		if(s.equals("PRIMARY"))
 			return MouseButton.PRIMARY;
@@ -61,6 +63,6 @@ public class MouseConfig {
 		else if(s.equals("MIDDLE"))
 			return MouseButton.MIDDLE;
 		else
-			return MouseButton.NONE; //Error, but wont be problematic
+			return MouseButton.NONE; //Catch Mistakes to a Key that does nothing
 	}
 }

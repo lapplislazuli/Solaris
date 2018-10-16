@@ -44,7 +44,7 @@ public class Program extends Application{
         initSpace();
         initPrimaryStage(primaryStage,scene);
         
-		ConfigFactory.save(config, "C:/Temp");
+		ConfigFactory.save(config);
 	}
 	
 	private void initPrimaryStage(Stage primaryStage, Scene scene) {
@@ -72,7 +72,7 @@ public class Program extends Application{
 	@Override
 	public void stop() {
 		System.out.println("Closing Solaris");
-		ConfigFactory.save(config, "C:/Temp");
+		ConfigFactory.save(config);
 		System.exit(0);
 	}
 	

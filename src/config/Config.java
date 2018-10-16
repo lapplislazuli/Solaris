@@ -7,8 +7,11 @@ public class Config {
 	public Settings settings;
 	public KeyConfig keyConfig;
 	public MouseConfig mouseConfig;
+	public String path; //So i can save it where it was drawn from
 	
-	public Config(JSONObject obj) {
+	public Config(String path, JSONObject obj) {
+		this.path=path;
+		
 		JSONObject generalConfigJSON= obj.getJSONObject("settings");
 		settings=new Settings(generalConfigJSON);
 		
