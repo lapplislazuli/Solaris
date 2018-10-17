@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.pmw.tinylog.Logger;
+
 import config.Config;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
@@ -24,7 +26,9 @@ public class UpdateManager implements TimerObject{
 	
 	private UpdateManager() {
 		registeredItems=new LinkedList<UpdatingObject>();
+		Logger.debug("Build UpdateManager");
 	}
+	
 	public static UpdateManager getInstance() {
 		if(INSTANCE==null)
 			INSTANCE= new UpdateManager();
@@ -68,5 +72,6 @@ public class UpdateManager implements TimerObject{
 
 	public void togglePause() {
 		running=!running;
+		Logger.debug("Updatemanager set to running:" + running);
 	}
 }

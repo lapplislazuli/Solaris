@@ -3,6 +3,8 @@ package logic.manager;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.pmw.tinylog.Logger;
+
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingObject;
 import interfaces.logical.UpdatingObject;
@@ -16,6 +18,7 @@ public class DrawingManager implements UpdatingObject {
 	
 	private DrawingManager() {
 		registeredItems=new HashSet<DrawingObject>();
+		Logger.debug("Build DrawingManager");
 	}
 	
 	public static DrawingManager getInstance() {
@@ -32,6 +35,7 @@ public class DrawingManager implements UpdatingObject {
 	
 	public void initDrawingManager(DrawingContext dc) {
 		this.context = dc;
+		Logger.debug("Initialised DrawingManager");
 	}
 	
 	@Override

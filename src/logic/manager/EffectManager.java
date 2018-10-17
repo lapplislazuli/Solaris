@@ -3,6 +3,8 @@ package logic.manager;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.pmw.tinylog.Logger;
+
 import interfaces.drawing.DrawingContext;
 import interfaces.logical.UpdatingObject;
 import space.effect.Effect;
@@ -15,6 +17,7 @@ public class EffectManager implements UpdatingObject {
 	
 	private EffectManager() {
 		registeredItems = new LinkedList<Effect>();
+		Logger.debug("Build EffectManager");
 	}
 	
 	public static EffectManager getInstance() {
