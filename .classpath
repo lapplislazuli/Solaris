@@ -5,5 +5,6 @@
 	<classpathentry excluding="space/core/|space/shuttle/ArrayDetectionTest.java|space/shuttle/LaunchTest.java|space/shuttle/MissileTest.java|space/|space/" kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="lib/json-20180813.jar"/>
+	<classpathentry kind="lib" path="lib/tinylog-1.3.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
