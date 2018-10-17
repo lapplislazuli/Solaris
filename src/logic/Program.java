@@ -19,7 +19,10 @@ import logic.manager.DrawingManager;
 import logic.manager.UpdateManager;
 import javafx.scene.*;
 
+import org.pmw.tinylog.Configurator;
+import org.pmw.tinylog.Level;
 import org.pmw.tinylog.Logger;
+import org.pmw.tinylog.writers.FileWriter;
 
 import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
@@ -28,6 +31,11 @@ public class Program extends Application{
 	Config config;
 	
 	public static void main(String[] args) {
+		Configurator.defaultConfig()
+		   .writer(new FileWriter("log.txt"))
+		   .level(Level.INFO)
+		   .activate();
+		
 		Logger.info("Starting Solaris");
 		
 		launch(args);
