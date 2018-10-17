@@ -1,5 +1,7 @@
 package space.shuttle;
 
+import org.pmw.tinylog.Logger;
+
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
@@ -72,7 +74,7 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 	public void destruct() {
 		if(isPlayer) {
 			PlayerManager.getInstance().deathCount++;
-			System.out.println("PlayerDeath #"+PlayerManager.getInstance().deathCount);
+			Logger.info("PlayerDeath #"+PlayerManager.getInstance().deathCount);
 		}
 		super.destruct();
 	}

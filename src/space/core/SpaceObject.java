@@ -2,6 +2,8 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.pmw.tinylog.Logger;
+
 import drawing.EmptyJFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.drawing.ComplexDrawingObject;
@@ -34,6 +36,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 			dInfo=new EmptyJFXDrawingInformation();
 		else
 			this.dInfo=dInfo;
+		Logger.debug("Build " + name + center.toString());
 	}
 	
 	public void update() {
@@ -45,7 +48,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	
 	public void draw(DrawingContext dc) {
 		if(dInfo==null)
-			throw new UnsupportedOperationException("Fuck");
+			throw new UnsupportedOperationException("Empty DrawingInformation");
 		dc.saveContext();
 		dInfo.applyDrawingInformation(dc);
 		drawShape(dc);
@@ -84,7 +87,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public void click() {
-		System.out.println("Clicked: " + toString());
+		Logger.info("Clicked: " + toString());
 	}
 	
 	public void updateHitbox() {

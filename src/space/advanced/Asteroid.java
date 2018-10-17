@@ -1,5 +1,7 @@
 package space.advanced;
 
+import org.pmw.tinylog.Logger;
+
 import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -66,7 +68,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	public void destruct() {
-		System.out.println(toString() + " got destroyed");
+		Logger.trace(toString() + " got destroyed");
 		if(parent!=null)
 			remove();
 	}	

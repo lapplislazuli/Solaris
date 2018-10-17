@@ -3,6 +3,8 @@ package space.shuttle;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.pmw.tinylog.Logger;
+
 import interfaces.logical.UpdatingObject;
 import logic.interaction.PlayerManager;
 import space.core.SpaceObject;
@@ -23,6 +25,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		route.add(shuttle.parent);
 		this.shuttle=shuttle;
 		this.name=name;
+		Logger.info("Initiated " + name + " with Shuttle " + shuttle.name);
 	}
 	
 	public void update() {

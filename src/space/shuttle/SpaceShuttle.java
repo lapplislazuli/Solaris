@@ -1,5 +1,7 @@
 package space.shuttle;
 
+import org.pmw.tinylog.Logger;
+
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.HShape;
@@ -84,7 +86,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	public void destruct() {
-		System.out.println("Spaceship: " + toString() + " Destroyed @" +center.toString());
+		Logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);

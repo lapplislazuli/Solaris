@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.pmw.tinylog.Logger;
+
 import config.Config;
 import config.MouseConfig;
 import geom.AbsolutePoint;
@@ -47,12 +49,12 @@ public class MouseManager implements UpdatingObject {
 	
 	private void initMouseBindings(MouseConfig config) {
 		for(Entry<MouseButton,String> binding : config.getKeyBindings().entrySet())
-			mouseBindings.put(binding.getKey(),  actions.getActionByName(binding.getValue()));
+			mouseBindings.put(binding.getKey(),actions.getActionByName(binding.getValue()));
 	}
 	
 	public void registerMouseBindings(MouseButton button, Action action) {
 		if(mouseBindings.get(button)!=null)
-			System.out.println("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
+			Logger.info("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
 		mouseBindings.put(button,action);
 	}
 	
@@ -62,10 +64,12 @@ public class MouseManager implements UpdatingObject {
 	
 	private void mouseClicked(MouseEvent evt) {
 		mousePos = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
-		if(mouseBindings.get(evt.getButton())!=null)
+		if(mouseBindings.get(evt.getButton())!=null) {
+			Logger.debug("Player pressed " +evt.getButton().toString() + " and did " + mouseBindings.get(evt.getButton()).getName());
 			mouseBindings.get(evt.getButton()).doAction();
+		}
 		else
-			System.out.println("No MouseBinding for this Action registered!");
+			Logger.debug("No MouseBinding for this Action registered!");
 	}
 	
 	public void shootAtMousePos() {
@@ -91,7 +95,7 @@ public class MouseManager implements UpdatingObject {
 			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())
 			.filter(item -> item.shape.contains(clickedPosition))
 			.forEach(clicked -> PlayerManager.getInstance().getPlayerNavigator().route.add(clicked));
-		System.out.println("New Route:"+PlayerManager.getInstance().getPlayerNavigator().route.toString());
+		Logger.info("New Route:"+PlayerManager.getInstance().getPlayerNavigator().route.toString());
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {

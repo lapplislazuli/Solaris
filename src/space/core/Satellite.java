@@ -3,6 +3,8 @@ package space.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.pmw.tinylog.Logger;
+
 import drawing.JavaFXDrawingInformation;
 import geom.TShape;
 import interfaces.logical.DestructibleObject;
@@ -36,11 +38,11 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	}
 	@Override
 	public void destruct() {
-		System.out.println(toString() + " got destroyed");
+		Logger.debug(toString() + " got destroyed");
 		new Explosion("Explosion from" + name,center,6,800,1.03,new JavaFXDrawingInformation(Color.FIREBRICK));
 		if(parent!=null) {
 			remove();
-			System.out.println(toString() + " removed!");
+			Logger.debug(toString() + " removed!");
 		}
 	}
 	
