@@ -1,5 +1,7 @@
 package logic.interaction;
 
+import org.pmw.tinylog.Logger;
+
 import space.shuttle.ArmedSpaceShuttle;
 import space.shuttle.ShuttleNavigator;
 
@@ -22,13 +24,13 @@ public class PlayerManager {
 	
 	public void registerPlayerNavigator(ShuttleNavigator pN){
 		if(playerNavigator!=null)
-			System.out.println("Overwriting active playerNavigator...");
+			Logger.info("Overwriting active playerNavigator...");
 		playerNavigator=pN;
 	}
 	
 	public void registerPlayerShuttle(ArmedSpaceShuttle p) {
 		if(playerShuttle!=null)
-			System.out.println("Overwriting active playershuttle...");
+			Logger.info("Overwriting active playershuttle...");
 		playerShuttle=p;
 	}
 	

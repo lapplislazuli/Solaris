@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.pmw.tinylog.Logger;
+
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.UpdatingObject;
@@ -22,6 +24,7 @@ public class CollisionManager implements UpdatingObject{
 	private CollisionManager() {
 		registeredItems = new HashSet<CollidingObject>();
 		registeredDestructibles = new HashSet<DestructibleObject>();
+		Logger.debug("Build CollisionManager");
 	}
 	
 	public static CollisionManager getInstance() {
@@ -32,6 +35,7 @@ public class CollisionManager implements UpdatingObject{
 	
 	public void initCollisionManager(UpdateManager parent) {
 		this.parent=parent;
+		Logger.debug("Initialised CollisionManager");
 	}
 	
 	public void update() {
@@ -78,5 +82,6 @@ public class CollisionManager implements UpdatingObject{
 
 	public void togglePause() {
 		running=!running;
+		Logger.debug("CollisionManager set to running:" + running);
 	}
 }

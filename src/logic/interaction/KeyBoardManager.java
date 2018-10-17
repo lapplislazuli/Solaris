@@ -4,15 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.pmw.tinylog.Logger;
+
 import config.Config;
 import config.KeyConfig;
-import config.MouseConfig;
 import interfaces.logical.UpdatingObject;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import logic.manager.CollisionManager;
-import logic.manager.UpdateManager;
 
 @SuppressWarnings("restriction")
 public class KeyBoardManager implements UpdatingObject {
@@ -57,22 +56,24 @@ public class KeyBoardManager implements UpdatingObject {
 	private void keyTyped(KeyEvent evt) {
 		if(currentPressed==Character.UNASSIGNED) {
 			currentPressed = evt.getCharacter().toCharArray()[0];
-			if(keyBindings.get(currentPressed)!=null)
+			if(keyBindings.get(currentPressed)!=null) {
+				Logger.debug("Player pressed " + currentPressed + " and do Action " + keyBindings.get(currentPressed).getName());
 				keyBindings.get(currentPressed).doAction();
+			}
 			else
-				System.out.println("You pressed " + currentPressed + " which has no action Bound!");
+				Logger.debug("Player pressed " + currentPressed + " which has no action Bound!");
 		}
 		else if (currentPressed==evt.getCharacter().toCharArray()[0]) {
 			//Someone is keeping the same Character pressed
 		}
 		else
-			System.out.println("You are pressing "  + currentPressed + "- release first for new Input!");
+			Logger.trace("Player presses "  + currentPressed + "- needs to release first for new Input");
 		
 	}
 	
 	public void registerKeyBinding(Character key, Action action) {
 		if(keyBindings.get(key)!=null)
-			System.out.println("Overrwrite Keybinding for " + key + " with Action " + action.getName());
+			Logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
 		keyBindings.put(key,action);
 	}
 	

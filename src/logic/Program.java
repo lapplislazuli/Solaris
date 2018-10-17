@@ -19,6 +19,11 @@ import logic.manager.DrawingManager;
 import logic.manager.UpdateManager;
 import javafx.scene.*;
 
+import org.pmw.tinylog.Configurator;
+import org.pmw.tinylog.Level;
+import org.pmw.tinylog.Logger;
+import org.pmw.tinylog.writers.FileWriter;
+
 import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
@@ -26,9 +31,16 @@ public class Program extends Application{
 	Config config;
 	
 	public static void main(String[] args) {
-		System.out.println("Starting Solaris");
+		Configurator.defaultConfig()
+		   .writer(new FileWriter("log.txt"))
+		   .level(Level.INFO)
+		   .activate();
+		
+		Logger.info("Starting Solaris");
+		
 		launch(args);
 	}
+
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -41,10 +53,9 @@ public class Program extends Application{
         
         initManagers(scene,config);
 		
+        Logger.info("Loaded Config and Managers, now loading Galaxy");
         initSpace();
         initPrimaryStage(primaryStage,scene);
-        
-		ConfigFactory.save(config);
 	}
 	
 	private void initPrimaryStage(Stage primaryStage, Scene scene) {
@@ -71,8 +82,9 @@ public class Program extends Application{
 	
 	@Override
 	public void stop() {
-		System.out.println("Closing Solaris");
+		Logger.info("Saving Config");
 		ConfigFactory.save(config);
+		Logger.info("Closing Solaris");
 		System.exit(0);
 	}
 	
@@ -99,7 +111,7 @@ public class Program extends Application{
 				.rotationSpeed(Math.PI*2/800)
 				.color(Color.INDIANRED)
 				.build();
-		
+
 		Planet moon = (new Planet.Builder("Moon", earth))
 				.size(4)
 				.distance(28)
