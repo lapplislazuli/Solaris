@@ -46,6 +46,23 @@ public class ConfigFactory {
 		}
 	}
 	
+	static public void shutDown(Config config){
+		if(config.path==null||config.path=="")
+			return;
+
+		File file = new File(config.path);
+		if (file.exists()) {
+
+			ConfigFactory.save(config);
+			System.exit(0);
+
+		}
+
+
+
+
+	}
+	
 	static public void saveConfigTo(Config config, String path) {
 		if(!path.endsWith(".json"))
 			path+="/configSave.json";
