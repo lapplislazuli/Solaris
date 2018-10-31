@@ -70,10 +70,10 @@ public class Program extends Application{
 	}
 	
 	@Override
-	public void stop() {
+	public void stop() throws Exception{
+
 		System.out.println("Closing Solaris");
-		ConfigFactory.save(config);
-		System.exit(0);
+		ConfigFactory.shutDown(config);
 	}
 	
 	@SuppressWarnings("unused")
