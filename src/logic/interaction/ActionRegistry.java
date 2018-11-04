@@ -1,10 +1,11 @@
 package logic.interaction;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import config.ConfigFactory;
 import logic.manager.CollisionManager;
 import logic.manager.UpdateManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionRegistry {
 	private static ActionRegistry INSTANCE;
@@ -30,7 +31,7 @@ public class ActionRegistry {
 						()->PlayerManager.getInstance().forceRespawn()));
 		registerAction(
 				new Action("Quit","Quits the Game" ,
-						()->System.exit(0)));
+						()-> ConfigFactory.getInstance().shutDown()));
 		registerAction(
 				new Action("Speed+","Speeds up the players ship by 10%" ,
 						()->PlayerManager.getInstance().speedUp()));
