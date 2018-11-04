@@ -1,5 +1,9 @@
 package config;
 
+import org.json.JSONObject;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,10 +12,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.json.JSONObject;
-
-public class ConfigFactory {
-	
+public class ConfigFactory implements KeyListener {
+	private static ConfigFactory INSTANCE;
+	private static Config conf;
 	static public Config read(String path) {
 		if(!path.endsWith(".json"))
 			throw new IllegalArgumentException("Faulty Path!");
@@ -30,6 +33,14 @@ public class ConfigFactory {
 		}
 		return null;
 	}
+
+
+
+	public static ConfigFactory getInstance() {
+		if(INSTANCE==null)
+			INSTANCE=new ConfigFactory();
+		return INSTANCE;
+	}
 	
 	static public void save(Config config) {
 		if(config.path==null||config.path=="")
@@ -46,23 +57,6 @@ public class ConfigFactory {
 		}
 	}
 	
-	static public void shutDown(Config config){
-		if(config.path==null||config.path=="")
-			return;
-
-		File file = new File(config.path);
-		if (file.exists()) {
-
-			ConfigFactory.save(config);
-			System.exit(0);
-
-		}
-
-
-
-
-	}
-	
 	static public void saveConfigTo(Config config, String path) {
 		if(!path.endsWith(".json"))
 			path+="/configSave.json";
@@ -77,5 +71,26 @@ public class ConfigFactory {
 			e.printStackTrace();
 		}
 	}
+
+	 public void shutDown(){
+		if(conf.path==null||conf.path=="")
+			return ;
+
+		File file = new File(conf.path);
+		if (file.exists()) {
+			ConfigFactory.save(conf);
+			System.exit(0);
+
+		}
+
+
+
+
+	}
+
 	
+
 }
+
+
+
