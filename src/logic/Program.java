@@ -70,11 +70,11 @@ public class Program extends Application{
 	}
 	
 	@Override
-	public void stop() throws Exception{
-
+	public  void stop() throws Exception{
+		ConfigFactory.getInstance().shutDown();
 		System.out.println("Closing Solaris");
-		ConfigFactory.shutDown(config);
-	}
+
+	}	
 	
 	@SuppressWarnings("unused")
 	private void initSpace() {
