@@ -1,11 +1,15 @@
-package geom;
+package geometryTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD:test/geom/PointTest.java
 import interfaces.geom.Point;
+=======
+import geom.Point;
+>>>>>>> master:test/geometryTest/PointTest.java
 
 class PointTest {
 	

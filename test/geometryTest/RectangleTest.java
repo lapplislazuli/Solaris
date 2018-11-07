@@ -1,4 +1,4 @@
-package geom;
+package geometryTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +8,12 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD:test/geom/RectangleTest.java
 import interfaces.geom.Point;
+=======
+import geom.Point;
+import geom.Rectangle;
+>>>>>>> master:test/geometryTest/RectangleTest.java
 
 class RectangleTest {
 	
