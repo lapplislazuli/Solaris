@@ -1,4 +1,4 @@
-package geom;
+package geometryTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,30 +9,31 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class RectangleTest {
+import geom.Circle;
+import geom.Point;
+
+class CircleTest {
 	
-	private static Rectangle testObject;
+	private static Circle testObject;
 	private static Point centerTestObject;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		centerTestObject= new Point(100,100);
-		testObject = new Rectangle(centerTestObject,200,200);
+		testObject = new Circle(centerTestObject,100);
 	}
 
-	
-	//TODO: Check this why its not working?
 	@Test
 	void testInitOutline() {
-		testObject.levelOfDetail=2; //4 OutlinePoints!
+		testObject.levelOfDetail=4; //4 OutlinePoints!
 		testObject.initOutline(); 
 		for (int i=0;i<4;i++) {
 			Point testOutlinePoint=testObject.outLine.get(i);
 			assertTrue(
-				testOutlinePoint.distanceTo(new Point(0,200))==0
-				|| testOutlinePoint.distanceTo(new Point(200,200))==0
-				|| testOutlinePoint.distanceTo(new Point(200,0))==0
-				|| testOutlinePoint.distanceTo(new Point(0,0))==0
+					testOutlinePoint.distanceTo(new Point(0,100))==0
+				|| testOutlinePoint.distanceTo(new Point(200,100))==0
+				|| testOutlinePoint.distanceTo(new Point(100,0))==0
+				|| testOutlinePoint.distanceTo(new Point(100,200))==0
 			);
 		}
 		testObject.levelOfDetail=100;
@@ -45,14 +46,14 @@ class RectangleTest {
 		List<Point> inPoints = new LinkedList<Point>();
 		inPoints.add(new Point(65,50)); //definitive in Circle 
 		inPoints.add(new Point(125,100)); //definitive in Circle
-		inPoints.add(new Point(200,200)); //Edgepoint
+		inPoints.add(new Point(200,100)); //Edgepoint
 		inPoints.add(centerTestObject);
 		for(Point inPoint : inPoints)
 			assertTrue(testObject.contains(inPoint));
 		List<Point> outPoints = new LinkedList<Point>();
-		outPoints.add(new Point(0,300));  
-		outPoints.add(new Point(0,-10)); 
-		//outPoints.add(new Point(0,0,400)); 
+		outPoints.add(new Point(0,0));  
+		outPoints.add(new Point(0,120)); 
+		outPoints.add(new Point(0,0,200)); 
 		for(Point outPoint : outPoints)
 			assertFalse(testObject.contains(outPoint));
 		
