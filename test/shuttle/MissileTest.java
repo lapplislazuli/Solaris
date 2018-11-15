@@ -1,4 +1,4 @@
-package shuttleTest;
+package shuttle;
 
 import static org.junit.jupiter.api.Assertions.*;
 

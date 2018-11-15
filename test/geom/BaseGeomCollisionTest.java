@@ -1,14 +1,10 @@
-package geometryTest;
+package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import geom.Circle;
-import geom.Point;
-import geom.Rectangle;
 
 class BaseGeomCollisionTest {
 	
