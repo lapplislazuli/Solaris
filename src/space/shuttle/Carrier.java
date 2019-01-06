@@ -3,7 +3,11 @@ package space.shuttle;
 import java.util.LinkedList;
 import java.util.List;
 
+import drawing.JavaFXDrawingInformation;
+import geom.LolliShape;
+import geom.UShape;
 import interfaces.logical.CollidingObject;
+import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.shuttle.missiles.Missile;
@@ -15,19 +19,16 @@ public class Carrier extends SpaceShuttle{
 	private int shipCounter = 0; // Overall Ships Build
 	private int shipCooldown = 0; 
 	
+	private int size;
+	
 	public Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, size, orbitingDistance, speed);
+		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
+		this.size=size;
 		
 		ships=new LinkedList<CarrierShip>();
 		for(int i = 0; i<maxShips;i++)
 			spawnShip();
 		shipCooldown=0; //For Init no cooldown
-	}
-	
-	@Override
-	public void destruct() {
-		System.out.println(toString()+" hit");
-		super.destruct();
 	}
 	
 	@Override
@@ -72,8 +73,7 @@ public class Carrier extends SpaceShuttle{
 	
 	private void spawnShip() {
 		shipCounter++;
-		//UNARMED Ships - because of reasons
-		CarrierShip spawned = new CarrierShip(name + "'s ship no." + shipCounter, this, 2,15,speed*4);
+		CarrierShip spawned = new CarrierShip(name + "'s ship no." + shipCounter, this, size/2 ,size*3,speed*4);
 		spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
 		ships.add(spawned);
 		
@@ -81,7 +81,7 @@ public class Carrier extends SpaceShuttle{
 	}
 	
 	private void setShipCooldown() {
-		shipCooldown = 3000/25; //UpdateRatio is 25/s so this will take 30 seconds
+		shipCooldown = 30000/25; //UpdateRatio is 25/s so this will take 30 seconds
 	}
 	
 	public boolean isBuilding() {

@@ -1,6 +1,7 @@
 package space.shuttle;
 
 import drawing.JavaFXDrawingInformation;
+import geom.UShape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
@@ -12,8 +13,10 @@ import space.shuttle.missiles.Laserbeam;
 public class CarrierShip extends ArmedSpaceShuttle{
 
 	public CarrierShip(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, size, orbitingDistance, speed);
+		super(name, parent,new JavaFXDrawingInformation(Color.BLANCHEDALMOND), new UShape(size*2,size*2,size/2), size, orbitingDistance, speed);
 		rocketsLeft=0; //No Rockets for CarrierShips
+
+		this.shape.setLevelOfDetail(2);
 	}
 	
 	@Override

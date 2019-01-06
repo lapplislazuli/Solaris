@@ -217,7 +217,7 @@ public class Program extends Application{
 				.next(mars)
 				.build();
 		
-		Carrier mothership = new Carrier("Mothership", sun, 3, 420, Math.PI/500);
+		Carrier mothership = new Carrier("Mothership", sun,9, 420, Math.PI/500);
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);

@@ -5,9 +5,10 @@ import org.pmw.tinylog.Logger;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.HShape;
+import interfaces.drawing.DrawingInformation;
+import interfaces.geom.Shape;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
-import logic.interaction.PlayerManager;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
@@ -22,7 +23,18 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	protected SensorArray sensor;
 
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(5,10,3), 0 , speed);
+		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), 0 , speed);
+		
+		this.parent=parent;
+		this.orbitingDistance=orbitingDistance;
+		distance=(int) (orbitingDistance+distanceTo(parent));
+		sensor = new SensorArray(this,50);
+
+		shape.setLevelOfDetail(size/2);
+	}
+	
+	public SpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
+		super(name, parent, dinfo, s, 0 , speed);
 		
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;

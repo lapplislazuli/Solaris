@@ -2,7 +2,9 @@ package space.shuttle;
 
 import org.pmw.tinylog.Logger;
 
+import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import logic.interaction.MouseManager;
@@ -20,6 +22,10 @@ public class ArmedSpaceShuttle extends SpaceShuttle{
 	
 	public ArmedSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
+	}
+	
+	public ArmedSpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
+		super(name, parent,dinfo,s, size, orbitingDistance, speed);
 	}
 	
 	@Override
