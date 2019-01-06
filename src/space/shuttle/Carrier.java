@@ -3,23 +3,43 @@ package space.shuttle;
 import java.util.LinkedList;
 import java.util.List;
 
+import interfaces.logical.CollidingObject;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
+import space.shuttle.missiles.Missile;
 
 public class Carrier extends SpaceShuttle{
 	
-	private int maxShips = 4; // How Many Ships can the carrier have active?
-	private List<SpaceShuttle> ships; 
+	private int maxShips = 3; // How Many Ships can the carrier have active?
+	private List<CarrierShip> ships; 
 	private int shipCounter = 0; // Overall Ships Build
 	private int shipCooldown = 0; 
 	
 	public Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
 		
-		ships=new LinkedList<SpaceShuttle>();
+		ships=new LinkedList<CarrierShip>();
 		for(int i = 0; i<maxShips;i++)
 			spawnShip();
 		shipCooldown=0; //For Init no cooldown
+	}
+	
+	@Override
+	public void destruct() {
+		System.out.println(toString()+" hit");
+		super.destruct();
+	}
+	
+	@Override
+	public boolean collides(CollidingObject other) {
+		//Don't collide with Children
+		if(other instanceof CarrierShip && ships.contains((CarrierShip)other))
+			return false;
+		// Don't collide with Childrens missiles
+		if(other instanceof Missile)
+			if(ships.stream().anyMatch(t -> t.getAllChildrenFlat().contains(other)))
+				return false;
+		return super.collides(other);
 	}
 	
 	@Override
@@ -27,9 +47,8 @@ public class Carrier extends SpaceShuttle{
 		super.update();
 		removeDeadShips();
 		
-		if(!hasFullShips()&&shipCooldown==0)
+		if(!hasFullShips()&&shipCooldown<=0)
 			spawnShip();
-		
 		shipCooldown --;
 	}
 	
@@ -54,7 +73,7 @@ public class Carrier extends SpaceShuttle{
 	private void spawnShip() {
 		shipCounter++;
 		//UNARMED Ships - because of reasons
-		SpaceShuttle spawned = new SpaceShuttle(name + "'s ship no." + shipCounter, this, 2,5,speed/4);
+		CarrierShip spawned = new CarrierShip(name + "'s ship no." + shipCounter, this, 2,15,speed*4);
 		spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
 		ships.add(spawned);
 		
@@ -62,7 +81,7 @@ public class Carrier extends SpaceShuttle{
 	}
 	
 	private void setShipCooldown() {
-		shipCooldown = 30000/25; //UpdateRatio is 25/s so this will take 30 seconds
+		shipCooldown = 3000/25; //UpdateRatio is 25/s so this will take 30 seconds
 	}
 	
 	public boolean isBuilding() {
@@ -72,7 +91,7 @@ public class Carrier extends SpaceShuttle{
 	// Returns an angle depending on the counter i and maxShips max 
 	private double shipSpawnAngle(int counter, int max) {
 		counter = counter%max;
-		return counter* Math.PI*2/max;
+		return counter* (Math.PI*2/max);
 	}
 	
 	public void removeFirstShipWithoutTrash() {
@@ -96,6 +115,6 @@ public class Carrier extends SpaceShuttle{
 	public int getCurrentShipCount() {return ships.size();}
 	public boolean hasFullShips() {return ships.size()==maxShips;}
 	public boolean hasNoShips() {return ships.isEmpty();}
-	public List<SpaceShuttle> getCurrentShips(){return ships;}
+	public List<CarrierShip> getCurrentShips(){return ships;}
 	
 }

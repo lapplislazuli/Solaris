@@ -5,6 +5,7 @@ import space.advanced.DistantGalaxy;
 import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
+import space.shuttle.Carrier;
 import space.shuttle.ShuttleNavigator;
 import config.Config;
 import config.ConfigFactory;
@@ -191,7 +192,7 @@ public class Program extends Application{
 				.color(Color.GRAY)
 				.build();
 		
-		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Overlord")
+		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Invader")
 				.shuttleName("Martians")
 				.idlingTurns(Math.PI)
 				.doesRespawn(true)
@@ -215,6 +216,8 @@ public class Program extends Application{
 				.start(sun)
 				.next(mars)
 				.build();
+		
+		Carrier mothership = new Carrier("Mothership", sun, 3, 420, Math.PI/500);
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);

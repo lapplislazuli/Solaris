@@ -44,10 +44,10 @@ class CarrierTest {
 	@Test
 	void ConstructorTest() {
 		assertTrue(carrier.hasFullShips());
-		assertEquals(4,carrier.getCurrentShipCount());
+		assertEquals(3,carrier.getCurrentShipCount());
 		assertFalse(carrier.isBuilding());
 		
-		assertEquals(5,carrier.getAllChildrenFlat().size()); //Itself and 4 children
+		assertEquals(4,carrier.getAllChildrenFlat().size()); //Itself and 4 children
 	}
 	
 	@Test
@@ -56,10 +56,10 @@ class CarrierTest {
 		// Update Everything 
 		star.update();
 		
-		assertEquals(4, carrier.getCurrentShipCount()); // There should still be 4 Ships for the Carrier
+		assertEquals(3, carrier.getCurrentShipCount()); // There should still be 4 Ships for the Carrier
 		assertEquals(1,carrier.getAllChildrenFlat().size()); // There should be nothing cycling around the carrier
 		
-		assertEquals(5, targetTwo.getAllChildrenFlat().size()); // The ships should be children of targetTwo
+		assertEquals(4, targetTwo.getAllChildrenFlat().size()); // The ships should be children of targetTwo
 	}
 	
 	@Test
@@ -72,10 +72,10 @@ class CarrierTest {
 		// Update Everything 
 		star.update();
 		
-		assertEquals(3, carrier.getCurrentShipCount()); // There should still be 3 Ships for the Carrier
+		assertEquals(2, carrier.getCurrentShipCount()); // There should still be 3 Ships for the Carrier
 		assertEquals(1,carrier.getAllChildrenFlat().size()); // There should be nothing cycling around the carrier
 		
-		assertEquals(4, targetTwo.getAllChildrenFlat().size()); // The ships should be children of targetTwo
+		assertEquals(3, targetTwo.getAllChildrenFlat().size()); // The ships should be children of targetTwo
 	}
 	
 	@Test
@@ -86,8 +86,8 @@ class CarrierTest {
 		carrier.revokeShips();
 		star.update();
 
-		assertEquals(4, carrier.getCurrentShipCount()); // There should still be 4 Ships for the Carrier
-		assertEquals(5,carrier.getAllChildrenFlat().size()); // Ships should be back at carrier
+		assertEquals(3, carrier.getCurrentShipCount()); // There should still be 4 Ships for the Carrier
+		assertEquals(4,carrier.getAllChildrenFlat().size()); // Ships should be back at carrier
 		
 		assertEquals(1, targetTwo.getAllChildrenFlat().size()); // TargetTwo should be free
 	}
@@ -142,7 +142,7 @@ class CarrierTest {
 		assertTrue(carrier.hasFullShips());
 		
 		carrier.setMaxShips(5); //One More
-		assertEquals(4,carrier.getCurrentShipCount());
+		assertEquals(3,carrier.getCurrentShipCount());
 		assertFalse(carrier.hasFullShips());
 	}
 	
@@ -153,5 +153,11 @@ class CarrierTest {
 	    assertThrows(IllegalArgumentException.class, wrongArgument, "MaxShips cannot be smaller than 0!");		
 	}
 	
+	@Test
+	void noChildCollision() {
+		carrier.getCurrentShips().forEach(s -> assertFalse(carrier.collides(s)));
+		carrier.update();
+		carrier.getCurrentShips().forEach(s -> assertFalse(carrier.collides(s)));
+	}
 	
 }
