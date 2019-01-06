@@ -30,6 +30,8 @@ public class Program extends Application{
 	
 	Config config;
 	
+	private static Program INSTANCE;
+	
 	public static void main(String[] args) {
 		Configurator.defaultConfig()
 		   .writer(new FileWriter("log.txt"))
@@ -44,6 +46,8 @@ public class Program extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		INSTANCE = this;
+		
 		config = ConfigFactory.read("./config.json");
 		Group root = new Group();
 		
@@ -78,6 +82,12 @@ public class Program extends Application{
 		UpdateManager.getInstance().initUpdateManager(config);    
         MouseManager.getInstance().init(scene, config);
         KeyBoardManager.getInstance().init(scene,config);   
+	}
+	
+	// To Call the correct shutdown which needs to be static
+	public static void invokeStop() {
+		if(INSTANCE!=null)
+			INSTANCE.stop();
 	}
 	
 	@Override

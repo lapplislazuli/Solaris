@@ -3,6 +3,7 @@ package logic.interaction;
 import java.util.HashMap;
 import java.util.Map;
 
+import logic.Program;
 import logic.manager.CollisionManager;
 import logic.manager.UpdateManager;
 
@@ -30,7 +31,7 @@ public class ActionRegistry {
 						()->PlayerManager.getInstance().forceRespawn()));
 		registerAction(
 				new Action("Quit","Quits the Game" ,
-						()->System.exit(0)));
+						()->Program.invokeStop()));
 		registerAction(
 				new Action("Speed+","Speeds up the players ship by 10%" ,
 						()->PlayerManager.getInstance().speedUp()));
