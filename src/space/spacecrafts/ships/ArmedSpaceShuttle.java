@@ -1,4 +1,4 @@
-package space.shuttle;
+package space.spacecrafts.ships;
 
 import org.pmw.tinylog.Logger;
 
@@ -10,9 +10,9 @@ import interfaces.logical.DestructibleObject;
 import logic.interaction.MouseManager;
 import logic.interaction.PlayerManager;
 import space.core.SpaceObject;
-import space.shuttle.missiles.Laserbeam;
-import space.shuttle.missiles.Missile;
-import space.shuttle.missiles.Rocket;
+import space.spacecrafts.ships.missiles.Laserbeam;
+import space.spacecrafts.ships.missiles.Missile;
+import space.spacecrafts.ships.missiles.Rocket;
 
 public class ArmedSpaceShuttle extends SpaceShuttle{
 	

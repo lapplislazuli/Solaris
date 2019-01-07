@@ -1,15 +1,16 @@
-package space.shuttle;
+package space.spacecrafts.navigators;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.pmw.tinylog.Logger;
 
-import interfaces.logical.UpdatingObject;
 import logic.interaction.PlayerManager;
 import space.core.SpaceObject;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.SpaceShuttle;
 
-public class ShuttleNavigator implements UpdatingObject{
+public class ShuttleNavigator implements Navigator{
 	
 	String name;
 	private int currentPointer=0,shuttleSize;
@@ -33,8 +34,8 @@ public class ShuttleNavigator implements UpdatingObject{
 			rebuildShuttle();
 		else if(shuttle.orbiting) {
 			currentIdle+=Math.abs(shuttle.speed);
-			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextTarget())) { //SpaceShuttle idled some time
-				shuttle.target=getNextTarget();
+			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextWayPoint())) { //SpaceShuttle idled some time
+				shuttle.target=getNextWayPoint();
 				shuttle.launch();
 				currentIdle=0;
 				incrementPointer();
@@ -47,13 +48,7 @@ public class ShuttleNavigator implements UpdatingObject{
 		route.add(shuttle.parent);
 	}
 	
-	boolean isInGoodLaunchPosition(SpaceObject target) {
-		double delta = Math.abs(shuttle.degreeTo(shuttle.parent) - shuttle.degreeTo(target));
-		delta = Math.abs(delta-Math.PI);
-		return delta<=0.1;
-	}
-	
-	private SpaceObject getNextTarget() {
+	public SpaceObject getNextWayPoint() {
 		return route.get(currentPointer+1);
 	}
 	
@@ -154,5 +149,15 @@ public class ShuttleNavigator implements UpdatingObject{
 		shuttle.setPlayer(builder.isPlayer);
 		if(isPlayer)
 			PlayerManager.getInstance().registerPlayerNavigator(this);
+	}
+
+	@Override
+	public SpaceShuttle getShuttle() {
+		return shuttle;
+	}
+
+	@Override
+	public List<SpaceObject> getRoute() {
+		return route;
 	}
 }

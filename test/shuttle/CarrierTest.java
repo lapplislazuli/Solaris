@@ -9,7 +9,7 @@ import org.junit.jupiter.api.function.Executable;
 import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Star;
-import space.shuttle.Carrier;
+import space.spacecrafts.ships.Carrier;
 
 class CarrierTest {
 	

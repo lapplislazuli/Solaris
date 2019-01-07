@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import geom.AbsolutePoint;
 import logic.manager.CollisionManager;
 import space.core.Star;
-import space.shuttle.SensorArray;
-import space.shuttle.SpaceShuttle;
+import space.spacecrafts.ships.SensorArray;
+import space.spacecrafts.ships.SpaceShuttle;
 
 public class ArrayDetectionTest {
 	

@@ -10,8 +10,8 @@ import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
-import space.shuttle.ArmedSpaceShuttle;
-import space.shuttle.missiles.Rocket;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.missiles.Rocket;
 
 class RemoveTest {
 	

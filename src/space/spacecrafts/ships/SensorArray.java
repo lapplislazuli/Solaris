@@ -1,4 +1,4 @@
-package space.shuttle;
+package space.spacecrafts.ships;
 
 import java.util.LinkedList;
 import java.util.List;

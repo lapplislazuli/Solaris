@@ -11,7 +11,7 @@ import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import space.core.Planet;
 import space.core.Star;
-import space.shuttle.SpaceShuttle;
+import space.spacecrafts.ships.SpaceShuttle;
 
 class LaunchTest {
 	

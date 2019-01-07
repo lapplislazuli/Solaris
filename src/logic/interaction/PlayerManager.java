@@ -2,8 +2,8 @@ package logic.interaction;
 
 import org.pmw.tinylog.Logger;
 
-import space.shuttle.ArmedSpaceShuttle;
-import space.shuttle.ShuttleNavigator;
+import space.spacecrafts.navigators.ShuttleNavigator;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
 
 public class PlayerManager {
 

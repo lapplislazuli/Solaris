@@ -1,4 +1,4 @@
-package space.shuttle.missiles;
+package space.spacecrafts.ships.missiles;
 
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
@@ -8,7 +8,7 @@ import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
-import space.shuttle.SpaceShuttle;
+import space.spacecrafts.ships.SpaceShuttle;
 
 @SuppressWarnings("restriction")
 public class Rocket extends Missile implements DestructibleObject {

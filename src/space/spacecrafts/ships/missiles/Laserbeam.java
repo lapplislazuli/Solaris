@@ -1,4 +1,4 @@
-package space.shuttle.missiles;
+package space.spacecrafts.ships.missiles;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +10,7 @@ import interfaces.drawing.DrawingContext;
 import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import space.shuttle.SpaceShuttle;
+import space.spacecrafts.ships.SpaceShuttle;
 
 @SuppressWarnings("restriction")
 public class Laserbeam extends Missile{

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import geom.AbsolutePoint;
 import space.core.Star;
-import space.shuttle.ArmedSpaceShuttle;
-import space.shuttle.missiles.Missile;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.missiles.Missile;
 class MissileShuttleCollisionTest {
 	Star star;
 	ArmedSpaceShuttle shuttleOne, shuttleTwo;

@@ -1,4 +1,4 @@
-package space.shuttle;
+package space.spacecrafts.ships;
 
 import drawing.JavaFXDrawingInformation;
 import geom.UShape;
@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.effect.Explosion;
-import space.shuttle.missiles.Laserbeam;
+import space.spacecrafts.ships.missiles.Laserbeam;
 
 public class CarrierShip extends ArmedSpaceShuttle{
 

@@ -1,4 +1,4 @@
-package space.shuttle;
+package space.spacecrafts.ships;
 
 import org.pmw.tinylog.Logger;
 
@@ -19,7 +19,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public boolean orbiting = true; 
 	public SpaceObject target;
 	public SpaceObject parent;
-	protected double orbitingDistance;
+	public double orbitingDistance;
 	protected SensorArray sensor;
 
 	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {

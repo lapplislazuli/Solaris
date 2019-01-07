@@ -1,4 +1,4 @@
-package space.shuttle.missiles;
+package space.spacecrafts.ships.missiles;
 
 import geom.BaseShape;
 import geom.AbsolutePoint;
@@ -6,7 +6,7 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
-import space.shuttle.SpaceShuttle;
+import space.spacecrafts.ships.SpaceShuttle;
 
 public abstract class Missile extends MovingSpaceObject implements RemovableObject {
 	

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Star;
-import space.shuttle.ArmedSpaceShuttle;
-import space.shuttle.missiles.Missile;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.missiles.Missile;
 
 public class MissileTest {
 	Star star;
