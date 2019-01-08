@@ -1,13 +1,13 @@
 package config;
 
 import org.json.JSONObject;
-
+import org.pmw.tinylog.Level;
 public class LoggerSettings {
-	public enum LogLevel{
-		ERROR,WARN,INFO,DEBUG,TRACE
-	}
+	//public enum LogLevel{
+	//	ERROR,WARN,INFO,DEBUG,TRACE
+	//}
 	
-	public LogLevel level;
+	public Level level;
 	public String logfile;
 	public boolean append; //Appends to the existing logfile if true, else write new one
 	
@@ -17,16 +17,16 @@ public class LoggerSettings {
 		append = configJSON.getBoolean("append");
 	}
 	
-	private LogLevel tryParseLogLevel(String s){
+	private Level tryParseLogLevel(String s){
 		String normed = s.toLowerCase(); //TODO: CLear Whitespaces
 		switch (normed){
-			case "error":	return LogLevel.ERROR;
-			case "warn": 	return LogLevel.WARN;
-			case "info": 	return LogLevel.INFO;
-			case "debug": 	return LogLevel.DEBUG;
-			case "trace": 	return LogLevel.TRACE;
+			case "error":	return Level.ERROR;
+			case "warn": 	return Level.WARNING;
+			case "info": 	return Level.INFO;
+			case "debug": 	return Level.DEBUG;
+			case "trace": 	return Level.TRACE;
 		}
-		return LogLevel.ERROR; //Default is highest loglevel
+		return Level.ERROR; //Default is highest loglevel
 	}
 	
 	public JSONObject toJSON() {

@@ -31,7 +31,7 @@ public class Config {
 		json.put("settings",settings.toJSON());
 		json.put("keyBindings",keyConfig.toJSON());
 		json.put("mouseBindings",mouseConfig.toJSON());
-		json.put("loggerSetings", loggerSettings.toJSON());
+		json.put("loggerSettings", loggerSettings.toJSON());
 		return json;
 	}
 }

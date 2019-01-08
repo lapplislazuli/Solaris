@@ -9,6 +9,7 @@ import space.shuttle.Carrier;
 import space.shuttle.ShuttleNavigator;
 import config.Config;
 import config.ConfigFactory;
+import config.LoggerSettings;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -24,6 +25,7 @@ import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.Logger;
 import org.pmw.tinylog.writers.FileWriter;
+import org.pmw.tinylog.writers.Writer;
 
 import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
@@ -34,13 +36,6 @@ public class Program extends Application{
 	private static Program INSTANCE;
 	
 	public static void main(String[] args) {
-		Configurator.defaultConfig()
-		   .writer(new FileWriter("log.txt"))
-		   .level(Level.INFO)
-		   .activate();
-		
-		Logger.info("Starting Solaris");
-		
 		launch(args);
 	}
 
@@ -50,6 +45,9 @@ public class Program extends Application{
 		INSTANCE = this;
 		
 		config = ConfigFactory.read("./config.json");
+		
+		initLogger(config.loggerSettings);
+		
 		Group root = new Group();
 		
 		Scene scene=initScene(config,root);
@@ -224,6 +222,14 @@ public class Program extends Application{
 		updateManager.registeredItems.add(nasa);
 		updateManager.registeredItems.add(aliens);
 		updateManager.registeredItems.add(chinesePeople);
+	}
+	
+	private void initLogger(LoggerSettings settings) {
+		Writer w = new FileWriter(settings.logfile,false,settings.append);
+		Configurator.defaultConfig()
+		   .writer(w)
+		   .level(Level.INFO)
+		   .activate();
 	}
 	
 }
