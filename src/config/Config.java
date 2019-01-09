@@ -7,6 +7,7 @@ public class Config {
 	public Settings settings;
 	public KeyConfig keyConfig;
 	public MouseConfig mouseConfig;
+	public LoggerSettings loggerSettings;
 	public String path; //So i can save it where it was drawn from
 	
 	public Config(String path, JSONObject obj) {
@@ -15,11 +16,14 @@ public class Config {
 		JSONObject generalConfigJSON= obj.getJSONObject("settings");
 		settings=new Settings(generalConfigJSON);
 		
-		JSONArray keyBindings = obj.getJSONArray("keyBindings");
-		keyConfig=new KeyConfig(keyBindings);
+		JSONArray keyBindingsJSON = obj.getJSONArray("keyBindings");
+		keyConfig=new KeyConfig(keyBindingsJSON);
 		
-		JSONArray mouseBindings = obj.getJSONArray("mouseBindings");
-		mouseConfig=new MouseConfig(mouseBindings);
+		JSONArray mouseBindingsJSON = obj.getJSONArray("mouseBindings");
+		mouseConfig=new MouseConfig(mouseBindingsJSON);
+		
+		JSONObject loggerJSON = obj.getJSONObject("loggerSettings");
+		loggerSettings = new LoggerSettings(loggerJSON);
 	}
 	
 	public JSONObject toJSON() {
@@ -27,6 +31,7 @@ public class Config {
 		json.put("settings",settings.toJSON());
 		json.put("keyBindings",keyConfig.toJSON());
 		json.put("mouseBindings",mouseConfig.toJSON());
+		json.put("loggerSettings", loggerSettings.toJSON());
 		return json;
 	}
 }
