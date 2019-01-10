@@ -12,7 +12,7 @@ import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Missile;
 
-public class Carrier extends SpaceShuttle{
+public class Carrier extends Ship{
 	
 	private int maxShips = 3; // How Many Ships can the carrier have active?
 	private List<CarrierShip> ships; 
@@ -54,14 +54,14 @@ public class Carrier extends SpaceShuttle{
 	}
 	
 	public void launchShips(SpaceObject target) {
-		for(SpaceShuttle ship : ships) {
+		for(Ship ship : ships) {
 			ship.target=target;
 			ship.launch();
 		}
 	}
 	
 	public void revokeShips() {
-		for(SpaceShuttle ship : ships) {
+		for(Ship ship : ships) {
 			ship.target=this;
 			ship.launch();
 		}

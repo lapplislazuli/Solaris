@@ -8,17 +8,17 @@ import interfaces.logical.DestructibleObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
-import space.spacecrafts.ships.SpaceShuttle;
+import space.spacecrafts.ships.Ship;
 
 @SuppressWarnings("restriction")
 public class Rocket extends Missile implements DestructibleObject {
 
-	public Rocket(String name, SpaceShuttle emitter, int size) {
+	public Rocket(String name, Ship emitter, int size) {
 		super(name, emitter,  new Rectangle(emitter.center,size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),emitter.rotation, emitter.speed);
 		shape.setLevelOfDetail(2);
 	}
 	
-	public Rocket(String name, SpaceShuttle emitter, int size,double rotation, int speed) {
+	public Rocket(String name, Ship emitter, int size,double rotation, int speed) {
 		super(name, emitter, new Rectangle(emitter.center,size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),rotation,speed);
 		shape.setLevelOfDetail(2);
 	}

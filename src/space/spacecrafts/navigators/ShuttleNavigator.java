@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.pmw.tinylog.Logger;
 
+import interfaces.spacecraft.Navigator;
+import interfaces.spacecraft.SpacecraftState;
 import logic.interaction.PlayerManager;
+import logic.manager.UpdateManager;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.SpaceShuttle;
+import space.spacecrafts.ships.PlayerSpaceShuttle;
+import space.spacecrafts.ships.Ship;
 
 public class ShuttleNavigator implements Navigator{
 	
@@ -32,7 +36,7 @@ public class ShuttleNavigator implements Navigator{
 	public void update() {
 		if(shuttle.isDead() && respawn)
 			rebuildShuttle();
-		else if(shuttle.orbiting) {
+		else if(shuttle.getState()==SpacecraftState.ORBITING) {
 			currentIdle+=Math.abs(shuttle.speed);
 			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextWayPoint())) { //SpaceShuttle idled some time
 				shuttle.target=getNextWayPoint();
@@ -60,7 +64,7 @@ public class ShuttleNavigator implements Navigator{
 	
 	private void rebuildShuttle() {
 		shuttle = new ArmedSpaceShuttle(shuttle.name,route.get(0),shuttleSize,(int) shuttle.orbitingDistance,shuttle.speed);
-		shuttle.setPlayer(isPlayer);
+		//shuttle.setPlayer(isPlayer);
 	}
 
 	public static class Builder {
@@ -138,7 +142,12 @@ public class ShuttleNavigator implements Navigator{
 	}
 	
 	private ShuttleNavigator(Builder builder) {
-		shuttle = new ArmedSpaceShuttle(builder.shuttleName,builder.route.get(1),builder.size,builder.orbitingDistance,builder.speed);
+		if(isPlayer) {
+			shuttle = new PlayerSpaceShuttle(builder.shuttleName,builder.route.get(1),builder.size,builder.orbitingDistance,builder.speed);
+			PlayerManager.getInstance().registerPlayerNavigator(this);
+		}
+			else{shuttle = new ArmedSpaceShuttle(builder.shuttleName,builder.route.get(1),builder.size,builder.orbitingDistance,builder.speed);
+		}
 		route=builder.route;
 		name=builder.name;
 		currentIdle=0;
@@ -146,18 +155,22 @@ public class ShuttleNavigator implements Navigator{
 		idlingTurns=builder.idlingTurns;
 		respawn=builder.respawn;
 		isPlayer=builder.isPlayer;
-		shuttle.setPlayer(builder.isPlayer);
-		if(isPlayer)
-			PlayerManager.getInstance().registerPlayerNavigator(this);
+		//shuttle.setPlayer(builder.isPlayer);
 	}
 
 	@Override
-	public SpaceShuttle getShuttle() {
+	public Ship getShuttle() {
 		return shuttle;
 	}
 
 	@Override
 	public List<SpaceObject> getRoute() {
 		return route;
+	}
+
+	@Override
+	public void remove() {
+		if(shuttle.isDead()&&!respawn)
+			UpdateManager.getInstance().registeredItems.remove(this);
 	}
 }

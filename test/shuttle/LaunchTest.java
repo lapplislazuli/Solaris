@@ -9,14 +9,15 @@ import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
+import interfaces.spacecraft.SpacecraftState;
 import space.core.Planet;
 import space.core.Star;
-import space.spacecrafts.ships.SpaceShuttle;
+import space.spacecrafts.ships.Ship;
 
 class LaunchTest {
 	
 	static Star origin,targetOne, targetTwo, targetAboveShuttleOne;
-	static SpaceShuttle shuttleOne, shuttleTwo;
+	static Ship shuttleOne, shuttleTwo;
 	static Planet launchedTowards,launchedAway;
 	
 	@BeforeAll
@@ -32,10 +33,10 @@ class LaunchTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		shuttleOne= new SpaceShuttle("shuttleOne",origin,0,50,-Math.PI/400);
+		shuttleOne= new Ship("shuttleOne",origin,0,50,-Math.PI/400);
 		shuttleOne.target=targetOne;
 		
-		shuttleTwo= new SpaceShuttle("shuttleTwo",origin,0,50,Math.PI/880);
+		shuttleTwo= new Ship("shuttleTwo",origin,0,50,Math.PI/880);
 		shuttleTwo.target=targetTwo; 
 		
 		shuttleTwo.relativePos=Math.PI/35;
@@ -52,7 +53,7 @@ class LaunchTest {
 	void testConstructor() {
 		assertTrue(origin.degreeTo(shuttleOne)-shuttleOne.relativePos <0.2);
 		assertEquals(origin.center.getX()+shuttleOne.getOrbitingDistance(), shuttleOne.center.getX()+1);
-		assertTrue(shuttleOne.orbiting);
+		assertEquals(SpacecraftState.ORBITING,shuttleOne.getState());
 	}
 	
 	@Test
@@ -61,7 +62,7 @@ class LaunchTest {
 		
 		assertEquals(shuttleOne.parent,targetOne);
 		assertEquals(null, shuttleOne.target);
-		assertFalse(shuttleOne.orbiting);
+		assertFalse(shuttleOne.getState()==SpacecraftState.ORBITING);
 	}
 	
 	@Test
@@ -95,7 +96,8 @@ class LaunchTest {
 		assertEquals(null, shuttleTwo.target);
 		
 		assertEquals(targetTwo.degreeTo(shuttleTwo),shuttleTwo.relativePos);
-		assertFalse(shuttleTwo.orbiting);
+
+		assertEquals(SpacecraftState.ORBITING,shuttleOne.getState());
 		assertEquals(shuttleTwo.distance,(int)shuttleTwo.distanceTo(targetTwo));
 	}
 	
@@ -106,7 +108,7 @@ class LaunchTest {
 		shuttleOne.launch(); // does nothing!assertEquals(shuttle.parent,target);
 		assertEquals(null, shuttleOne.target);
 		
-		assertTrue(shuttleOne.orbiting);
+		assertEquals(SpacecraftState.ORBITING,shuttleOne.getState());
 	}
 	
 	@Test

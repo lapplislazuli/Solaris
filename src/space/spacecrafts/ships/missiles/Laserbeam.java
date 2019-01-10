@@ -10,19 +10,19 @@ import interfaces.drawing.DrawingContext;
 import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import space.spacecrafts.ships.SpaceShuttle;
+import space.spacecrafts.ships.Ship;
 
 @SuppressWarnings("restriction")
 public class Laserbeam extends Missile{
 
 	private List<AbsolutePoint> trail=new LinkedList<AbsolutePoint>();
 	
-	public Laserbeam(String name, SpaceShuttle emitter) {
+	public Laserbeam(String name, Ship emitter) {
 		super(name, emitter,new Circle(emitter.center,2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.rotation, 3);
 		
 	}
 	
-	public Laserbeam(String name, SpaceShuttle emitter,  double direction, int speed) {
+	public Laserbeam(String name, Ship emitter,  double direction, int speed) {
 		super(name, emitter, new Circle(emitter.center,2),new JavaFXDrawingInformation(Color.LIGHTGREEN),direction, speed);
 	}
 

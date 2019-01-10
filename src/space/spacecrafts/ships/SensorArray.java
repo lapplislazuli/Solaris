@@ -20,10 +20,10 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	
 	int radius;
 	AbsolutePoint center;
-	SpaceShuttle emitter;
+	Ship emitter;
 	public List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
 	
-	public SensorArray (SpaceShuttle emitter,int radius) {
+	public SensorArray (Ship emitter,int radius) {
 		this.emitter=emitter;
 		center=emitter.center;
 		this.radius=radius;

@@ -1,21 +1,21 @@
-package space.spacecrafts.navigators;
+package interfaces.spacecraft;
 
 import java.util.List;
 
+import interfaces.logical.RemovableObject;
 import interfaces.logical.UpdatingObject;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.SpaceShuttle;
 
-public interface Navigator extends UpdatingObject{
+public interface Navigator extends UpdatingObject,RemovableObject{
 	
-	public SpaceShuttle getShuttle();
+	public Spacecraft getShuttle();
 	public List<SpaceObject> getRoute();
 	
 	public void clearRoute();
 
 	default boolean isInGoodLaunchPosition(SpaceObject target) {
 		if(getShuttle()!=null && !getShuttle().isDead()) {
-			double delta = Math.abs(getShuttle().degreeTo(getShuttle().parent) - getShuttle().degreeTo(target));
+			double delta = Math.abs(getShuttle().degreeTo(getShuttle().getParent()) - getShuttle().degreeTo(target));
 			delta = Math.abs(delta-Math.PI);
 			return delta<=0.1;	
 		}

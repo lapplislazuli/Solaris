@@ -10,7 +10,7 @@ import geom.AbsolutePoint;
 import logic.manager.CollisionManager;
 import space.core.Star;
 import space.spacecrafts.ships.SensorArray;
-import space.spacecrafts.ships.SpaceShuttle;
+import space.spacecrafts.ships.Ship;
 
 public class ArrayDetectionTest {
 	
@@ -24,7 +24,7 @@ public class ArrayDetectionTest {
 		notHitStar = new Star("noHit",null,new AbsolutePoint(1250,250),250);
 		notHittableStar = new Star("noHitEver",null,new AbsolutePoint(250,1250),0); //no Size!
 		
-		SpaceShuttle shuttle= new SpaceShuttle("shuttle",hitStar,0,0,0);
+		Ship shuttle= new Ship("shuttle",hitStar,0,0,0);
 		
 		sensor= new SensorArray(shuttle,50);
 		

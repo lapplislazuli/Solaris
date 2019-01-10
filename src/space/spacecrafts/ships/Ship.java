@@ -7,7 +7,8 @@ import geom.AbsolutePoint;
 import geom.HShape;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
-import interfaces.logical.DestructibleObject;
+import interfaces.spacecraft.Spacecraft;
+import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
@@ -15,14 +16,15 @@ import space.core.SpaceObject;
 import space.effect.Explosion;
 
 @SuppressWarnings("restriction")
-public class SpaceShuttle extends MovingSpaceObject implements DestructibleObject{
-	public boolean orbiting = true; 
+public class Ship extends MovingSpaceObject implements Spacecraft{
 	public SpaceObject target;
 	public SpaceObject parent;
 	public double orbitingDistance;
+	
 	protected SensorArray sensor;
-
-	public SpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
+	protected SpacecraftState state = SpacecraftState.ORBITING;
+	
+	public Ship(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), 0 , speed);
 		
 		this.parent=parent;
@@ -33,7 +35,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 		shape.setLevelOfDetail(size/2);
 	}
 	
-	public SpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
+	public Ship(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
 		super(name, parent, dinfo, s, 0 , speed);
 		
 		this.parent=parent;
@@ -70,7 +72,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 
 	protected void changeHierarchy() {
 		target.trabants.add(this);
-		orbiting=false;
+		state=SpacecraftState.FLYING;
 		parent = target;
 		target=null;
 	}
@@ -87,11 +89,11 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	
 	@Override 
 	public void move(AbsolutePoint parentCenter) {
-		if(!orbiting) {
+		if(state!=SpacecraftState.ORBITING) {
 			if(distance>=orbitingDistance+distanceTo(parent)) 
 				distance--;
 			else 
-				orbiting=true;
+				state=SpacecraftState.ORBITING;
 		}
 		sensor.move(center);
 		super.move(parentCenter);
@@ -100,6 +102,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	public void destruct() {
 		Logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
+			state=SpacecraftState.DEAD;
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);
 			remove();
@@ -112,7 +115,7 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 	
 	public boolean isDead() {
-		return parent==null;
+		return state==SpacecraftState.DEAD;
 	}
 	
 	public void remove() {
@@ -121,4 +124,17 @@ public class SpaceShuttle extends MovingSpaceObject implements DestructibleObjec
 	}
 
 	public double getOrbitingDistance() {return orbitingDistance;}
+
+	public Spacecraft copy() {return this.copy();}
+
+	public SpaceObject getParent() {return parent;}
+	public void setTarget(SpaceObject target) {this.target=target;}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public SpacecraftState getState() {
+		return state;
+	}
 }
