@@ -4,10 +4,15 @@ import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.core.Planet;
 import space.core.Satellite;
+import space.core.SpaceObject;
 import space.core.Star;
+import space.spacecrafts.navigators.BaseNavigator;
 import space.spacecrafts.navigators.ShuttleNavigator;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
+import space.spacecrafts.ships.PlayerSpaceShuttle;
+import space.spacecrafts.ships.Ship;
 import config.Config;
 import config.ConfigFactory;
 import config.LoggerSettings;
@@ -145,17 +150,10 @@ public class Program extends Application{
 				.asteroids(100)
 				.build();
 		
-		ShuttleNavigator nasa = new ShuttleNavigator.Builder("NASA")
-				.shuttleName("Ikarus")
-				.idlingTurns(5*Math.PI/2)
-				.doesRespawn(true)
-				.isPlayer(true)
-				.shuttlesize(2)
-				.shuttleOrbitingDistance(40)
-				.shuttleSpeed(Math.PI/140)
-				.start(earth)
-				.next(mars)
-				.build();
+		//TODO: Builder Patttern!
+		PlayerSpaceShuttle pS = new PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
+		ShuttleNavigator playerNav = new ShuttleNavigator("Nasa",pS,true);
+		playerNav.getRoute().add(mars);
 		
 		Satellite astra = (new Satellite.Builder("Astra", earth))
 				.size(3,3)
@@ -191,40 +189,26 @@ public class Program extends Application{
 				.color(Color.GRAY)
 				.build();
 		
-		ShuttleNavigator aliens = new ShuttleNavigator.Builder("Alien Invader")
-				.shuttleName("Martians")
-				.idlingTurns(Math.PI)
-				.doesRespawn(true)
-				.isPlayer(false)
-				.shuttlesize(3)
-				.shuttleOrbitingDistance(50)
-				.shuttleSpeed(Math.PI/100)
-				.start(mars)
-				.next(saturn)
-				.next(sun)
-				.build();
+		ArmedSpaceShuttle martians = new ArmedSpaceShuttle("Martians",mars,3,50,Math.PI/100);
+		ShuttleNavigator aliens = new ShuttleNavigator("Alien Invader",martians,true);
+		aliens.getRoute().add(saturn);
+		aliens.getRoute().add(sun);
 		
-		ShuttleNavigator chinesePeople = new ShuttleNavigator.Builder("Xin Ping")
-				.shuttleName("Chinese")
-				.idlingTurns(Math.PI)
-				.doesRespawn(true)
-				.isPlayer(false)
-				.shuttlesize(3)
-				.shuttleOrbitingDistance(55)
-				.shuttleSpeed(Math.PI/90)
-				.start(sun)
-				.next(mars)
-				.build();
+		Ship chineseShip = new ArmedSpaceShuttle("Chinese",sun,3,50,Math.PI/100);
+		BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
+		chinNav.getRoute().add(mars);
 		
 		Carrier mothership = new BattleCarrier("Mothership", sun,9, 420, Math.PI/500);
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
-		updateManager.registeredItems.add(nasa);
+		updateManager.registeredItems.add(playerNav);
 		updateManager.registeredItems.add(aliens);
-		updateManager.registeredItems.add(chinesePeople);
+		updateManager.registeredItems.add(chinNav);
 	}
-	
+
+
+
 	private void initLogger(LoggerSettings settings) {
 		Writer w = new FileWriter(settings.logfile,false,settings.append);
 		Configurator.defaultConfig()

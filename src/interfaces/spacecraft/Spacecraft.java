@@ -20,6 +20,8 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	
 	public SpacecraftState getState();
 
+	public Spacecraft rebuildAt(String name, SpaceObject at);
+	
 	public double degreeTo(SpaceObject parent); //TODO: Move this somewhere better!
 }
 

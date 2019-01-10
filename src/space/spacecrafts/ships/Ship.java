@@ -24,9 +24,12 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	protected SensorArray sensor;
 	protected SpacecraftState state = SpacecraftState.ORBITING;
 	
+	protected int size;
+	
 	public Ship(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), 0 , speed);
 		
+		this.size=size;
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;
 		distance=(int) (orbitingDistance+distanceTo(parent));
@@ -125,7 +128,14 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 
 	public double getOrbitingDistance() {return orbitingDistance;}
 
-	public Spacecraft copy() {return this.copy();}
+	public Ship copy() {
+		try {
+			return (Ship) clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public SpaceObject getParent() {return parent;}
 	public void setTarget(SpaceObject target) {this.target=target;}
@@ -136,5 +146,10 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 
 	public SpacecraftState getState() {
 		return state;
+	}
+
+	public Ship rebuildAt(String name, SpaceObject at) {
+		Ship copy = new Ship(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
+		return copy;
 	}
 }

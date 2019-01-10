@@ -8,6 +8,7 @@ import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.ArmedSpacecraft;
+import interfaces.spacecraft.Spacecraft;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
@@ -80,5 +81,11 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	}
 	public void attack(SpaceObject o) {
 		shootLaser(o);
+	}
+	
+	@Override
+	public ArmedSpaceShuttle rebuildAt(String name, SpaceObject at) {
+		ArmedSpaceShuttle copy = new ArmedSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
+		return copy;
 	}
 }

@@ -10,6 +10,7 @@ import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import logic.manager.UpdateManager;
 import space.core.SpaceObject;
+import space.spacecrafts.ships.Ship;
 
 public class BaseNavigator implements Navigator{
 
@@ -17,16 +18,17 @@ public class BaseNavigator implements Navigator{
 	private int currentPointer=0;
 	public List<SpaceObject> route;
 	
-	private Spacecraft ship;
+	protected Spacecraft ship;
 	
 	boolean respawn; //Bool whether new Ships will be spawned
 	double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	
-	public BaseNavigator(String name, Spacecraft ship) {
+	public BaseNavigator(String name, Spacecraft ship, boolean respawn) {
 		route= new LinkedList<SpaceObject>();
 		route.add(ship.getParent());
 		this.ship=ship;
 		this.name=name;
+		this.respawn=respawn;
 		Logger.info("Initiated " + name + " with Shuttle " + ship.toString());
 	}
 	
@@ -59,22 +61,18 @@ public class BaseNavigator implements Navigator{
 			currentPointer=0;
 	}
 	
-	private void rebuildShuttle() {
-		ship = ship.copy();
-		//ship.getParent() = route.get(0);
-		//shuttle.setPlayer(isPlayer);
+	protected void rebuildShuttle() {
+		ship = ship.rebuildAt(name+"s Ship", route.get(0));
 	}
 
 	public void remove() {
 		UpdateManager.getInstance().registeredItems.remove(this);
 	}
 
-	@Override
 	public Spacecraft getShuttle() {
 		return ship;
 	}
 
-	@Override
 	public List<SpaceObject> getRoute() {
 		return route;
 	}
