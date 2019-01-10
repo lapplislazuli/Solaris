@@ -9,6 +9,7 @@ import org.junit.jupiter.api.function.Executable;
 import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Star;
+import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
 
 class CarrierTest {
@@ -38,7 +39,7 @@ class CarrierTest {
 	
 	@BeforeEach
 	void buildCarrier() {
-		carrier = new Carrier("TestCarrier",targetOne,5,6,Math.PI/2);
+		carrier = new BattleCarrier("TestCarrier",targetOne,5,6,Math.PI/2);
 	}
 	
 	@Test

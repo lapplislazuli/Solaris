@@ -75,7 +75,10 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 		return super.collides(other);
 	}
 	
-	public void attack() {
-		shootNextDestructible();
+	public void attack(Point p) {
+		shootLaser(p);
+	}
+	public void attack(SpaceObject o) {
+		shootLaser(o);
 	}
 }

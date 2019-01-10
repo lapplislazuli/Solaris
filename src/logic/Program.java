@@ -6,6 +6,7 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.spacecrafts.navigators.ShuttleNavigator;
+import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
 import config.Config;
 import config.ConfigFactory;
@@ -215,7 +216,7 @@ public class Program extends Application{
 				.next(mars)
 				.build();
 		
-		Carrier mothership = new Carrier("Mothership", sun,9, 420, Math.PI/500);
+		Carrier mothership = new BattleCarrier("Mothership", sun,9, 420, Math.PI/500);
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);

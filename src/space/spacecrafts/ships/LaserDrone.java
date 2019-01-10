@@ -4,15 +4,16 @@ import drawing.JavaFXDrawingInformation;
 import geom.UShape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
+import interfaces.spacecraft.CarrierDrone;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 import space.spacecrafts.ships.missiles.Laserbeam;
 
-public class CarrierShip extends ArmedSpaceShuttle{
+public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 
-	public CarrierShip(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
+	public LaserDrone(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent,new JavaFXDrawingInformation(Color.BLANCHEDALMOND), new UShape(size*2,size*2,size/2), size, orbitingDistance, speed);
 		rocketsLeft=0; //No Rockets for CarrierShips
 
@@ -32,7 +33,7 @@ public class CarrierShip extends ArmedSpaceShuttle{
 	public boolean collides(CollidingObject other) {
 		if(other instanceof Carrier && ((Carrier)other).getCurrentShips().contains(this))
 			return false;
-		if(other instanceof CarrierShip)
+		if(other instanceof LaserDrone)
 			return false;
 		return super.collides(other);
 	}
@@ -43,7 +44,7 @@ public class CarrierShip extends ArmedSpaceShuttle{
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
 				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
-				.filter(c -> ! (c instanceof CarrierShip)) 
+				.filter(c -> ! (c instanceof LaserDrone)) 
 				.forEach(c-> shootLaser((SpaceObject)c));
 	}
 	

@@ -7,25 +7,26 @@ import drawing.JavaFXDrawingInformation;
 import geom.LolliShape;
 import geom.UShape;
 import interfaces.logical.CollidingObject;
+import interfaces.spacecraft.CarrierDrone;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Missile;
 
-public class Carrier extends Ship{
+public abstract class Carrier extends Ship{
 	
-	private int maxShips = 3; // How Many Ships can the carrier have active?
-	private List<CarrierShip> ships; 
-	private int shipCounter = 0; // Overall Ships Build
-	private int shipCooldown = 0; 
+	protected int maxShips = 3; // How Many Ships can the carrier have active?
+	protected List<CarrierDrone> drones; 
+	protected int shipCounter = 0; // Overall Ships Build
+	protected int shipCooldown = 0; 
 	
-	private int size;
+	protected int size;
 	
 	public Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
 		this.size=size;
 		
-		ships=new LinkedList<CarrierShip>();
+		drones=new LinkedList<CarrierDrone>();
 		for(int i = 0; i<maxShips;i++)
 			spawnShip();
 		shipCooldown=0; //For Init no cooldown
@@ -34,12 +35,13 @@ public class Carrier extends Ship{
 	@Override
 	public boolean collides(CollidingObject other) {
 		//Don't collide with Children
-		if(other instanceof CarrierShip && ships.contains((CarrierShip)other))
+		if(other instanceof LaserDrone && drones.contains((LaserDrone)other))
 			return false;
-		// Don't collide with Childrens missiles
-		if(other instanceof Missile)
-			if(ships.stream().anyMatch(t -> t.getAllChildrenFlat().contains(other)))
+		// Don't collide with Childrens missiles TODO Reimplement this
+		/*if(other instanceof Missile)
+			//if(drones.stream().anyMatch(t -> t.getAllChildrenFlat().contains(other)))
 				return false;
+				*/
 		return super.collides(other);
 	}
 	
@@ -54,33 +56,32 @@ public class Carrier extends Ship{
 	}
 	
 	public void launchShips(SpaceObject target) {
-		for(Ship ship : ships) {
-			ship.target=target;
+		for(CarrierDrone ship : drones) {
+			ship.setTarget(target);
 			ship.launch();
 		}
 	}
 	
 	public void revokeShips() {
-		for(Ship ship : ships) {
-			ship.target=this;
+		for(CarrierDrone ship : drones) {
+			ship.setTarget(this);
 			ship.launch();
 		}
 	}
 	
-	private void removeDeadShips() {
-		ships.removeIf(s -> s.isDead());
+	protected void removeDeadShips() {
+		drones.removeIf(s -> s.isDead());
 	}
 	
-	private void spawnShip() {
+	protected void spawnShip() {
+		//LaserDrone spawned = new LaserDrone(name + "'s ship no." + shipCounter, this, size/2 ,size*3,speed*4);
+		//spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
+		//drones.add(spawned);
 		shipCounter++;
-		CarrierShip spawned = new CarrierShip(name + "'s ship no." + shipCounter, this, size/2 ,size*3,speed*4);
-		spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
-		ships.add(spawned);
-		
 		setShipCooldown();
 	}
 	
-	private void setShipCooldown() {
+	protected void setShipCooldown() {
 		shipCooldown = 30000/25; //UpdateRatio is 25/s so this will take 30 seconds
 	}
 	
@@ -89,13 +90,13 @@ public class Carrier extends Ship{
 	}
 	
 	// Returns an angle depending on the counter i and maxShips max 
-	private double shipSpawnAngle(int counter, int max) {
+	protected double shipSpawnAngle(int counter, int max) {
 		counter = counter%max;
 		return counter* (Math.PI*2/max);
 	}
 	
 	public void removeFirstShipWithoutTrash() {
-		ships.get(0).destruct();
+		drones.get(0).destruct();
 		removeDeadShips();
 		getAllChildrenFlat().stream().filter(t-> t instanceof Asteroid).map(s -> (Asteroid) s).forEach(a -> a.remove());
 	}
@@ -103,18 +104,18 @@ public class Carrier extends Ship{
 	public void setMaxShips(int max) {
 		if(max<0)
 			throw new IllegalArgumentException("MaxShips cannot be smaller than 0!");
-		if(maxShips > max && ships.size()> max) 
+		if(maxShips > max && drones.size()> max) 
 			for(int i = 0; i<maxShips-max;i++)
-				ships.get(i).destruct();
+				drones.get(i).destruct();
 		getAllChildrenFlat().stream().filter(t-> t instanceof Asteroid).map(s -> (Asteroid) s).forEach(a -> a.remove());
 		removeDeadShips();	
 		maxShips = max;	
 	}
 	
 	public int getMaxShips() {return maxShips;}
-	public int getCurrentShipCount() {return ships.size();}
-	public boolean hasFullShips() {return ships.size()==maxShips;}
-	public boolean hasNoShips() {return ships.isEmpty();}
-	public List<CarrierShip> getCurrentShips(){return ships;}
+	public int getCurrentShipCount() {return drones.size();}
+	public boolean hasFullShips() {return drones.size()==maxShips;}
+	public boolean hasNoShips() {return drones.isEmpty();}
+	public List<CarrierDrone> getCurrentShips(){return drones;}
 	
 }
