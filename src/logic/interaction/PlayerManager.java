@@ -2,8 +2,7 @@ package logic.interaction;
 
 import org.pmw.tinylog.Logger;
 
-import space.spacecrafts.navigators.ShuttleNavigator;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.navigators.PlayerNavigator;
 import space.spacecrafts.ships.PlayerSpaceShuttle;
 
 public class PlayerManager {
@@ -11,7 +10,7 @@ public class PlayerManager {
 	private static PlayerManager INSTANCE;
 
 	private PlayerSpaceShuttle playerShuttle;
-	private ShuttleNavigator playerNavigator;
+	private PlayerNavigator playerNavigator;
 	
 	public int deathCount=0;
 	
@@ -23,7 +22,7 @@ public class PlayerManager {
 		return INSTANCE;
 	}
 	
-	public void registerPlayerNavigator(ShuttleNavigator pN){
+	public void registerPlayerNavigator(PlayerNavigator pN){
 		if(playerNavigator!=null)
 			Logger.info("Overwriting active playerNavigator...");
 		playerNavigator=pN;
@@ -36,7 +35,7 @@ public class PlayerManager {
 	}
 	
 	public PlayerSpaceShuttle getPlayerShuttle() {return playerShuttle;}
-	public ShuttleNavigator getPlayerNavigator() {return playerNavigator;}
+	public PlayerNavigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {
 		playerShuttle.destruct();

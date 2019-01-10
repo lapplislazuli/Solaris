@@ -128,14 +128,6 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 
 	public double getOrbitingDistance() {return orbitingDistance;}
 
-	public Ship copy() {
-		try {
-			return (Ship) clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	public SpaceObject getParent() {return parent;}
 	public void setTarget(SpaceObject target) {this.target=target;}

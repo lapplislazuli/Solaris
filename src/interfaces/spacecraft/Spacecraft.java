@@ -9,8 +9,6 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	public void launch();
 	
 	public boolean isDead();
-	
-	public Spacecraft copy(); //For respawn purposes
 
 	public SpaceObject getParent();
 	

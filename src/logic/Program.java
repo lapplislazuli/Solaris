@@ -7,7 +7,8 @@ import space.core.Satellite;
 import space.core.SpaceObject;
 import space.core.Star;
 import space.spacecrafts.navigators.BaseNavigator;
-import space.spacecrafts.navigators.ShuttleNavigator;
+import space.spacecrafts.navigators.PlayerNavigator;
+import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
@@ -44,7 +45,6 @@ public class Program extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -152,7 +152,7 @@ public class Program extends Application{
 		
 		//TODO: Builder Patttern!
 		PlayerSpaceShuttle pS = new PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
-		ShuttleNavigator playerNav = new ShuttleNavigator("Nasa",pS,true);
+		PlayerNavigator playerNav = new PlayerNavigator("Nasa",pS);
 		playerNav.getRoute().add(mars);
 		
 		Satellite astra = (new Satellite.Builder("Astra", earth))
@@ -190,11 +190,11 @@ public class Program extends Application{
 				.build();
 		
 		ArmedSpaceShuttle martians = new ArmedSpaceShuttle("Martians",mars,3,50,Math.PI/100);
-		ShuttleNavigator aliens = new ShuttleNavigator("Alien Invader",martians,true);
+		ArmedShuttleNavigator aliens = new ArmedShuttleNavigator("Alien Invader",martians,true);
 		aliens.getRoute().add(saturn);
 		aliens.getRoute().add(sun);
 		
-		Ship chineseShip = new ArmedSpaceShuttle("Chinese",sun,3,50,Math.PI/100);
+		Ship chineseShip = new Ship("Chinese",sun,3,50,Math.PI/100);
 		BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 		chinNav.getRoute().add(mars);
 		

@@ -26,4 +26,11 @@ public class PlayerSpaceShuttle extends ArmedSpaceShuttle {
 		}
 		super.destruct();
 	}
+	
+
+	@Override
+	public PlayerSpaceShuttle rebuildAt(String name, SpaceObject at) {
+		PlayerSpaceShuttle copy = new PlayerSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
+		return copy;
+	}
 }
