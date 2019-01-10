@@ -27,5 +27,10 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	public void attack(SpaceObject o) {
 		launchShips(o);
 	}
-
+	
+	@Override
+	public BattleCarrier rebuildAt(String name, SpaceObject at) {
+		BattleCarrier copy = new BattleCarrier(name,at,size,(int) orbitingDistance,speed);
+		return copy;
+	}
 }

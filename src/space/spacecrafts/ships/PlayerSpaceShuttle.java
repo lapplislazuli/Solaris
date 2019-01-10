@@ -11,9 +11,11 @@ public class PlayerSpaceShuttle extends ArmedSpaceShuttle {
 	
 	public PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
+		PlayerManager.getInstance().registerPlayerShuttle(this);
 	}
 	public PlayerSpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
 		super(name, parent,dinfo,s, size, orbitingDistance, speed);
+		PlayerManager.getInstance().registerPlayerShuttle(this);
 	}
 	
 	@Override
