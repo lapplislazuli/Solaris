@@ -1,5 +1,8 @@
 package interfaces.spacecraft;
 
+import java.util.List;
+
+import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.MovingObject;
 import space.core.SpaceObject;
@@ -21,5 +24,7 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	public Spacecraft rebuildAt(String name, SpaceObject at);
 	
 	public double degreeTo(SpaceObject parent); //TODO: Move this somewhere better!
+	
+	public List<CollidingObject> getDetectedItems();
 }
 

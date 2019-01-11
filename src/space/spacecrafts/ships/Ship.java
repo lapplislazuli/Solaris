@@ -1,5 +1,7 @@
 package space.spacecrafts.ships;
 
+import java.util.List;
+
 import org.pmw.tinylog.Logger;
 
 import drawing.JavaFXDrawingInformation;
@@ -7,6 +9,7 @@ import geom.AbsolutePoint;
 import geom.HShape;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
+import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
@@ -143,5 +146,9 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	public Ship rebuildAt(String name, SpaceObject at) {
 		Ship copy = new Ship(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
 		return copy;
+	}
+
+	public List<CollidingObject> getDetectedItems() {
+		return sensor.detectedItems;
 	}
 }

@@ -1,6 +1,6 @@
 package space.spacecrafts.ships;
 
-import org.pmw.tinylog.Logger;
+import java.util.Optional;
 
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
@@ -8,7 +8,6 @@ import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.ArmedSpacecraft;
-import interfaces.spacecraft.Spacecraft;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
@@ -30,18 +29,8 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	
 	@Override
 	public void update() {
-		if(parent!=null)
-			shootNextDestructible();
 		laserCoolDown--;
 		super.update();
-	}
-	
-	public void shootNextDestructible() {
-		if(!sensor.detectedItems.isEmpty())
-			sensor.detectedItems.stream()
-				.filter(c->c instanceof DestructibleObject)
-				.filter(c -> c instanceof SpaceObject)
-				.forEach(c-> shootLaser((SpaceObject)c));
 	}
 	
 	public void shootLaser(SpaceObject targetSpaceObject) {
@@ -87,5 +76,16 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	public ArmedSpaceShuttle rebuildAt(String name, SpaceObject at) {
 		ArmedSpaceShuttle copy = new ArmedSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
 		return copy;
+	}
+
+	public Optional<SpaceObject> getNearestPossibleTarget() {
+		Optional<SpaceObject> possibleTarget = null;
+		if(!sensor.detectedItems.isEmpty())
+			possibleTarget=sensor.detectedItems.stream()
+				.filter(c->c instanceof DestructibleObject)
+				.filter(c -> c instanceof SpaceObject)
+				.map(c-> (SpaceObject)c)
+				.findFirst();
+		return possibleTarget;
 	}
 }

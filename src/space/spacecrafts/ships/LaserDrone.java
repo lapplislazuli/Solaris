@@ -1,5 +1,7 @@
 package space.spacecrafts.ships;
 
+import java.util.Optional;
+
 import drawing.JavaFXDrawingInformation;
 import geom.UShape;
 import interfaces.logical.CollidingObject;
@@ -11,6 +13,7 @@ import space.core.SpaceObject;
 import space.effect.Explosion;
 import space.spacecrafts.ships.missiles.Laserbeam;
 
+@SuppressWarnings("restriction")
 public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 
 	public LaserDrone(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -37,15 +40,20 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 			return false;
 		return super.collides(other);
 	}
+	
+
 	@Override
-	public void shootNextDestructible() {
+	public Optional<SpaceObject> getNearestPossibleTarget() {
+		Optional<SpaceObject> possibleTarget = null;
 		if(!sensor.detectedItems.isEmpty())
-			sensor.detectedItems.stream()
+			possibleTarget=sensor.detectedItems.stream()
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
+				.map(c-> (SpaceObject)c)
 				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
 				.filter(c -> ! (c instanceof LaserDrone)) 
-				.forEach(c-> shootLaser((SpaceObject)c));
+				.findFirst();
+		return possibleTarget;
 	}
 	
 	@Override

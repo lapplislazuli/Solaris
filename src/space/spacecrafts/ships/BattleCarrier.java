@@ -1,6 +1,9 @@
 package space.spacecrafts.ships;
 
+import java.util.Optional;
+
 import interfaces.geom.Point;
+import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.ArmedSpacecraft;
 import space.core.SpaceObject;
 
@@ -21,7 +24,8 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	}
 
 	public void attack(Point p) {
-		// Carriers cannot attack points?		
+		// Carriers cannot attack points?
+		// TODO: SensorArray for Point p with given Radious and spread attack for every found valid target!
 	}
 
 	public void attack(SpaceObject o) {
@@ -32,5 +36,19 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	public BattleCarrier rebuildAt(String name, SpaceObject at) {
 		BattleCarrier copy = new BattleCarrier(name,at,size,(int) orbitingDistance,speed);
 		return copy;
+	}
+
+	@Override
+	public Optional<SpaceObject> getNearestPossibleTarget() {
+		Optional<SpaceObject> possibleTarget = null;
+		if(!sensor.detectedItems.isEmpty())
+			possibleTarget=sensor.detectedItems.stream()
+				.filter(c->c instanceof DestructibleObject)
+				.filter(c -> c instanceof SpaceObject)
+				.map(c-> (SpaceObject)c)
+				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
+				.filter(c -> ! (c instanceof LaserDrone)) 
+				.findFirst();
+		return possibleTarget;
 	}
 }
