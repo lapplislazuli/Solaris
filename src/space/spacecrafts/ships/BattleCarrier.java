@@ -47,7 +47,7 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
 				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
-				.filter(c -> ! (c instanceof LaserDrone)) 
+				.filter(c -> ! drones.contains(c)) 
 				.findFirst();
 		return possibleTarget;
 	}

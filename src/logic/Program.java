@@ -200,14 +200,18 @@ public class Program extends Application{
 		chinNav.getRoute().add(mars);
 		
 		BattleCarrier mothership = new BattleCarrier("Mothership", sun,9, 420, Math.PI/500);
-		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,false);
+		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,true);
 		carrierNav.setAutoAttack(true);
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
+		
+		updateManager.update();
+		
 		updateManager.registeredItems.add(playerNav);
 		updateManager.registeredItems.add(aliens);
 		updateManager.registeredItems.add(chinNav);
+		updateManager.registeredItems.add(carrierNav);
 	}
 
 

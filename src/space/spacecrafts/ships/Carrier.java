@@ -5,14 +5,15 @@ import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
 import geom.LolliShape;
-import geom.UShape;
 import interfaces.logical.CollidingObject;
+import interfaces.spacecraft.ArmedSpacecraft;
 import interfaces.spacecraft.CarrierDrone;
 import javafx.scene.paint.Color;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Missile;
 
+@SuppressWarnings("restriction")
 public abstract class Carrier extends Ship{
 	
 	protected int maxShips = 3; // How Many Ships can the carrier have active?
@@ -34,14 +35,16 @@ public abstract class Carrier extends Ship{
 	
 	@Override
 	public boolean collides(CollidingObject other) {
-		//Don't collide with Children
-		if(other instanceof LaserDrone && drones.contains((LaserDrone)other))
+		if(other instanceof LaserDrone && drones.contains((LaserDrone)other)) //Don't collide with Children
 			return false;
-		// Don't collide with Childrens missiles TODO Reimplement this
-		/*if(other instanceof Missile)
-			//if(drones.stream().anyMatch(t -> t.getAllChildrenFlat().contains(other)))
+		if(other instanceof Missile) {	// Don't collide with Childrens missiles
+			if (drones.stream()
+					.filter(d -> d instanceof ArmedSpacecraft)
+					.filter(d -> d instanceof Ship)
+					.map(d -> (Ship)d )
+					.anyMatch(d-> d.getAllChildrenFlat().contains(other)))
 				return false;
-				*/
+		}
 		return super.collides(other);
 	}
 	
