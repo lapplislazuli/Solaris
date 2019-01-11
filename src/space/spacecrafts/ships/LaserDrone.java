@@ -8,7 +8,6 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.CarrierDrone;
 import javafx.scene.paint.Color;
-import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 import space.spacecrafts.ships.missiles.Laserbeam;
@@ -44,7 +43,7 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 
 	@Override
 	public Optional<SpaceObject> getNearestPossibleTarget() {
-		Optional<SpaceObject> possibleTarget = null;
+		Optional<SpaceObject> possibleTarget = Optional.empty();
 		if(!sensor.detectedItems.isEmpty())
 			possibleTarget=sensor.detectedItems.stream()
 				.filter(c->c instanceof DestructibleObject)
@@ -58,8 +57,6 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 	
 	@Override
 	public void destruct() {
-		// NO SPACETRASH!!!
-		System.out.println(toString() + " hit!");
 		if(!isDead()) {
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			remove();

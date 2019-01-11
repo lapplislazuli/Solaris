@@ -4,17 +4,17 @@ import java.util.Optional;
 
 import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
+import interfaces.spacecraft.ArmedSpacecraft;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
 
 public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNavigator{
 	
-	private ArmedSpaceShuttle shuttle;
+	private ArmedSpacecraft shuttle;
 	
 	boolean isPlayer;
 	boolean doesAutoAttack = false;
 	
-	public ArmedShuttleNavigator(String name, ArmedSpaceShuttle shuttle, boolean respawn) {
+	public ArmedShuttleNavigator(String name, ArmedSpacecraft shuttle, boolean respawn) {
 		super(name, shuttle,respawn);
 		this.shuttle=shuttle;
 	}
@@ -22,19 +22,18 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	@Override
 	public void update(){
 		super.update();
-		if(doesAutoAttack)
+		if(!shuttle.isDead() && doesAutoAttack)
 			autoAttack();
 	}
 	
 	@Override
 	protected void rebuildShuttle() {
-		shuttle = shuttle.rebuildAt(name+"s Ship", route.get(0));
+		shuttle = (ArmedSpacecraft) shuttle.rebuildAt(name+"s Ship", route.get(0));
 		ship=shuttle;
 	}
 
 	public void attack(Point p) {
 		shuttle.attack(p);
-		
 	}
 
 	public void attack(SpaceObject o) {
@@ -43,7 +42,7 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 
 	public void autoAttack() {
 		Optional<SpaceObject> possible = shuttle.getNearestPossibleTarget();
-		if(possible.isPresent())
+		if(possible!=null && possible.isPresent())
 			attack(possible.get());
 	}
 	

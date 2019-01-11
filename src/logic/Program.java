@@ -193,12 +193,15 @@ public class Program extends Application{
 		ArmedShuttleNavigator aliens = new ArmedShuttleNavigator("Alien Invader",martians,true);
 		aliens.getRoute().add(saturn);
 		aliens.getRoute().add(sun);
+		aliens.setAutoAttack(true);
 		
 		Ship chineseShip = new Ship("Chinese",sun,3,50,Math.PI/100);
 		BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 		chinNav.getRoute().add(mars);
 		
-		Carrier mothership = new BattleCarrier("Mothership", sun,9, 420, Math.PI/500);
+		BattleCarrier mothership = new BattleCarrier("Mothership", sun,9, 420, Math.PI/500);
+		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,false);
+		carrierNav.setAutoAttack(true);
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);

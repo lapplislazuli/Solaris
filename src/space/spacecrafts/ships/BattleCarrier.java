@@ -40,7 +40,7 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 
 	@Override
 	public Optional<SpaceObject> getNearestPossibleTarget() {
-		Optional<SpaceObject> possibleTarget = null;
+		Optional<SpaceObject> possibleTarget = Optional.empty();
 		if(!sensor.detectedItems.isEmpty())
 			possibleTarget=sensor.detectedItems.stream()
 				.filter(c->c instanceof DestructibleObject)

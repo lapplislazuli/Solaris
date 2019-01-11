@@ -79,7 +79,7 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	}
 
 	public Optional<SpaceObject> getNearestPossibleTarget() {
-		Optional<SpaceObject> possibleTarget = null;
+		Optional<SpaceObject> possibleTarget = Optional.empty();
 		if(!sensor.detectedItems.isEmpty())
 			possibleTarget=sensor.detectedItems.stream()
 				.filter(c->c instanceof DestructibleObject)

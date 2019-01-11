@@ -74,9 +74,6 @@ public abstract class Carrier extends Ship{
 	}
 	
 	protected void spawnShip() {
-		//LaserDrone spawned = new LaserDrone(name + "'s ship no." + shipCounter, this, size/2 ,size*3,speed*4);
-		//spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
-		//drones.add(spawned);
 		shipCounter++;
 		setShipCooldown();
 	}
