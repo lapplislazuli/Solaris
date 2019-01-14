@@ -52,7 +52,10 @@ public class BaseNavigator implements Navigator{
 	}
 	
 	public SpaceObject getNextWayPoint() {
-		return route.get(currentPointer+1);
+		if (currentPointer<route.size()-1)
+			return route.get(currentPointer+1);
+		else
+			return route.get(0);
 	}
 	
 	private void incrementPointer() {

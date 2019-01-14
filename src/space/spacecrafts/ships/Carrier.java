@@ -35,7 +35,7 @@ public abstract class Carrier extends Ship{
 	
 	@Override
 	public boolean collides(CollidingObject other) {
-		if(other instanceof LaserDrone && drones.contains((LaserDrone)other)) //Don't collide with Children
+		if(other instanceof CarrierDrone && drones.contains((CarrierDrone)other)) //Don't collide with Children
 			return false;
 		if(other instanceof Missile) {	// Don't collide with Childrens missiles
 			if (drones.stream()

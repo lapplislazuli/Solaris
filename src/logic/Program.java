@@ -141,7 +141,7 @@ public class Program extends Application{
 				.color(Color.LIGHTGOLDENRODYELLOW)
 				.speed(Math.PI/4000)
 				.rotationSpeed(Math.PI/10000)
-				.distance(480)
+				.distance(560)
 				.build();
 		
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
@@ -199,7 +199,7 @@ public class Program extends Application{
 		BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 		chinNav.getRoute().add(mars);
 		
-		BattleCarrier mothership = new BattleCarrier("Mothership", sun,9, 420, Math.PI/500);
+		BattleCarrier mothership = new BattleCarrier("Mothership", sun,9, 480, Math.PI/500);
 		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,true);
 		carrierNav.setAutoAttack(true);
 		

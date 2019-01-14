@@ -30,7 +30,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	protected int size;
 	
 	public Ship(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), 0 , speed);
+		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), orbitingDistance , speed);
 		
 		this.size=size;
 		this.parent=parent;
@@ -42,7 +42,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	public Ship(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
-		super(name, parent, dinfo, s, 0 , speed);
+		super(name, parent, dinfo, s, orbitingDistance , speed);
 		
 		this.parent=parent;
 		this.orbitingDistance=orbitingDistance;

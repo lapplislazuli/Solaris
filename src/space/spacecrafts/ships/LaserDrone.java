@@ -19,6 +19,7 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 		super(name, parent,new JavaFXDrawingInformation(Color.BLANCHEDALMOND), new UShape(size*2,size*2,size/2), size, orbitingDistance, speed);
 		rocketsLeft=0; //No Rockets for CarrierShips
 
+		System.out.println(toString()+ " Spawned!");
 		this.shape.setLevelOfDetail(2);
 	}
 	

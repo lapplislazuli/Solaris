@@ -121,8 +121,6 @@ class CarrierTest {
 	void testAllDead() {
 		carrier.getCurrentShips().forEach(t -> t.destruct());
 		carrier.update();
-		carrier.getCurrentShips().get(0).destruct();
-		carrier.update();
 		assertTrue(carrier.hasNoShips());
 		assertFalse(carrier.hasFullShips());
 		assertEquals(0,carrier.getCurrentShipCount());
