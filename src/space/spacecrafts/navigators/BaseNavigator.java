@@ -10,7 +10,6 @@ import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import logic.manager.UpdateManager;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.Ship;
 
 public class BaseNavigator implements Navigator{
 
@@ -33,13 +32,13 @@ public class BaseNavigator implements Navigator{
 	}
 	
 	public void update() {
-		if(ship.isDead() && respawn)
+		if(getShuttle().isDead() && respawn)
 			rebuildShuttle();
-		else if(ship.getState() == SpacecraftState.ORBITING) {
-			currentIdle+=Math.abs(ship.getSpeed());
+		else if(getShuttle().getState() == SpacecraftState.ORBITING) {
+			currentIdle+=Math.abs(getShuttle().getSpeed());
 			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextWayPoint())) { //SpaceShuttle idled some time
-				ship.setTarget(getNextWayPoint());
-				ship.launch();
+				getShuttle().setTarget(getNextWayPoint());
+				getShuttle().launch();
 				currentIdle=0;
 				incrementPointer();
 			}
@@ -48,7 +47,7 @@ public class BaseNavigator implements Navigator{
 	
 	public void clearRoute() {
 		route= new LinkedList<SpaceObject>();
-		route.add(ship.getParent());
+		route.add(getShuttle().getParent());
 	}
 	
 	public SpaceObject getNextWayPoint() {

@@ -23,9 +23,6 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	@Override
 	public void update(){
 		super.update();
-		//DEBUG ONLY
-		//if(shuttle instanceof Carrier)
-		//	System.out.println(shuttle.toString()+" is " + shuttle.getState().toString());
 		if(!shuttle.isDead() && doesAutoAttack)
 			autoAttack();
 	}

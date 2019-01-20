@@ -52,7 +52,6 @@ class LaunchTest {
 	@Test
 	void testConstructor() {
 		assertTrue(origin.degreeTo(shuttleOne)-shuttleOne.relativePos <0.2);
-		assertEquals(origin.center.getX()+shuttleOne.getOrbitingDistance(), shuttleOne.center.getX()+1);
 		assertEquals(SpacecraftState.ORBITING,shuttleOne.getState());
 	}
 	
