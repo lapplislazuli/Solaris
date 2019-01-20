@@ -9,7 +9,6 @@ import space.core.SpaceObject;
 
 public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	
-	
 	public BattleCarrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
 	}
@@ -19,7 +18,6 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 		LaserDrone spawned = new LaserDrone(name + "'s ship no." + shipCounter, this, size/2 ,size*3+2,speed*4);
 		spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
 		drones.add(spawned);
-		System.out.println(toString()+ " Spawned!");
 		super.spawnShip();
 	}
 

@@ -6,6 +6,7 @@ import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
 import space.core.SpaceObject;
+import space.spacecrafts.ships.Carrier;
 
 public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNavigator{
 	
@@ -22,6 +23,9 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	@Override
 	public void update(){
 		super.update();
+		//DEBUG ONLY
+		//if(shuttle instanceof Carrier)
+		//	System.out.println(shuttle.toString()+" is " + shuttle.getState().toString());
 		if(!shuttle.isDead() && doesAutoAttack)
 			autoAttack();
 	}

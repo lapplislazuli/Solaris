@@ -7,6 +7,7 @@ import geom.UShape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.CarrierDrone;
+import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
 import space.core.SpaceObject;
 import space.effect.Explosion;
@@ -18,8 +19,7 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 	public LaserDrone(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent,new JavaFXDrawingInformation(Color.BLANCHEDALMOND), new UShape(size*2,size*2,size/2), size, orbitingDistance, speed);
 		rocketsLeft=0; //No Rockets for CarrierShips
-
-		System.out.println(toString()+ " Spawned!");
+		System.out.println("Drone " + toString()  + " build");
 		this.shape.setLevelOfDetail(2);
 	}
 	
@@ -34,13 +34,15 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 	
 	@Override
 	public boolean collides(CollidingObject other) {
-		if(other instanceof Carrier && ((Carrier)other).getCurrentShips().contains(this))
-			return false;
-		if(other instanceof LaserDrone)
-			return false;
-		return super.collides(other);
+		if(super.collides(other)) {
+			if(other instanceof Carrier && ((Carrier)other).getCurrentShips().contains(this))
+				return false;
+			if(other instanceof LaserDrone)
+				return false;	
+			return true;
+		}
+		return false;
 	}
-	
 
 	@Override
 	public Optional<SpaceObject> getNearestPossibleTarget() {
@@ -59,6 +61,9 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 	@Override
 	public void destruct() {
 		if(!isDead()) {
+			state = SpacecraftState.DEAD;
+			System.out.println(toString() + " died!");
+			// No SpaceTrash!
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			remove();
 		}

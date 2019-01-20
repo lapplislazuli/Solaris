@@ -18,6 +18,9 @@ public class AsteroidBelt extends MovingSpaceObject{
 			a.relativePos=(i/Math.PI*2);
 			trabants.add(a);
 		}
+		for(SpaceObject t:trabants)
+			if(t instanceof Asteroid)
+				((Asteroid)t).move(center);
 	}
 
 	@Override

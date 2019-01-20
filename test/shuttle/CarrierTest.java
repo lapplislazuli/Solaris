@@ -121,6 +121,9 @@ class CarrierTest {
 	void testAllDead() {
 		carrier.getCurrentShips().forEach(t -> t.destruct());
 		carrier.update();
+		carrier.getCurrentShips().forEach(t -> t.destruct());
+		carrier.update();
+		
 		assertTrue(carrier.hasNoShips());
 		assertFalse(carrier.hasFullShips());
 		assertEquals(0,carrier.getCurrentShipCount());
@@ -157,6 +160,13 @@ class CarrierTest {
 		carrier.getCurrentShips().forEach(s -> assertFalse(carrier.collides(s)));
 		carrier.update();
 		carrier.getCurrentShips().forEach(s -> assertFalse(carrier.collides(s)));
+	}
+	
+	@Test
+	void destroyTest() {
+		carrier.destruct();
+		
+		assertTrue(carrier.isDead());
 	}
 	
 }

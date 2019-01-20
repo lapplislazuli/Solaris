@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
+import geom.HShape;
 import geom.LolliShape;
 import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.ArmedSpacecraft;
@@ -18,34 +19,41 @@ public abstract class Carrier extends Ship{
 	
 	protected int maxShips = 3; // How Many Ships can the carrier have active?
 	protected List<CarrierDrone> drones; 
-	protected int shipCounter = 0; // Overall Ships Build
+	protected int shipCounter = 0; // Overall Ships Build, for numbering and statistics
 	protected int shipCooldown = 0; 
 	
 	protected int size;
 	
 	public Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
+		//super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
+		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new HShape(size,size*2,size/2), size, orbitingDistance, speed);
+		
 		this.size=size;
 		
 		drones=new LinkedList<CarrierDrone>();
-		for(int i = 0; i<maxShips;i++)
+		for(int i = 0; i<maxShips;i++) {
 			spawnShip();
+			drones.get(i).move(center);
+		}
 		shipCooldown=0; //For Init no cooldown
 	}
 	
 	@Override
 	public boolean collides(CollidingObject other) {
-		if(other instanceof CarrierDrone && drones.contains((CarrierDrone)other)) //Don't collide with Children
-			return false;
-		if(other instanceof Missile) {	// Don't collide with Childrens missiles
-			if (drones.stream()
-					.filter(d -> d instanceof ArmedSpacecraft)
-					.filter(d -> d instanceof Ship)
-					.map(d -> (Ship)d )
-					.anyMatch(d-> d.getAllChildrenFlat().contains(other)))
+		if(super.collides(other)) {
+			if(other instanceof CarrierDrone && drones.contains((CarrierDrone)other)) //Don't collide with Children
 				return false;
+			if(other instanceof Missile) {	// Don't collide with Childrens missiles
+				if (drones.stream()
+						.filter(d -> d instanceof ArmedSpacecraft)
+						.filter(d -> d instanceof Ship)
+						.map(d -> (Ship)d )
+						.anyMatch(d-> d.getAllChildrenFlat().contains(other)))
+					return false;
+			}
+			return true;
 		}
-		return super.collides(other);
+		return false;
 	}
 	
 	@Override

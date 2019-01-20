@@ -120,7 +120,7 @@ public class Program extends Application{
 				.build();
 		Planet mars = (new Planet.Builder("Mars", sun))
 				.size(19)
-				.distance(250)
+				.distance(280)
 				.levelOfDetail(20)
 				.speed(Math.PI/1000)
 				.rotationSpeed(Math.PI*2/800)
@@ -145,9 +145,9 @@ public class Program extends Application{
 				.build();
 		
 		AsteroidBelt andromeda = (new AsteroidBelt.Builder("Andromeda",sun))
-				.distance(350)
+				.distance(400)
 				.speed(Math.PI/4000)
-				.asteroids(100)
+				.asteroids(60)
 				.build();
 		
 		//TODO: Builder Patttern!
@@ -199,8 +199,9 @@ public class Program extends Application{
 		BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 		chinNav.getRoute().add(mars);
 		
-		BattleCarrier mothership = new BattleCarrier("Mothership", sun,9, 480, Math.PI/500);
+		BattleCarrier mothership = new BattleCarrier("Mothership", sun,6, 480, Math.PI/500);
 		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,true);
+		carrierNav.getRoute().add(earth);
 		carrierNav.setAutoAttack(true);
 		
 		updateManager.addSpaceObject(milkyway);

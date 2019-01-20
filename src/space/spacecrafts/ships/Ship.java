@@ -39,6 +39,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 		sensor = new SensorArray(this,50);
 
 		shape.setLevelOfDetail(size/2);
+		move(parent.center);
 	}
 	
 	public Ship(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
