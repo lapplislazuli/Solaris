@@ -11,7 +11,6 @@ import space.spacecrafts.navigators.PlayerNavigator;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
-import space.spacecrafts.ships.Carrier;
 import space.spacecrafts.ships.PlayerSpaceShuttle;
 import space.spacecrafts.ships.Ship;
 import config.Config;
@@ -200,7 +199,7 @@ public class Program extends Application{
 		chinNav.getRoute().add(mars);
 		
 		BattleCarrier mothership = new BattleCarrier("Mothership", sun,6, 480, Math.PI/500);
-		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,true);
+		ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,false);
 		carrierNav.getRoute().add(earth);
 		carrierNav.setAutoAttack(true);
 		
@@ -210,9 +209,9 @@ public class Program extends Application{
 		updateManager.update();
 		
 		updateManager.registeredItems.add(playerNav);
+		updateManager.registeredItems.add(carrierNav);
 		updateManager.registeredItems.add(aliens);
 		updateManager.registeredItems.add(chinNav);
-		updateManager.registeredItems.add(carrierNav);
 	}
 
 

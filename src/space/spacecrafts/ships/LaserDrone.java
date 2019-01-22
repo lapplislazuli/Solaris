@@ -61,7 +61,6 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 	public void destruct() {
 		if(!isDead()) {
 			state = SpacecraftState.DEAD;
-			System.out.println(toString() + " died!");
 			// No SpaceTrash!
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			remove();

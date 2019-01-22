@@ -85,7 +85,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 
 	protected boolean isAliveAndRegistered() {
-		return target!=null && parent.trabants.remove(this);
+		return target!=null && parent != null && parent.trabants.remove(this);
 	}
 	
 	@Override

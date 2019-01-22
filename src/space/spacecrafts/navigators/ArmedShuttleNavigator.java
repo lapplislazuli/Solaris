@@ -6,7 +6,6 @@ import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.Carrier;
 
 public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNavigator{
 	

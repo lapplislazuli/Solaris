@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
-import geom.HShape;
 import geom.LolliShape;
 import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.ArmedSpacecraft;
@@ -25,8 +24,7 @@ public abstract class Carrier extends Ship{
 	protected int size;
 	
 	public Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		//super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
-		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new HShape(size,size*2,size/2), size, orbitingDistance, speed);
+		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
 		
 		this.size=size;
 		
