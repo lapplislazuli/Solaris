@@ -12,6 +12,7 @@ import interfaces.geom.Point;
 public class Explosion extends TimerEffect {
 	
 	double growthRate=1;
+	static double growthAlternative=0.3;
 	
 	public Explosion(String name, Point p,int radious, int lifetime,DrawingInformation dInfo){
 		super(name,p, new Circle(p,radious),lifetime,dInfo);
@@ -27,7 +28,7 @@ public class Explosion extends TimerEffect {
 		if(growthRate!=1)
 			c.radious*=growthRate;
 		else
-			c.radious+=0.3;
+			c.radious+=growthAlternative;
 	}
 
 }
