@@ -1,6 +1,8 @@
 package helpers;
 
 import geom.AbsolutePoint;
+import space.advanced.FixStar;
+import space.core.Planet;
 import space.core.SpaceObject;
 import space.core.Star;
 
@@ -18,9 +20,46 @@ public abstract class SpaceObjectFakeFactory {
 		return anchor;
 	}
 	
-	public static SpaceObject fakeStar(String name,int xpos,int ypos,int size) {
+	public static Star fakeStar(String name,int xpos,int ypos,int size) {
 		Star anchor = new Star(name, null, new AbsolutePoint(xpos,ypos),size);
 		anchor.shape.updateOrInitOutline();
 		return anchor;
 	}
+	
+	public static Planet fakePlanet(SpaceObject parent,int distance) {
+		Planet planet = (new Planet.Builder("NoCollider", parent))
+				.size(0)
+				.distance(distance)
+				.levelOfDetail(10)
+				.speed(0)
+				.build();
+		
+		planet.updateHitbox();
+		return planet;
+	}
+	
+	public static Planet fakePlanet(SpaceObject parent,int distance,int size) {
+		Planet planet = (new Planet.Builder("NoCollider", parent))
+				.size(size)
+				.distance(distance)
+				.levelOfDetail(10)
+				.speed(0)
+				.build();
+		
+		planet.updateHitbox();
+		return planet;
+	}
+	
+	public static FixStar fakeFixStar(int xpos, int ypos) {
+		FixStar f = new FixStar("dummy", xpos, ypos, 0);
+		f.shape.updateOrInitOutline();
+		return f;
+	}
+	
+	public static FixStar fakeFixStar(int xpos, int ypos, int size) {
+		FixStar f = new FixStar("dummy", xpos, ypos, size);
+		f.shape.updateOrInitOutline();
+		return f;
+	}
+	
 }
