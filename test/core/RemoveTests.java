@@ -13,7 +13,7 @@ import space.core.Star;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.missiles.Rocket;
 
-class RemoveTest {
+class RemoveTests {
 	
 	static Star sun;
 	static Planet earth;

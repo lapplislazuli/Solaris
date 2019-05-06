@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import interfaces.geom.Point;
 
-class PointTest {
+class PointTests {
 	
 	
 	private static AbsolutePoint first2D,second2D; 

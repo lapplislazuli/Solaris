@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import interfaces.geom.Point;
 
-class CircleTest {
+class CircleTests {
 	
 	private Circle testObject;
 	private Point centerTestObject;

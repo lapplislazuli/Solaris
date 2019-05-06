@@ -6,7 +6,7 @@ import geom.AbsolutePoint;
 import space.core.Star;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.missiles.Missile;
-class MissileShuttleCollisionTest {
+class MissileShuttleCollisionTests {
 	Star star;
 	ArmedSpaceShuttle shuttleOne, shuttleTwo;
 	Missile missileOne,missileTwo;

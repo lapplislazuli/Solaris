@@ -14,7 +14,7 @@ import space.core.Planet;
 import space.core.Star;
 import space.spacecrafts.ships.Ship;
 
-class LaunchTest {
+class LaunchTests {
 	
 	static Star origin,targetOne, targetTwo, targetAboveShuttleOne;
 	static Ship shuttleOne, shuttleTwo;

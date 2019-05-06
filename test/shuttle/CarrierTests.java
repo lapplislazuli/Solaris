@@ -12,7 +12,7 @@ import space.core.Star;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
 
-class CarrierTest {
+class CarrierTests {
 	
 	Carrier carrier;
 	

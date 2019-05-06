@@ -14,7 +14,7 @@ import space.core.Star;
 import javafx.scene.paint.Color;
 
 @SuppressWarnings("restriction")
-class DistanceTest {
+class DistanceTests {
 	
 	static Star starOne;
 	static Planet closeStar,mediumStar,farStar;

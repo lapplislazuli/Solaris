@@ -10,7 +10,7 @@ import space.advanced.FixStar;
 import space.core.Planet;
 import space.core.Star;
 
-class CollisionTest {
+class CollisionTests {
 	
 	
 	static Star starOne, starTwo;

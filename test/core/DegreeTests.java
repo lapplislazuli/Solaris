@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import geom.AbsolutePoint;
 import space.core.Star;
 
-public class DegreeTest {
+public class DegreeTests {
 	static Star starOne,starTwo,starAboveTwo, starFarAway;
 	
 	@BeforeAll

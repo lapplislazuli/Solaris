@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import interfaces.geom.Shape;
 
-class ShapeEqualitiesTest {
+class ShapeEqualitiesTests {
 
 	static Shape aOne,aTwo,bOne,bTwo;
 	static Shape c,d;

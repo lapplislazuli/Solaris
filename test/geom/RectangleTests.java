@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import interfaces.geom.Point;
 
-class RectangleTest {
+class RectangleTests {
 	
 	private Rectangle testObject;
 	private AbsolutePoint centerTestObject;

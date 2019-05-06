@@ -20,7 +20,7 @@ import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 
 @SuppressWarnings("restriction")
-class NavigatorTest {
+class NavigatorTests {
 	
 	ArmedShuttleNavigator nav;
 	ArmedSpaceShuttle shuttle;

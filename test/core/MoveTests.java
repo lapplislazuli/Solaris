@@ -11,7 +11,7 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 
-class MoveTest {
+class MoveTests {
 
 	static Star sun;
 	static Planet planet;

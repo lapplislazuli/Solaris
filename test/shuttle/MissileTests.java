@@ -11,7 +11,7 @@ import space.core.Star;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.missiles.Missile;
 
-public class MissileTest {
+public class MissileTests {
 	Star star;
 	Planet targetOne,targetTwo;
 	Star targetThree, targetFour;

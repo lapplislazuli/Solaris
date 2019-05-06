@@ -12,7 +12,7 @@ import space.core.Star;
 import space.spacecrafts.ships.SensorArray;
 import space.spacecrafts.ships.Ship;
 
-public class ArrayDetectionTest {
+public class ArrayDetectionTests {
 	
 	static Star hitStar,notHitStar, notHittableStar;
 	static SensorArray sensor;

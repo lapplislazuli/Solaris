@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BaseGeomCollisionTest {
+class BaseGeomCollisionTests {
 	
 	static Rectangle rect,distantRect;
 	static Circle smallCircle,bigCircle;

@@ -10,7 +10,7 @@ import geom.AbsolutePoint;
 import space.core.Planet;
 import space.core.Star;
 
-class RotationTest {
+class RotationTests {
 	
 	static Star anker;
 	static Planet slow, fast, reverse;

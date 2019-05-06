@@ -19,7 +19,7 @@ import space.core.Planet;
 import space.core.SpaceObject;
 import space.core.Star;
 
-class SpaceObjectEqualityTest {
+class SpaceObjectEqualityTests {
 
 	static Star aOne, aTwo, aThree, b;
 	Planet cOne,cTwo;
