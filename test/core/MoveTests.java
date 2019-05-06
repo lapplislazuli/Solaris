@@ -2,181 +2,201 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.AbsolutePoint;
+import space.core.MovingSpaceObject;
 import space.core.Planet;
-import space.core.Satellite;
-import space.core.Star;
+import space.core.SpaceObject;
+
+import static helpers.SpaceObjectFakeFactory.*;
 
 class MoveTests {
-
-	static Star sun;
-	static Planet planet;
-	static Satellite satellite;
-	
-	@BeforeAll
-	static void initSun() {
-		sun=new Star("Sun",null,new AbsolutePoint(250,250),50);
-	}
-	
-	@BeforeEach
-	void resetSatelliteAndPlanet(){
-		planet = (new Planet.Builder("A", sun))
-				.size(50)
-				.distance(250)
-				.speed(Math.PI/2)
-				.build();
-		satellite= (new Satellite.Builder("B", planet))
-				.size(50,50)
-				.distance(250)
-				.speed(-Math.PI/2)
-				.build();
-		
-	}
 	
 	@Test
-	void testInitSpaceObjects() {
-		assertEquals(250,sun.center.getX());assertEquals(250,sun.center.getY());
+	void testConstructor_makePlanet_planetXandDistanceCorrellate() {		
+		SpaceObject anchor = fakeStar(250,250);
+		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
 		
-		Planet noSpeedPlanet= (new Planet.Builder("A", sun))
-				.size(50)
-				.distance(250)
-				.speed(0)
-				.build();
 		//Check X-Y Koords
 		assertEquals(250,planet.center.getX());
 		assertEquals(500,planet.center.getY());
-		assertEquals(250,satellite.center.getX());
-		assertEquals(750,satellite.center.getY());
-		assertEquals(250,noSpeedPlanet.center.getX());
-		assertEquals(500,noSpeedPlanet.center.getY());
+		
 		//Check DegreeTo EachOther
-		assertEquals(3*Math.PI/2, planet.degreeTo(sun));
-		assertEquals(3*Math.PI/2, satellite.degreeTo(sun));
-		assertEquals(3*Math.PI/2, noSpeedPlanet.degreeTo(sun));
-		//assertEquals(3*Math.PI/2, a.degreeTo(b));
+		assertEquals(3*Math.PI/2, planet.degreeTo(anchor));
 	}
 	
 	@Test
-	void testSimpleMove() {
-		//Move all Items, if they are movable
-		sun.update();
-		//Star not moved, Planet right to Star, Satellite Left to Planet in Star
-		assertEquals(250,sun.center.getX());
-		assertEquals(250,sun.center.getY());
-		assertEquals(250,planet.center.getX());
-		assertEquals(500,planet.center.getY());
+	void testConstructor_makePlanet_planetDegreeDiffersInX() {		
+		SpaceObject anchor = fakeStar(250,250);
+		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+
+		//Check DegreeTo EachOther
+		assertEquals(3*Math.PI/2, planet.degreeTo(anchor));
+	}
+	
+	@Test
+	void testMovement_starMove_shouldNotMove() {
+		SpaceObject anchor = fakeStar(250,250);
 		
-		sun.update();
-		//Star not moved, Planet beyond Star
-		assertEquals(250,sun.center.getX());
-		assertEquals(250,sun.center.getY());
-		assertEquals(0,planet.center.getX());
+		int expectedX=250;
+		int expectedY=250;
+		
+		anchor.update();
+
+		assertEquals(expectedX,anchor.center.getX());
+		assertEquals(expectedY,anchor.center.getY());
+	}
+	
+	@Test
+	void testMovement_singlePlanetsingleMove_shouldMove() {
+		SpaceObject anchor = fakeStar(250,250);
+		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		
+		int expectedX=250;
+		int expectedY=500;
+		
+		anchor.update();
+
+		assertEquals(expectedX,planet.center.getX());
+		assertEquals(expectedY,planet.center.getY());
+	}
+	
+	@Test
+	void testMovement_singlePlanetdoubleMove_shouldMove() {
+		SpaceObject anchor = fakeStar(250,250);
+		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		
+		int expectedX=0;
+		int expectedY=250;
+		
+		anchor.update();
+		anchor.update();
+		
+		assertEquals(expectedX,planet.center.getX());
+		assertEquals(expectedY,planet.center.getY());
+	}
+	
+	@Test
+	void testMovement_negativeSpeed_shouldMoveBackwards() {
+		SpaceObject anchor = fakeStar(250,250);
+		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		SpaceObject satellite = fakeSatelliteWithSpeed(planet,250,-Math.PI/2);
+		
+		anchor.update();
+		
+		assertEquals(250,satellite.center.getX());
+		assertEquals(250,satellite.center.getY());
+	}
+	
+	
+	@Test
+	void testMovement_zeroSpeed_shouldNotMove() {
+		SpaceObject anchor = fakeStar(250,250);
+		SpaceObject planet = fakePlanetWithSpeed(anchor,250,0);
+		
+		anchor.update();
+		
+		assertEquals(500,planet.center.getX());
 		assertEquals(250,planet.center.getY());
 	}
-	@Test
-	void testNegativeSpeedMovement() {
-		sun.update();
-		assertEquals(250,satellite.center.getX());
-		assertEquals(250,satellite.center.getY());
-		sun.update();
-		assertEquals(-250,satellite.center.getX());
-		assertEquals(250,satellite.center.getY());
-	}
 	
 	@Test
-	void testNoSpeed() {
-		//Add a Planet to move with 90° per update
-		Planet planet = (new Planet.Builder("A", sun))
-				.size(50)
-				.distance(250)
-				.speed(0)
-				.build();
+	public void testMovement_checkRelativePositionAfterUpdate_shouldChange() {
+		SpaceObject anchor = fakeStar(250,250);
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
 		
-		for(int i =0;i<10;i++) {
-			sun.update();
-			assertEquals(500,planet.center.getX());
-			assertEquals(250,planet.center.getY());
-		}
-	}
-	
-	@Test
-	public void testRelativePosition() {
-		sun.update();
+		anchor.update();
 		
-		assertEquals(3*Math.PI/2,planet.degreeTo(sun));
+		assertEquals(3*Math.PI/2,planet.degreeTo(anchor));
 		assertEquals(Math.PI/2,planet.relativePos);
-		assertEquals(3*Math.PI/2,planet.degreeTo(sun));
+		assertEquals(3*Math.PI/2,planet.degreeTo(anchor));
+	}
+	
+	@Test
+	public void testMovement_doubleUpdate_checkRelativePositionAfterUpdate_shouldChange() {
+		SpaceObject anchor = fakeStar(250,250);
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
 		
-		sun.update();
-		assertEquals(0,planet.degreeTo(sun));
+		anchor.update();
+		anchor.update();
+		
+		assertEquals(0,planet.degreeTo(anchor));
 		assertEquals(Math.PI,planet.relativePos);
-		assertEquals(Math.PI, sun.degreeTo(planet));
+		assertEquals(Math.PI, anchor.degreeTo(planet));
 	}
 	
-	@Test
-	void testNegativeRelativePosition() {		
-		sun.update();
-		assertEquals(Math.PI/2,satellite.degreeTo(planet));
-		assertEquals(3*Math.PI/2,satellite.relativePos);
-		sun.update();
-		assertEquals(0,satellite.degreeTo(planet));
-		assertEquals(Math.PI,satellite.relativePos);
-	}
 	
-	@Test
-	void testPositiveIsFasterThanMe() {
-		Planet fasterPlanet = (new Planet.Builder("Faster", sun))
-				.size(50)
-				.distance(250)
-				.speed(Math.PI)
-				.build();
+	public void testFasterThanMe_ComparisonIsFaster_ShouldBeTrue() {
+		SpaceObject anchor = fakeStar(250,250);
+		
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		Planet fasterPlanet = fakePlanetWithSpeed(anchor,250,Math.PI);
 		
 		assertTrue(planet.isFasterThanMe(fasterPlanet));
 	}
 	
-	@Test
-	void testNegativeIsFasterThanMe() {
-		Planet slowerPlanet = (new Planet.Builder("Slower", sun))
-				.size(50)
-				.distance(250)
-				.speed(Math.PI/4)
-				.build();
+	public void testFasterThanMe_ComparisonIsSlower_ShouldBeFalse() {
+		SpaceObject anchor = fakeStar(250,250);
 		
-		assertFalse(planet.isFasterThanMe(slowerPlanet));
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		Planet slowerPlanet = fakePlanetWithSpeed(anchor,250,Math.PI/4);
+		
+		assertTrue(planet.isFasterThanMe(slowerPlanet));
 	}
 	
 	@Test
-	void testIsFasterThanMeWithSpaceObject() {
-		assertFalse(planet.isFasterThanMe(sun));
-		assertFalse(satellite.isFasterThanMe(sun));
+	public void testFasterThanMe_ComparisonIsNotMoving_ShouldBeFalse() {
+		SpaceObject anchor = fakeStar(250,250);
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		
+		assertFalse(planet.isFasterThanMe(anchor));
 	}
 	
+
 	@Test
-	void testPositivemovesInSameDirection() {
-		Planet sameDirectionPlanet = (new Planet.Builder("Faster", sun))
-				.size(50)
-				.distance(250)
-				.speed(Math.PI)
-				.build();
+	public void testSameDirection_ComparisonMovesSameDirection_ShouldBeTrue() {
+		SpaceObject anchor = fakeStar(250,250);
+		
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		MovingSpaceObject sameDirectionPlanet = fakePlanetWithSpeed(anchor,250,Math.PI);
 		
 		assertTrue(planet.movesInSameDirection(sameDirectionPlanet));
 	}
 	
 	@Test
-	void testNegativeMovesInSameDirection() {
+	public void testSameDirection_MovesSameDirection_symmetry_ShouldBeTrue() {
+		SpaceObject anchor = fakeStar(250,250);
+		
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		MovingSpaceObject sameDirectionPlanet = fakePlanetWithSpeed(anchor,250,Math.PI);
+		
+		assertTrue(planet.movesInSameDirection(sameDirectionPlanet)==sameDirectionPlanet.movesInSameDirection(planet));
+	}
+	
+	@Test
+	public void testSameDirection_ComparisonMovesOtherDirection_ShouldBeTrue() {
+		SpaceObject anchor = fakeStar(250,250);
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		MovingSpaceObject satellite = fakeSatelliteWithSpeed(planet,250,-Math.PI/2);
+		
 		assertFalse(planet.movesInSameDirection(satellite));
 	}
 	
 	@Test
-	void testMovesInSameDirectionWithSpaceObject() {
-		assertFalse(planet.movesInSameDirection(sun));
-		assertFalse(satellite.movesInSameDirection(sun));
+	public void testSameDirection_MovesOtherDirection_symmetry_ShouldBeTrue() {
+		SpaceObject anchor = fakeStar(250,250);
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		MovingSpaceObject satellite = fakeSatelliteWithSpeed(planet,250,-Math.PI/2);
+		
+		assertTrue(planet.movesInSameDirection(satellite)==satellite.movesInSameDirection(planet));
 	}
 	
-	
+	@Test
+	public void testSameDirection_ComparisonDoesNotMove_ShouldBeFalse() {
+		SpaceObject anchor = fakeStar(250,250);
+		MovingSpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
+		
+		assertFalse(planet.movesInSameDirection(anchor));
+	}	
 	
 }

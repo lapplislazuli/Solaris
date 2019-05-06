@@ -3,6 +3,7 @@ package helpers;
 import geom.AbsolutePoint;
 import space.advanced.FixStar;
 import space.core.Planet;
+import space.core.Satellite;
 import space.core.SpaceObject;
 import space.core.Star;
 
@@ -50,6 +51,18 @@ public abstract class SpaceObjectFakeFactory {
 		return planet;
 	}
 	
+	public static Planet fakePlanetWithSpeed(SpaceObject parent, int distance, double speed) {
+		Planet planet = (new Planet.Builder("NoCollider", parent))
+				.size(0)
+				.distance(distance)
+				.levelOfDetail(10)
+				.speed(speed)
+				.build();
+		
+		planet.updateHitbox();
+		return planet;	
+	}
+	
 	public static FixStar fakeFixStar(int xpos, int ypos) {
 		FixStar f = new FixStar("dummy", xpos, ypos, 0);
 		f.shape.updateOrInitOutline();
@@ -60,6 +73,16 @@ public abstract class SpaceObjectFakeFactory {
 		FixStar f = new FixStar("dummy", xpos, ypos, size);
 		f.shape.updateOrInitOutline();
 		return f;
+	}
+	
+	public static Satellite fakeSatelliteWithSpeed(SpaceObject parent,int distance,double speed){
+		Satellite satellite= (new Satellite.Builder("dummy", parent))
+				.size(0,0)
+				.distance(distance)
+				.speed(speed)
+				.build();
+		satellite.shape.updateOrInitOutline();
+		return satellite;
 	}
 	
 }
