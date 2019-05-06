@@ -1,8 +1,3 @@
-/**
- * @Author Leonhard Applis
- * @Created 03.10.2018
- * @Package core
- */
 package core;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,116 +5,82 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import geom.AbsolutePoint;
-import space.core.Planet;
 import space.core.SpaceObject;
-import space.core.Star;
+import static helpers.SpaceObjectFakeFactory.*;
 
 class SpaceObjectEqualityTests {
 
-	static Star aOne, aTwo, aThree, b;
-	Planet cOne,cTwo;
-	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		aOne = (new Star.Builder("a"))
-				.center(new AbsolutePoint(100,100))
-				.radious(10)
-				.build();
-		aTwo = (new Star.Builder("a"))
-				.center(new AbsolutePoint(100,100))
-				.radious(10)
-				.build();
-		aThree = (new Star.Builder("a"))
-				.center(new AbsolutePoint(100,100))
-				.radious(10)
-				.build();
+	@Test 
+	public void testEquality_selfEquality_shouldBeTrue() {
+		SpaceObject self = fakeStar(0,0);
 		
-		b = (new Star.Builder("b"))
-				.center(new AbsolutePoint(120,110))
-				.radious(10)
-				.build();
+		assertTrue(self.equals(self));
 	}
 	
-	@BeforeEach
-	void setupPlanetsAndMove() {
-		cOne= (new Planet.Builder("c", aOne))
-				.size(1)
-				.distance(100)
-				.speed(Math.PI)
-				.build();
-		cTwo= (new Planet.Builder("c", aOne))
-				.size(1)
-				.distance(100)
-				.speed(Math.PI)
-				.build(); 
-	}
-
-	@Test
-	void testPositiveEqualsObject() {
-		assertTrue(aOne.equals(aTwo));
+	@Test 
+	public void testEquality_sameAttributes_shouldBeTrue() {
+		SpaceObject obj = fakeStar(0,0);
+		SpaceObject sameObj=fakeStar(0,0);
 		
-		assertTrue(cOne.equals(cTwo));
-	}
-
-	
-	@Test
-	void testNegativeEquality() {
-		assertFalse(aOne.equals(cOne));
-		assertFalse(aOne.equals(b));
-		assertFalse(cOne.equals(b));
+		assertTrue(obj.equals(sameObj));
 	}
 	
-	@Test
-	void testReflexivity() {
-		assertTrue(aOne.equals(aOne));
-	}
-	
-	@Test
-	void testSymetry() {
-		assertTrue(aOne.equals(aTwo)==aTwo.equals(aOne));
-		assertTrue(cOne.equals(cTwo)==cTwo.equals(cOne));
-	}
-	
-	@Test
-	void testTransitity() {
-		assertTrue(aOne.equals(aTwo)==aTwo.equals(aThree));
-	}
-	
-	@Test
-	void testEqualityAfterMove() {
-		cOne.speed = 0;
+	@Test 
+	public void testEquality_differentKoords_shouldBeFalse() {
+		SpaceObject obj = fakeStar(0,0);
+		SpaceObject diff=fakeStar(20,0);
 		
-		aOne.update(); // c#s moved
-		
-		assertFalse(cOne.equals(cTwo));
+		assertFalse(obj.equals(diff));	
 	}
 	
+	@Test 
+	public void testEquality_sameKoordsDifferentClass_shouldBeFalse() {
+		SpaceObject obj = fakeStar(0,0);
+		SpaceObject diff=fakePlanet(obj,0);
+		
+		assertFalse(obj.equals(diff));	
+	}
+	
+	@Test 
+	public void testEquality_symmetry_shouldBeTrue() {
+		SpaceObject obj = fakeStar(0,0);
+		SpaceObject sameObj=fakeStar(0,0);
+		
+		assertTrue(obj.equals(sameObj)==sameObj.equals(obj));
+	}
+	
+	@Test 
+	public void testEquality_transity_shouldBeTrue() {
+		SpaceObject first = fakeStar(0,0);
+		SpaceObject second=fakeStar(0,0);
+		SpaceObject third=fakeStar(0,0);
+		
+		assertTrue(first.equals(second)==second.equals(third));
+	}
+	
+	
 	@Test
-	void testAddSameItemToSet() {
+	public void testEquality_addSameItemToSet_shouldDisappear() {
+		SpaceObject obj = fakeStar(0,0);
 		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
-		sOs.add(aOne); 
-		sOs.add(aOne);
+		sOs.add(obj); 
+		sOs.add(obj);
+		
 		assertEquals(1,sOs.size());
 	}
 	
-	@Test
-	void testAddSimiliarItemToSet() {
-		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
-		sOs.add(aOne); 
-		sOs.add(aTwo);
-		assertEquals(1,sOs.size());
-	}
 	
 	@Test
-	void testAddDifferentItemsToSet() {
+	public void testEquality_addOtherItemToSet_shouldDisappear() {
+		SpaceObject obj = fakeStar(0,0);
+		SpaceObject other = fakeStar(0,10);
 		Set<SpaceObject> sOs= new HashSet<SpaceObject>();
-		sOs.add(aOne); 
-		sOs.add(cOne);
+		
+		sOs.add(obj); 
+		sOs.add(other);
+		
 		assertEquals(2,sOs.size());
 	}
 }

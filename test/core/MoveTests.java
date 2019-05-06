@@ -29,8 +29,7 @@ class MoveTests {
 	void testConstructor_makePlanet_planetDegreeDiffersInX() {		
 		SpaceObject anchor = fakeStar(250,250);
 		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
-
-		//Check DegreeTo EachOther
+		
 		assertEquals(3*Math.PI/2, planet.degreeTo(anchor));
 	}
 	
