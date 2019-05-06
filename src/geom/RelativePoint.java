@@ -3,6 +3,7 @@ package geom;
 import interfaces.geom.Point;
 
 public class RelativePoint implements Point{
+	
 	protected Point anker;
 	protected int xDif,yDif,zDif;
 	

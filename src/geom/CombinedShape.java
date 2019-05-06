@@ -19,10 +19,12 @@ public abstract class CombinedShape implements Shape{
 		parts=new LinkedList<Shape>();
 		center=new AbsolutePoint(0,0);
 	}
+	
 	public CombinedShape(Point center) {
 		parts=new LinkedList<Shape>();
 		this.center=center;
 	}
+	
 	public double area() {
 		double sum=0;
 		for(Shape part:parts)

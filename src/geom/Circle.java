@@ -28,7 +28,9 @@ public class Circle extends BaseShape{
 	}
 
 	public void initOutline() {
+		//Reset!
 		outLine.removeIf(p->true);
+		//New Points
 		for(int i=0;i<levelOfDetail;i++) {
 			RelativePoint outLinePoint= 
 					new RelativePoint(center,
