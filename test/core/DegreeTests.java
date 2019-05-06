@@ -2,49 +2,60 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import geom.AbsolutePoint;
-import space.core.Star;
+import space.core.SpaceObject;
+
+import static helpers.SpaceObjectFakeFactory.*;
 
 public class DegreeTests {
-	static Star starOne,starTwo,starAboveTwo, starFarAway;
 	
-	@BeforeAll
-	static void initStars() {
-		starOne= new Star("anker1", null, new AbsolutePoint(0, 0),0);
-		starTwo= new Star("anker2", null, new AbsolutePoint(100, 0),0);
-		starAboveTwo = new Star("anker3", null, new AbsolutePoint(100, -50),0);
-		starFarAway= new Star("Anker4", null, new AbsolutePoint(1000,1000),0);
+	@Test
+	void testDegree_twoObjectOnLine_ShouldEqual0Degree() {
+		SpaceObject one = fakeStar(0,0,0);
+		SpaceObject two = fakeStar(100,0,0);
+		
+		assertEquals(0,one.degreeTo(two));
 	}
 	
 	@Test
-	void testBasicDegree() {		
-		//Expected: 180°
-		assertEquals(0,starOne.degreeTo(starTwo));
-		//Expected: 360°=0°
-		assertEquals(Math.PI,starTwo.degreeTo(starOne));
+	void testDegree_twoObjectOnLine_otherWayRound_ShouldEqual180Degree() {
+		SpaceObject one = fakeStar(0,0,0);
+		SpaceObject two = fakeStar(100,0,0);
+		
+		assertEquals(Math.PI,two.degreeTo(one));
 	}
 	
 	@Test
-	void testDegreesForUpperItems() {
-		//Expected: 90°
-		assertEquals(Math.PI/2, starAboveTwo.degreeTo(starTwo));
-		//Expected: 270°
-		assertEquals(3*Math.PI/2, starTwo.degreeTo(starAboveTwo));
-	}
-	@Test
-	void testDegreesFarAwayItem() {
-		//Expected: 45°
-		assertEquals(Math.PI/4+0.0000000000000001, starOne.degreeTo(starFarAway));
-		//Expected: 215°
-		assertEquals(5*Math.PI/4+0.0000000000000001, starFarAway.degreeTo(starOne));
+	void testDegree_itemVerticalBeyondOther_shouldEqual270Degree() {
+		SpaceObject base = fakeStar(100,0,0);
+		SpaceObject aboveBase = fakeStar(100,-50,0);
+		
+		assertEquals(3*Math.PI/2, base.degreeTo(aboveBase));
 	}
 	
 	@Test
-	void testDegreeSymetry() {
+	void testDegree_itemVerticalAboveOther_shouldEqual90Degree() {
+		SpaceObject base = fakeStar(100,0,0);
+		SpaceObject aboveBase = fakeStar(100,-50,0);
+	
+		assertEquals(Math.PI/2, aboveBase.degreeTo(base));
+	}
+	
+	@Test
+	void testDegree_itemFarAwayDiagonal() {
+		SpaceObject one = fakeStar(0,0,0);
+		SpaceObject farAway = fakeStar(1000,1000,0);
+ 
+		assertEquals(Math.PI/4+0.0000000000000001, one.degreeTo(farAway));
+		assertEquals(5*Math.PI/4+0.0000000000000001, farAway.degreeTo(one));
+	}
+	
+	@Test
+	void testDegree_compareDegrees_shouldVaryByPi() {
+		SpaceObject one = fakeStar(0,0,0);
+		SpaceObject two = fakeStar(100,0,0);
 		//Expected: One==Other+PI
-		assertTrue(starOne.degreeTo(starTwo)+Math.PI==starTwo.degreeTo(starOne));
+		assertTrue(one.degreeTo(two)+Math.PI==two.degreeTo(one));
 	}
 }
