@@ -41,8 +41,8 @@ public class CollisionManager implements UpdatingObject{
 	public void update() {
 		if(running) {
 			refresh();
-			
 			Set<DestructibleObject> destroyed=new HashSet<DestructibleObject>();
+			
 			for(DestructibleObject destructible : registeredDestructibles)
 				for(CollidingObject collider: registeredItems)
 					if(collider.collides(destructible)) {
