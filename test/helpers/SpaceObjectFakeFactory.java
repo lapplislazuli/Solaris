@@ -5,7 +5,13 @@ import space.core.SpaceObject;
 import space.core.Star;
 
 public abstract class SpaceObjectFakeFactory {
-
+	
+	public static Star fakeStar(int xpos,int ypos) {
+		Star anchor = new Star("Anker", null, new AbsolutePoint(xpos,ypos),0);
+		anchor.shape.updateOrInitOutline();
+		return anchor;
+	}
+	
 	public static Star fakeStar(int xpos,int ypos,int size) {
 		Star anchor = new Star("Anker", null, new AbsolutePoint(xpos,ypos),size);
 		anchor.shape.updateOrInitOutline();

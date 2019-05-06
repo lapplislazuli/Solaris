@@ -2,65 +2,56 @@ package core;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import drawing.EmptyJFXDrawingInformation;
-import geom.AbsolutePoint;
-import space.core.Planet;
-import space.core.Star;
+import space.core.SpaceObject;
 
-import javafx.scene.paint.Color;
+import static helpers.SpaceObjectFakeFactory.*;
 
-@SuppressWarnings("restriction")
 class DistanceTests {
-	
-	static Star starOne;
-	static Planet closeStar,mediumStar,farStar;
-	
-	@BeforeEach
-	void initSpaceObjects(){
-		starOne= new Star("anker", new EmptyJFXDrawingInformation(), new AbsolutePoint( 0, 0),0);
-		closeStar = (new Planet.Builder("a", starOne))
-				.color(Color.INDIANRED)
-				.size(0)
-				.distance(0)
-				.build();
-		mediumStar =(new Planet.Builder("b", starOne))
-				.size(0)
-				.color(Color.INDIANRED)
-				.distance(50)
-				.build();
-		farStar = (new Planet.Builder("c", starOne))
-				.size(0)
-				.color(Color.INDIANRED)
-				.distance(100)
-				.build();
+
+	@Test
+	void testDistance_closeItem_shouldBeDifferenceOfCenters() {
+		int ancorscenter=0;
+		int wantedDifference=50;
+		SpaceObject ancor = fakeStar(ancorscenter,0);
+		SpaceObject close = fakeStar(ancorscenter+wantedDifference,0);
+		
+		assertEquals(wantedDifference, close.distanceTo(ancor));
 	}
 	
 	@Test
-	void positiveDistance() {
-		assertEquals(50, closeStar.distanceTo(mediumStar));
-		assertEquals(50, mediumStar.distanceTo(farStar));
-		assertEquals(100,closeStar.distanceTo(farStar));
+	void testDistance_farItem_shouldBeDifferenceOfCenters() { 
+		int ancorscenter=0;
+		int wantedDifference=5000;
+		SpaceObject ancor = fakeStar(ancorscenter,0);
+		SpaceObject close = fakeStar(ancorscenter+wantedDifference,0);
+		
+		assertEquals(wantedDifference, close.distanceTo(ancor));
 	}
 	
 	@Test
-	void negativeDistance() {
-		assertEquals(50, closeStar.distanceTo(mediumStar));
-		assertEquals(50, mediumStar.distanceTo(farStar));
+	void testDistance_negativeXDif_shouldBePositiveDistance() {
+		int ancorscenter=0;
+		int wantedDifference=50;
+		SpaceObject ancor = fakeStar(ancorscenter,0);
+		SpaceObject negativer = fakeStar(ancorscenter-wantedDifference,0);
+		
+		assertEquals(wantedDifference, negativer.distanceTo(ancor));
 	}
 	
 	@Test
-	void testDistanceSymmetry() {
-		assertTrue(closeStar.distanceTo(mediumStar)==mediumStar.distanceTo(closeStar));
-		assertTrue(farStar.distanceTo(mediumStar)==mediumStar.distanceTo(farStar));
+	void testDistance_compareTwoItems_shouldHaveSameDistance() {
+		SpaceObject ancor = fakeStar(0,0);
+		SpaceObject other = fakeStar(100,-50);
+		
+		assertTrue(ancor.distanceTo(other)==other.distanceTo(ancor));
 	}
 	
 	@Test
-	void nullDistance() {
-		Star starTwo= new Star("anker", new EmptyJFXDrawingInformation(), new AbsolutePoint( 0, 0),0);
-		assertEquals(0,starOne.distanceTo(starTwo));
+	void testDistance_compareItemToItself_shouldHaveZeroDistance() {
+		SpaceObject singleton = fakeStar(0,0);
+		
+		assertEquals(0,singleton.distanceTo(singleton));
 	}
 }
