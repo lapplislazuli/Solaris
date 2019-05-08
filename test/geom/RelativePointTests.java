@@ -1,136 +1,90 @@
 package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static helpers.GeometryFakeFactory.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import interfaces.geom.Point;
 
 class RelativePointTests {
-	
-	static AbsolutePoint absAnker;
-	static RelativePoint relAnker;
 
-	RelativePoint absAnkered, relAnkered;
-	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		absAnker= new AbsolutePoint(100,100);
-		relAnker= new RelativePoint(absAnker,100,100); //[200,200]
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-		absAnkered= new RelativePoint(absAnker, 50,50); //[150,150]
-		relAnkered= new RelativePoint(relAnker, 50,50); //[250,250]
-	}
-
-	
-	@Test
-	void testAnkerMoved(){
-		absAnker.move(100, 100); //[200,200]
-		//RelAnker will move, if everything is correct!
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,30,75,100})
+	void testInitialValues_shouldBeOnAnker(int value){
+		Point anker = fakeAbsolutePoint(value,value);
+		RelativePoint testy = fakeRelativePoint(anker);
 		
-		assertEquals(300,relAnker.getX());
-		assertEquals(300,relAnker.getY());
-		
-		assertEquals(350,relAnkered.getX());
-		assertEquals(350,relAnkered.getY());
-		
-		absAnker.move(-100, -100); //CleanUp
+		assertEquals(anker.getX(),testy.getX());
+		assertEquals(anker.getY(),testy.getY());
 	}
 	
-	@Test 
-	void testAnkerChanged(){
-		relAnkered.anker=absAnkered.anker;
+	@ParameterizedTest
+	@ValueSource(ints = {-100,-10,-5,0,10,30,75,100})
+	void testInitialValues_moveRelativePoint_shouldOffsetAway(int offset){
+		Point anker = fakeAbsolutePoint();
+		RelativePoint testy = fakeRelativePoint(anker,offset,offset);
 		
-		assertEquals(150, relAnkered.getX());
-
-		assertEquals(150, relAnkered.getY());
+		assertEquals(offset,testy.getX());
+		assertEquals(offset,testy.getY());
 	}
 	
-	@Test
-	void testGetX() {
-		assertEquals(150,absAnkered.getX());
-		assertEquals(250,relAnkered.getX());
-	}
-
-	@Test
-	void testGetY() {
-		assertEquals(150,absAnkered.getY());
-		assertEquals(250,relAnkered.getY());
-	}
-
-	@Test
-	void testGetZ() {
-		assertEquals(0,absAnkered.getZ());
-		assertEquals(0,relAnkered.getZ());
-	}
-
-	@Test
-	void testSetX() {
-		absAnkered.setX(100); //[100,100]
-		relAnkered.setX(100); //[100,200]
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,30,75,100})
+	void testAnkerChanged_AnkerIsOnewPos_ShouldHaveNewPosition(int moved){
+		Point oldAnker = fakeAbsolutePoint();
+		Point newAnker = fakeAbsolutePoint(moved,moved);
+		RelativePoint testy = fakeRelativePoint(oldAnker);
 		
-		assertEquals(100,absAnkered.getX());
-		assertEquals(100,relAnkered.getX());
-	}
-
-	@Test
-	void testSetY() {
-		absAnkered.setY(100); //[200,100]
-		relAnkered.setY(100); //[300,100]
+		testy.anker=newAnker;
 		
-		assertEquals(100,absAnkered.getY());
-		assertEquals(100,relAnkered.getY());
+		assertEquals(newAnker.getX(),testy.getX());
+		assertEquals(newAnker.getY(),testy.getY());
 	}
-
-	@Test
-	void testSetZ() {
-		absAnkered.setZ(100);
-		relAnkered.setZ(100);
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100,-10,-5,0,10,30,75,100})
+	void testSetRelative_PointShouldBeOnNewValues(int dest){
+		Point oldAnker = fakeAbsolutePoint();
+		RelativePoint testy = fakeRelativePoint(oldAnker);
 		
-		assertEquals(100,absAnkered.getZ());
-		assertEquals(100,relAnkered.getZ());
+		testy.setX(dest);
+		testy.setY(dest);
+
+		assertEquals(dest,testy.getX());
+		assertEquals(dest,testy.getY());
 	}
-
-	@Test
-	void testSetXDif() {
-		absAnkered.setXDif(100); //[200,100]
-		relAnkered.setXDif(100); //[300,200]
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100,-10,-5,0,10,30,75,100})
+	void testSetXDiffRelative_PointShouldBeOnNewValues(int dest){
+		Point oldAnker = fakeAbsolutePoint();
+		RelativePoint testy = fakeRelativePoint(oldAnker);
 		
-		assertEquals(200,absAnkered.getX());
-		assertEquals(300,relAnkered.getX());
-	}
+		testy.setXDif(dest);
+		testy.setYDif(dest);
 
-	@Test
-	void testSetYDif() {
-		absAnkered.setYDif(100); //[100,200]
-		relAnkered.setYDif(100); //[200,300]
-		
-		assertEquals(200,absAnkered.getY());
-		assertEquals(300,relAnkered.getY());
-	}
-
-	@Test
-	void testSetZDif() {
-		absAnkered.setZDif(100); //[200,100]
-		relAnkered.setZDif(100); //[300,100]
-		
-		assertEquals(100,absAnkered.getZ());
-		assertEquals(100,relAnkered.getZ());
+		assertEquals(dest,testy.getX());
+		assertEquals(dest,testy.getY());
 	}
 	
 	
 	@Test
-	void testSamePosition() {
-		RelativePoint onParent = new RelativePoint(absAnkered,0,0);
+	void testRelativePoint_SamePosition_shouldBeTrue() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint testy = fakeRelativePoint(anchor);
 		
-		assertTrue(onParent.samePosition(absAnkered));
+		assertTrue(testy.samePosition(anchor));
 	}
 	
 	@Test
-	void testNegativeSamePosition() {
-		assertFalse(absAnkered.samePosition(relAnkered));
+	void testRelativePoint_SamePosition_moved_shouldBeFalse() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint testy = fakeRelativePoint(anchor,10,10);
+		
+		assertFalse(testy.samePosition(anchor));
 	}
 }

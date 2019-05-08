@@ -81,7 +81,6 @@ class PointTests {
 	@ParameterizedTest
 	@ValueSource(ints = {-100000,-100,-10,0,10,100,10000})
 	void testDistance_symmetry_shouldBeSymmetric(int dist) {
-		
 		Point fakeCenter = fakeAbsolutePoint();
 		Point xcomparer = fakeAbsolutePoint(dist,0);
 		
