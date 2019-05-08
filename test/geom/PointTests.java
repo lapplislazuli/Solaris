@@ -1,126 +1,137 @@
 package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static helpers.GeometryFakeFactory.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import interfaces.geom.Point;
 
 class PointTests {
 	
-	
-	private static AbsolutePoint first2D,second2D; 
-	private static AbsolutePoint first3D; //3 Dimensional Point
-
-	@BeforeEach
-	void setUp() throws Exception {
-		first2D= new AbsolutePoint(0,0);
-		second2D= new AbsolutePoint(50,50);
-		first3D= new AbsolutePoint(0,0,100);
-	}
-
-	@Test
-	void testDegreeTo() {
-		second2D.move(-50, 0);
-		assertEquals(Math.PI/2,first2D.degreeTo(second2D));
-		assertEquals(3*Math.PI/2,second2D.degreeTo(first2D));
+	@Test 
+	void testDegreeTo_verticalPointAbove_shouldBe90Degrees(){
+		Point firstPoint= fakeAbsolutePoint();
+		Point secondPoint= fakeAbsolutePoint(0,100);
 		
-		second2D.move(50, -50);
-		assertEquals(0,first2D.degreeTo(second2D));
-		assertEquals(Math.PI, second2D.degreeTo(first2D));
-	}
-
-	@Test
-	void testDistance2D() {
-		//Check correctness of formula
-		assertEquals(100, first2D.distanceTo(first3D));
-		assertEquals(Math.sqrt(2)*50,first2D.distanceTo(second2D));
-	}
-	@Test
-	void testDistance3D() {
-		assertEquals(Math.sqrt(15000),first3D.distanceTo(second2D));
-	}
-	
-	@Test
-	void testNegativeDistance() {
-		//x and y would be negative, but distance has to be positive all the time
-		first2D.move(100, 100);
-		assertEquals(Math.sqrt(2)*50,first2D.distanceTo(second2D));
-	}
-	
-	@Test
-	void testDistanceToSymmetry() {
-		assertTrue(first2D.distanceTo(second2D)==second2D.distanceTo(first2D));
-		assertTrue(first2D.distanceTo(first3D)==first3D.distanceTo(first2D));
-		assertTrue(first3D.distanceTo(second2D)==second2D.distanceTo(first3D));
-	}
-	
-	@Test
-	void testMoveIntInt() {
-		first2D.move(50, 50);
-		assertEquals(50,first2D.x);
-		assertEquals(50,first2D.y);
-		assertEquals(0,first2D.distanceTo(second2D));
-		
-		first2D.move(-50, -50);
-		assertEquals(0,first2D.x);
-		assertEquals(0,first2D.y);
-		assertEquals(Math.sqrt(2)*50,first2D.distanceTo(second2D));
-	}
-
-	@Test
-	void testMovePositive3D() {
-		first2D.move(0, 0,100);
-		assertEquals(0,first2D.x);
-		assertEquals(0,first2D.y);
-		assertEquals(100,first2D.z);
-	}
-	
-	@Test
-	void testMoveNegative3D() {
-		first2D.move(0, 0, -100);
-		assertEquals(0,first2D.x);
-		assertEquals(0,first2D.y);
-		assertEquals(-100,first2D.z);
-	}
-	@Test
-	void testClone() {
-		AbsolutePoint clone= first2D.clone();
-		first2D.move(50, 50);
-		assertEquals(0,clone.x);
-		assertEquals(0,clone.y);
+		assertEquals(Math.PI/2,firstPoint.degreeTo(secondPoint));
 	}
 	
 	@Test 
-	void testPositiveSamePosition() {
-		Point samePoint = first2D.clone();
+	void testDegreeTo_verticalPointBeyond_shouldBe270Degrees(){
+		Point firstPoint= fakeAbsolutePoint();
+		Point secondPoint= fakeAbsolutePoint(0,-100);
 		
-		assertTrue(samePoint.samePosition(first2D));
-	}
-	@Test
-	void testNegativeSamePosition() {
-		assertFalse(second2D.samePosition(first2D));
+		assertEquals(3*Math.PI/2,firstPoint.degreeTo(secondPoint));
 	}
 	
 	@Test 
-	void testPositiveHashCode() {
-		Point samePoint = first2D.clone();
+	void testDegreeTo_horizontalPointRight_shouldBe0Degrees(){
+		Point firstPoint= fakeAbsolutePoint();
+		Point secondPoint= fakeAbsolutePoint(100,0);
 		
-		assertEquals(first2D.hashCode(),samePoint.hashCode());
+		assertEquals(0,firstPoint.degreeTo(secondPoint));
 	}
-	@Test
-	void testNegativeHashCode() {
-		assertFalse(second2D.hashCode()==first2D.hashCode());
+	
+	@Test 
+	void testDegreeTo_horizontalPointLeft_shouldBe180Degrees(){
+		Point firstPoint= fakeAbsolutePoint();
+		Point secondPoint= fakeAbsolutePoint(-100,0);
+		
+		assertEquals(Math.PI,firstPoint.degreeTo(secondPoint));
 	}
 	
 	@Test
-	void testSamePointSymetry() {
-		Point samePoint = first2D.clone();
+	void testDegreeTo_comparePointsToEachother_shouldBeSymmetric() {
+		Point firstPoint= fakeAbsolutePoint();
+		Point secondPoint= fakeAbsolutePoint(-100,0);
 		
-		assertTrue(samePoint.samePosition(first2D)== first2D.samePosition(samePoint));
-		
-		assertTrue(first2D.samePosition(second2D) == second2D.samePosition(first2D));
+		assertTrue(firstPoint.degreeTo(secondPoint)==secondPoint.degreeTo(firstPoint)+Math.PI);
 	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,30,75,100})
+	void testDistance_pointIsInXNAway_shouldEqualN(int dist) {
+		Point fakeCenter = fakeAbsolutePoint();
+		Point xcomparer = fakeAbsolutePoint(0,dist);
+		
+		assertEquals(dist,xcomparer.distanceTo(fakeCenter));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,30,75,100})
+	void testDistance_pointIsInYNAway_shouldEqualN(int dist) {
+		Point fakeCenter = fakeAbsolutePoint();
+		Point ycomparer = fakeAbsolutePoint(0,dist);
+		
+		assertEquals(dist,ycomparer.distanceTo(fakeCenter));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,30,75,100})
+	void testDistance_pointIsInXNegativeAway_shouldEqualHavePositiveN(int dist) {
+		Point fakeCenter = fakeAbsolutePoint();
+		Point xcomparer = fakeAbsolutePoint(-dist,0);
+		
+		assertEquals(dist,xcomparer.distanceTo(fakeCenter));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100000,-100,-10,0,10,100,10000})
+	void testDistance_symmetry_shouldBeSymmetric(int dist) {
+		
+		Point fakeCenter = fakeAbsolutePoint();
+		Point xcomparer = fakeAbsolutePoint(dist,0);
+		
+		assertTrue(xcomparer.distanceTo(fakeCenter)==fakeCenter.distanceTo(xcomparer));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100000,-100,-10,0,10,100,10000})
+	void testDistance_movePointOntoOther_shouldOnOther(int dist) {
+		AbsolutePoint movingPoint = fakeAbsolutePoint();
+		Point center = fakeAbsolutePoint(dist,dist);
+		
+		movingPoint.move(dist, dist);
 
+		assertEquals(0,movingPoint.distanceTo(center));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100000,-100,-10,0,10,100,10000})
+	void testClone_PointShouldHaveSamePosition_shouldBeTrue(int variableCord) {
+		AbsolutePoint test = fakeAbsolutePoint(variableCord,variableCord);
+		Point clone = test.clone();
+		
+		assertTrue(test.samePosition(clone));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100000,-100,-10,10,100,10000})
+	void testClone_DifferentPoints_shouldBeFalse(int variableCord) {
+		Point center = fakeAbsolutePoint();
+		AbsolutePoint test = fakeAbsolutePoint(variableCord,variableCord);
+		
+		assertFalse(test.samePosition(center));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100000,-100,-10,10,100,10000})
+	void testClone_checkHashcode_shouldNotBeEqual(int variableCord) {
+		Point center = fakeAbsolutePoint();
+		AbsolutePoint test = fakeAbsolutePoint(variableCord,variableCord);
+		
+		assertFalse(test.hashCode() == center.hashCode());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100000,-100,-10,10,100,10000})
+	void testClone_cloneSamePositionSymmetry_shouldBeEqual(int variableCord) {
+		AbsolutePoint test = fakeAbsolutePoint(variableCord,variableCord);
+		Point clone = test.clone();
+		
+		assertTrue(test.samePosition(clone)==clone.samePosition(test));
+	}
 }
