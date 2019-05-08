@@ -2,84 +2,97 @@ package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Ignore;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import interfaces.geom.Point;
 
+import static helpers.GeometryFakeFactory.*;
+
 class CircleTests {
-	
-	private Circle testObject;
-	private Point centerTestObject;
-	
-	@BeforeEach
-	void setUp() throws Exception {
-		centerTestObject= new AbsolutePoint(100,100);
-		testObject = new Circle(centerTestObject,100);
-	}
-	
-	@Test
-	void testPositiveContains() {
-		List<Point> inPoints = new LinkedList<Point>();
-		inPoints.add(new AbsolutePoint(65,50)); 
-		inPoints.add(new AbsolutePoint(125,100));
-		inPoints.add(centerTestObject);
-		for(Point inPoint : inPoints)
-			assertTrue(testObject.contains(inPoint));
-	}
-	
-	@Test 
-	void testNegativeContains() {
-		List<Point> outPoints = new LinkedList<Point>();
-		outPoints.add(new AbsolutePoint(0,0));  
-		outPoints.add(new AbsolutePoint(0,120)); 
-		outPoints.add(new AbsolutePoint(0,0,200)); 
-		for(Point outPoint : outPoints)
-			assertFalse(testObject.contains(outPoint));
-	}
-	
-	@Test
-	void testTangentialContains() {
-		Point edgePoint = new AbsolutePoint(200,100); //On the Edge of Circle
-		assertTrue(testObject.contains(edgePoint));
-	}
-	
-	/*
-	 * Idea: Make a little smaller Circle and a little bigger circle around the testObject
-	 * Check whether all Points are in one and not in the other. 
-	 * This leaves only to check whether outline distance and outlinepoint-degree are correct
-	 */
-	@Test
-	void testInitOutlineWithRelativeCircles() {
-		Circle biggerCircle = new Circle(centerTestObject,102);
-		Circle smallerCircle = new Circle(centerTestObject,98);
-		testObject.setLevelOfDetail(1000);
-		testObject.initOutline();
+
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,30,75,100})
+	void testContains_pointIsInCircle_shouldSucceed(int dist) {
+		Circle testCircle = fakeCircle(200);
+		Point inPoint = fakeAbsolutePoint(dist,dist);
 		
-		for(Point p : testObject.outLine) {
+		assertTrue(testCircle.contains(inPoint));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {200,300,100000})
+	void testContains_yposOut_shouldFail(int ypos) {
+		Circle testCircle = fakeCircle(100);
+		Point outPoint = fakeAbsolutePoint(0,ypos);
+		
+		assertFalse(testCircle.contains(outPoint));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {200,300,100000})
+	void testContains_xposOut_shouldFail(int xpos) {
+		Circle testCircle = fakeCircle(100);
+		Point outPoint = fakeAbsolutePoint(xpos,0);
+		
+		assertFalse(testCircle.contains(outPoint));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {200,300,100000})
+	void testContains_bothAttributesOut_shouldFail(int distance) {
+		Circle testCircle = fakeCircle(100);
+		Point outPoint = fakeAbsolutePoint(distance,distance);
+		
+		assertFalse(testCircle.contains(outPoint));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	void testContains_PointTangents_shouldSucceed(int distance) {
+		Circle testCircle = fakeCircle(distance);
+		
+		Point verticalTangenter = fakeAbsolutePoint(distance,0);
+		Point horizontalTangenter = fakeAbsolutePoint(0,distance);
+		Point diagonalTangenter = fakeAbsolutePoint(0,0);
+		
+		assertTrue(testCircle.contains(verticalTangenter));
+		assertTrue(testCircle.contains(horizontalTangenter));
+		assertTrue(testCircle.contains(diagonalTangenter));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	void testContains_EveryOtherPointOfInnerCircle_shouldSucceed(int distance) {
+		Point fakeCenter = fakeAbsolutePoint();
+		
+		Circle smallerCircle = fakeCircle(fakeCenter,distance);
+		Circle biggerCircle = fakeCircle(fakeCenter,distance+5);
+		
+		for(Point p : smallerCircle.outLine)
 			assertTrue(biggerCircle.contains(p));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	void testContains_EveryOtherPointOfOutCircle_shouldFail(int distance) {
+		Point fakeCenter = fakeAbsolutePoint();
+		
+		Circle smallerCircle = fakeCircle(fakeCenter,distance);
+		Circle biggerCircle = fakeCircle(fakeCenter,distance+5);
+		
+		for(Point p : biggerCircle.outLine) 
 			assertFalse(smallerCircle.contains(p));
-		}
 	}
 	
-	@Test
-	void testOutlineIsTangenting() {
-			testObject.setLevelOfDetail(100);
-			testObject.initOutline();
-			
-			for(Point p : testObject.outLine)
-				testObject.contains(p);
-	}
-	
-	@Test
-	void testOutlineCount() {
-		testObject.levelOfDetail=100;
-		testObject.updateOrInitOutline();
-		assertEquals(100,testObject.outLine.size());
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	void testContains_EveryPointOfOutline_shouldSucceed(int distance) {
+		Point fakeCenter = fakeAbsolutePoint();
+		
+		Circle testObject = fakeCircle(fakeCenter,distance);
+		
+		for(Point p : testObject.outLine)
+			testObject.contains(p);
 	}
 }
