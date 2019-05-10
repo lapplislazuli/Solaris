@@ -50,4 +50,15 @@ public class Rectangle extends BaseShape{
 	public double area() {
 		return xSize*ySize;
 	}
+	
+	@Override 
+	public boolean equals(Object other) {
+		if(! (other instanceof Rectangle))
+			return false;
+		Rectangle otherParsed = (Rectangle) other;
+		
+		if(!getCenter().equals(otherParsed.getCenter()))
+			return false;
+		return otherParsed.xSize==xSize && otherParsed.ySize==ySize;
+	}
 }

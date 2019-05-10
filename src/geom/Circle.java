@@ -44,4 +44,14 @@ public class Circle extends BaseShape{
 		return Math.PI*Math.pow(radious, 2);
 	}
 	
+	@Override 
+	public boolean equals(Object other) {
+		if(! (other instanceof Circle))
+			return false;
+		Circle otherParsed = (Circle) other;
+		
+		if(!getCenter().equals(otherParsed.getCenter()))
+			return false;
+		return otherParsed.radious==radious;
+	}
 }
