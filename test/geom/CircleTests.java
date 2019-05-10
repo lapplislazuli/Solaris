@@ -107,4 +107,62 @@ class CircleTests implements ShapeTests{
 		Circle testItem = fakeCircle(0);
 		assertTrue(true,"Circle was build with size 0 - No Exception");
 	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_SameValuesAndSameCenter_shouldBeTrue(int size) {
+		Point sharedCenter = fakeAbsolutePoint();
+		
+		Circle testObject = fakeCircle(sharedCenter,size);
+		Circle sameObject = fakeCircle(sharedCenter,size);
+		
+		assertTrue(testObject.equals(sameObject));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_SameValuesDifferentCenterOnSamePoint_shouldBeFalse(int size) {
+		Circle testObject = fakeCircle(size);
+		Circle sameObject = fakeCircle(size);
+		
+		assertFalse(testObject.equals(sameObject));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_differentValues_shouldBeFalse(int size) {
+		Circle testObject = fakeCircle(size);
+		Circle otherObject = fakeCircle(size+1);
+		
+		assertFalse(testObject.equals(otherObject));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_checkSymmetryOfSameValue_shouldBeTrue(int size) {
+		Circle testObject = fakeCircle(size);
+		Circle sameObject = fakeCircle(size);
+		
+		assertTrue(testObject.equals(sameObject)==sameObject.equals(testObject));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_checkSymmetryOfDifferentValue_shouldBeTrue(int size) {
+		Circle testObject = fakeCircle(size);
+		Circle otherObject = fakeCircle(size+1);
+		
+		assertTrue(testObject.equals(otherObject)==otherObject.equals(testObject));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {-10,0,10,})
+	public void testEquality_sameSizeDifferentCenter_shouldbeFalse(int offset) {
+		Point firstCenter = fakeAbsolutePoint();
+		Point secondCenter = fakeAbsolutePoint(offset,offset);
+		Circle testObject = fakeCircle(firstCenter,100);
+		Circle otherObject = fakeCircle(secondCenter,100);
+		
+		assertFalse(testObject.equals(otherObject));
+	}
 }

@@ -96,4 +96,62 @@ class RectangleTests implements ShapeTests{
 		Rectangle testItem = fakeRectangle(0);
 		assertTrue(true,"Rectangle was build with size 0 - No Exception");
 	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_SameValuesAndSameCenter_shouldBeTrue(int size) {
+		Point sharedCenter = fakeAbsolutePoint();
+		
+		Rectangle testObject = fakeRectangle(sharedCenter,size);
+		Rectangle sameObject = fakeRectangle(sharedCenter,size);
+		
+		assertTrue(testObject.equals(sameObject));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_SameValuesDifferentCenterOnSamePoint_shouldBeFalse(int size) {
+		Rectangle testObject = fakeRectangle(size);
+		Rectangle sameObject = fakeRectangle(size);
+		
+		assertFalse(testObject.equals(sameObject));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_differentValues_shouldBeFalse(int size) {
+		Rectangle testObject = fakeRectangle(size);
+		Rectangle otherObject = fakeRectangle(size+1);
+		
+		assertFalse(testObject.equals(otherObject));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_checkSymmetryOfSameValue_shouldBeTrue(int size) {
+		Rectangle testObject = fakeRectangle(size);
+		Rectangle sameObject = fakeRectangle(size);
+		
+		assertTrue(testObject.equals(sameObject)==sameObject.equals(testObject));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0,10,100,1000})
+	public void testEquality_checkSymmetryOfDifferentValue_shouldBeTrue(int size) {
+		Rectangle testObject = fakeRectangle(size);
+		Rectangle otherObject = fakeRectangle(size+1);
+		
+		assertTrue(testObject.equals(otherObject)==otherObject.equals(testObject));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-10,0,10,})
+	public void testEquality_sameSizeDifferentCenter_shouldbeFalse(int offset) {
+		Point firstCenter = fakeAbsolutePoint();
+		Point secondCenter = fakeAbsolutePoint(offset,offset);
+		Rectangle testObject = fakeRectangle(firstCenter,100);
+		Rectangle otherObject = fakeRectangle(secondCenter,100);
+		
+		assertFalse(testObject.equals(otherObject));
+	}
 }

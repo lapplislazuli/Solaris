@@ -18,4 +18,12 @@ public interface ShapeTests {
 	
 	void testShape_NegativeSizeInput_ShouldThrowError();
 	void testShape_ZeroSizeInput_ShouldSucceed();
+	
+
+	void testEquality_SameValuesAndSameCenter_shouldBeTrue(int size);
+	void testEquality_SameValuesDifferentCenterOnSamePoint_shouldBeFalse(int size);
+	void testEquality_differentValues_shouldBeFalse(int size);
+	void testEquality_checkSymmetryOfSameValue_shouldBeTrue(int size);
+	void testEquality_checkSymmetryOfDifferentValue_shouldBeTrue(int size);
+	void testEquality_sameSizeDifferentCenter_shouldbeFalse(int offset);
 }
