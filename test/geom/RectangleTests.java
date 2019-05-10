@@ -1,77 +1,89 @@
 package geom;
 
+import static helpers.GeometryFakeFactory.fakeAbsolutePoint;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import interfaces.geom.Point;
+import static helpers.GeometryFakeFactory.*;
 
-class RectangleTests {
+class RectangleTests implements ShapeTests{
 	
-	private Rectangle testObject;
-	private AbsolutePoint centerTestObject;
-	
-	@BeforeEach
-	void setUpBeforeClass() throws Exception {
-		centerTestObject= new AbsolutePoint(100,100);
-		testObject = new Rectangle(centerTestObject,200,200);
-	}
-	
-	@Test
-	void testPositiveContains() {
-		List<AbsolutePoint> inPoints = new LinkedList<AbsolutePoint>();
-		inPoints.add(new AbsolutePoint(65,50));
-		inPoints.add(new AbsolutePoint(125,100));
-		inPoints.add(centerTestObject);
-		for(AbsolutePoint inPoint : inPoints)
-			assertTrue(testObject.contains(inPoint));
-	}
-	@Test
-	void testNegativeContains() {
-		List<AbsolutePoint> outPoints = new LinkedList<AbsolutePoint>();
-		outPoints.add(new AbsolutePoint(0,300));  
-		outPoints.add(new AbsolutePoint(0,-10));
+	@ParameterizedTest
+	@ValueSource(ints = {-35,-10,0,10,30})
+	public void testContains_pointIsInShape_shouldSucceed(int shift) {
+		Rectangle testItem = fakeRectangle(100);
+		Point inPoint = fakeAbsolutePoint(shift,shift);
 		
-		for(AbsolutePoint outPoint : outPoints)
-			assertFalse(testObject.contains(outPoint));
-	}
-	
-	@Test
-	void testTangentialContains() {
-		Point edgePoint=new AbsolutePoint(200,200); 
-		assertTrue(testObject.contains(edgePoint));
+		assertTrue(testItem.contains(inPoint));
 	}
 
-	@Test
-	void testInitOutlineWithRelativeRectangles() {
-		Rectangle biggerRectangle = new Rectangle(centerTestObject, 202,202);
-		Rectangle smallerRectangle = new Rectangle(centerTestObject, 190, 190);
+	@ParameterizedTest
+	@ValueSource(ints = {-3000,-500,200,300,10000})
+	public void testContains_yposOut_shouldFail(int ypos) {
+		Rectangle testItem = fakeRectangle(100);
+		Point outPoint = fakeAbsolutePoint(0,ypos);
 		
-		testObject.setLevelOfDetail(100);
-		testObject.initOutline();
+		assertFalse(testItem.contains(outPoint));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {-3000,-500,200,300,10000})
+	public void testContains_xposOut_shouldFail(int xpos) {
+		Rectangle testItem = fakeRectangle(100);
+		Point outPoint = fakeAbsolutePoint(xpos,0);
 		
-		for(Point p : testObject.outLine) {
-			assertTrue(biggerRectangle.contains(p));
-			assertFalse(smallerRectangle.contains(p));
-		}
+		assertFalse(testItem.contains(outPoint));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {-3000,-500,200,300,10000})
+	public void testContains_bothAttributesOut_shouldFail(int shift) {
+		Rectangle testItem = fakeRectangle(100);
+		Point outPoint = fakeAbsolutePoint(shift,shift);
+		
+		assertFalse(testItem.contains(outPoint));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {10,50,100})
+	public void testContains_PointTangents_shouldSucceed(int size) {
+		Rectangle testItem = fakeRectangle(size);
+		Point tangenterOne = fakeAbsolutePoint(size/2,0);
+		Point tangenterTwo = fakeAbsolutePoint(0,size/2);
+		
+		assertTrue(testItem.contains(tangenterOne));
+		assertTrue(testItem.contains(tangenterTwo));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {10,50,100})
+	public void testContains_EveryPointOfOutline_shouldSucceed(int size) {
+		Rectangle testItem = fakeRectangle(size);
+		
+		for(Point p : testItem.outLine)
+			testItem.contains(p);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {10,50,100,250})
+	public void testContains_ContainsAnotherSmallerShape_shouldSucced(int size) {
+		Rectangle smallerItem = fakeRectangle(size);
+		Rectangle biggerItem = fakeRectangle(size+5);
+		
+		for(Point p : smallerItem.outLine)
+			assertTrue(biggerItem.contains(p));
+	}
+
+	@Override
+	public void testContains_ContainsAnotherBiggerShape_shouldFail(int size) {
+		Rectangle smallerItem = fakeRectangle(size);
+		Rectangle biggerItem = fakeRectangle(size+5);
+		
+		for(Point p : biggerItem.outLine) 
+			assertFalse(smallerItem.contains(p));
 	}
 	
-	@Test
-	void testOutlineIsTangenting() {
-		testObject.setLevelOfDetail(100);
-		testObject.initOutline();
-		
-		for(Point p : testObject.outLine)
-			testObject.contains(p);
-	}
-	@Test
-	void testOutlineCount() {
-		testObject.levelOfDetail=25;
-		testObject.updateOrInitOutline();
-		assertEquals(100,testObject.outLine.size());
-	}
 }

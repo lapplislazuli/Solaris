@@ -1,7 +1,10 @@
 package helpers;
 
+import static helpers.GeometryFakeFactory.fakeAbsolutePoint;
+
 import geom.AbsolutePoint;
 import geom.Circle;
+import geom.Rectangle;
 import geom.RelativePoint;
 import interfaces.geom.Point;
 
@@ -36,4 +39,19 @@ public abstract class GeometryFakeFactory {
 		fake.initOutline();
 		return fake;
 	}
+	
+	public static Rectangle fakeRectangle(int size) {
+		Point fakeCenter = fakeAbsolutePoint();
+
+		return new Rectangle(fakeCenter,size,size);
+	}
+	
+	public static Rectangle fakeRectangle(Point center,int size) {
+		return new Rectangle(center,size,size);
+	}
+	
+	public static Rectangle fakeRectangle(Point center,int xsize,int ysize) {
+		return new Rectangle(center,xsize,ysize);
+	}
+	
 }
