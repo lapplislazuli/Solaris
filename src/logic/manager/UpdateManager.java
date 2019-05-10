@@ -46,6 +46,11 @@ public class UpdateManager implements TimerObject{
 		running = !config.settings.paused;
 	}
 	
+	public void registerObject(UpdatingObject o) {
+		if(!registeredItems.contains(o))
+			registeredItems.add(o);
+	}
+	
 	public void update() {
 		if(running) 
 			for(UpdatingObject updateMe : registeredItems)
@@ -53,7 +58,7 @@ public class UpdateManager implements TimerObject{
 	}
 	
 	public void addSpaceObject(SpaceObject o) {
-		registeredItems.add(o);
+		registerObject(o);
 		DrawingManager.getInstance().registeredItems.add(o);
 		for(SpaceObject child : o.getAllChildrenFlat())
 			CollisionManager.getInstance().register(child);
@@ -73,5 +78,18 @@ public class UpdateManager implements TimerObject{
 	public void togglePause() {
 		running=!running;
 		Logger.debug("Updatemanager set to running:" + running);
+	}
+	
+	public void reset() {
+		registeredItems=new LinkedList<UpdatingObject>();
+		running=true;
+
+		registeredItems.add(CollisionManager.getInstance());
+		registeredItems.add(DrawingManager.getInstance());
+		registeredItems.add(EffectManager.getInstance());
+	}
+	
+	public boolean getState() {
+		return running;
 	}
 }
