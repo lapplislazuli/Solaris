@@ -1,8 +1,8 @@
 package geom;
 
-import static helpers.GeometryFakeFactory.fakeAbsolutePoint;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -86,4 +86,14 @@ class RectangleTests implements ShapeTests{
 			assertFalse(smallerItem.contains(p));
 	}
 	
+	@Test
+	public void testShape_NegativeSizeInput_ShouldThrowError() {
+		assertThrows(Exception.class,() -> fakeRectangle(-100));
+	}
+
+	@Test
+	public void testShape_ZeroSizeInput_ShouldSucceed() {
+		Rectangle testItem = fakeRectangle(0);
+		assertTrue(true,"Rectangle was build with size 0 - No Exception");
+	}
 }

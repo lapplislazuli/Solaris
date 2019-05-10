@@ -2,6 +2,7 @@ package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -94,5 +95,16 @@ class CircleTests implements ShapeTests{
 		
 		for(Point p : biggerCircle.outLine) 
 			assertFalse(smallerCircle.contains(p));
+	}
+
+	@Test
+	public void testShape_NegativeSizeInput_ShouldThrowError() {
+		assertThrows(Exception.class,() -> fakeCircle(-100));
+	}
+
+	@Test
+	public void testShape_ZeroSizeInput_ShouldSucceed() {
+		Circle testItem = fakeCircle(0);
+		assertTrue(true,"Circle was build with size 0 - No Exception");
 	}
 }

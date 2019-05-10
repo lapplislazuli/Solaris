@@ -16,4 +16,6 @@ public interface ShapeTests {
 	void testContains_ContainsAnotherSmallerShape_shouldSucced(int size);
 	void testContains_ContainsAnotherBiggerShape_shouldFail(int size);
 	
+	void testShape_NegativeSizeInput_ShouldThrowError();
+	void testShape_ZeroSizeInput_ShouldSucceed();
 }
