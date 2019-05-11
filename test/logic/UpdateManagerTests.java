@@ -6,8 +6,6 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
-import logic.manager.CollisionManager;
-import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
 import fakes.FakeUpdatableCollidingObject;
 import fakes.FakeUpdatingObject;

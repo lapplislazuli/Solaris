@@ -2,8 +2,9 @@ package fakes;
 
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
+import interfaces.logical.RecursiveObject;
 
-public class FakeUpdatableCollidingObject extends FakeUpdatingObject implements DestructibleObject{
+public class FakeUpdatableCollidingObject extends FakeUpdatingObject implements DestructibleObject,RecursiveObject{
 
 	public boolean hitBoxUpdatet;
 	

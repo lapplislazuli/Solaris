@@ -58,13 +58,20 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 	}
 	
 	public Set<CollidingObject> getAllActiveColliders() {	
-		return getRegisteredItems().stream()
+		Set<CollidingObject> kids = getRegisteredItems().stream()
 		.filter(updatingObject -> updatingObject instanceof RecursiveObject)
 		.map(spaceObject -> (RecursiveObject)spaceObject)
 		.flatMap(recursive -> recursive.getAllChildren().stream())
 		.filter(o -> o instanceof CollidingObject)
 		.map(o->(CollidingObject)o)
 		.collect(Collectors.toSet());
+		
+		Set<CollidingObject> roots = getRegisteredItems().stream()
+				.filter(t->t instanceof CollidingObject)
+				.map(o->(CollidingObject)o)
+				.collect(Collectors.toSet());
+		roots.addAll(kids);
+		return roots;
 	}
 	
 	@Override
