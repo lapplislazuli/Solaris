@@ -2,18 +2,12 @@ package logic;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import logic.manager.UpdateManager;
 import fakes.FakeUpdatingObject;
 
-class UpdateManagerTests {
-	
-	@AfterEach
-	void resetUpdateManger() {
-	//	UpdateManager.getInstance().reset();
-	}
+class UpdateManagerTests implements SharedManagerTests{
 	
 	@Test
 	void testUpdate_objectCanbeUpdatet_shouldBeUpdatet() {
@@ -110,7 +104,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testRegisterItems_registeredObjectShouldContainItem_shouldBeTrue() {
+	public void testRegisterItems_registeredObjectShouldContainItem_shouldBeTrue() {
 		UpdateManager mnger =new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
@@ -121,7 +115,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testRegisterItems_doubleRegisterDoesntWork_shouldBeTrue() {
+	public void testDoubleRegisterItems_CheckSize_shouldBeOne() {
 		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
@@ -133,7 +127,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testReset_addItemAndReset_shouldBeEmpty() {
+	public void testReset_addItemAndReset_shouldBeEmpty() {
 		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
@@ -146,7 +140,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testReset_togglePauseAndReset_shouldBeTrue() {
+	public void testReset_togglePauseAndReset_shouldBeOn() {
 		UpdateManager mnger = new UpdateManager();
 		mnger.togglePause();
 		
@@ -156,7 +150,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testTogglePause_toggleOff_shouldBeOff() {
+	public void testTogglePause_toggleOff_shouldBeOff() {
 		UpdateManager mnger =new UpdateManager();
 		
 		mnger.togglePause();
@@ -165,7 +159,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testTogglePause_toggleOffOn_shouldBeOn() {
+	public void testTogglePause_toggleOffOn_shouldBeOn() {
 		UpdateManager mnger = new UpdateManager();
 		
 		mnger.togglePause();
@@ -175,7 +169,7 @@ class UpdateManagerTests {
 	}
 	
 	@Test
-	void testState_UpdateWhenPaused_shouldNotUpdate() {
+	public void testState_UpdateWhenPaused_shouldNotDoAnything() {
 		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		mnger.registerItem(fake);
