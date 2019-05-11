@@ -1,5 +1,6 @@
 package logic.manager;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -8,6 +9,7 @@ import java.util.TimerTask;
 import org.pmw.tinylog.Logger;
 
 import config.Config;
+import interfaces.logical.ManagerObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
@@ -15,10 +17,9 @@ import javafx.application.Platform;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
-public class UpdateManager implements TimerObject{
+public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 
-	public List<UpdatingObject> registeredItems;
-	
+	private List<UpdatingObject> registeredItems;
 	private Timer timer;
 	private boolean running=true;
 	
@@ -35,7 +36,7 @@ public class UpdateManager implements TimerObject{
 		return INSTANCE;
 	}
 	
-	public void initUpdateManager(Config config) {
+	public void init(Config config) {
 		CollisionManager.getInstance().initCollisionManager(this);
 		
 		registeredItems.add(CollisionManager.getInstance());
@@ -46,7 +47,7 @@ public class UpdateManager implements TimerObject{
 		running = !config.settings.paused;
 	}
 	
-	public void registerObject(UpdatingObject o) {
+	public void registerItem(UpdatingObject o) {
 		if(!registeredItems.contains(o))
 			registeredItems.add(o);
 	}
@@ -58,7 +59,7 @@ public class UpdateManager implements TimerObject{
 	}
 	
 	public void addSpaceObject(SpaceObject o) {
-		registerObject(o);
+		registerItem(o);
 		DrawingManager.getInstance().registeredItems.add(o);
 		for(SpaceObject child : o.getAllChildrenFlat())
 			CollisionManager.getInstance().register(child);
@@ -91,5 +92,9 @@ public class UpdateManager implements TimerObject{
 	
 	public boolean getState() {
 		return running;
+	}
+
+	public Collection<UpdatingObject> getRegisteredItems() {
+		return registeredItems;
 	}
 }

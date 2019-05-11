@@ -73,7 +73,7 @@ public class CollisionManager implements UpdatingObject{
 	}
 	
 	public Set<SpaceObject> getAllActiveSpaceObjects() {	
-		return parent.registeredItems.stream()
+		return parent.getRegisteredItems().stream()
 				.filter(updatingObject -> updatingObject instanceof SpaceObject)
 				.map(spaceObject -> (SpaceObject)spaceObject)
 				.flatMap(spaceObject -> spaceObject.getAllChildrenFlat().stream())

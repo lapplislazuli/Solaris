@@ -83,7 +83,7 @@ public class Program extends Application{
 	}
 	
 	private void initManagers(Scene scene,Config config) {
-		UpdateManager.getInstance().initUpdateManager(config);    
+		UpdateManager.getInstance().init(config);    
         MouseManager.getInstance().init(scene, config);
         KeyBoardManager.getInstance().init(scene,config);   
 	}
@@ -208,10 +208,10 @@ public class Program extends Application{
 		
 		updateManager.update();
 		
-		updateManager.registeredItems.add(playerNav);
-		updateManager.registeredItems.add(carrierNav);
-		updateManager.registeredItems.add(aliens);
-		updateManager.registeredItems.add(chinNav);
+		updateManager.registerItem(playerNav);
+		updateManager.registerItem(carrierNav);
+		updateManager.registerItem(aliens);
+		updateManager.registerItem(chinNav);
 	}
 
 

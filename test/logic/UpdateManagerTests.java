@@ -20,7 +20,7 @@ class UpdateManagerTests {
 		UpdateManager mnger = UpdateManager.getInstance();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		mnger.update();
 		
 		assertTrue(fake.updatet);
@@ -32,7 +32,7 @@ class UpdateManagerTests {
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		fake.canBeUpdatet = false;
 
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		mnger.update();
 		
 		assertFalse(fake.updatet);
@@ -43,7 +43,7 @@ class UpdateManagerTests {
 		UpdateManager mnger = UpdateManager.getInstance();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		mnger.update();
 		mnger.update();
 		
@@ -56,7 +56,7 @@ class UpdateManagerTests {
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		fake.canBeUpdatet = false;
 
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		mnger.update();
 		mnger.update();
 		
@@ -70,7 +70,7 @@ class UpdateManagerTests {
 		FakeUpdatingObject fakeKid = new FakeUpdatingObject();
 		fakeParent.kid=fakeKid;
 
-		mnger.registerObject(fakeParent);
+		mnger.registerItem(fakeParent);
 		mnger.update();
 		
 		assertTrue(fakeParent.updatet);
@@ -86,7 +86,7 @@ class UpdateManagerTests {
 		fakeKid.canBeUpdatet=false;
 		fakeParent.kid=fakeKid;
 
-		mnger.registerObject(fakeParent);
+		mnger.registerItem(fakeParent);
 		mnger.update();
 		
 		assertTrue(fakeParent.updatet);
@@ -102,7 +102,7 @@ class UpdateManagerTests {
 		fakeParent.canBeUpdatet=false;
 		fakeParent.kid=fakeKid;
 
-		mnger.registerObject(fakeParent);
+		mnger.registerItem(fakeParent);
 		mnger.update();
 		
 		assertFalse(fakeParent.updatet);
@@ -114,10 +114,10 @@ class UpdateManagerTests {
 		UpdateManager mnger = UpdateManager.getInstance();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		
-		assertTrue(mnger.registeredItems.contains(fake));
-		assertEquals(1,mnger.registeredItems.size());
+		assertTrue(mnger.getRegisteredItems().contains(fake));
+		assertEquals(1,mnger.getRegisteredItems().size());
 	}
 	
 	@Test
@@ -125,11 +125,11 @@ class UpdateManagerTests {
 		UpdateManager mnger = UpdateManager.getInstance();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
-		mnger.registerObject(fake);
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
+		mnger.registerItem(fake);
 		
-		assertTrue(mnger.registeredItems.contains(fake));
-		assertEquals(1,mnger.registeredItems.size());
+		assertTrue(mnger.getRegisteredItems().contains(fake));
+		assertEquals(1,mnger.getRegisteredItems().size());
 	}
 	
 	@Test
@@ -137,12 +137,12 @@ class UpdateManagerTests {
 		UpdateManager mnger = UpdateManager.getInstance();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		
 		mnger.reset();
 		
-		assertFalse(mnger.registeredItems.contains(fake));
-		assertEquals(0,mnger.registeredItems.size());
+		assertFalse(mnger.getRegisteredItems().contains(fake));
+		assertEquals(0,mnger.getRegisteredItems().size());
 	}
 	
 	@Test
@@ -178,7 +178,7 @@ class UpdateManagerTests {
 	void testState_UpdateWhenPaused_shouldNotUpdate() {
 		UpdateManager mnger = UpdateManager.getInstance();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
-		mnger.registerObject(fake);
+		mnger.registerItem(fake);
 		
 		mnger.togglePause();
 		mnger.update();

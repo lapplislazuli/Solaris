@@ -68,7 +68,7 @@ public class BaseNavigator implements Navigator{
 	}
 
 	public void remove() {
-		UpdateManager.getInstance().registeredItems.remove(this);
+		UpdateManager.getInstance().getRegisteredItems().remove(this);
 	}
 
 	public Spacecraft getShuttle() {
