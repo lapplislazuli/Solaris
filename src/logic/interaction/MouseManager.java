@@ -92,7 +92,9 @@ public class MouseManager implements UpdatingObject {
 		DrawingManager.getInstance().registeredItems.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
-			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())
+			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())
+			.filter(t-> t instanceof SpaceObject)
+			.map(t->(SpaceObject)t)
 			.filter(item -> item.shape.contains(clickedPosition))
 			.forEach(clicked -> PlayerManager.getInstance().getPlayerNavigator().route.add(clicked));
 		Logger.info("New Route:"+PlayerManager.getInstance().getPlayerNavigator().route.toString());
@@ -102,7 +104,9 @@ public class MouseManager implements UpdatingObject {
 		DrawingManager.getInstance().registeredItems.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
-			.flatMap(space -> ((SpaceObject)space).getAllChildrenFlat().stream())
+			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())
+			.filter(t-> t instanceof SpaceObject)
+			.map(t->(SpaceObject)t)
 			.filter(item -> item.shape.contains(clickedPosition))
 			.forEach(clicked -> clicked.click());
 	}

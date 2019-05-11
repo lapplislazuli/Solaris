@@ -73,8 +73,41 @@ public class CollisionManagerTests implements SharedManagerTests {
 	
 	
 	@Test
+	public void TestRegisterItem_registerDestructibleItem_shouldBeThere() {
+		CollisionManager mnger = freshNewCollisionManager();
+		
+		FakeDestructibleObject fakeDestructible = new FakeDestructibleObject();
+		mnger.registerItem(fakeDestructible);
+		
+		assertTrue(mnger.getRegisteredDestructibles().contains(fakeDestructible));
+	}
+	
+	@Test
+	public void TestRegisterItem_registerNonDestructibleItem_DestructiblesShouldBeEmpty() {
+		CollisionManager mnger = freshNewCollisionManager();
+		FakeCollidingObject fakeCollider = new FakeCollidingObject();
+		mnger.registerItem(fakeCollider);
+		
+		assertTrue(mnger.getRegisteredDestructibles().isEmpty());
+	}
+	
+	@Test
+	public void testEmpty_clearsBothLists() {
+		CollisionManager mnger = freshNewCollisionManager();
+		FakeCollidingObject fakeCollider = new FakeCollidingObject();
+		FakeDestructibleObject fakeDestructible = new FakeDestructibleObject();
+		mnger.registerItem(fakeCollider);
+		mnger.registerItem(fakeDestructible);
+		
+		mnger.empty();
+		
+		assertTrue(mnger.getRegisteredDestructibles().isEmpty());
+		assertTrue(mnger.getRegisteredItems().isEmpty());
+	}
+	
+	@Test
 	public void testRegisterItems_registeredObjectShouldContainItem_shouldBeTrue() {
-		CollisionManager mnger =new CollisionManager();
+		CollisionManager mnger =freshNewCollisionManager();
 		FakeCollidingObject fake = new FakeCollidingObject();
 		
 		mnger.registerItem(fake);
@@ -93,6 +126,17 @@ public class CollisionManagerTests implements SharedManagerTests {
 		
 		assertTrue(mnger.getRegisteredItems().contains(fake));
 		assertEquals(1,mnger.getRegisteredItems().size());
+	}
+	@Test
+	public void testDoubleRegisterDestructibleItemsItems_CheckSize_shouldBeOne() {
+		CollisionManager mnger = freshNewCollisionManager();
+		FakeDestructibleObject fake = new FakeDestructibleObject();
+		
+		mnger.registerItem(fake);
+		mnger.registerItem(fake);
+		
+		assertTrue(mnger.getRegisteredDestructibles().contains(fake));
+		assertEquals(1,mnger.getRegisteredDestructibles().size());
 	}
 	
 	@Test

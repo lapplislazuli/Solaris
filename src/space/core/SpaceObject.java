@@ -1,4 +1,5 @@
 package space.core;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,9 +13,10 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Shape;
 import interfaces.interaction.ClickableObject;
 import interfaces.logical.CollidingObject;
+import interfaces.logical.RecursiveObject;
 import interfaces.logical.UpdatingObject;
 
-public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject, ComplexDrawingObject{
+public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject, ComplexDrawingObject,RecursiveObject{
 	public Shape shape;
 	public String name;
 	public AbsolutePoint center;
@@ -78,10 +80,10 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return false;
 	}
 	
-	public List<SpaceObject> getAllChildrenFlat(){
-		List<SpaceObject> flatChildren = new LinkedList<SpaceObject>();
+	public Collection<RecursiveObject> getAllChildren(){
+		Collection<RecursiveObject> flatChildren = new LinkedList<RecursiveObject>();
 		for(SpaceObject trabant : trabants)
-			flatChildren.addAll(trabant.getAllChildrenFlat());
+			flatChildren.addAll(trabant.getAllChildren());
 		flatChildren.add(this);
 		return flatChildren;
 	}
@@ -123,4 +125,5 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	public DrawingInformation getDrawingInformation() {
 		return dInfo;
 	}
+	
 }

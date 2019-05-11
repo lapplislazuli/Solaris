@@ -9,13 +9,10 @@ public class FakeDestructibleObject extends FakeCollidingObject implements Destr
 	
 	public FakeDestructibleObject() {
 		collides=true;
-		removed=false;
 		destroyed=false;
 	}
 	
-	public void remove() {
-		removed=true;
-	}
+	public void remove() {}
 
 	public void destruct() {
 		destroyed=true;

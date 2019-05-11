@@ -32,10 +32,10 @@ class MissileShuttleCollisionTests {
 	}
 	void initMissiles() {
 		shuttleOne.shootLaser(shuttleTwo);
-		missileOne=(Missile)shuttleOne.getAllChildrenFlat().get(0);
+		//missileOne=(Missile)shuttleOne.getAllChildren().(0);
 		
 		shuttleTwo.shootLaser(shuttleOne);
-		missileTwo=(Missile)shuttleTwo.getAllChildrenFlat().get(0);
+		//missileTwo=(Missile)shuttleTwo.getAllChildren().get(0);
 	}
 	
 	@Test

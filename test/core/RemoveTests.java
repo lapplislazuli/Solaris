@@ -53,42 +53,42 @@ class RemoveTests {
 
 	@Test
 	void testInitialChildrenCount() {
-		assertEquals(5,sun.getAllChildrenFlat().size());
+		assertEquals(5,sun.getAllChildren().size());
 	}
 	@Test
 	void testChildrenCountAfterShootingMissiles() {
 		shuttleOne.shootLaser(sun);
 		shuttleTwo.shootLaser(sun);
 		
-		assertEquals(7,sun.getAllChildrenFlat().size());
+		assertEquals(7,sun.getAllChildren().size());
 	}
 	
 	@Test
 	void testRemoveSatellite() {
 		astra.remove();
 		
-		assertEquals(4, sun.getAllChildrenFlat().size());
+		assertEquals(4, sun.getAllChildren().size());
 	}
 	
 	@Test
 	void testDestructSatellite() {
 		astra.destruct();
 		
-		assertEquals(4, sun.getAllChildrenFlat().size());
+		assertEquals(4, sun.getAllChildren().size());
 	}
 	
 	@Test
 	void testRemoveShuttle() {
 		shuttleOne.remove();
 		
-		assertEquals(4, sun.getAllChildrenFlat().size());
+		assertEquals(4, sun.getAllChildren().size());
 	}
 	
 	@Test
 	void testDestructShuttle() {
 		shuttleOne.destruct();
 		// Still 5, because an Asteroid is added!
-		assertEquals(5, sun.getAllChildrenFlat().size());
+		assertEquals(5, sun.getAllChildren().size());
 	}
 	
 
@@ -96,22 +96,22 @@ class RemoveTests {
 	void testShootAndRemoveMissile() {
 		shuttleOne.shootRocket(sun);
 		Rocket r = (Rocket)(shuttleOne.trabants.get(0));
-		assertEquals(6, sun.getAllChildrenFlat().size());
+		assertEquals(6, sun.getAllChildren().size());
 		
 		r.remove();
 		
-		assertEquals(5, sun.getAllChildrenFlat().size());
+		assertEquals(5, sun.getAllChildren().size());
 	}
 	
 	@Test
 	void testShootAndDestructMissile() {
 		shuttleOne.shootRocket(sun);
 		Rocket r = (Rocket)(shuttleOne.trabants.get(0));
-		assertEquals(6, sun.getAllChildrenFlat().size());
+		assertEquals(6, sun.getAllChildren().size());
 		
 		r.destruct();
 		
-		assertEquals(5, sun.getAllChildrenFlat().size());
+		assertEquals(5, sun.getAllChildren().size());
 	}
 	
 	@Test

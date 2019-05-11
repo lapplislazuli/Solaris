@@ -3,13 +3,17 @@ package logic.manager;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
 
 import config.Config;
+import interfaces.logical.CollidingObject;
 import interfaces.logical.ManagerObject;
+import interfaces.logical.RecursiveObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
@@ -48,8 +52,19 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 	public void addSpaceObject(SpaceObject o) {
 		registerItem(o);
 		DrawingManager.getInstance().registeredItems.add(o);
-		for(SpaceObject child : o.getAllChildrenFlat())
-			ManagerRegistry.getCollisionManager().registerItem(child);
+		for(RecursiveObject child : o.getAllChildren())
+			if(child instanceof CollidingObject)
+				ManagerRegistry.getCollisionManager().registerItem((CollidingObject)child);
+	}
+	
+	public Set<CollidingObject> getAllActiveColliders() {	
+		return getRegisteredItems().stream()
+		.filter(updatingObject -> updatingObject instanceof SpaceObject)
+		.map(spaceObject -> (SpaceObject)spaceObject)
+		.flatMap(spaceObject -> spaceObject.getAllChildren().stream())
+		.filter(o -> o instanceof CollidingObject)
+		.map(o->(CollidingObject)o)
+		.collect(Collectors.toSet());
 	}
 	
 	@Override

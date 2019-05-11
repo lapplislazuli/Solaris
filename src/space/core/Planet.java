@@ -7,12 +7,14 @@ package space.core;
 
 import javafx.scene.paint.Color;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import interfaces.drawing.DrawingInformation;
+import interfaces.logical.RecursiveObject;
 
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
@@ -83,6 +85,8 @@ public class Planet extends MovingSpaceObject {
 		rotationSpeed=builder.rotationSpeed;
 		if(dInfo instanceof JavaFXDrawingInformation)
 			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
-	}	
+	}
+
+	
 	
 }

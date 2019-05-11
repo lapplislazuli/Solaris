@@ -3,7 +3,6 @@ package logic.manager;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
 
@@ -11,18 +10,15 @@ import config.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.ManagerObject;
-import space.core.SpaceObject;
 
 public class CollisionManager implements ManagerObject<CollidingObject>{
 	
 	private Set<CollidingObject> registeredItems;
 	private Set<DestructibleObject> registeredDestructibles;
 
-	private UpdateManager parent;
 	private boolean running=true;
 	
 	public CollisionManager() {
-		parent=ManagerRegistry.getUpdateManager();
 		registeredItems = new HashSet<CollidingObject>();
 		registeredDestructibles = new HashSet<DestructibleObject>();
 		Logger.debug("Build CollisionManager");
@@ -56,19 +52,11 @@ public class CollisionManager implements ManagerObject<CollidingObject>{
 	
 	public void refresh() {
 			empty();
-			for(SpaceObject o : getAllActiveSpaceObjects())
+			for(CollidingObject o : ManagerRegistry.getUpdateManager().getAllActiveColliders())
 				registerItem(o);
 			registeredItems.stream().forEach(e->e.updateHitbox());
 	}
 	
-	public Set<SpaceObject> getAllActiveSpaceObjects() {	
-		return parent.getRegisteredItems().stream()
-				.filter(updatingObject -> updatingObject instanceof SpaceObject)
-				.map(spaceObject -> (SpaceObject)spaceObject)
-				.flatMap(spaceObject -> spaceObject.getAllChildrenFlat().stream())
-				.collect(Collectors.toSet());
-	}
-
 	public void toggleUpdate() {
 		running=!running;
 		Logger.debug("CollisionManager set to running:" + running);
@@ -78,9 +66,7 @@ public class CollisionManager implements ManagerObject<CollidingObject>{
 	}
 	
 	
-	public void init(Config c) {
-		parent = ManagerRegistry.getUpdateManager();
-	}
+	public void init(Config c) {}
 
 	public void reset() {
 		registeredItems = new HashSet<CollidingObject>();

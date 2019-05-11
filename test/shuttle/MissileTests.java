@@ -52,19 +52,19 @@ public class MissileTests {
 
 	void initMissiles() {
 		shuttle.shootLaser(targetOne);
-		missileOne=(Missile)shuttle.getAllChildrenFlat().get(0);
+		//missileOne=(Missile)shuttle.getAllChildrenFlat().get(0);
 		
 		shuttle.laserCoolDown=0;
 		shuttle.shootLaser(targetTwo);
-		missileTwo=(Missile)shuttle.getAllChildrenFlat().get(1);
+		//missileTwo=(Missile)shuttle.getAllChildrenFlat().get(1);
 		
 		shuttle.laserCoolDown=0;
 		shuttle.shootLaser(targetThree);
-		missileThree=(Missile)shuttle.getAllChildrenFlat().get(2);
+		//missileThree=(Missile)shuttle.getAllChildrenFlat().get(2);
 		
 		shuttle.laserCoolDown=0;
 		shuttle.shootLaser(targetFour);
-		missileFour=(Missile)shuttle.getAllChildrenFlat().get(3);
+		//missileFour=(Missile)shuttle.getAllChildrenFlat().get(3);
 	}
 	
 	@Test
