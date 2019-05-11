@@ -8,7 +8,7 @@ public class FakeDestructibleObject extends FakeCollidingObject implements Destr
 	public boolean destroyed;
 	
 	public FakeDestructibleObject() {
-		super();
+		collides=true;
 		removed=false;
 		destroyed=false;
 	}

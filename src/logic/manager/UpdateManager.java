@@ -63,7 +63,7 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
         }, 0, updateIntervall);
 	}
 
-	public void togglePause() {
+	public void toggleUpdate() {
 		running=!running;
 		Logger.debug("Updatemanager set to running:" + running);
 	}
@@ -74,7 +74,7 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 		
 	}
 	
-	public boolean getState() {
+	public boolean isRunning() {
 		return running;
 	}
 

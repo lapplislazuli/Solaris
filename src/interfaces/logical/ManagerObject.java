@@ -10,4 +10,7 @@ public interface ManagerObject<T> extends UpdatingObject{
 	public void init(Config c);
 	public void reset();
 	public Collection<T> getRegisteredItems();
+	
+	public void toggleUpdate();
+	public boolean isRunning();
 }

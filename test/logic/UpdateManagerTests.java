@@ -142,30 +142,30 @@ class UpdateManagerTests implements SharedManagerTests{
 	@Test
 	public void testReset_togglePauseAndReset_shouldBeOn() {
 		UpdateManager mnger = new UpdateManager();
-		mnger.togglePause();
+		mnger.toggleUpdate();
 		
 		mnger.reset();
 		
-		assertTrue(mnger.getState());
+		assertTrue(mnger.isRunning());
 	}
 	
 	@Test
 	public void testTogglePause_toggleOff_shouldBeOff() {
 		UpdateManager mnger =new UpdateManager();
 		
-		mnger.togglePause();
+		mnger.toggleUpdate();
 		
-		assertFalse(mnger.getState());
+		assertFalse(mnger.isRunning());
 	}
 	
 	@Test
 	public void testTogglePause_toggleOffOn_shouldBeOn() {
 		UpdateManager mnger = new UpdateManager();
 		
-		mnger.togglePause();
-		mnger.togglePause();
+		mnger.toggleUpdate();
+		mnger.toggleUpdate();
 		
-		assertTrue(mnger.getState());
+		assertTrue(mnger.isRunning());
 	}
 	
 	@Test
@@ -174,7 +174,7 @@ class UpdateManagerTests implements SharedManagerTests{
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		mnger.registerItem(fake);
 		
-		mnger.togglePause();
+		mnger.toggleUpdate();
 		mnger.update();
 		
 		assertFalse(fake.updatet);

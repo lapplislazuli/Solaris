@@ -22,6 +22,7 @@ public class CollisionManager implements ManagerObject<CollidingObject>{
 	private boolean running=true;
 	
 	public CollisionManager() {
+		parent=ManagerRegistry.getUpdateManager();
 		registeredItems = new HashSet<CollidingObject>();
 		registeredDestructibles = new HashSet<DestructibleObject>();
 		Logger.debug("Build CollisionManager");
@@ -30,17 +31,22 @@ public class CollisionManager implements ManagerObject<CollidingObject>{
 	public void update() {
 		if(running) {
 			refresh();
-			Set<DestructibleObject> destroyed=new HashSet<DestructibleObject>();
-			
-			for(DestructibleObject destructible : registeredDestructibles)
-				for(CollidingObject collider: registeredItems)
-					if(collider.collides(destructible)) {
-						destructible.destruct();
-						destroyed.add(destructible);
-					}
-			registeredDestructibles.removeAll(destroyed);
-			registeredItems.removeAll(destroyed);
+			doCollisions();
 		}	
+	}
+	
+	public void doCollisions() {
+		Set<DestructibleObject> destroyed=new HashSet<DestructibleObject>();
+		
+		for(DestructibleObject destructible : registeredDestructibles)
+			for(CollidingObject collider: registeredItems)
+				if(collider.collides(destructible)) {
+					destructible.destruct();
+					destroyed.add(destructible);
+				}
+		
+		registeredDestructibles.removeAll(destroyed);
+		registeredItems.removeAll(destroyed);
 	}
 	
 	public void empty() {
@@ -63,11 +69,15 @@ public class CollisionManager implements ManagerObject<CollidingObject>{
 				.collect(Collectors.toSet());
 	}
 
-	public void togglePause() {
+	public void toggleUpdate() {
 		running=!running;
 		Logger.debug("CollisionManager set to running:" + running);
 	}
-
+	public boolean isRunning() {
+		return running;
+	}
+	
+	
 	public void init(Config c) {
 		parent = ManagerRegistry.getUpdateManager();
 	}
@@ -75,6 +85,7 @@ public class CollisionManager implements ManagerObject<CollidingObject>{
 	public void reset() {
 		registeredItems = new HashSet<CollidingObject>();
 		registeredDestructibles = new HashSet<DestructibleObject>();
+		running=true;
 		Logger.debug("Reset CollisionManager");
 	}
 

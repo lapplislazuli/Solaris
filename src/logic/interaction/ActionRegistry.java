@@ -20,10 +20,10 @@ public class ActionRegistry {
 	private void initStandardActions() {
 		registerAction(
 				new Action("TogglePause" ,"Pauses or Starts the update-Cycle",
-						()->ManagerRegistry.getUpdateManager().togglePause()));
+						()->ManagerRegistry.getUpdateManager().toggleUpdate()));
 		registerAction(
 				new Action("ToggleCollision" ,"Pauses or Starts the Collision" ,
-						()->ManagerRegistry.getCollisionManager().togglePause()));
+						()->ManagerRegistry.getCollisionManager().toggleUpdate()));
 		registerAction(
 				new Action("RouteClear" ,"Cleares all current Items in the Players Route, leaving only current Parent",
 						()->PlayerManager.getInstance().getPlayerNavigator().clearRoute()));
