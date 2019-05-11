@@ -1,20 +1,13 @@
-/**
- * @Author Leonhard Applis
- * @Created 31.08.2018
- * @Package space.core
- */
 package space.core;
 
 import javafx.scene.paint.Color;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import interfaces.drawing.DrawingInformation;
-import interfaces.logical.RecursiveObject;
 
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {

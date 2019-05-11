@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import logic.Program;
-import logic.manager.CollisionManager;
 import logic.manager.ManagerRegistry;
-import logic.manager.UpdateManager;
 
 public class ActionRegistry {
 	private static ActionRegistry INSTANCE;

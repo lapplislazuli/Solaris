@@ -1,30 +1,25 @@
 package logic.manager;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.pmw.tinylog.Logger;
 
+import config.Config;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingObject;
-import interfaces.logical.UpdatingObject;
+import interfaces.logical.ManagerObject;
 
-public class DrawingManager implements UpdatingObject {
+public class DrawingManager implements ManagerObject<DrawingObject> {
 
-	private static DrawingManager INSTANCE;
-	
 	public Set<DrawingObject> registeredItems;
 	private DrawingContext context;
+	private boolean running=true;
 	
-	private DrawingManager() {
+	public DrawingManager() {
 		registeredItems=new HashSet<DrawingObject>();
 		Logger.debug("Build DrawingManager");
-	}
-	
-	public static DrawingManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new DrawingManager();
-		return INSTANCE;
 	}
 	
 	private void drawAll() {
@@ -40,7 +35,26 @@ public class DrawingManager implements UpdatingObject {
 	
 	@Override
 	public void update() {
-		drawAll();	
+		if(running)
+			drawAll();	
+	}
+
+	public void init(Config c) {
+		//Nothing?
+		//Normal Init is done with DrawingContext, which is not good for a Config
+	}
+
+	@Override
+	public void reset() {
+		running=true;
+		registeredItems=new HashSet<DrawingObject>();
+	}
+
+	public void toggleUpdate() {running=!running;}
+	public boolean isRunning() {return running;}
+
+	public Collection<DrawingObject> getRegisteredItems() {
+		return registeredItems;
 	}
 	
 }

@@ -4,11 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import geom.AbsolutePoint;
-import space.advanced.FixStar;
 import space.core.Planet;
 import space.core.SpaceObject;
-import space.core.Star;
 
 import static helpers.SpaceObjectFakeFactory.*;
 

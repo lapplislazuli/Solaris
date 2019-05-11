@@ -1,7 +1,5 @@
 package helpers;
 
-import static helpers.GeometryFakeFactory.fakeAbsolutePoint;
-
 import geom.AbsolutePoint;
 import geom.Circle;
 import geom.Rectangle;

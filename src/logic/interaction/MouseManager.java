@@ -3,7 +3,7 @@ package logic.interaction;
 
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import logic.manager.DrawingManager;
+import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import javafx.scene.*;
 
@@ -89,7 +89,7 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	private void registerSpaceObjectToPlayerRoute(Point clickedPosition) {
-		DrawingManager.getInstance().registeredItems.
+		ManagerRegistry.getDrawingManager().registeredItems.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
 			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())
@@ -101,7 +101,7 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {
-		DrawingManager.getInstance().registeredItems.
+		ManagerRegistry.getDrawingManager().registeredItems.
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
 			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())

@@ -1,11 +1,8 @@
 package space.spacecrafts.ships.missiles;
 
-import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.Rectangle;
-import interfaces.drawing.DrawingContext;
 import interfaces.logical.DestructibleObject;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
 import space.spacecrafts.ships.Ship;

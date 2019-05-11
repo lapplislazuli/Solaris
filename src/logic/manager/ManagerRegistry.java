@@ -19,7 +19,7 @@ public class ManagerRegistry {
 	private ManagerRegistry() {
 		uptmng=new UpdateManager();
 		efxmng=EffectManager.getInstance();
-		drwmng=DrawingManager.getInstance();
+		drwmng=new DrawingManager();
 		colmng=new CollisionManager();
 	}
 	

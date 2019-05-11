@@ -8,7 +8,7 @@ public class FakeDrawingObject implements ComplexDrawingObject{
 	public boolean shapeDrawn;
 	public boolean drawable;
 	
-	FakeDrawingObject(){
+	public FakeDrawingObject(){
 		drawn=false;
 		shapeDrawn=false;
 		drawable=true;
@@ -16,17 +16,27 @@ public class FakeDrawingObject implements ComplexDrawingObject{
 	
 	@Override
 	public void draw(DrawingContext dc) {
-		if(drawable)
-			drawn=true;
+		fakeDraw(dc);
 	}
 
+	private void fakeDraw(DrawingContext dc){
+		FakeDrawingContext fc = (FakeDrawingContext) dc;
+		if(drawable) {
+			if(fc.error!=null)
+				//throw new Exception(fc.error);
+				return;
+			else {
+				fc.drawnItems.add(this);
+				drawn = true;
+			}
+		}
+	}
+	
 	@Override
 	public void drawShape(DrawingContext dc) {
 		if(drawable) {
 			shapeDrawn=true;
-			
 		}
-			
 	}
 
 	@Override

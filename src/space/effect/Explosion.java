@@ -1,9 +1,6 @@
 package space.effect;
 
-import javafx.scene.paint.Color;
-import drawing.JavaFXDrawingContext;
 import geom.Circle;
-import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 

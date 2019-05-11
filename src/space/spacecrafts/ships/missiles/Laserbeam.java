@@ -8,7 +8,6 @@ import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import interfaces.drawing.DrawingContext;
 import geom.AbsolutePoint;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import space.spacecrafts.ships.Ship;
 

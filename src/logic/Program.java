@@ -57,10 +57,10 @@ public class Program extends Application{
 		Group root = new Group();
 		
 		Scene scene=initScene(config,root);
-		
+
+        initManagers(scene,config);
         initDrawingContextAndManager(root,scene);
         
-        initManagers(scene,config);
 		
         Logger.info("Loaded Config and Managers, now loading Galaxy");
         initSpace();
@@ -80,7 +80,7 @@ public class Program extends Application{
 	private void initDrawingContextAndManager(Group root, Scene scene) {
 		JavaFXDrawingContext jfx = new JavaFXDrawingContext(root);
         jfx.bindSizeProperties(scene);
-        DrawingManager.getInstance().initDrawingManager(jfx);
+        ManagerRegistry.getDrawingManager().initDrawingManager(jfx);
 	}
 	
 	private void initManagers(Scene scene,Config config) {

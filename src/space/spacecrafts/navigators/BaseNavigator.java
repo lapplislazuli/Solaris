@@ -9,7 +9,6 @@ import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import logic.manager.ManagerRegistry;
-import logic.manager.UpdateManager;
 import space.core.SpaceObject;
 
 public class BaseNavigator implements Navigator{

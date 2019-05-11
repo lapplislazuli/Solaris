@@ -5,8 +5,8 @@ import java.util.List;
 import interfaces.drawing.*;
 public class FakeDrawingContext implements DrawingContext{
 	
-	String error;
-	List<DrawingObject> drawnItems;
+	public String error;
+	public List<DrawingObject> drawnItems;
 	
 	public FakeDrawingContext(){
 		drawnItems = new LinkedList<DrawingObject>();
