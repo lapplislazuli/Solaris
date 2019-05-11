@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import logic.interaction.KeyBoardManager;
 import logic.interaction.MouseManager;
 import logic.manager.DrawingManager;
+import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
 import javafx.scene.*;
 
@@ -83,7 +84,8 @@ public class Program extends Application{
 	}
 	
 	private void initManagers(Scene scene,Config config) {
-		UpdateManager.getInstance().init(config);    
+		ManagerRegistry.getInstance().init(config);
+		    
         MouseManager.getInstance().init(scene, config);
         KeyBoardManager.getInstance().init(scene,config);   
 	}
@@ -104,7 +106,7 @@ public class Program extends Application{
 	
 	@SuppressWarnings("unused")
 	private void initSpace() {
-		UpdateManager updateManager = UpdateManager.getInstance();
+		UpdateManager updateManager = ManagerRegistry.getUpdateManager();
 		
 		DistantGalaxy milkyway = new DistantGalaxy("MilkyWay",250);
 		

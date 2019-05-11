@@ -9,7 +9,6 @@ public class ManagerRegistry {
 	private static DrawingManager drwmng;
 	private static CollisionManager colmng;
 	
-
 	private static ManagerRegistry INSTANCE;
 	public static ManagerRegistry getInstance() {
 		if(INSTANCE==null)
@@ -18,7 +17,7 @@ public class ManagerRegistry {
 	}
 	
 	private ManagerRegistry() {
-		uptmng=UpdateManager.getInstance();
+		uptmng=new UpdateManager();
 		efxmng=EffectManager.getInstance();
 		drwmng=DrawingManager.getInstance();
 		colmng=CollisionManager.getInstance();
@@ -26,6 +25,10 @@ public class ManagerRegistry {
 	
 	public void init(Config conf) {
 		uptmng.init(conf);
+		
+		uptmng.registerItem(efxmng);
+		uptmng.registerItem(drwmng);
+		uptmng.registerItem(colmng);
 		//Efx does not need init
 		//drwmng needs drawingcontext?
 	}

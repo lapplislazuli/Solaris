@@ -8,6 +8,7 @@ import org.pmw.tinylog.Logger;
 import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
+import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
 import space.core.SpaceObject;
 
@@ -68,7 +69,7 @@ public class BaseNavigator implements Navigator{
 	}
 
 	public void remove() {
-		UpdateManager.getInstance().getRegisteredItems().remove(this);
+		ManagerRegistry.getUpdateManager().getRegisteredItems().remove(this);
 	}
 
 	public Spacecraft getShuttle() {

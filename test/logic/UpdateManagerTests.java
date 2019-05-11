@@ -12,12 +12,12 @@ class UpdateManagerTests {
 	
 	@AfterEach
 	void resetUpdateManger() {
-		UpdateManager.getInstance().reset();
+	//	UpdateManager.getInstance().reset();
 	}
 	
 	@Test
 	void testUpdate_objectCanbeUpdatet_shouldBeUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
 		mnger.registerItem(fake);
@@ -28,7 +28,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testUpdate_objectCannotUpdatet_shouldNotBeUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		fake.canBeUpdatet = false;
 
@@ -40,7 +40,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testUpdate_objectCanbeUpdatet_updateTwice_shouldBeUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 
 		mnger.registerItem(fake);
@@ -52,7 +52,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testUpdate_objectCannotUpdatet_updateTwice_shouldNotBeUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		fake.canBeUpdatet = false;
 
@@ -65,7 +65,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testRecursiveUpdate_shouldBeBothUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger =new UpdateManager();
 		FakeUpdatingObject fakeParent = new FakeUpdatingObject();
 		FakeUpdatingObject fakeKid = new FakeUpdatingObject();
 		fakeParent.kid=fakeKid;
@@ -79,7 +79,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testRecursiveUpdate_KidCannotBeUpdatet_ParentShouldBeUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fakeParent = new FakeUpdatingObject();
 		FakeUpdatingObject fakeKid = new FakeUpdatingObject();
 		
@@ -95,7 +95,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testRecursiveUpdate_ParentCannotBeUpdatet_NothingShouldBeUpdatet() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fakeParent = new FakeUpdatingObject();
 		FakeUpdatingObject fakeKid = new FakeUpdatingObject();
 		
@@ -111,7 +111,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testRegisterItems_registeredObjectShouldContainItem_shouldBeTrue() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger =new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
 		mnger.registerItem(fake);
@@ -122,7 +122,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testRegisterItems_doubleRegisterDoesntWork_shouldBeTrue() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
 		mnger.registerItem(fake);
@@ -134,7 +134,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testReset_addItemAndReset_shouldBeEmpty() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		
 		mnger.registerItem(fake);
@@ -147,7 +147,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testReset_togglePauseAndReset_shouldBeTrue() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		mnger.togglePause();
 		
 		mnger.reset();
@@ -157,7 +157,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testTogglePause_toggleOff_shouldBeOff() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger =new UpdateManager();
 		
 		mnger.togglePause();
 		
@@ -166,7 +166,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testTogglePause_toggleOffOn_shouldBeOn() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		
 		mnger.togglePause();
 		mnger.togglePause();
@@ -176,7 +176,7 @@ class UpdateManagerTests {
 	
 	@Test
 	void testState_UpdateWhenPaused_shouldNotUpdate() {
-		UpdateManager mnger = UpdateManager.getInstance();
+		UpdateManager mnger = new UpdateManager();
 		FakeUpdatingObject fake = new FakeUpdatingObject();
 		mnger.registerItem(fake);
 		

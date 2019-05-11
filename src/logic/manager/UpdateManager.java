@@ -23,18 +23,11 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 	private Timer timer;
 	private boolean running=true;
 	
-	private static UpdateManager INSTANCE;
-	
-	private UpdateManager() {
+	public UpdateManager() {
 		registeredItems=new LinkedList<UpdatingObject>();
 		Logger.debug("Build UpdateManager");
 	}
 	
-	public static UpdateManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE= new UpdateManager();
-		return INSTANCE;
-	}
 	
 	public void init(Config config) {
 		CollisionManager.getInstance().initCollisionManager(this);
@@ -84,10 +77,7 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 	public void reset() {
 		registeredItems=new LinkedList<UpdatingObject>();
 		running=true;
-
-		registeredItems.add(CollisionManager.getInstance());
-		registeredItems.add(DrawingManager.getInstance());
-		registeredItems.add(EffectManager.getInstance());
+		
 	}
 	
 	public boolean getState() {

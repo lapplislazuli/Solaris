@@ -5,6 +5,7 @@ import java.util.Map;
 
 import logic.Program;
 import logic.manager.CollisionManager;
+import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
 
 public class ActionRegistry {
@@ -19,7 +20,7 @@ public class ActionRegistry {
 	private void initStandardActions() {
 		registerAction(
 				new Action("TogglePause" ,"Pauses or Starts the update-Cycle",
-						()->UpdateManager.getInstance().togglePause()));
+						()->ManagerRegistry.getUpdateManager().togglePause()));
 		registerAction(
 				new Action("ToggleCollision" ,"Pauses or Starts the Collision" ,
 						()->CollisionManager.getInstance().togglePause()));
