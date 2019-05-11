@@ -20,7 +20,7 @@ public class ManagerRegistry {
 		uptmng=new UpdateManager();
 		efxmng=EffectManager.getInstance();
 		drwmng=DrawingManager.getInstance();
-		colmng=CollisionManager.getInstance();
+		colmng=new CollisionManager();
 	}
 	
 	public void init(Config conf) {
@@ -29,6 +29,8 @@ public class ManagerRegistry {
 		uptmng.registerItem(efxmng);
 		uptmng.registerItem(drwmng);
 		uptmng.registerItem(colmng);
+		
+		colmng.init(conf);
 		//Efx does not need init
 		//drwmng needs drawingcontext?
 	}

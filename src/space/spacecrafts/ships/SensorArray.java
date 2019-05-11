@@ -9,6 +9,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingObject;
 import interfaces.logical.UpdatingObject;
 import logic.manager.CollisionManager;
+import logic.manager.ManagerRegistry;
 import space.advanced.FixStar;
 import space.core.SpaceObject;
 
@@ -32,7 +33,8 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	@Override
 	public void update() {
 		detectedItems=
-				CollisionManager.getInstance().registeredItems.stream()
+				ManagerRegistry.getCollisionManager().getRegisteredItems()
+				.stream()
 				.filter(c-> c instanceof SpaceObject)
 				.filter(c->!(c instanceof FixStar))
 				.map(c->(SpaceObject)c)

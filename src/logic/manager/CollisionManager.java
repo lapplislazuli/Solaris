@@ -1,43 +1,32 @@
 package logic.manager;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
 
+import config.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import interfaces.logical.UpdatingObject;
+import interfaces.logical.ManagerObject;
 import space.core.SpaceObject;
 
-public class CollisionManager implements UpdatingObject{
+public class CollisionManager implements ManagerObject<CollidingObject>{
 	
-	public final Set<CollidingObject> registeredItems;
-	public final Set<DestructibleObject> registeredDestructibles;
+	private Set<CollidingObject> registeredItems;
+	private Set<DestructibleObject> registeredDestructibles;
 
 	private UpdateManager parent;
 	private boolean running=true;
 	
-	private static CollisionManager INSTANCE;
-	
-	private CollisionManager() {
+	public CollisionManager() {
 		registeredItems = new HashSet<CollidingObject>();
 		registeredDestructibles = new HashSet<DestructibleObject>();
 		Logger.debug("Build CollisionManager");
 	}
-	
-	public static CollisionManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new CollisionManager();
-		return INSTANCE;
-	}
-	
-	public void initCollisionManager(UpdateManager parent) {
-		this.parent=parent;
-		Logger.debug("Initialised CollisionManager");
-	}
-	
+
 	public void update() {
 		if(running) {
 			refresh();
@@ -59,16 +48,10 @@ public class CollisionManager implements UpdatingObject{
 		registeredDestructibles.clear();
 	}
 	
-	public void register(CollidingObject o){
-		registeredItems.add(o);
-		if(o instanceof DestructibleObject)
-			registeredDestructibles.add((DestructibleObject)o);
-	}
-	
 	public void refresh() {
 			empty();
 			for(SpaceObject o : getAllActiveSpaceObjects())
-				register(o);
+				registerItem(o);
 			registeredItems.stream().forEach(e->e.updateHitbox());
 	}
 	
@@ -83,5 +66,31 @@ public class CollisionManager implements UpdatingObject{
 	public void togglePause() {
 		running=!running;
 		Logger.debug("CollisionManager set to running:" + running);
+	}
+
+	public void init(Config c) {
+		parent = ManagerRegistry.getUpdateManager();
+	}
+
+	public void reset() {
+		registeredItems = new HashSet<CollidingObject>();
+		registeredDestructibles = new HashSet<DestructibleObject>();
+		Logger.debug("Reset CollisionManager");
+	}
+
+	public Collection<CollidingObject> getRegisteredItems() {
+		return registeredItems;
+	}
+	
+	public Collection<DestructibleObject> getRegisteredDestructibles() {
+		return registeredDestructibles;
+	}
+	
+	public void registerItem(CollidingObject item) {
+		if(!registeredItems.contains(item))
+			registeredItems.add(item);
+		if(item instanceof DestructibleObject)
+			if(!registeredDestructibles.contains((DestructibleObject)item))
+				registeredDestructibles.add((DestructibleObject)item);
 	}
 }

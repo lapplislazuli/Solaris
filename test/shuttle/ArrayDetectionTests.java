@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
 import logic.manager.CollisionManager;
+import logic.manager.ManagerRegistry;
 import space.core.Star;
 import space.spacecrafts.ships.SensorArray;
 import space.spacecrafts.ships.Ship;
@@ -28,11 +29,11 @@ public class ArrayDetectionTests {
 		
 		sensor= new SensorArray(shuttle,50);
 		
-		cm=CollisionManager.getInstance();
-		cm.register(hitStar); 
-		cm.register(notHitStar);
-		cm.register(notHittableStar);
-		cm.register(shuttle);
+		cm=ManagerRegistry.getCollisionManager();
+		cm.registerItem(hitStar); 
+		cm.registerItem(notHitStar);
+		cm.registerItem(notHittableStar);
+		cm.registerItem(shuttle);
 	}
 	
 	@Test

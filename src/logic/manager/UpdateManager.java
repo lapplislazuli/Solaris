@@ -30,12 +30,6 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 	
 	
 	public void init(Config config) {
-		CollisionManager.getInstance().initCollisionManager(this);
-		
-		registeredItems.add(CollisionManager.getInstance());
-		registeredItems.add(DrawingManager.getInstance());
-		registeredItems.add(EffectManager.getInstance());
-		
 		setTimer(config.settings.updateIntervall);
 		running = !config.settings.paused;
 	}
@@ -55,7 +49,7 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 		registerItem(o);
 		DrawingManager.getInstance().registeredItems.add(o);
 		for(SpaceObject child : o.getAllChildrenFlat())
-			CollisionManager.getInstance().register(child);
+			ManagerRegistry.getCollisionManager().registerItem(child);
 	}
 	
 	@Override

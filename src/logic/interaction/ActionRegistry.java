@@ -23,7 +23,7 @@ public class ActionRegistry {
 						()->ManagerRegistry.getUpdateManager().togglePause()));
 		registerAction(
 				new Action("ToggleCollision" ,"Pauses or Starts the Collision" ,
-						()->CollisionManager.getInstance().togglePause()));
+						()->ManagerRegistry.getCollisionManager().togglePause()));
 		registerAction(
 				new Action("RouteClear" ,"Cleares all current Items in the Players Route, leaving only current Parent",
 						()->PlayerManager.getInstance().getPlayerNavigator().clearRoute()));
