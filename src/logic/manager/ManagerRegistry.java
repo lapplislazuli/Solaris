@@ -39,4 +39,9 @@ public class ManagerRegistry {
 	public static EffectManager getEffectManager() {return efxmng;}
 	public static DrawingManager getDrawingManager() {return drwmng;}
 	public static CollisionManager getCollisionManager() {return colmng;}
+	
+	public static void setUpdateManager(UpdateManager newmgr) 		{uptmng=newmgr;}
+	public static void setEffectManager(EffectManager newmgr) 		{efxmng=newmgr;}
+	public static void setDrawingManager(DrawingManager newmgr) 	{drwmng=newmgr;}
+	public static void setCollisionManager(CollisionManager newmgr) {colmng=newmgr;}
 }

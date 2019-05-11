@@ -8,8 +8,10 @@ import org.junit.Test;
 
 import fakes.FakeCollidingObject;
 import fakes.FakeDestructibleObject;
+import fakes.FakeUpdatableCollidingObject;
 import logic.manager.CollisionManager;
 import logic.manager.ManagerRegistry;
+import logic.manager.UpdateManager;
 
 public class CollisionManagerTests implements SharedManagerTests {
 	
@@ -198,10 +200,74 @@ public class CollisionManagerTests implements SharedManagerTests {
 		assertFalse(fakeDestructible.destroyed);
 	}
 	
+	@Test
+	public void testReset_getItemsFromUpdateManager_shouldHaveUpdateManagersObjects() {
+		UpdateManager source = new UpdateManager();
+		CollisionManager mnger = freshNewCollisionManager();
+		ManagerRegistry.setUpdateManager(source);
+		
+		FakeUpdatableCollidingObject parent = new FakeUpdatableCollidingObject();
+		FakeUpdatableCollidingObject kid = new FakeUpdatableCollidingObject();
+		parent.kid=kid;
+		source.registerItem(parent);
+		
+		mnger.refresh();
+		
+		assertTrue(mnger.getRegisteredItems().contains(parent));
+		assertTrue(mnger.getRegisteredItems().contains(kid));
+	}
+	
+	@Test
+	public void testUpdate_getItemsFromUpdateManager_shouldHaveUpdateManagersObjects() {
+		UpdateManager source = new UpdateManager();
+		CollisionManager mnger = freshNewCollisionManager();
+		ManagerRegistry.setUpdateManager(source);
+
+		FakeUpdatableCollidingObject parent = new FakeUpdatableCollidingObject();
+		FakeUpdatableCollidingObject kid = new FakeUpdatableCollidingObject();
+		parent.kid=kid;
+		source.registerItem(parent);
+		
+		mnger.update();
+		
+		assertTrue(mnger.getRegisteredItems().contains(parent));
+		assertTrue(mnger.getRegisteredItems().contains(kid));
+	}
+	
+	@Test
+	public void testRefresh_checkHitboxes_ShouldBeUpdatet() {
+		UpdateManager source = new UpdateManager();
+		CollisionManager mnger = freshNewCollisionManager();
+		ManagerRegistry.setUpdateManager(source);
+
+		FakeUpdatableCollidingObject parent = new FakeUpdatableCollidingObject();
+		FakeUpdatableCollidingObject kid = new FakeUpdatableCollidingObject();
+		parent.kid=kid;
+		source.registerItem(parent);
+		
+		mnger.update();
+		
+		assertTrue(parent.hitBoxUpdatet);
+		assertTrue(kid.hitBoxUpdatet);
+	}
+	
+	@Test
+	public void testUpdate_getItemsFromUpdateManager_shouldLooseOldObjects() {
+		CollisionManager mnger = freshNewCollisionManager();
+		FakeCollidingObject fakeCollider = new FakeCollidingObject();
+		mnger.registerItem(fakeCollider);
+		
+		mnger.update();
+		
+		assertFalse(mnger.getRegisteredItems().contains(fakeCollider));
+	}
+	
 	public static CollisionManager freshNewCollisionManager() {
 		ManagerRegistry.getInstance();
 		CollisionManager mnger = new CollisionManager();
 		mnger.init(null);
 		return mnger;
 	}
+	
+	
 }

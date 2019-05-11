@@ -2,10 +2,16 @@ package logic;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collection;
+
 import org.junit.jupiter.api.Test;
 
+import logic.manager.CollisionManager;
+import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
+import fakes.FakeUpdatableCollidingObject;
 import fakes.FakeUpdatingObject;
+import interfaces.logical.CollidingObject;
 
 class UpdateManagerTests implements SharedManagerTests{
 	
@@ -180,4 +186,42 @@ class UpdateManagerTests implements SharedManagerTests{
 		assertFalse(fake.updatet);
 	}
 	
+	@Test
+	public void testExportColliders_shouldContainCollider() {
+		UpdateManager source = new UpdateManager();
+	
+		FakeUpdatableCollidingObject collider = new FakeUpdatableCollidingObject();
+		source.registerItem(collider);
+		
+		Collection<CollidingObject> results = source.getAllActiveColliders();
+		
+		assertTrue(results.contains(collider));
+	}
+	
+	@Test
+	public void testExportColliders_shouldContainRecursiveColliders() {
+		UpdateManager source = new UpdateManager();
+	
+		FakeUpdatableCollidingObject parent = new FakeUpdatableCollidingObject();
+		FakeUpdatableCollidingObject kid = new FakeUpdatableCollidingObject();
+		parent.kid=kid;
+		source.registerItem(parent);
+		
+		Collection<CollidingObject> results = source.getAllActiveColliders();
+		
+		assertTrue(results.contains(parent));
+		assertTrue(results.contains(kid));
+	}
+	
+	@Test
+	public void testExportColliders_shouldNotContainNoCollider() {
+		UpdateManager source = new UpdateManager();
+		
+		FakeUpdatingObject notReturned = new FakeUpdatingObject();
+		source.registerItem(notReturned);
+		
+		Collection<CollidingObject> results = source.getAllActiveColliders();
+		
+		assertTrue(results.isEmpty());
+	}
 }
