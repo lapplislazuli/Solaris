@@ -1,52 +1,56 @@
 package logic.manager;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.pmw.tinylog.Logger;
 
+import config.Config;
 import interfaces.drawing.DrawingContext;
-import interfaces.logical.UpdatingObject;
-import space.effect.Effect;
+import interfaces.drawing.DrawingObject;
+import interfaces.logical.Effect;
+import interfaces.logical.ManagerObject;
 
-public class EffectManager implements UpdatingObject {
+public class EffectManager implements ManagerObject<Effect>,DrawingObject {
 	
 	private List<Effect> registeredItems = new LinkedList<Effect>();
+	private boolean running=true;
 	
-	private static EffectManager INSTANCE;
-	
-	private EffectManager() {
+	public EffectManager() {
 		registeredItems = new LinkedList<Effect>();
+		running=true;
 		Logger.debug("Build EffectManager");
 	}
 	
-	public static EffectManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new EffectManager();
-		return INSTANCE;
-	}
-	
-	
-	public void addEffect(Effect e){
-		registeredItems.add(e);
-	}
-	
-	public void emptyEffects() {
-		registeredItems = new LinkedList<Effect>();
-	}
-	
 	public void update() {
-		for(Effect e : registeredItems)
-			e.update();
+		if(running)
+			for(Effect e : registeredItems)
+				e.update();
 	}
 	
 	public void removeEffect(Effect e){
 		registeredItems.remove(e);
 	}
 
-	public void drawEffects(DrawingContext dc) {
-		for(Effect e : registeredItems)
-			e.draw(dc);
+	public void init(Config c) {
+		ManagerRegistry.getDrawingManager().registerItem(this);
+	}
+
+	public void reset() {
+		 registeredItems = new LinkedList<Effect>();
+		 running=true;
+		 ManagerRegistry.getDrawingManager().registerItem(this);
+	}
+
+	public Collection<Effect> getRegisteredItems() {return registeredItems;}
+	public void toggleUpdate() {running=!running;}
+	public boolean isRunning() {return running;}
+
+	public void draw(DrawingContext dc) {
+		//if(running) // Does not Work as intended?
+			for(Effect e : registeredItems)
+				e.draw(dc);
 	}
 
 }

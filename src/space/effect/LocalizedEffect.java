@@ -1,32 +1,30 @@
 package space.effect;
 
 import geom.AbsolutePoint;
-import interfaces.drawing.ComplexDrawingObject;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
-import interfaces.logical.RemovableObject;
-import interfaces.logical.UpdatingObject;
-import logic.manager.EffectManager;
+import interfaces.logical.Effect;
+import logic.manager.ManagerRegistry;
 
-public abstract class Effect implements UpdatingObject, ComplexDrawingObject, RemovableObject{
+public abstract class LocalizedEffect implements Effect{
 	
 	String name;
 	Point center;
 	Shape shape;
 	DrawingInformation dInfo;
 	
-	public Effect(String name,Point p, Shape s, DrawingInformation dInfo){
+	public LocalizedEffect(String name,Point p, Shape s, DrawingInformation dInfo){
 		this.name = name;
 		center=p;
 		shape=s;
 		this.dInfo=dInfo;
-		EffectManager.getInstance().addEffect(this);
+		ManagerRegistry.getEffectManager().registerItem(this);
 	}
 	
 	public void remove() {
-		EffectManager.getInstance().removeEffect(this);
+		ManagerRegistry.getEffectManager().removeEffect(this);
 	}
 	
 	public void update() {}

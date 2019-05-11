@@ -25,7 +25,7 @@ public class DrawingManager implements ManagerObject<DrawingObject> {
 	private void drawAll() {
 		for(DrawingObject drawable : registeredItems)
 			drawable.draw(context);
-		EffectManager.getInstance().drawEffects(context);
+		//ManagerRegistry.getEffectManager().drawEffects(context);
 	}
 	
 	public void initDrawingManager(DrawingContext dc) {

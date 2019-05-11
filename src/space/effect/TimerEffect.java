@@ -10,7 +10,7 @@ import interfaces.logical.TimerObject;
 import javafx.application.Platform;
 
 @SuppressWarnings("restriction")
-public abstract class TimerEffect extends Effect implements TimerObject{
+public abstract class TimerEffect extends LocalizedEffect implements TimerObject{
 	
 	public TimerEffect(String name, Point p, Shape s, int lifetime, DrawingInformation dInfo) {
 		super(name, p, s, dInfo);

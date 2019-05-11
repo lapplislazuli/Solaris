@@ -2,7 +2,6 @@ package logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import fakes.FakeDrawingContext;
 import fakes.FakeDrawingObject;
 import logic.manager.DrawingManager;
+
+import static helpers.ManagerFakeFactory.fakeDrawingManager;
 
 public class DrawingManagerTests implements SharedManagerTests {
 	
@@ -140,14 +141,6 @@ public class DrawingManagerTests implements SharedManagerTests {
 		mnger.update();
 		
 		assertFalse(fake.drawn);
-	}
-	
-	public static DrawingManager fakeDrawingManager() {
-		DrawingManager mnger = new DrawingManager();
-		FakeDrawingContext fakeContext = new FakeDrawingContext();
-
-		mnger.initDrawingManager(fakeContext);
-		return mnger;
 	}
 	
 }
