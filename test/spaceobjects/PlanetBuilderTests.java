@@ -26,7 +26,7 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 				.levelOfDetail(10).build());
 			
 		assertEquals(50,testObject.distance);
-		assertEquals(10,testObject.shape.getLevelOfDetail());
+		assertEquals(10,testObject.getShape().getLevelOfDetail());
 		
 	}
 	

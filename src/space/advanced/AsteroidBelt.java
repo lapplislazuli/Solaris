@@ -2,7 +2,7 @@ package space.advanced;
 
 import geom.Circle;
 import drawing.EmptyJFXDrawingInformation;
-import geom.AbsolutePoint;
+import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
@@ -11,7 +11,7 @@ public class AsteroidBelt extends MovingSpaceObject{
 	
 	private AsteroidBelt(Builder builder) {
 		super(builder.name,builder.parent, new EmptyJFXDrawingInformation(), new Circle(0),0,0);
-		center=builder.parent.center;
+		center=builder.parent.getCenter();
 		
 		for(int i = 1; i<=builder.asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,builder.distance,builder.speed);
@@ -29,7 +29,7 @@ public class AsteroidBelt extends MovingSpaceObject{
 	}
 	
 	@Override
-	public void move(AbsolutePoint parentCenter) {
+	public void move(Point parentCenter) {
 		center=parentCenter;
 
 		for(MovingSpaceObject asteroid : trabants)

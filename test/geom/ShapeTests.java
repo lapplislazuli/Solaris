@@ -16,8 +16,8 @@ public interface ShapeTests {
 	void testContains_ContainsAnotherSmallerShape_shouldSucced(int size);
 	void testContains_ContainsAnotherBiggerShape_shouldFail(int size);
 	
-	void testShape_NegativeSizeInput_ShouldThrowError();
-	void testShape_ZeroSizeInput_ShouldSucceed();
+	void testShape_NegativeSizeInput_ShouldThrowError(int size);
+	void testShape_ZeroSizeInput_ShouldSucceed(int zeros);
 	
 
 	void testEquality_SameValuesAndSameCenter_shouldBeTrue(int size);
@@ -26,4 +26,5 @@ public interface ShapeTests {
 	void testEquality_checkSymmetryOfSameValue_shouldBeTrue(int size);
 	void testEquality_checkSymmetryOfDifferentValue_shouldBeTrue(int size);
 	void testEquality_sameSizeDifferentCenter_shouldbeFalse(int offset);
+	void testEquality_completelyDifferentObject_shouldNotBeEqual(int dummy);
 }

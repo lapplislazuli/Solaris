@@ -40,7 +40,7 @@ public abstract class FakeGeometryFactory {
 	
 	public static Rectangle fakeRectangle(int size) {
 		Point fakeCenter = fakeAbsolutePoint();
-
+		
 		return new Rectangle(fakeCenter,size,size);
 	}
 	

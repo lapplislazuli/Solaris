@@ -2,6 +2,8 @@ package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.LinkedList;
+
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -81,6 +83,11 @@ class CircleTests implements ShapeTests{
 		Circle smallerCircle = fakeCircle(fakeCenter,size);
 		Circle biggerCircle = fakeCircle(fakeCenter,size+5);
 		
+		smallerCircle.setLevelOfDetail(10);
+		biggerCircle.setLevelOfDetail(10);
+		smallerCircle.updateOrInitOutline();
+		biggerCircle.updateOrInitOutline();
+
 		for(Point p : smallerCircle.outLine)
 			assertTrue(biggerCircle.contains(p));
 	}
@@ -92,19 +99,26 @@ class CircleTests implements ShapeTests{
 		
 		Circle smallerCircle = fakeCircle(fakeCenter,size);
 		Circle biggerCircle = fakeCircle(fakeCenter,size+5);
-		
+
+		smallerCircle.setLevelOfDetail(10);
+		biggerCircle.setLevelOfDetail(10);
+		smallerCircle.updateOrInitOutline();
+		biggerCircle.updateOrInitOutline();
+
 		for(Point p : biggerCircle.outLine) 
 			assertFalse(smallerCircle.contains(p));
 	}
 
-	@Test
-	public void testShape_NegativeSizeInput_ShouldThrowError() {
-		assertThrows(Exception.class,() -> fakeCircle(-100));
+	@ParameterizedTest
+	@ValueSource(ints = {-10,-100})
+	public void testShape_NegativeSizeInput_ShouldThrowError(int size) {
+		assertThrows(Exception.class,() -> fakeCircle(size));
 	}
 
-	@Test
-	public void testShape_ZeroSizeInput_ShouldSucceed() {
-		Circle testItem = fakeCircle(0);
+	@ParameterizedTest
+	@ValueSource(ints = {0,-0})
+	public void testShape_ZeroSizeInput_ShouldSucceed(int size) {
+		Circle testItem = fakeCircle(size);
 		assertTrue(true,"Circle was build with size 0 - No Exception");
 	}
 	
@@ -143,7 +157,7 @@ class CircleTests implements ShapeTests{
 		Circle testObject = fakeCircle(size);
 		Circle sameObject = fakeCircle(size);
 		
-		assertTrue(testObject.equals(sameObject)==sameObject.equals(testObject));
+		assertEquals(testObject.equals(sameObject),sameObject.equals(testObject));
 	}
 
 	@ParameterizedTest
@@ -152,7 +166,7 @@ class CircleTests implements ShapeTests{
 		Circle testObject = fakeCircle(size);
 		Circle otherObject = fakeCircle(size+1);
 		
-		assertTrue(testObject.equals(otherObject)==otherObject.equals(testObject));
+		assertEquals(testObject.equals(otherObject),otherObject.equals(testObject));
 	}
 
 	@ParameterizedTest
@@ -165,4 +179,14 @@ class CircleTests implements ShapeTests{
 		
 		assertFalse(testObject.equals(otherObject));
 	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {0})
+	public void testEquality_completelyDifferentObject_shouldNotBeEqual(int dummy) {
+		Point firstCenter = fakeAbsolutePoint();
+		Circle testObject = fakeCircle(firstCenter,100);
+		
+		assertNotEquals(new LinkedList<Object>(),testObject);
+	}
+
 }

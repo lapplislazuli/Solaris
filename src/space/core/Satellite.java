@@ -21,8 +21,8 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		parent=builder.parent;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		
-		if(dInfo instanceof JavaFXDrawingInformation)
-			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
+		if(getDrawingInformation() instanceof JavaFXDrawingInformation)
+			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect=true;
 	}
 	
 	@Override 

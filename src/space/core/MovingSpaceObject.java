@@ -11,6 +11,7 @@ import geom.BaseShape;
 import geom.AbsolutePoint;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
+import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.MovingObject;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,10 +36,10 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 		
 		relativePos=degreeTo(parent);
 		parent.trabants.add(this);
-		center.move(0, distance);
+		center.setY(parent.center.getY()+distance);
 	}
 	
-	public void move(AbsolutePoint parentCenter) {
+	public void move(Point parentCenter) {
 		moveRelativePos();
 		center.setX(parentCenter.getX()+(int)(Math.cos(relativePos)*distance));
 		center.setY(parentCenter.getY()+(int)(Math.sin(relativePos)*distance));
@@ -87,7 +88,8 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingObj
 	}
 	
 	protected void updateDrawingInformation() {
-		if(dInfo instanceof JavaFXDrawingInformation) {
+		DrawingInformation dInfo=getDrawingInformation() ;
+		if(dInfo  instanceof JavaFXDrawingInformation) {
 			Affine transformRotation= new Affine();
 			transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
 			((JavaFXDrawingInformation)dInfo).transformations.clear();

@@ -10,6 +10,7 @@ import geom.AbsolutePoint;
 import interfaces.drawing.ComplexDrawingObject;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
+import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.interaction.ClickableObject;
 import interfaces.logical.CollidingObject;
@@ -17,16 +18,16 @@ import interfaces.logical.RecursiveObject;
 import interfaces.logical.UpdatingObject;
 
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject, ComplexDrawingObject,RecursiveObject{
-	public Shape shape;
-	public String name;
-	public AbsolutePoint center;
+	protected Shape shape;
+	protected String name;
+	protected Point center;
+
+	protected DrawingInformation dInfo;
 	
-	public DrawingInformation dInfo;
-	
-	public List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
+	protected List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
 	protected float rotation = 0; //in radiant-degree
 	
-	public SpaceObject(String name,AbsolutePoint center, Shape shape, DrawingInformation dInfo) {
+	public SpaceObject(String name,Point center, Shape shape, DrawingInformation dInfo) {
 		if(name==null||name.isEmpty())
 			throw new IllegalArgumentException("Requires Name!");
 		this.name=name;
@@ -126,4 +127,36 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return dInfo;
 	}
 	
+	public Shape getShape() {
+		return shape;
+	}
+
+	public void setShape(Shape shape) {
+		this.shape = shape;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Point getCenter() {
+		return center;
+	}
+
+	public void setCenter(Point center) {
+		this.center = center;
+	}
+
+	public List<MovingSpaceObject> getTrabants() {
+		return trabants;
+	}
+
+	public void setTrabants(List<MovingSpaceObject> trabants) {
+		this.trabants = trabants;
+	}
+
 }

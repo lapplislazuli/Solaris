@@ -1,8 +1,8 @@
 package interfaces.logical;
 
-import geom.AbsolutePoint;
+import interfaces.geom.Point;
 
 public interface MovingObject {
 	
-	public void move(AbsolutePoint absolutePoint);
+	public void move(Point point);
 }

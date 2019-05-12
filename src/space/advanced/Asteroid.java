@@ -6,6 +6,7 @@ import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.Rectangle;
+import interfaces.geom.Point;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
@@ -57,14 +58,15 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}
 	
 	@Override 
-	public void move(AbsolutePoint parentCenter) {
+	public void move(Point parentCenter) {
 		super.move(parentCenter);
 		shake();
 	}
 	
 	//Change my koords by a little noise, so its not a perfect circle
 	private void shake() {
-		center.move((int)(Math.random()+1)*3,(int)(Math.random()+1)*3);
+		center.setX(center.getX()+(int)(Math.random()+1)*3);
+		center.setY(center.getY()+(int)(Math.random()+1)*3);
 	}
 	
 	public void destruct() {
@@ -74,7 +76,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	}	
 	
 	public void remove() {
-		parent.trabants.remove(this);
+		parent.getTrabants().remove(this);
 		parent=null;
 	}
 }

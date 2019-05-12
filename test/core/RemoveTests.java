@@ -47,8 +47,8 @@ class RemoveTests {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		shuttleOne.trabants.clear();
-		shuttleTwo.trabants.clear();
+		shuttleOne.getTrabants().clear();
+		shuttleTwo.getTrabants().clear();
 	}
 
 	@Test
@@ -95,7 +95,7 @@ class RemoveTests {
 	@Test
 	void testShootAndRemoveMissile() {
 		shuttleOne.shootRocket(sun);
-		Rocket r = (Rocket)(shuttleOne.trabants.get(0));
+		Rocket r = (Rocket)(shuttleOne.getTrabants().get(0));
 		assertEquals(6, sun.getAllChildren().size());
 		
 		r.remove();
@@ -106,7 +106,7 @@ class RemoveTests {
 	@Test
 	void testShootAndDestructMissile() {
 		shuttleOne.shootRocket(sun);
-		Rocket r = (Rocket)(shuttleOne.trabants.get(0));
+		Rocket r = (Rocket)(shuttleOne.getTrabants().get(0));
 		assertEquals(6, sun.getAllChildren().size());
 		
 		r.destruct();
@@ -120,9 +120,9 @@ class RemoveTests {
 		
 		Satellite tmp = (new Satellite.Builder("Earth", tmpSun))
 			.build();
-		assertEquals(1, tmpSun.trabants.size());
+		assertEquals(1, tmpSun.getTrabants().size());
 		
 		tmp.remove();
-		assertEquals(0, tmpSun.trabants.size());
+		assertEquals(0, tmpSun.getTrabants().size());
 	}
 }

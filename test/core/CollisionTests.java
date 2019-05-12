@@ -85,7 +85,7 @@ class CollisionTests {
 		
 		SpaceObject uncollider = fakeFixStar(1,1);
 		
-		uncollider.shape.updateOrInitOutline();
+		uncollider.getShape().updateOrInitOutline();
 		
 		assertTrue(anchor.collides(uncollider));
 	}

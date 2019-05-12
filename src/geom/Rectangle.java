@@ -16,6 +16,8 @@ public class Rectangle extends BaseShape{
 	
 	public Rectangle(Point center, int xSize, int ySize) {
 		super(center);
+		if(xSize<0 || ySize<0)
+			throw new IllegalArgumentException("Size cannot be negative!");
 		this.xSize=xSize;
 		this.ySize=ySize;
 	}

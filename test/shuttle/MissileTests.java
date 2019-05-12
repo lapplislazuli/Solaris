@@ -78,7 +78,7 @@ public class MissileTests {
 	
 	@Test
 	public void testMissileInitialisation() {
-		assertTrue(missileOne.center.getX()==shuttle.center.getX() && missileOne.center.getY()==shuttle.center.getY());
+		assertTrue(missileOne.getCenter().getX()==shuttle.getCenter().getX() && missileOne.getCenter().getY()==shuttle.getCenter().getY());
 		assertTrue(missileOne.distanceTo(targetOne)==targetOne.distanceTo(shuttle));
 		assertTrue(missileOne.rotation==shuttle.degreeTo(targetOne));
 		
@@ -122,7 +122,7 @@ public class MissileTests {
 	@Test
  	public void testMissileRemove() {
  		missileOne.remove();
- 		assertEquals(3,shuttle.trabants.size());
+ 		assertEquals(3,shuttle.getTrabants().size());
  	}
  	
  	@Test
@@ -133,6 +133,6 @@ public class MissileTests {
  			timer++;	
  		}
  		
- 		assertEquals(3, shuttle.trabants.size());
+ 		assertEquals(3, shuttle.getTrabants().size());
 }
 }

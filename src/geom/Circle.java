@@ -14,6 +14,8 @@ public class Circle extends BaseShape{
 	
 	public Circle(Point center, int radious) {
 		super(center);
+		if(radious<0)
+			throw new IllegalArgumentException("radious cannot smaller than 0!");
 		this.radious=radious;
 	}
 

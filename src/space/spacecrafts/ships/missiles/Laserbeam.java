@@ -7,6 +7,7 @@ import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import interfaces.drawing.DrawingContext;
+import interfaces.geom.Point;
 import geom.AbsolutePoint;
 import javafx.scene.paint.Color;
 import space.spacecrafts.ships.Ship;
@@ -17,17 +18,18 @@ public class Laserbeam extends Missile{
 	private List<AbsolutePoint> trail=new LinkedList<AbsolutePoint>();
 	
 	public Laserbeam(String name, Ship emitter) {
-		super(name, emitter,new Circle(emitter.center,2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.rotation, 3);
+		super(name, emitter,new Circle(emitter.getCenter().absoluteClone(),2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.rotation, 3);
 		
 	}
 	
 	public Laserbeam(String name, Ship emitter,  double direction, int speed) {
-		super(name, emitter, new Circle(emitter.center,2),new JavaFXDrawingInformation(Color.LIGHTGREEN),direction, speed);
+		super(name, emitter, new Circle(emitter.getCenter().absoluteClone(),2),new JavaFXDrawingInformation(Color.LIGHTGREEN),direction, speed);
 	}
 
 	@Override
-	public void move(AbsolutePoint oldPosition) {
-	    trail.add(center.clone());
+	public void move(Point oldPosition) {
+		AbsolutePoint trailPoint = new AbsolutePoint(oldPosition.getX(),oldPosition.getY());
+	    trail.add(trailPoint);
 		super.move(oldPosition);
 	}
 	

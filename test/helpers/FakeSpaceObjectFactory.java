@@ -11,19 +11,19 @@ public abstract class FakeSpaceObjectFactory {
 	
 	public static Star fakeStar(int xpos,int ypos) {
 		Star anchor = new Star("Anker", null, new AbsolutePoint(xpos,ypos),0);
-		anchor.shape.updateOrInitOutline();
+		anchor.getShape().updateOrInitOutline();
 		return anchor;
 	}
 	
 	public static Star fakeStar(int xpos,int ypos,int size) {
 		Star anchor = new Star("Anker", null, new AbsolutePoint(xpos,ypos),size);
-		anchor.shape.updateOrInitOutline();
+		anchor.getShape().updateOrInitOutline();
 		return anchor;
 	}
 	
 	public static Star fakeStar(String name,int xpos,int ypos,int size) {
 		Star anchor = new Star(name, null, new AbsolutePoint(xpos,ypos),size);
-		anchor.shape.updateOrInitOutline();
+		anchor.getShape().updateOrInitOutline();
 		return anchor;
 	}
 	
@@ -65,13 +65,13 @@ public abstract class FakeSpaceObjectFactory {
 	
 	public static FixStar fakeFixStar(int xpos, int ypos) {
 		FixStar f = new FixStar("dummy", xpos, ypos, 0);
-		f.shape.updateOrInitOutline();
+		f.getShape().updateOrInitOutline();
 		return f;
 	}
 	
 	public static FixStar fakeFixStar(int xpos, int ypos, int size) {
 		FixStar f = new FixStar("dummy", xpos, ypos, size);
-		f.shape.updateOrInitOutline();
+		f.getShape().updateOrInitOutline();
 		return f;
 	}
 	
@@ -81,7 +81,7 @@ public abstract class FakeSpaceObjectFactory {
 				.distance(distance)
 				.speed(speed)
 				.build();
-		satellite.shape.updateOrInitOutline();
+		satellite.getShape().updateOrInitOutline();
 		return satellite;
 	}
 	

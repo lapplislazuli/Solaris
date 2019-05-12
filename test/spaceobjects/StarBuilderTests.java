@@ -22,7 +22,7 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 				.levelOfDetail(50)
 				.build();
 
-		assertEquals(center,testObject.center);
+		assertEquals(center,testObject.getCenter());
 	}
 	
 	@Test
@@ -33,8 +33,8 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 				.radious(50)
 				.center(0,0)
 				.build();
-		assertEquals(center.getX(),testObject.center.getX());
-		assertEquals(center.getY(),testObject.center.getY());
+		assertEquals(center.getX(),testObject.getCenter().getX());
+		assertEquals(center.getY(),testObject.getCenter().getY());
 	}
 	
 	@Test

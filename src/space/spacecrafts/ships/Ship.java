@@ -5,9 +5,9 @@ import java.util.List;
 import org.pmw.tinylog.Logger;
 
 import drawing.JavaFXDrawingInformation;
-import geom.AbsolutePoint;
 import geom.HShape;
 import interfaces.drawing.DrawingInformation;
+import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.Spacecraft;
@@ -39,7 +39,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 		sensor = new SensorArray(this,50);
 
 		shape.setLevelOfDetail(size/2);
-		move(parent.center);
+		move(parent.getCenter());
 	}
 	
 	public Ship(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
@@ -78,14 +78,14 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 
 	protected void changeHierarchy() {
-		target.trabants.add(this);
+		target.getTrabants().add(this);
 		state=SpacecraftState.FLYING;
 		parent = target;
 		target=null;
 	}
 
 	protected boolean isAliveAndRegistered() {
-		return target!=null && parent != null && parent.trabants.remove(this);
+		return target!=null && parent != null && parent.getTrabants().remove(this);
 	}
 	
 	@Override
@@ -95,7 +95,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	@Override 
-	public void move(AbsolutePoint parentCenter) {
+	public void move(Point parentCenter) {
 		if(state!=SpacecraftState.ORBITING) {
 			if(distance>=orbitingDistance+distanceTo(parent)) 
 				distance--;
@@ -126,7 +126,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	public void remove() {
-		parent.trabants.remove(this);
+		parent.getTrabants().remove(this);
 		parent=(target=null);
 	}
 

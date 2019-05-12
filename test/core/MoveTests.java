@@ -18,8 +18,8 @@ class MoveTests {
 		SpaceObject planet = fakePlanetWithSpeed(anchor,250,Math.PI/2);
 		
 		//Check X-Y Koords
-		assertEquals(250,planet.center.getX());
-		assertEquals(500,planet.center.getY());
+		assertEquals(250,planet.getCenter().getX());
+		assertEquals(500,planet.getCenter().getY());
 		
 		//Check DegreeTo EachOther
 		assertEquals(3*Math.PI/2, planet.degreeTo(anchor));
@@ -42,8 +42,8 @@ class MoveTests {
 		
 		anchor.update();
 
-		assertEquals(expectedX,anchor.center.getX());
-		assertEquals(expectedY,anchor.center.getY());
+		assertEquals(expectedX,anchor.getCenter().getX());
+		assertEquals(expectedY,anchor.getCenter().getY());
 	}
 	
 	@Test
@@ -56,8 +56,8 @@ class MoveTests {
 		
 		anchor.update();
 
-		assertEquals(expectedX,planet.center.getX());
-		assertEquals(expectedY,planet.center.getY());
+		assertEquals(expectedX,planet.getCenter().getX());
+		assertEquals(expectedY,planet.getCenter().getY());
 	}
 	
 	@Test
@@ -71,8 +71,8 @@ class MoveTests {
 		anchor.update();
 		anchor.update();
 		
-		assertEquals(expectedX,planet.center.getX());
-		assertEquals(expectedY,planet.center.getY());
+		assertEquals(expectedX,planet.getCenter().getX());
+		assertEquals(expectedY,planet.getCenter().getY());
 	}
 	
 	@Test
@@ -83,8 +83,8 @@ class MoveTests {
 		
 		anchor.update();
 		
-		assertEquals(250,satellite.center.getX());
-		assertEquals(250,satellite.center.getY());
+		assertEquals(250,satellite.getCenter().getX());
+		assertEquals(250,satellite.getCenter().getY());
 	}
 	
 	
@@ -95,8 +95,8 @@ class MoveTests {
 		
 		anchor.update();
 		
-		assertEquals(500,planet.center.getX());
-		assertEquals(250,planet.center.getY());
+		assertEquals(500,planet.getCenter().getX());
+		assertEquals(250,planet.getCenter().getY());
 	}
 	
 	@Test

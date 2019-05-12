@@ -3,6 +3,7 @@ package space.spacecrafts.ships.missiles;
 import geom.BaseShape;
 import geom.AbsolutePoint;
 import interfaces.drawing.DrawingInformation;
+import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
@@ -31,8 +32,8 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	}
 	
 	@Override
-	public void move(AbsolutePoint oldPosition){
-		AbsolutePoint oldCenter=center.clone();
+	public void move(Point oldPosition){
+		AbsolutePoint oldCenter=new AbsolutePoint(center.getX(),center.getY());
 		center.setX((int) (center.getX()+Math.cos(rotation)*speed));
 		center.setY((int) (center.getY()+Math.sin(rotation)*speed));
 		distance += oldCenter.distanceTo(center);
@@ -44,7 +45,7 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	@Override
 	public void remove() {
 		if(emitter!=null)
-			emitter.trabants.remove(this);
+			emitter.getTrabants().remove(this);
 		emitter=null;
 	}
 	@Override 

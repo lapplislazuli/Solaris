@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import geom.AbsolutePoint;
+import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingObject;
 import interfaces.logical.UpdatingObject;
@@ -19,13 +19,13 @@ import space.core.SpaceObject;
 public class SensorArray implements UpdatingObject,MovingObject{
 	
 	int radius;
-	AbsolutePoint center;
+	Point center;
 	Ship emitter;
 	public List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
 	
 	public SensorArray (Ship emitter,int radius) {
 		this.emitter=emitter;
-		center=emitter.center;
+		center=emitter.getCenter();
 		this.radius=radius;
 	}
 	
@@ -37,12 +37,12 @@ public class SensorArray implements UpdatingObject,MovingObject{
 				.filter(c-> c instanceof SpaceObject)
 				.filter(c->!(c instanceof FixStar))
 				.map(c->(SpaceObject)c)
-				.filter(other -> isCovered(other.center.getX(), other.center.getY()))
+				.filter(other -> isCovered(other.getCenter().getX(), other.getCenter().getY()))
 				.filter(c->!(c == emitter))
 				.collect(Collectors.toList());
 	}
 	@Override
-	public void move(AbsolutePoint parentCenter) {}
+	public void move(Point parentCenter) {}
 	
 	private boolean isCovered(int otherX, int otherY) {
 		return

@@ -46,7 +46,7 @@ class LaunchTests {
 	
 	@AfterEach
 	void emptyOriginsShuttles() throws Exception {
-		origin.trabants.clear();
+		origin.getTrabants().clear();
 	}
 	
 	@Test
@@ -112,30 +112,30 @@ class LaunchTests {
 	
 	@Test
 	void testNoTeleport() {
-		Point oldPos= shuttleOne.center.clone();
+		Point oldPos= shuttleOne.getCenter().clone();
 
 		shuttleOne.launch();
 		targetOne.update();
 		
-		assertTrue(oldPos.distanceTo(shuttleOne.center)<=20);
+		assertTrue(oldPos.distanceTo(shuttleOne.getCenter())<=20);
 	}
 	
 	@Test
 	void testRemoval() {
 		shuttleOne.remove();
-		assertEquals(1,origin.trabants.size());
+		assertEquals(1,origin.getTrabants().size());
 		
 		shuttleTwo.remove();
-		assertEquals(0,origin.trabants.size());
+		assertEquals(0,origin.getTrabants().size());
 	}
 	@Test
 	void testNoTeleportShuttleTwo() {
-		Point oldPos= shuttleTwo.center.clone();
+		Point oldPos= shuttleTwo.getCenter().clone();
 
 		shuttleTwo.launch();
 		targetTwo.update();
 		
-		assertTrue(oldPos.distanceTo(shuttleTwo.center)<=10);
+		assertTrue(oldPos.distanceTo(shuttleTwo.getCenter())<=10);
 	}
 	
 	@Test

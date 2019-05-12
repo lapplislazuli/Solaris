@@ -1,5 +1,7 @@
 package interfaces.geom;
 
+import geom.AbsolutePoint;
+
 public interface Point {
 	public int getX() ;
 	public int getY() ;
@@ -35,4 +37,9 @@ public interface Point {
 	}
 	
 	public Point clone();
+	
+	default public AbsolutePoint absoluteClone() {
+		return 
+			new AbsolutePoint(getX(),getY());
+	}
 }

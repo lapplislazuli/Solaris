@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
+import geom.AbsolutePoint;
 import geom.Circle;
 
 @SuppressWarnings("restriction")
@@ -77,10 +78,8 @@ public class Planet extends MovingSpaceObject {
 		trabants=builder.trabants;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		rotationSpeed=builder.rotationSpeed;
-		if(dInfo instanceof JavaFXDrawingInformation)
-			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
+		if(getDrawingInformation() instanceof JavaFXDrawingInformation)
+			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect=true;
 	}
-
-	
 	
 }

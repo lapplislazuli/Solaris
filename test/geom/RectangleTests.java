@@ -2,6 +2,8 @@ package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.LinkedList;
+
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -73,27 +75,44 @@ class RectangleTests implements ShapeTests{
 		Rectangle smallerItem = fakeRectangle(size);
 		Rectangle biggerItem = fakeRectangle(size+5);
 		
+		smallerItem.setLevelOfDetail(5);
+		biggerItem.setLevelOfDetail(5);
+		
+		smallerItem.updateOrInitOutline();
+		biggerItem.updateOrInitOutline();
+		
 		for(Point p : smallerItem.outLine)
 			assertTrue(biggerItem.contains(p));
 	}
 
-	@Override
+	@ParameterizedTest
+	@ValueSource(ints = {10,50,100,250})
 	public void testContains_ContainsAnotherBiggerShape_shouldFail(int size) {
 		Rectangle smallerItem = fakeRectangle(size);
 		Rectangle biggerItem = fakeRectangle(size+5);
+		
+		smallerItem.setLevelOfDetail(5);
+		biggerItem.setLevelOfDetail(5);
+		
+		smallerItem.updateOrInitOutline();
+		biggerItem.updateOrInitOutline();
 		
 		for(Point p : biggerItem.outLine) 
 			assertFalse(smallerItem.contains(p));
 	}
 	
-	@Test
-	public void testShape_NegativeSizeInput_ShouldThrowError() {
-		assertThrows(Exception.class,() -> fakeRectangle(-100));
+
+	@ParameterizedTest
+	@ValueSource(ints = {-10,-100,-1000})
+	public void testShape_NegativeSizeInput_ShouldThrowError(int size) {
+		assertThrows(Exception.class,() -> fakeRectangle(size));
 	}
 
-	@Test
-	public void testShape_ZeroSizeInput_ShouldSucceed() {
-		Rectangle testItem = fakeRectangle(0);
+
+	@ParameterizedTest
+	@ValueSource(ints = {0,-0})
+	public void testShape_ZeroSizeInput_ShouldSucceed(int zeros) {
+		Rectangle testItem = fakeRectangle(zeros);
 		assertTrue(true,"Rectangle was build with size 0 - No Exception");
 	}
 	
@@ -153,5 +172,15 @@ class RectangleTests implements ShapeTests{
 		Rectangle otherObject = fakeRectangle(secondCenter,100);
 		
 		assertFalse(testObject.equals(otherObject));
+	}
+	
+
+	@ParameterizedTest
+	@ValueSource(ints = {0})
+	public void testEquality_completelyDifferentObject_shouldNotBeEqual(int dummy) {
+		Point firstCenter = fakeAbsolutePoint();
+		Rectangle testObject =  fakeRectangle(firstCenter,100);
+		
+		assertNotEquals(new LinkedList<Object>(),testObject);
 	}
 }
