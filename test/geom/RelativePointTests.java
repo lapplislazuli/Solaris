@@ -1,6 +1,9 @@
 package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.LinkedList;
+
 import static helpers.FakeGeometryFactory.*;
 
 import org.junit.jupiter.api.Test;
@@ -25,10 +28,21 @@ class RelativePointTests {
 	@ValueSource(ints = {-100,-10,-5,0,10,30,75,100})
 	void testInitialValues_moveRelativePoint_shouldOffsetAway(int offset){
 		Point anker = fakeAbsolutePoint();
-		RelativePoint testy = fakeRelativePoint(anker,offset,offset);
+		RelativePoint testy = new RelativePoint(anker,offset,offset);
 		
 		assertEquals(offset,testy.getX());
 		assertEquals(offset,testy.getY());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = {-100,-10,-5,0,10,30,75,100})
+	void testConstructor_moveRelativePoint_shouldBeOffsetAway(int offset){
+		Point anker = fakeAbsolutePoint();
+		RelativePoint testy = new RelativePoint(anker,offset,offset,offset);
+		
+		assertEquals(offset,testy.getX());
+		assertEquals(offset,testy.getY());
+		assertEquals(offset,testy.getZ());
 	}
 	
 	
@@ -53,9 +67,11 @@ class RelativePointTests {
 		
 		testy.setX(dest);
 		testy.setY(dest);
+		testy.setZ(dest);
 
 		assertEquals(dest,testy.getX());
 		assertEquals(dest,testy.getY());
+		assertEquals(dest,testy.getZ());
 	}
 	
 	@ParameterizedTest
@@ -66,9 +82,11 @@ class RelativePointTests {
 		
 		testy.setXDif(dest);
 		testy.setYDif(dest);
+		testy.setZDif(dest);
 
 		assertEquals(dest,testy.getX());
 		assertEquals(dest,testy.getY());
+		assertEquals(dest,testy.getZ());
 	}
 	
 	
@@ -86,5 +104,66 @@ class RelativePointTests {
 		RelativePoint testy = fakeRelativePoint(anchor,10,10);
 		
 		assertFalse(testy.samePosition(anchor));
+	}
+	
+	@Test
+	void testClone_compareToClone_shouldBeEqual() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,10,10);
+		RelativePoint clone= raw.clone();
+		
+		assertEquals(raw,clone);
+	}
+	
+	@Test
+	void testClone_compareToClone_shouldHaveSameKoords() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,10,10);
+		RelativePoint clone= raw.clone();
+		
+		assertEquals(raw.getY(),clone.getY());
+		assertEquals(raw.getX(),clone.getX());
+		assertEquals(raw.getZ(),clone.getZ());
+	}
+	
+	@Test
+	void testToString_shouldBeCoordsInBrackets() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,0,0);
+		
+		assertEquals("[0|0|0]",raw.toString());
+	}
+	
+	@Test
+	void testClone_toString_shouldBeEqual() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,10,10);
+		RelativePoint clone= raw.clone();
+		
+		assertEquals(raw.toString(),clone.toString());
+	}
+	
+	@Test
+	void testToString_NoOffset_shouldBeEqualToAnchor() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,0,0);
+		
+		assertEquals(anchor.toString(),raw.toString());
+	}
+	
+	@Test
+	void testEquals_noPointToCompare_shouldbeFalse() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,0,0);
+		
+		assertNotEquals(new LinkedList(),raw);
+	}
+	
+	@Test
+	void testEquals_AbsolutePointOnSamePosition_shouldBeTrue() {
+		Point anchor = fakeAbsolutePoint();
+		RelativePoint raw = fakeRelativePoint(anchor,0,0);
+		
+		assertNotEquals(anchor,raw);
 	}
 }

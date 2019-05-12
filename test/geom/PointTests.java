@@ -11,44 +11,52 @@ import interfaces.geom.Point;
 
 class PointTests {
 	
-	@Test 
-	void testDegreeTo_verticalPointAbove_shouldBe90Degrees(){
+
+	@ParameterizedTest
+	@ValueSource(ints = {10,75,1000})
+	void testDegreeTo_verticalPointAbove_shouldBe90Degrees(int offset){
 		Point firstPoint= fakeAbsolutePoint();
-		Point secondPoint= fakeAbsolutePoint(0,100);
+		Point secondPoint= fakeAbsolutePoint(0,offset);
 		
 		assertEquals(Math.PI/2,firstPoint.degreeTo(secondPoint));
 	}
 	
-	@Test 
-	void testDegreeTo_verticalPointBeyond_shouldBe270Degrees(){
+
+	@ParameterizedTest
+	@ValueSource(ints = {-10,-75,-1000})
+	void testDegreeTo_verticalPointBeyond_shouldBe270Degrees(int offset){
 		Point firstPoint= fakeAbsolutePoint();
-		Point secondPoint= fakeAbsolutePoint(0,-100);
+		Point secondPoint= fakeAbsolutePoint(0,offset);
 		
 		assertEquals(3*Math.PI/2,firstPoint.degreeTo(secondPoint));
 	}
-	
-	@Test 
-	void testDegreeTo_horizontalPointRight_shouldBe0Degrees(){
+
+	@ParameterizedTest
+	@ValueSource(ints = {10,75,1000})
+	void testDegreeTo_horizontalPointRight_shouldBe0Degrees(int offset){
 		Point firstPoint= fakeAbsolutePoint();
-		Point secondPoint= fakeAbsolutePoint(100,0);
+		Point secondPoint= fakeAbsolutePoint(offset,0);
 		
 		assertEquals(0,firstPoint.degreeTo(secondPoint));
 	}
 	
-	@Test 
-	void testDegreeTo_horizontalPointLeft_shouldBe180Degrees(){
+
+	@ParameterizedTest
+	@ValueSource(ints = {-10,-75,-1000})
+	void testDegreeTo_horizontalPointLeft_shouldBe180Degrees(int offset){
 		Point firstPoint= fakeAbsolutePoint();
-		Point secondPoint= fakeAbsolutePoint(-100,0);
+		Point secondPoint= fakeAbsolutePoint(offset,0);
 		
 		assertEquals(Math.PI,firstPoint.degreeTo(secondPoint));
 	}
 	
-	@Test
-	void testDegreeTo_comparePointsToEachother_shouldBeSymmetric() {
+	@ParameterizedTest
+	@ValueSource(ints = {-10,-75,-1000})
+	void testDegreeTo_comparePointsToEachother_shouldBeSymmetric(int offset) {
 		Point firstPoint= fakeAbsolutePoint();
-		Point secondPoint= fakeAbsolutePoint(-100,0);
+		Point secondPoint= fakeAbsolutePoint(offset,0);
 		
-		assertTrue(firstPoint.degreeTo(secondPoint)==secondPoint.degreeTo(firstPoint)+Math.PI);
+		assertEquals(firstPoint.degreeTo(secondPoint),secondPoint.degreeTo(firstPoint)+Math.PI);
 	}
 	
 	@ParameterizedTest
@@ -84,7 +92,7 @@ class PointTests {
 		Point fakeCenter = fakeAbsolutePoint();
 		Point xcomparer = fakeAbsolutePoint(dist,0);
 		
-		assertTrue(xcomparer.distanceTo(fakeCenter)==fakeCenter.distanceTo(xcomparer));
+		assertEquals(xcomparer.distanceTo(fakeCenter),fakeCenter.distanceTo(xcomparer));
 	}
 	
 	@ParameterizedTest
@@ -122,7 +130,7 @@ class PointTests {
 		Point center = fakeAbsolutePoint();
 		AbsolutePoint test = fakeAbsolutePoint(variableCord,variableCord);
 		
-		assertFalse(test.hashCode() == center.hashCode());
+		assertNotEquals(test.hashCode(),center.hashCode());
 	}
 	
 	@ParameterizedTest
@@ -131,6 +139,6 @@ class PointTests {
 		AbsolutePoint test = fakeAbsolutePoint(variableCord,variableCord);
 		Point clone = test.clone();
 		
-		assertTrue(test.samePosition(clone)==clone.samePosition(test));
+		assertEquals(test.samePosition(clone),clone.samePosition(test));
 	}
 }

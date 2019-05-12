@@ -42,7 +42,15 @@ public class RelativePoint implements Point{
 	public RelativePoint clone() {
 		return new RelativePoint(anker,xDif,yDif,zDif);
 	}
-
+	
+	@Override
+	public boolean equals(Object other) {
+		if(other instanceof Point) {
+			return ((Point)other).hashCode()==hashCode();
+		}
+		return false;
+	}
+	
 	@Override
 	public int hashCode() {
 		int result= Integer.hashCode(getX());
