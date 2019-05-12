@@ -1,26 +1,22 @@
 package config.interfaces;
 
-import config.JSON.JSONKeyConfig;
-import config.JSON.JSONLoggerSettings;
-import config.JSON.JSONMouseConfig;
-import config.JSON.JSONSettings;
 
 public interface Config {
 
 	Settings getSettings();
 
-	void setSettings(JSONSettings settings);
+	void setSettings(Settings settings);
 
 	KeyConfig getKeyConfig();
 
-	void setKeyConfig(JSONKeyConfig keyConfig);
+	void setKeyConfig(KeyConfig keyConfig);
 
 	MouseConfig getMouseConfig();
 
-	void setMouseConfig(JSONMouseConfig mouseConfig);
+	void setMouseConfig(MouseConfig mouseConfig);
 
 	LoggerSettings getLoggerSettings();
 
-	void setLoggerSettings(JSONLoggerSettings loggerSettings);
+	void setLoggerSettings(LoggerSettings loggerSettings);
 
 }

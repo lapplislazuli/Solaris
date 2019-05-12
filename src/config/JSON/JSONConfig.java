@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
+import config.interfaces.LoggerSettings;
 import config.interfaces.MouseConfig;
 import config.interfaces.Settings;
 
@@ -44,32 +45,36 @@ public class JSONConfig implements Config {
 		return settings;
 	}
 
-	public void setSettings(JSONSettings settings) {
-		this.settings = settings;
+	public void setSettings(Settings settings) {
+		if(settings instanceof JSONSettings)
+			this.settings =(JSONSettings) settings;
 	}
 
 	public KeyConfig getKeyConfig() {
 		return keyConfig;
 	}
 
-	public void setKeyConfig(JSONKeyConfig keyConfig) {
-		this.keyConfig = keyConfig;
+	public void setKeyConfig(KeyConfig keyConfig) {
+		if(keyConfig instanceof JSONKeyConfig)
+			this.keyConfig = (JSONKeyConfig)keyConfig;
 	}
 
 	public MouseConfig getMouseConfig() {
 		return mouseConfig;
 	}
 
-	public void setMouseConfig(JSONMouseConfig mouseConfig) {
-		this.mouseConfig = mouseConfig;
+	public void setMouseConfig(MouseConfig mouseConfig) {
+		if(mouseConfig instanceof JSONMouseConfig)
+			this.mouseConfig = (JSONMouseConfig)mouseConfig;
 	}
 
-	public JSONLoggerSettings getLoggerSettings() {
+	public LoggerSettings getLoggerSettings() {
 		return loggerSettings;
 	}
 
-	public void setLoggerSettings(JSONLoggerSettings loggerSettings) {
-		this.loggerSettings = loggerSettings;
+	public void setLoggerSettings(LoggerSettings loggerSettings) {
+		if(loggerSettings instanceof JSONLoggerSettings)
+			this.loggerSettings = (JSONLoggerSettings)loggerSettings;
 	}
 	
 	public String getPath() {return path;}

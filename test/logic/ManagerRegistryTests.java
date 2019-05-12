@@ -4,42 +4,81 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 
+import config.interfaces.Config;
+import helpers.FakeConfigFactory;
+import logic.manager.CollisionManager;
+import logic.manager.DrawingManager;
 import logic.manager.EffectManager;
 import logic.manager.ManagerRegistry;
+import logic.manager.UpdateManager;
 
 public class ManagerRegistryTests {
 	
-	@AfterAll
+	@AfterEach
 	public static void resetManagerRegistry() {
 		ManagerRegistry.reset();
 	}
 	
 	@Test
 	public void testGetInstance_shouldNotBeNull() {
-		assertFalse(null==ManagerRegistry.getInstance());
+		assertFalse(ManagerRegistry.getInstance()==null);
 	}
 	
 	@Test
 	public void testInit_EfxManager_shouldBeInUpdateManager() {
+		UpdateManager toMock = new UpdateManager();
 		EffectManager toCheck = new EffectManager();
 		ManagerRegistry.setEffectManager(toCheck);
+		ManagerRegistry.setUpdateManager(toMock);
 		
-		ManagerRegistry.getInstance().init(null);
+		Config fakeConfig = FakeConfigFactory.standardConfig();
 		
-		boolean result = ManagerRegistry.getUpdateManager().getRegisteredItems().contains(toCheck);
-		assertTrue(result);
+		ManagerRegistry.getInstance().init(fakeConfig);
+		
+		assertTrue(toMock.getRegisteredItems().contains(toCheck));
+	}
+	
+	@Test
+	public void testInit_DrwManager_shouldBeInUpdateManager() {
+		UpdateManager toMock = new UpdateManager();
+		DrawingManager toCheck = new DrawingManager();
+		ManagerRegistry.setDrawingManager(toCheck);
+		ManagerRegistry.setUpdateManager(toMock);
+		
+		Config fakeConfig = FakeConfigFactory.standardConfig();
+		
+		ManagerRegistry.getInstance().init(fakeConfig);
+		
+		assertTrue(toMock.getRegisteredItems().contains(toCheck));
+	}
+	
+	@Test
+	public void testInit_ColManager_shouldBeInUpdateManager() {
+		UpdateManager toMock = new UpdateManager();
+		CollisionManager toCheck = new CollisionManager();
+		ManagerRegistry.setCollisionManager(toCheck);
+		ManagerRegistry.setUpdateManager(toMock);
+		
+		Config fakeConfig = FakeConfigFactory.standardConfig();
+		
+		ManagerRegistry.getInstance().init(fakeConfig);
+		
+		assertTrue(toMock.getRegisteredItems().contains(toCheck));
 	}
 	
 	@Test
 	public void testInit_EfxManager_shouldBeInDrawingManager() {
 		EffectManager toCheck = new EffectManager();
+		DrawingManager toMock = new DrawingManager();
 		ManagerRegistry.setEffectManager(toCheck);
+		ManagerRegistry.setDrawingManager(toMock);
 		
-		ManagerRegistry.getInstance().init(null);
+		Config fakeConfig = FakeConfigFactory.standardConfig();
 		
-		boolean result = ManagerRegistry.getDrawingManager().getRegisteredItems().contains(toCheck);
-		assertTrue(result);
+		ManagerRegistry.getInstance().init(fakeConfig);
+		
+		assertTrue(toMock.getRegisteredItems().contains(toCheck));
 	}
 }
