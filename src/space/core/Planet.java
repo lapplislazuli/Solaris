@@ -7,15 +7,10 @@ import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
 import geom.Circle;
-import interfaces.drawing.DrawingInformation;
 
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
 
-	protected Planet(String name, SpaceObject parent,DrawingInformation dInfo, int size, int distance, double speed) {
-		super(name, parent, dInfo, new Circle(size), distance, speed);
-	}
-	
 	public static class Builder {
 		private final String name;
 		private SpaceObject parent;
@@ -38,12 +33,16 @@ public class Planet extends MovingSpaceObject {
 			return this;
 		}
 		
-		public Builder distance(int val){ 
+		public Builder distance(int val){
+			if(val<0)
+				throw new IllegalArgumentException("Distance cannot be smaller than 0");
 			distance= val; 
 			return this;
 		}
 		
 		public Builder size(int val){
+			if(val<0)
+				throw new IllegalArgumentException("Size cannot be smaller than 0");
 			size= val; 
 			return this;
 		}
@@ -57,6 +56,8 @@ public class Planet extends MovingSpaceObject {
 			return this;
 		}
 		public Builder levelOfDetail(int val){ 
+			if(val<0)
+				throw new IllegalArgumentException("LoD cannot be smaller than 0");
 			levelOfDetail= val; 
 			return this;
 		}

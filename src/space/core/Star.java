@@ -26,13 +26,6 @@ public class Star extends SpaceObject {
 		checkAndAddSunEffects();
 	}
 	
-	public Star(String name,DrawingInformation dInfo,int size) {
-		super(name,new AbsolutePoint(0,0), new Circle(size),dInfo);
-		shape.setLevelOfDetail(100);
-		this.size=size;
-		checkAndAddSunEffects();
-	}
-	
 	private Star(Builder builder) {
 		super(builder.name,builder.center,new Circle(builder.radious),new JavaFXDrawingInformation(builder.color));
 		shape.setLevelOfDetail(builder.levelOfDetail);
