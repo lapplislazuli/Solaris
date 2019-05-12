@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import space.core.Planet;
 import space.core.SpaceObject;
 
-import static helpers.SpaceObjectFakeFactory.*;
+import static helpers.FakeSpaceObjectFactory.*;
 
 class CollisionTests {
 	

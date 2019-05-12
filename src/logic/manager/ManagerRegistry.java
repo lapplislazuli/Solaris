@@ -1,6 +1,6 @@
 package logic.manager;
 
-import config.Config;
+import config.interfaces.Config;
 
 public class ManagerRegistry {
 	
@@ -44,4 +44,8 @@ public class ManagerRegistry {
 	public static void setEffectManager(EffectManager newmgr) 		{efxmng=newmgr;}
 	public static void setDrawingManager(DrawingManager newmgr) 	{drwmng=newmgr;}
 	public static void setCollisionManager(CollisionManager newmgr) {colmng=newmgr;}
+	
+	public static void reset() {
+		INSTANCE=null;
+	}
 }

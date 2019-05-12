@@ -10,8 +10,8 @@ import logic.manager.DrawingManager;
 import logic.manager.EffectManager;
 import logic.manager.ManagerRegistry;
 
-import static helpers.ManagerFakeFactory.fakeEfxManager;
-import static helpers.ManagerFakeFactory.fakeDrawingManager;
+import static helpers.FakeManagerFactory.fakeEfxManager;
+import static helpers.FakeManagerFactory.fakeDrawingManager;
 
 public class DrawEffectTests {
 	

@@ -1,4 +1,4 @@
-package config;
+package config.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,11 +6,13 @@ import java.util.Map.Entry;
 
 import org.json.*;
 
-public class KeyConfig {
+import config.interfaces.KeyConfig;
+
+public class JSONKeyConfig implements KeyConfig {
 	
 	private final Map<String,String> keyBindings = new HashMap<String,String>();
 	
-	public KeyConfig(JSONArray bindings) {
+	public JSONKeyConfig(JSONArray bindings) {
 		for (int i = 0; i < bindings.length(); i++)
 		{
 		    String key = bindings.getJSONObject(i).getString("key");

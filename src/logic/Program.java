@@ -13,9 +13,11 @@ import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.PlayerSpaceShuttle;
 import space.spacecrafts.ships.Ship;
-import config.Config;
-import config.ConfigFactory;
-import config.LoggerSettings;
+import config.JSON.JSONConfig;
+import config.JSON.JSONConfigFactory;
+import config.JSON.JSONLoggerSettings;
+import config.interfaces.Config;
+import config.interfaces.LoggerSettings;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -38,7 +40,7 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("restriction")
 public class Program extends Application{
 	
-	Config config;
+	JSONConfig config;
 	
 	private static Program INSTANCE;
 	
@@ -50,9 +52,9 @@ public class Program extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		INSTANCE = this;
 		
-		config = ConfigFactory.read("./config.json");
+		config = JSONConfigFactory.read("./config.json");
 		
-		initLogger(config.loggerSettings);
+		initLogger(config.getLoggerSettings());
 		
 		Group root = new Group();
 		
@@ -74,7 +76,7 @@ public class Program extends Application{
 	}
 
 	private Scene initScene(Config config, Group root) {
-        return new Scene(root,config.settings.screenWidth , config.settings.screenHeight);     
+        return new Scene(root,config.getSettings().getScreenWidth() , config.getSettings().getScreenHeight());     
 	}
 	
 	private void initDrawingContextAndManager(Group root, Scene scene) {
@@ -99,7 +101,7 @@ public class Program extends Application{
 	@Override
 	public void stop() {
 		Logger.info("Saving Config");
-		ConfigFactory.save(config);
+		JSONConfigFactory.save(config);
 		Logger.info("Closing Solaris");
 		System.exit(0);
 	}
@@ -219,7 +221,7 @@ public class Program extends Application{
 
 
 	private void initLogger(LoggerSettings settings) {
-		Writer w = new FileWriter(settings.logfile,false,settings.append);
+		Writer w = new FileWriter(settings.getLogfile(),false,settings.isAppend());
 		Configurator.defaultConfig()
 		   .writer(w)
 		   .level(Level.INFO)

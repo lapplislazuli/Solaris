@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.pmw.tinylog.Logger;
 
-import config.Config;
+import config.interfaces.Config;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingObject;
 import interfaces.logical.Effect;

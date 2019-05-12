@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import fakes.FakeEffect;
 import logic.manager.EffectManager;
-import static helpers.ManagerFakeFactory.fakeEfxManager;
+import static helpers.FakeManagerFactory.fakeEfxManager;
 
 public class EffectManagerTests implements SharedManagerTests {
 	

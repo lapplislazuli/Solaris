@@ -8,7 +8,7 @@ import space.core.MovingSpaceObject;
 import space.core.Planet;
 import space.core.SpaceObject;
 
-import static helpers.SpaceObjectFakeFactory.*;
+import static helpers.FakeSpaceObjectFactory.*;
 
 class MoveTests {
 	

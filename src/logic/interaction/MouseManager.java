@@ -13,8 +13,8 @@ import java.util.Map.Entry;
 
 import org.pmw.tinylog.Logger;
 
-import config.Config;
-import config.MouseConfig;
+import config.interfaces.Config;
+import config.interfaces.MouseConfig;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.UpdatingObject;
@@ -44,7 +44,7 @@ public class MouseManager implements UpdatingObject {
 		this.scene=scene;
 		//this.scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
-        initMouseBindings(config.mouseConfig);
+        initMouseBindings(config.getMouseConfig());
     }
 	
 	private void initMouseBindings(MouseConfig config) {

@@ -1,7 +1,7 @@
 package geom;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static helpers.GeometryFakeFactory.*;
+import static helpers.FakeGeometryFactory.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

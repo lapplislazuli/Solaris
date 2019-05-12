@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import fakes.FakeDrawingContext;
-import fakes.FakeDrawingObject;
+import fakes.interfaces.FakeDrawingContext;
+import fakes.interfaces.FakeDrawingObject;
 import logic.manager.DrawingManager;
 
-import static helpers.ManagerFakeFactory.fakeDrawingManager;
+import static helpers.FakeManagerFactory.fakeDrawingManager;
 
 public class DrawingManagerTests implements SharedManagerTests {
 	

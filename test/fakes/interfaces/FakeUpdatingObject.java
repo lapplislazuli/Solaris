@@ -1,4 +1,4 @@
-package fakes;
+package fakes.interfaces;
 
 import java.util.Collection;
 import java.util.LinkedList;

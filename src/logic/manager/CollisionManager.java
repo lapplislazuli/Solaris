@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.pmw.tinylog.Logger;
 
-import config.Config;
+import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.ManagerObject;

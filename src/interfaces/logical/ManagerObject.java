@@ -2,7 +2,7 @@ package interfaces.logical;
 
 import java.util.Collection;
 
-import config.Config;
+import config.interfaces.Config;
 
 public interface ManagerObject<T> extends UpdatingObject{
 	

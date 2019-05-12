@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import space.core.SpaceObject;
 
-import static helpers.SpaceObjectFakeFactory.*;
+import static helpers.FakeSpaceObjectFactory.*;
 
 public class DegreeTests {
 	

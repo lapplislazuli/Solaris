@@ -1,4 +1,4 @@
-package fakes;
+package fakes.interfaces;
 
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;

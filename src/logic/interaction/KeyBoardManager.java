@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 
 import org.pmw.tinylog.Logger;
 
-import config.Config;
-import config.KeyConfig;
+import config.interfaces.Config;
+import config.interfaces.KeyConfig;
 import interfaces.logical.UpdatingObject;
 
 import javafx.scene.Scene;
@@ -41,7 +41,7 @@ public class KeyBoardManager implements UpdatingObject {
 	public void init(Scene scene, Config config) {
         scene.addEventHandler(KeyEvent.KEY_TYPED, evt -> keyTyped(evt));
         scene.addEventHandler(KeyEvent.KEY_RELEASED, evt -> keyReleased(evt));
-        initKeyBindings(config.keyConfig);
+        initKeyBindings(config.getKeyConfig());
 	}
 
 	private void keyReleased(KeyEvent evt) {

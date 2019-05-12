@@ -6,15 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
-import fakes.FakeCollidingObject;
-import fakes.FakeDestructibleObject;
-import fakes.FakeUpdatableCollidingObject;
+import fakes.interfaces.FakeCollidingObject;
+import fakes.interfaces.FakeDestructibleObject;
+import fakes.interfaces.FakeUpdatableCollidingObject;
 import logic.manager.CollisionManager;
 import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
 
 public class CollisionManagerTests implements SharedManagerTests {
-	
 
 	@Test
 	public void testCollision_OtherIsDestructibleAndCollided_shouldbeDestroyed() {

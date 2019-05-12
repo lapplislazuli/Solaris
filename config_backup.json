@@ -21,5 +21,11 @@
 		{button:"PRIMARY", action: "ItemInfo"},
 		{button:"MIDDLE", action: "AddToRoute"},
 		{button:"SECONDARY", action: "Shoot"}
-	]
+	],
+	
+	loggerSettings : {
+		append : true,
+		logfile : "log.txt",
+		level : "warn"
+	}
 }

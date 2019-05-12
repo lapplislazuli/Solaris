@@ -1,4 +1,4 @@
-package config;
+package config.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,14 +6,15 @@ import java.util.Map.Entry;
 
 import org.json.*;
 
+import config.interfaces.MouseConfig;
 import javafx.scene.input.MouseButton;
 
 @SuppressWarnings("restriction")
-public class MouseConfig {
+public class JSONMouseConfig implements MouseConfig {
 
 	private final Map<MouseButton,String> mouseBindings = new HashMap<MouseButton,String>();
 	
-	public MouseConfig(JSONArray bindings) {
+	public JSONMouseConfig(JSONArray bindings) {
 		for (int i = 0; i < bindings.length(); i++)
 		{
 		    String key = bindings.getJSONObject(i).getString("button");

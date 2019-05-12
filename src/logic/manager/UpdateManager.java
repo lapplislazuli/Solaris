@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
 
-import config.Config;
+import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.ManagerObject;
 import interfaces.logical.RecursiveObject;
@@ -34,8 +34,8 @@ public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
 	
 	
 	public void init(Config config) {
-		setTimer(config.settings.updateIntervall);
-		running = !config.settings.paused;
+		setTimer(config.getSettings().getUpdateIntervall());
+		running = !config.getSettings().isPaused();
 	}
 	
 	public void registerItem(UpdatingObject o) {

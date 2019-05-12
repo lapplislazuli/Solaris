@@ -1,4 +1,4 @@
-package config;
+package config.JSON;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,9 +10,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-public class ConfigFactory {
+public class JSONConfigFactory {
 	
-	static public Config read(String path) {
+	static public JSONConfig read(String path) {
 		if(!path.endsWith(".json"))
 			throw new IllegalArgumentException("Faulty Path!");
 		try {
@@ -23,7 +23,7 @@ public class ConfigFactory {
 			for(String line : allLines)
 				completeFile+=line;
 			JSONObject read = new JSONObject(completeFile);
-			return new Config(path,read);
+			return new JSONConfig(path,read);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -31,11 +31,11 @@ public class ConfigFactory {
 		return null;
 	}
 	
-	static public void save(Config config) {
-		if(config.path==null||config.path=="")
+	static public void save(JSONConfig config) {
+		if(config.getPath()==null||config.getPath()=="")
 			return;
 		try {
-			File f = new File(config.path);
+			File f = new File(config.getPath());
 			if(!f.exists())
 				f.createNewFile();
 			FileWriter fW = new FileWriter(f);
@@ -46,7 +46,7 @@ public class ConfigFactory {
 		}
 	}
 	
-	static public void saveConfigTo(Config config, String path) {
+	static public void saveConfigTo(JSONConfig config, String path) {
 		if(!path.endsWith(".json"))
 			path+="/configSave.json";
 		try {

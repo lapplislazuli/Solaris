@@ -1,17 +1,16 @@
-package config;
+package config.JSON;
 
 import org.json.JSONObject;
 import org.pmw.tinylog.Level;
-public class LoggerSettings {
-	//public enum LogLevel{
-	//	ERROR,WARN,INFO,DEBUG,TRACE
-	//}
+
+import config.interfaces.LoggerSettings;
+public class JSONLoggerSettings implements LoggerSettings {
 	
-	public Level level;
-	public String logfile;
-	public boolean append; //Appends to the existing logfile if true, else write new one
+	private Level level;
+	private String logfile;
+	private boolean append; //Appends to the existing logfile if true, else write new one
 	
-	public LoggerSettings(JSONObject configJSON) {
+	public JSONLoggerSettings(JSONObject configJSON) {
 		level = tryParseLogLevel(configJSON.getString("level"));
 		logfile = configJSON.getString("logfile");
 		append = configJSON.getBoolean("append");
@@ -35,5 +34,33 @@ public class LoggerSettings {
 		obj.put("logfile",logfile);
 		obj.put("append", append);
 		return obj;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+	
+	public void setLevel(String level) {
+		this.level = tryParseLogLevel(level);
+	}
+
+	public String getLogfile() {
+		return logfile;
+	}
+
+	public void setLogfile(String logfile) {
+		this.logfile = logfile;
+	}
+
+	public boolean isAppend() {
+		return append;
+	}
+
+	public void setAppend(boolean append) {
+		this.append = append;
 	}
 }

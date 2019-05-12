@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import interfaces.geom.Point;
-import static helpers.GeometryFakeFactory.*;
+import static helpers.FakeGeometryFactory.*;
 
 class RectangleTests implements ShapeTests{
 	

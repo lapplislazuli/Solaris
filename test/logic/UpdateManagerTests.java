@@ -6,9 +6,9 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
+import fakes.interfaces.FakeUpdatableCollidingObject;
+import fakes.interfaces.FakeUpdatingObject;
 import logic.manager.UpdateManager;
-import fakes.FakeUpdatableCollidingObject;
-import fakes.FakeUpdatingObject;
 import interfaces.logical.CollidingObject;
 
 class UpdateManagerTests implements SharedManagerTests{

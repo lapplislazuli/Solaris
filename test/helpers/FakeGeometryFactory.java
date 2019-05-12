@@ -6,7 +6,7 @@ import geom.Rectangle;
 import geom.RelativePoint;
 import interfaces.geom.Point;
 
-public abstract class GeometryFakeFactory {
+public abstract class FakeGeometryFactory {
 	
 	public static AbsolutePoint fakeAbsolutePoint() {
 		return new AbsolutePoint(0,0);

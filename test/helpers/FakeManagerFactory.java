@@ -1,11 +1,11 @@
 package helpers;
 
-import fakes.FakeDrawingContext;
+import fakes.interfaces.FakeDrawingContext;
 import logic.manager.DrawingManager;
 import logic.manager.EffectManager;
 import logic.manager.ManagerRegistry;
 
-public class ManagerFakeFactory {
+public abstract class FakeManagerFactory {
 	
 	public static EffectManager fakeEfxManager() {
 		ManagerRegistry.getInstance();
