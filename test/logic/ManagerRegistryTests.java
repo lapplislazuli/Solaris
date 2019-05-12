@@ -1,6 +1,7 @@
 package logic;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -17,7 +18,7 @@ import logic.manager.UpdateManager;
 public class ManagerRegistryTests {
 	
 	@AfterEach
-	public static void resetManagerRegistry() {
+	public void resetManagerRegistry() {
 		ManagerRegistry.reset();
 	}
 	
@@ -81,4 +82,25 @@ public class ManagerRegistryTests {
 		
 		assertTrue(toMock.getRegisteredItems().contains(toCheck));
 	}
+	
+	@Test
+	public void testReset_RegisterManagersAndReset_ShouldAllBeGone() {
+		UpdateManager upt = new UpdateManager();
+		CollisionManager col = new CollisionManager();
+		EffectManager efx = new EffectManager();
+		DrawingManager drw = new DrawingManager();
+		
+		ManagerRegistry.setEffectManager(efx);
+		ManagerRegistry.setDrawingManager(drw);
+		ManagerRegistry.setCollisionManager(col);
+		ManagerRegistry.setUpdateManager(upt);
+		
+		ManagerRegistry.reset();
+		
+		assertNotEquals(efx,ManagerRegistry.getEffectManager());
+		assertNotEquals(upt,ManagerRegistry.getUpdateManager());
+		assertNotEquals(drw,ManagerRegistry.getDrawingManager());
+		assertNotEquals(col,ManagerRegistry.getCollisionManager());
+	}
+	
 }

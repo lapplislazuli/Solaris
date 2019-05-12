@@ -46,6 +46,6 @@ public class ManagerRegistry {
 	public static void setCollisionManager(CollisionManager newmgr) {colmng=newmgr;}
 	
 	public static void reset() {
-		INSTANCE=null;
+		INSTANCE= new ManagerRegistry();
 	}
 }
