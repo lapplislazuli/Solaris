@@ -1,6 +1,7 @@
 package helpers;
 
 import fakes.interfaces.FakeDrawingContext;
+import logic.manager.CollisionManager;
 import logic.manager.DrawingManager;
 import logic.manager.EffectManager;
 import logic.manager.ManagerRegistry;
@@ -21,6 +22,13 @@ public abstract class FakeManagerFactory {
 		FakeDrawingContext fakeContext = new FakeDrawingContext();
 
 		mnger.initDrawingManager(fakeContext);
+		return mnger;
+	}
+	
+	public static CollisionManager freshNewCollisionManager() {
+		ManagerRegistry.getInstance();
+		CollisionManager mnger = new CollisionManager();
+		mnger.init(null);
 		return mnger;
 	}
 	

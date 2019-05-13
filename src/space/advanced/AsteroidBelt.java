@@ -13,14 +13,16 @@ public class AsteroidBelt extends MovingSpaceObject{
 		super(builder.name,builder.parent, new EmptyJFXDrawingInformation(), new Circle(0),0,0);
 		center=builder.parent.getCenter();
 		
-		for(int i = 1; i<=builder.asteroids;i++) {
+		for(int i = 1; i<builder.asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,builder.distance,builder.speed);
 			a.relativePos=(i/Math.PI*2);
-			trabants.add(a);
 		}
 		for(SpaceObject t:trabants)
 			if(t instanceof Asteroid)
 				((Asteroid)t).move(center);
+		
+		distance=builder.distance;
+		speed=builder.speed;
 	}
 
 	@Override
@@ -53,13 +55,13 @@ public class AsteroidBelt extends MovingSpaceObject{
 		}
 		
 		public Builder distance(int val){ 
-			if(distance<0)
+			if(val<0)
 				throw new IllegalArgumentException("Distance cannot be negative");
 			distance= val; 
 			return this;
 		}
 		public Builder asteroids(int val){
-			if(asteroids<0)
+			if(val<0)
 				throw new IllegalArgumentException("Asteroid-Count cannot be negative");
 			asteroids= val; 
 			return this;

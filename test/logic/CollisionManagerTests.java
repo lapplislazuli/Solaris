@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static helpers.FakeManagerFactory.*;
+
 import org.junit.Test;
 
 import fakes.interfaces.FakeCollidingObject;
@@ -261,12 +263,6 @@ public class CollisionManagerTests implements SharedManagerTests {
 		assertFalse(mnger.getRegisteredItems().contains(fakeCollider));
 	}
 	
-	public static CollisionManager freshNewCollisionManager() {
-		ManagerRegistry.getInstance();
-		CollisionManager mnger = new CollisionManager();
-		mnger.init(null);
-		return mnger;
-	}
 	
 	
 }
