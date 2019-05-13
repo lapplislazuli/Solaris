@@ -4,7 +4,6 @@ import geom.Circle;
 import drawing.EmptyJFXDrawingInformation;
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
-import interfaces.logical.MovingObject;
 import interfaces.logical.MovingUpdatingObject;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;

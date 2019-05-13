@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import fakes.FakeMovingSpaceObject;
 import fakes.interfaces.FakeCollidingObject;
 import fakes.interfaces.FakeDestructibleObject;
 import interfaces.geom.Point;
@@ -136,4 +137,19 @@ public class AsteroidBeltTests {
 		
 		assertFalse(fakeDestructibleObject.destroyed);
 	}
+	
+	@Test
+	public void testMove_childrenMoved_shouldBeMoved() {
+		Star anchor = fakeStar(0,0);
+		AsteroidBelt testObject = (new AsteroidBelt.Builder("Test",anchor))
+				.build();
+		
+		FakeMovingSpaceObject fake = new FakeMovingSpaceObject();
+		testObject.getTrabants().add(fake);
+		
+		testObject.move(anchor.getCenter());
+		
+		assertTrue(fake.moved);
+	}
+	
 }
