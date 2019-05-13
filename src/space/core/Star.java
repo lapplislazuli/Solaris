@@ -8,6 +8,7 @@ import drawing.JavaFXDrawingInformation;
 import geom.Circle;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
+import interfaces.logical.MovingUpdatingObject;
 import geom.AbsolutePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -64,7 +65,7 @@ public class Star extends SpaceObject {
 		private AbsolutePoint center=new AbsolutePoint(0,0);
 		private boolean reCentering=false;
 		
-		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
+		private List<MovingUpdatingObject> trabants = new LinkedList<MovingUpdatingObject>();
 		
 		public Builder(String name) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
@@ -104,7 +105,7 @@ public class Star extends SpaceObject {
 			return this;
 		}
 		
-		public Builder trabant(MovingSpaceObject val){ 
+		public Builder trabant(MovingUpdatingObject val){ 
 			trabants.add(val); 
 			return this;
 		}

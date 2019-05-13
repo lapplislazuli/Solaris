@@ -10,10 +10,12 @@ import geom.AbsolutePoint;
 import interfaces.drawing.ComplexDrawingObject;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
+import interfaces.drawing.DrawingObject;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.interaction.ClickableObject;
 import interfaces.logical.CollidingObject;
+import interfaces.logical.MovingUpdatingObject;
 import interfaces.logical.RecursiveObject;
 import interfaces.logical.UpdatingObject;
 
@@ -24,7 +26,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 
 	protected DrawingInformation dInfo;
 	
-	protected List<MovingSpaceObject> trabants=new LinkedList<MovingSpaceObject>();
+	protected List<MovingUpdatingObject> trabants=new LinkedList<MovingUpdatingObject>();
 	protected float rotation = 0; //in radiant-degree
 	
 	public SpaceObject(String name,Point center, Shape shape, DrawingInformation dInfo) {
@@ -43,7 +45,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public void update() {
-		for (MovingSpaceObject trabant : trabants){
+		for (MovingUpdatingObject trabant : trabants){
 			trabant.move(center);
 			trabant.update();
 		}
@@ -64,8 +66,10 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	};
 	
 	protected void drawTrabants(DrawingContext dc){
-		for (MovingSpaceObject trabant : trabants) 
-			trabant.draw(dc);
+		trabants.stream()
+			.filter(t-> t instanceof DrawingObject)
+			.map(t -> (DrawingObject) t)
+			.forEach(trabant->trabant.draw(dc));
 	}
 	
 	public double distanceTo(SpaceObject other) {
@@ -83,8 +87,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	
 	public Collection<RecursiveObject> getAllChildren(){
 		Collection<RecursiveObject> flatChildren = new LinkedList<RecursiveObject>();
-		for(SpaceObject trabant : trabants)
-			flatChildren.addAll(trabant.getAllChildren());
+		for(MovingUpdatingObject trabant : trabants)
+			if(trabant instanceof RecursiveObject)
+				flatChildren.addAll(((RecursiveObject)trabant).getAllChildren());
 		flatChildren.add(this);
 		return flatChildren;
 	}
@@ -151,11 +156,11 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		this.center = center;
 	}
 
-	public List<MovingSpaceObject> getTrabants() {
+	public List<MovingUpdatingObject> getTrabants() {
 		return trabants;
 	}
 
-	public void setTrabants(List<MovingSpaceObject> trabants) {
+	public void setTrabants(List<MovingUpdatingObject> trabants) {
 		this.trabants = trabants;
 	}
 

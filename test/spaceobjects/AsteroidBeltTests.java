@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import fakes.interfaces.FakeCollidingObject;
 import fakes.interfaces.FakeDestructibleObject;
 import interfaces.geom.Point;
+import interfaces.logical.MovingUpdatingObject;
 import logic.manager.CollisionManager;
 import space.advanced.Asteroid;
 import space.advanced.AsteroidBelt;
@@ -59,7 +60,7 @@ public class AsteroidBeltTests {
 				.asteroids(20)
 				.build();
 		
-		for(MovingSpaceObject r : testObject.getTrabants())
+		for(MovingUpdatingObject r : testObject.getTrabants())
 			assertTrue(r instanceof Asteroid);
 	}
 	

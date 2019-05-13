@@ -8,6 +8,7 @@ import org.pmw.tinylog.Logger;
 import drawing.JavaFXDrawingInformation;
 import geom.TShape;
 import interfaces.logical.DestructibleObject;
+import interfaces.logical.MovingUpdatingObject;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
 
@@ -52,7 +53,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		private Color color= Color.BLACK;
 		private int distance = 0, xSize = 0, ySize=0, levelOfDetail=2;
 		private double speed = 0;
-		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
+		private List<MovingUpdatingObject> trabants = new LinkedList<MovingUpdatingObject>();
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())
@@ -95,7 +96,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 			return this;
 		}
 		
-		public Builder trabant(MovingSpaceObject val){ 
+		public Builder trabant(MovingUpdatingObject val){ 
 			trabants.add(val); 
 			return this;
 		}

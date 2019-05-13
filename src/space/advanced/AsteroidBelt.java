@@ -4,6 +4,8 @@ import geom.Circle;
 import drawing.EmptyJFXDrawingInformation;
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
+import interfaces.logical.MovingObject;
+import interfaces.logical.MovingUpdatingObject;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
@@ -17,7 +19,7 @@ public class AsteroidBelt extends MovingSpaceObject{
 			Asteroid a = new Asteroid(name+"#"+i,this,builder.distance,builder.speed);
 			a.relativePos=(i/Math.PI*2);
 		}
-		for(SpaceObject t:trabants)
+		for(MovingUpdatingObject t:trabants)
 			if(t instanceof Asteroid)
 				((Asteroid)t).move(center);
 		
@@ -34,7 +36,7 @@ public class AsteroidBelt extends MovingSpaceObject{
 	public void move(Point parentCenter) {
 		center=parentCenter;
 
-		for(MovingSpaceObject asteroid : trabants)
+		for(MovingUpdatingObject asteroid : trabants)
 			asteroid.move(center);
 	}
 	

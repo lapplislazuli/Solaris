@@ -8,6 +8,7 @@ import java.util.List;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import geom.Circle;
+import interfaces.logical.MovingUpdatingObject;
 
 @SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
@@ -18,7 +19,7 @@ public class Planet extends MovingSpaceObject {
 		private Color color= Color.BLACK;
 		private int distance = 0,size = 0, levelOfDetail=2;
 		private double speed = 0,rotationSpeed=0;
-		private List<MovingSpaceObject> trabants = new LinkedList<MovingSpaceObject>();
+		private List<MovingUpdatingObject> trabants = new LinkedList<MovingUpdatingObject>();
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
 			if(name==null||name.isEmpty())

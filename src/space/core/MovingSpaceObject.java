@@ -14,6 +14,7 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.MovingObject;
+import interfaces.logical.MovingUpdatingObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Glow;
 import javafx.scene.paint.Color;
@@ -23,7 +24,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.transform.Affine;
 
 @SuppressWarnings({ "restriction", "unused" })
-public abstract class MovingSpaceObject extends SpaceObject implements MovingObject {	
+public abstract class MovingSpaceObject extends SpaceObject implements MovingUpdatingObject {	
 	public int distance;
 	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	
