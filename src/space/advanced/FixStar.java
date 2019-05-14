@@ -50,11 +50,14 @@ public class FixStar extends Star implements TimerObject {
 		timer.schedule(new TimerTask() {
             @Override
             public void run() {
-            	dead = true;
+            	die();
             }
         }, lifetime);
 	}
-
+	
+	public void die() {dead=true;}
+	public boolean isDead() {return dead;}
+	
 	@Override
 	public boolean collides(CollidingObject other) {return false;}
 	@Override
