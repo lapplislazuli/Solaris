@@ -1,17 +1,16 @@
 package spaceobjects;
 
+import static helpers.FakeManagerFactory.freshNewCollisionManager;
+import static helpers.FakeSpaceObjectFactory.fakePlanet;
+import static helpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static helpers.FakeManagerFactory.freshNewCollisionManager;
-import static helpers.FakeSpaceObjectFactory.*;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import fakes.interfaces.FakeDestructibleObject;
 import interfaces.logical.MovingUpdatingObject;
@@ -21,8 +20,7 @@ import space.advanced.FixStar;
 import space.core.Planet;
 import space.core.Star;
 
-public class DistantGalaxyTests {
-	
+class DistantGalaxyTest {
 	@Test
 	void testConstructor_buildWithoutName_shouldThrowError(){
 		assertThrows(IllegalArgumentException.class,
@@ -149,5 +147,4 @@ public class DistantGalaxyTests {
 		
 		assertTrue(testObject.getTrabants().isEmpty());
 	}
-	
 }
