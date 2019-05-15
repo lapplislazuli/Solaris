@@ -117,17 +117,14 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	@Override
-	public void rotate() {
-		rotation=degreeTo(parent);
-	}
+	public void rotate() {rotation=degreeTo(parent);}
 	
-	public boolean isDead() {
-		return state==SpacecraftState.DEAD;
-	}
+	public boolean isDead() {return state==SpacecraftState.DEAD;}
 	
 	public void remove() {
 		parent.getTrabants().remove(this);
-		parent=(target=null);
+		parent=null;
+		target=null;
 	}
 
 	public double getOrbitingDistance() {return orbitingDistance;}

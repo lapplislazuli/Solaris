@@ -5,11 +5,16 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
+import interfaces.logical.MovingUpdatingObject;
 import interfaces.spacecraft.SpacecraftState;
+import logic.manager.ManagerRegistry;
+import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
 import space.core.Planet;
 import space.core.SpaceObject;
@@ -20,6 +25,15 @@ import static helpers.FakeSpaceObjectFactory.*;
 
 public class ShipTests {
 
+	@BeforeEach
+	void initManagerRegistry() {
+		ManagerRegistry.getInstance();
+	}
+	@AfterEach
+	void resteManagerRegistry() {
+		ManagerRegistry.reset();
+	}
+	
 	@Test
 	void testConstructor_ValuesShouldBeAsExpected() {
 		SpaceObject root = fakeStar(0,0);
@@ -91,6 +105,7 @@ public class ShipTests {
 		assertTrue(shuttle.getState()==SpacecraftState.FLYING);
 	}
 	
+	@Test
 	void testLaunch_InspectDistance_shouldBeDistanceToTarget() {
 		SpaceObject root = fakeStar(0,0);
 		Ship shuttle= new Ship("shuttleOne",root,0,50,Math.PI);
@@ -101,7 +116,8 @@ public class ShipTests {
 
 		assertEquals(shuttle.getDistance(),(int)shuttle.distanceTo(target));
 	}
-
+	
+	@Test
 	void testLaunch_InspectRelativePos_shouldBeDegreeToTarget() {
 		SpaceObject root = fakeStar(0,0);
 		Ship shuttle= new Ship("shuttleOne",root,0,50,Math.PI);
@@ -197,6 +213,18 @@ public class ShipTests {
 	}
 	
 	@Test
+	public void testRemove_inspectTarget_shouldBeNull() {
+		SpaceObject root = fakeStar(0,0);
+		Ship testObject= new Ship("shuttleOne",root,0,50,0);
+		SpaceObject target = fakeStar(1000,1000);
+		testObject.setTarget(target);
+		
+		testObject.remove();
+		
+		assertEquals(null,testObject.getTarget());
+	}
+	
+	@Test
 	public void testRemove_doubleRemove_shouldThrowNullpoint() {
 		SpaceObject root = fakeStar(0,0);
 		Ship testObject= new Ship("shuttleOne",root,0,50,0);
@@ -236,4 +264,156 @@ public class ShipTests {
 		
 		assertEquals(oldSpeed,-shuttle.getSpeed());
 	}
+	
+	@Test
+	void testMove_isFlying_comesCloserToTarget_shouldBeCloser() {
+		SpaceObject root = fakeStar(0,0);
+		double speed= 1; //Minimal Speed
+		Ship shuttle= new Ship("shuttleOne",root,0,50,speed);
+		SpaceObject target = fakeStar(1000,1000);
+		
+		double oldDistance= shuttle.getDistance();
+		
+		shuttle.setTarget(target);
+		shuttle.launch();
+		
+		shuttle.move(target.getCenter());
+		
+		assertTrue(shuttle.getDistance()>oldDistance);
+	}
+	
+	@Test
+	void testMove_isOrbiting_distanceStaysSame() {
+		SpaceObject root = fakeStar(0,0);
+		double speed= 0.001; //Minimal Speed
+		Ship shuttle= new Ship("shuttleOne",root,0,50,speed);
+		
+		double oldDistance= shuttle.getDistance();
+		
+		
+		shuttle.move(root.getCenter());
+		
+		assertEquals(oldDistance,shuttle.getDistance());
+	}
+	
+	@Test
+	void testMove_isFlying_CloseEnoughToStay_shouldGetOrbiting() {
+		SpaceObject root = fakeStar(0,0);
+		double speed= 0.001; //Minimal Speed
+		Ship shuttle= new Ship("shuttleOne",root,0,150,speed);
+		SpaceObject target = fakeStar(0,0);
+		
+		shuttle.setTarget(target);
+		shuttle.launch();
+		
+		shuttle.move(target.getCenter());
+		
+		assertEquals(SpacecraftState.ORBITING ,shuttle.getState());
+	}
+	
+	@Test
+	void testRebuildAt_shouldHaveSameValues() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,1);
+		
+		Ship copy = shuttle.rebuildAt("copy", root);
+		
+		assertEquals(150,copy.getOrbitingDistance());
+		assertEquals(1, copy.getSpeed());
+		assertEquals(shuttle.getParent(),copy.getParent());
+		assertEquals(shuttle.getState(),copy.getState());
+	}
+	
+	@Test
+	void testRebuildAt_loosesTarget() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		SpaceObject target = fakeStar(600,600);
+		
+		shuttle.setTarget(target);
+		
+		Ship copy = shuttle.rebuildAt("new", root);
+		
+		assertEquals(null ,copy.getTarget());
+	}
+	
+	@Test
+	void testRebuildAt_spawnsAtParent() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		
+		Ship copy = shuttle.rebuildAt("new", root);
+		
+		assertEquals(root,copy.getParent());
+	}
+	
+	@Test
+	void testRebuildAt_spawnsOrbiting() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		SpaceObject target = fakeStar(0,0);
+		
+		shuttle.setTarget(target);
+		shuttle.launch();
+		Ship copy = shuttle.rebuildAt("new", root);
+		
+		assertEquals(SpacecraftState.ORBITING,copy.getState());
+	}
+	
+	@Test
+	void testRebuildAt_OriginalShipWasDead_CopyShouldBeAlive() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		
+		shuttle.destruct();
+		
+		Ship copy = shuttle.rebuildAt("new", root);
+		
+		assertEquals(SpacecraftState.ORBITING,copy.getState());
+	}
+	
+	@Test
+	void testDestruct_stateShouldBeDead() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		
+		shuttle.destruct();
+		
+		assertEquals(SpacecraftState.DEAD,shuttle.getState());
+	}
+	
+	@Test
+	void testDestruct_doubleDestruct_shouldNotDoAnything() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		
+		shuttle.destruct();
+		shuttle.destruct();
+		
+		assertTrue(shuttle.isDead());
+	}
+	
+	@Test
+	void testDestruct_shouldSpawnTrash() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,50,0);
+		
+		shuttle.destruct();
+		
+		MovingUpdatingObject test = root.getTrabants().get(0);
+		assertTrue(test instanceof Asteroid);
+		Asteroid castedTest = (Asteroid) test;
+		assertEquals(Asteroid.Type.TRASH,castedTest.getType());
+	}
+	
+	@Test
+	void testDestruct_shouldBeDead() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,50,0);
+		
+		shuttle.destruct();
+		
+		assertTrue(shuttle.isDead());
+	}
+	
 }
