@@ -140,6 +140,8 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 		return speed;
 	}
 
+	public boolean isOrphan() {return parent==null;}
+	
 	public SpacecraftState getState() {
 		return state;
 	}
