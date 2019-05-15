@@ -42,9 +42,9 @@ public class PlayerManager {
 	}
 	
 	public void speedUp() {
-		playerShuttle.speed*=1.1;
+		playerShuttle.setSpeed(playerShuttle.getSpeed()*1.1);
 	}
 	public void slowDown() {
-		playerShuttle.speed*=0.9;
+		playerShuttle.setSpeed(playerShuttle.getSpeed()*0.9);
 	}
 }

@@ -25,8 +25,8 @@ import javafx.scene.transform.Affine;
 
 @SuppressWarnings({ "restriction", "unused" })
 public abstract class MovingSpaceObject extends SpaceObject implements MovingUpdatingObject {	
-	public int distance;
-	public double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
+	protected int distance;
+	protected double speed, relativePos,rotation, rotationSpeed; //Everything in Radians
 	
 	public MovingSpaceObject(String name,SpaceObject parent,DrawingInformation dInfo, Shape shape,int distance, double speed) {
 		super(name,parent.center.clone(),shape,dInfo);
@@ -97,6 +97,17 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingUpd
 			((JavaFXDrawingInformation)dInfo).transformations.add(transformRotation);
 		}
 	}
+
+	public int getDistance() {return distance;}
+	public void setDistance(int distance) {this.distance = distance;}
+	public double getSpeed() {return speed;}
+	public void setSpeed(double speed) {this.speed = speed;}
+	public double getRelativePos() {return relativePos;}
+	public void setRelativePos(double relativePos) {this.relativePos = relativePos;}
+	public double getRotation() {return rotation;}
+	public void setRotation(double rotation) {this.rotation = rotation;}
+	public double getRotationSpeed() {return rotationSpeed;}
+	public void setRotationSpeed(double rotationSpeed) {this.rotationSpeed = rotationSpeed;}
 
 	
 }

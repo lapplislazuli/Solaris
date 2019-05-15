@@ -107,7 +107,7 @@ class MoveTests {
 		anchor.update();
 		
 		assertEquals(3*Math.PI/2,planet.degreeTo(anchor));
-		assertEquals(Math.PI/2,planet.relativePos);
+		assertEquals(Math.PI/2,planet.getRelativePos());
 		assertEquals(3*Math.PI/2,planet.degreeTo(anchor));
 	}
 	
@@ -120,7 +120,7 @@ class MoveTests {
 		anchor.update();
 		
 		assertEquals(0,planet.degreeTo(anchor));
-		assertEquals(Math.PI,planet.relativePos);
+		assertEquals(Math.PI,planet.getRelativePos());
 		assertEquals(Math.PI, anchor.degreeTo(planet));
 	}
 	

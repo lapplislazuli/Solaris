@@ -18,7 +18,7 @@ public class Laserbeam extends Missile{
 	private List<AbsolutePoint> trail=new LinkedList<AbsolutePoint>();
 	
 	public Laserbeam(String name, Ship emitter) {
-		super(name, emitter,new Circle(emitter.getCenter().absoluteClone(),2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.rotation, 3);
+		super(name, emitter,new Circle(emitter.getCenter().absoluteClone(),2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.getRotation(), 3);
 		
 	}
 	

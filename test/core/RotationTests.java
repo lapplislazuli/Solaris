@@ -38,38 +38,38 @@ class RotationTests {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		slow.rotation=0;
-		fast.rotation=0;
-		reverse.rotation=0;
+		slow.setRotation(0);
+		fast.setRotation(0);
+		reverse.setRotation(0);
 	}
 
 	@Test
 	void rotate() {
 		slow.rotate(); 
-		assertEquals(slow.rotationSpeed, slow.rotation);
+		assertEquals(slow.getRotationSpeed(), slow.getRotation());
 		fast.rotate(); 
-		assertEquals(fast.rotationSpeed, fast.rotation);
+		assertEquals(fast.getRotationSpeed(), fast.getRotation());
 	}
 	@Test
 	void rotateReset() {
 		//Rotate for more than 2 PI
 		for(int i=0;i<5;i++)
 			fast.rotate(); 
-		assertEquals(Math.PI/2, fast.rotation);
+		assertEquals(Math.PI/2, fast.getRotation());
 		
 		for(int i=0;i<721;i++)
 			slow.rotate();
 		
-		assertEquals(Math.round(Math.PI/360), Math.round(slow.rotation));
+		assertEquals(Math.round(Math.PI/360), Math.round(slow.getRotation()));
 	}
 	
 	@Test
 	void reverseRotation() {
 		reverse.rotate(); 
 		reverse.rotate();
-		assertEquals(Math.PI, reverse.rotation);
+		assertEquals(Math.PI, reverse.getRotation());
 		for(int i=0;i<4;i++)
 			reverse.rotate();
-		assertEquals(Math.PI, reverse.rotation);
+		assertEquals(Math.PI, reverse.getRotation());
 	}
 }

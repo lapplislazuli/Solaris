@@ -16,7 +16,7 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	@Override
 	protected void spawnShip() {
 		LaserDrone spawned = new LaserDrone(name + "'s ship no." + shipCounter, this, size/2 ,size*3+2,speed*4);
-		spawned.relativePos = shipSpawnAngle(shipCounter,maxShips);
+		spawned.setRelativePos(shipSpawnAngle(shipCounter,maxShips));
 		drones.add(spawned);
 		super.spawnShip();
 	}

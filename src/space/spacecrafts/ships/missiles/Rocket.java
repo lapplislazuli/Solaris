@@ -11,7 +11,7 @@ import space.spacecrafts.ships.Ship;
 public class Rocket extends Missile implements DestructibleObject {
 
 	public Rocket(String name, Ship emitter, int size) {
-		super(name, emitter,  new Rectangle(emitter.getCenter(),size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),emitter.rotation, emitter.speed);
+		super(name, emitter,  new Rectangle(emitter.getCenter(),size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),emitter.getRotation(), emitter.getSpeed());
 		shape.setLevelOfDetail(2);
 	}
 	

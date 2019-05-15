@@ -20,19 +20,6 @@ import static helpers.FakeSpaceObjectFactory.*;
 
 public class ShipTests {
 
-	
-/*
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		origin = new Star("star",null,new AbsolutePoint(250,250),250);
-		targetOne = new Star("One",null,new AbsolutePoint(1250,250),250);
-		targetTwo = new Star("Two",null,new AbsolutePoint(699,394),250);
-		targetAboveShuttleOne = new Star("Three",null,new AbsolutePoint(300,500),250);
-		
-		launchedTowards=new Planet.Builder("Forward", origin).speed(Math.PI/2000).distance(300).build();
-		launchedAway = new Planet.Builder("Flip", origin).speed(Math.PI/80).distance(250).build();
-	}
-	*/
 	@Test
 	void testConstructor_ValuesShouldBeAsExpected() {
 		SpaceObject root = fakeStar(0,0);
@@ -52,7 +39,7 @@ public class ShipTests {
 		
 		shuttle.setTarget(target);
 		
-		assertEquals(target,shuttle.target);
+		assertEquals(target,shuttle.getTarget());
 	}
 	
 	@Test
@@ -65,7 +52,7 @@ public class ShipTests {
 		shuttle.setTarget(target);
 		shuttle.setTarget(newertarget);
 		
-		assertEquals(newertarget,shuttle.target);
+		assertEquals(newertarget,shuttle.getTarget());
 	}
 	
 	@Test
@@ -89,7 +76,7 @@ public class ShipTests {
 		shuttle.setTarget(target);
 		shuttle.launch();
 		
-		assertEquals(null, shuttle.target);
+		assertEquals(null, shuttle.getTarget());
 	}
 	
 	@Test
@@ -112,7 +99,7 @@ public class ShipTests {
 		shuttle.setTarget(target);
 		shuttle.launch();
 
-		assertEquals(shuttle.distance,(int)shuttle.distanceTo(target));
+		assertEquals(shuttle.getDistance(),(int)shuttle.distanceTo(target));
 	}
 
 	void testLaunch_InspectRelativePos_shouldBeDegreeToTarget() {
@@ -123,7 +110,7 @@ public class ShipTests {
 		shuttle.setTarget(target);
 		shuttle.launch();
 
-		assertEquals(target.degreeTo(shuttle),shuttle.relativePos);
+		assertEquals(target.degreeTo(shuttle),shuttle.getRelativePos());
 	}
 
 	@Test

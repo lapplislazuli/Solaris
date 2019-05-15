@@ -20,9 +20,9 @@ import space.effect.Explosion;
 
 @SuppressWarnings("restriction")
 public class Ship extends MovingSpaceObject implements Spacecraft{
-	public SpaceObject target;
-	public SpaceObject parent;
-	public double orbitingDistance;
+	protected SpaceObject target;
+	protected SpaceObject parent;
+	protected double orbitingDistance;
 	
 	protected SensorArray sensor;
 	protected SpacecraftState state = SpacecraftState.ORBITING;
@@ -131,20 +131,11 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 
 	public double getOrbitingDistance() {return orbitingDistance;}
-
-
 	public SpaceObject getParent() {return parent;}
 	public void setTarget(SpaceObject target) {this.target=target;}
-
-	public double getSpeed() {
-		return speed;
-	}
-
+	public SpaceObject getTarget() {return target;}
 	public boolean isOrphan() {return parent==null;}
-	
-	public SpacecraftState getState() {
-		return state;
-	}
+	public SpacecraftState getState() {return state;}
 
 	public Ship rebuildAt(String name, SpaceObject at) {
 		Ship copy = new Ship(name,at,dInfo,shape,size,(int) orbitingDistance,speed);

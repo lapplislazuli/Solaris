@@ -25,7 +25,7 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 				.rotationSpeed(Math.PI)
 				.levelOfDetail(10).build());
 			
-		assertEquals(50,testObject.distance);
+		assertEquals(50,testObject.getDistance());
 		assertEquals(10,testObject.getShape().getLevelOfDetail());
 		
 	}

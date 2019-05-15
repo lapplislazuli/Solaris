@@ -16,7 +16,7 @@ public class AsteroidBelt extends MovingSpaceObject{
 		
 		for(int i = 1; i<builder.asteroids;i++) {
 			Asteroid a = new Asteroid(name+"#"+i,this,builder.distance,builder.speed);
-			a.relativePos=(i/Math.PI*2);
+			a.setRelativePos(i/Math.PI*2);
 		}
 		for(MovingUpdatingObject t:trabants)
 			if(t instanceof Asteroid)

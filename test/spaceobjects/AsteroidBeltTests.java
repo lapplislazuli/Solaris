@@ -34,7 +34,7 @@ public class AsteroidBeltTests {
 				.speed(Math.PI)
 				.build();
 		
-		assertEquals(50,testObject.distance);
+		assertEquals(50,testObject.getDistance());
 		assertEquals(10,testObject.getAllChildren().size());
 	}
 	
