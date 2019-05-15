@@ -105,7 +105,10 @@ public abstract class Carrier extends Ship{
 		drones.get(0).destruct();
 		removeDeadShips();
 		//REMOVE TRASH -- TRASH IS ASTEROID
-		getAllChildren().stream().filter(t-> t instanceof Asteroid).map(s -> (Asteroid) s).forEach(a -> a.remove());
+		getAllChildren().stream()
+			.filter(t-> t instanceof Asteroid)
+			.map(s -> (Asteroid) s)
+			.forEach(a -> a.remove());
 	}
 	
 	public void setMaxShips(int max) {
@@ -115,7 +118,10 @@ public abstract class Carrier extends Ship{
 			for(int i = 0; i<maxShips-max;i++)
 				drones.get(i).destruct();
 		//REMOVE TRASH -- TRASH IS ASTEROID
-		getAllChildren().stream().filter(t-> t instanceof Asteroid).map(s -> (Asteroid) s).forEach(a -> a.remove());
+		getAllChildren().stream()
+			.filter(t-> t instanceof Asteroid)
+			.map(s -> (Asteroid) s)
+			.forEach(a -> a.remove());
 		removeDeadShips();	
 		maxShips = max;	
 	}

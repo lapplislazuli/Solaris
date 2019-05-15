@@ -35,7 +35,7 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	}
 	
 	public void shootLaser(SpaceObject targetSpaceObject) {
-		if(laserCoolDown<=0) {
+		if(laserCoolDown==0) {
 			new Laserbeam("Laser from " + name, this,degreeTo(targetSpaceObject),5);
 			//@UpdateRatio 25ms its every 3 Seconds:
 			laserCoolDown= 3000/25;
@@ -49,7 +49,7 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 		}
 	}
 	public void shootLaser(Point targetPoint) {
-		if(laserCoolDown<=0) {
+		if(laserCoolDown==0) {
 			new Laserbeam("Laser from " + name, this,center.degreeTo(targetPoint),5);
 			//@UpdateRatio 25ms its every 3 Seconds:
 			laserCoolDown= 3000/25;

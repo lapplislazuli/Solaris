@@ -2,99 +2,169 @@ package shuttle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import geom.AbsolutePoint;
-import space.core.Planet;
-import space.core.Star;
+import interfaces.spacecraft.CarrierDrone;
+import logic.manager.ManagerRegistry;
+import space.core.SpaceObject;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
 
+import static helpers.FakeSpaceObjectFactory.*;
+
 class CarrierTests {
 	
-	Carrier carrier;
-	
-	Star star;
-	Planet targetOne,targetTwo;
-	
 	@BeforeEach
-	void resetPlanets() {
-		star = new Star("Anker",null,new AbsolutePoint(250,250), 25);
-		
-		targetOne = (new Planet.Builder("One", star))
-				.size(10)
-				.distance(100)
-				.speed(0)
-				.build();
-		targetTwo = (new Planet.Builder("Two", star))
-				.size(10)
-				.distance(-100)
-				.speed(0)
-				.build();
-		
-		targetTwo.relativePos=Math.PI/4.5; //Move it
+	void initManagerRegistry() {
+		ManagerRegistry.getInstance();
 	}
-	
-	@BeforeEach
-	void buildCarrier() {
-		carrier = new BattleCarrier("TestCarrier",targetOne,5,6,Math.PI/2);
+	@AfterEach
+	void resteManagerRegistry() {
+		ManagerRegistry.reset();
 	}
 	
 	@Test
-	void ConstructorTest() {
+	void testConstructor_shouldHaveSetValues() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		assertEquals(Math.PI/2,carrier.getSpeed());
+		assertEquals("TestCarrier",carrier.getName());
+	}
+	
+	@Test
+	void testConstructor_hasFullShips() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
 		assertTrue(carrier.hasFullShips());
-		assertEquals(3,carrier.getCurrentShipCount());
-		assertFalse(carrier.isBuilding());
-		
-		assertEquals(4,carrier.getAllChildren().size()); //Itself and 4 children
 	}
 	
 	@Test
-	void CarrierLaunchTest() {
-		carrier.launchShips(targetTwo);
-		// Update Everything 
-		star.update();
+	void testConstructor_isBuildWith3Ships() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		assertEquals(3,carrier.getCurrentShipCount());
+	}
+	
+	@Test
+	void testConstructor_isNotBuildingNewShips() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		assertFalse(carrier.isBuilding());
+	}
+	
+	@Test
+	void testConstructor_hasFullShipsIsTrue() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		assertTrue(carrier.hasFullShips());
+	}
+	
+	@Test
+	void testConstructor_hasNoShips_isFalse() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		assertFalse(carrier.hasNoShips());
+	}
+	
+	@Test
+	void testLaunchShips_checkTarget_shouldHaveShipsInTrabants() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
+		
+		assertEquals(3, droneTarget.getTrabants().size()); // The ships should be children of targetTwo	
+	}
+	
+	@Test
+	void testLaunchShips_inspectDrones_shouldHaveTargetAsParent() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
+		
+		for(CarrierDrone s : carrier.getCurrentShips())
+			assertEquals(droneTarget,s.getParent());
+	}
+	
+	@Test
+	void testLaunchShips_shouldStillbeInCarriersKader() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
 		
 		assertEquals(3, carrier.getCurrentShipCount()); // There should still be 4 Ships for the Carrier
-		assertEquals(1,carrier.getAllChildren().size()); // There should be nothing cycling around the carrier
-		
-		assertEquals(4, targetTwo.getAllChildren().size()); // The ships should be children of targetTwo
 	}
 	
 	@Test
-	void ReducedCarrierLaunchTest() {
-		carrier.removeFirstShipWithoutTrash();
-		carrier.removeFirstShipWithoutTrash();
-		star.update();
+	void testLaunchShips_inspectCarrierTrabants_shouldBeEmpty() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
 		
-		carrier.launchShips(targetTwo);
-		// Update Everything 
-		star.update();
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
 		
-		assertEquals(2, carrier.getCurrentShipCount()); // There should still be 3 Ships for the Carrier
-		assertEquals(1,carrier.getAllChildren().size()); // There should be nothing cycling around the carrier
-		
-		assertEquals(3, targetTwo.getAllChildren().size()); // The ships should be children of targetTwo
+		assertTrue(carrier.getTrabants().isEmpty());
 	}
 	
 	@Test
-	void CarrierRevokeTest() {
-		carrier.launchShips(targetTwo);
-		star.update();
+	void testRevoke_inspectCarrierTrabants_shouldBeShipsCount() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
 		
 		carrier.revokeShips();
-		star.update();
-
-		assertEquals(3, carrier.getCurrentShipCount()); // There should still be 4 Ships for the Carrier
-		assertEquals(4,carrier.getAllChildren().size()); // Ships should be back at carrier
 		
-		assertEquals(1, targetTwo.getAllChildren().size()); // TargetTwo should be free
+		assertEquals(3,carrier.getCurrentShipCount());
 	}
 	
 	@Test
-	void RespawnTest() {
+	void testRevoke_inspectDrones_shouldHaveCarrierAsParent() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
+		
+		carrier.revokeShips();
+		
+		for(CarrierDrone s : carrier.getCurrentShips())
+			assertEquals(carrier,s.getParent());
+	}
+	
+	@Test
+	void testRevoke_inspectTarget_shouldHaveNoTrabants() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
+		SpaceObject droneTarget = fakeStar(1000,1000);
+		carrier.launchShips(droneTarget);
+		
+		carrier.revokeShips();
+		
+		assertTrue(droneTarget.getTrabants().isEmpty());
+	}
+	
+	@Test
+	void testRespawn_RemoveShipAndUpdate_shouldHaveANewShip() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
 		carrier.removeFirstShipWithoutTrash(); //Remove a ship!
 		carrier.update(); //Update
 		//Update should have rebuild, as fresh carriers dont have cooldown
@@ -102,54 +172,109 @@ class CarrierTests {
 	}
 	
 	@Test
-	void RespawnTimerTest() {
-		carrier.getCurrentShips().get(0).destruct();
+	void testRespawn_RemoveShipAndUpdate_shouldSetBuildingTrue() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		carrier.removeFirstShipWithoutTrash();
 		carrier.update();
 		assertTrue(carrier.isBuilding());
 	}
 	
 	@Test
-	void negativeHasFullShipsTest() {
-		carrier.getCurrentShips().get(0).destruct();
-		carrier.getCurrentShips().get(1).destruct();
-		carrier.update();
+	void testFullShips_DestroyAShipAndTest_shouldBeFalse(){
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
+		carrier.removeFirstShipWithoutTrash();
+		
 		assertFalse(carrier.hasFullShips());
-		assertFalse(carrier.hasNoShips());
 	}
 	
 	@Test
-	void testAllDead() {
-		carrier.getCurrentShips().forEach(t -> t.destruct());
-		carrier.update();
-		carrier.getCurrentShips().forEach(t -> t.destruct());
-		carrier.update();
+	void testHasNoShips_killAllShipsBefore_shouldBeTrue() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
+		for(int i=0;i<carrier.getCurrentShipCount();i++)
+			carrier.removeFirstShipWithoutTrash();
 		
 		assertTrue(carrier.hasNoShips());
-		assertFalse(carrier.hasFullShips());
-		assertEquals(0,carrier.getCurrentShipCount());
+		assertEquals(0,carrier.getCurrentShipCount());	
 	}
 	
 	@Test
-	void reduceMaxShipsTest() {
-		assertTrue(carrier.hasFullShips());
-		carrier.update();
+	void testReduceMaxShips_reduceAndUpdate_shouldHaveLessShips() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
 		carrier.setMaxShips(2); //One Less
 		carrier.update();
+		
 		assertEquals(2,carrier.getCurrentShipCount());
 		assertEquals(carrier.getCurrentShipCount(),carrier.getMaxShips());
+		
+	}
+	
+	@Test
+	void testReduceMaxShips_reduceAndUpdate_shouldHaveFullShips() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
+		carrier.setMaxShips(2); //One Less
+		carrier.update();
+		
 		assertTrue(carrier.hasFullShips());
 	}
+	
 	@Test
-	void extendMaxShipsTest() {
-		assertTrue(carrier.hasFullShips());
+	void testExtendMaxShips_checkHasFullShips_shouldBeFalse() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
 		
-		carrier.setMaxShips(5); //One More
-		assertEquals(3,carrier.getCurrentShipCount());
+
+		carrier.setMaxShips(10);
+		carrier.update();
+
 		assertFalse(carrier.hasFullShips());
 	}
 	
 	@Test
-	void negativeMaxShipsTest() {
+	void testExtendMaxShips_shouldSpawnANewShipAfterUpdate() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
+		carrier.setMaxShips(4);
+		carrier.update();
+		
+		assertEquals(4,carrier.getCurrentShipCount());
+	}
+	
+	@Test
+	void testExtendMaxShips_AndUpdate_shouldBeBuilding() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+
+		carrier.setMaxShips(5); //One More
+		carrier.update();
+		
+		assertTrue(carrier.isBuilding());
+	}
+	
+	@Test
+	void testExtendMaxShips_DontUpdate_shouldHaveOldShipCount() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+			
+		carrier.setMaxShips(5);
+		assertEquals(3,carrier.getCurrentShipCount());
+	}
+	
+	@Test
+	void testSetMaxShips_insertNegativeValue_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	
 		Executable wrongArgument = () -> carrier.setMaxShips(-1);
 
 	    assertThrows(IllegalArgumentException.class, wrongArgument, "MaxShips cannot be smaller than 0!");		
@@ -157,16 +282,13 @@ class CarrierTests {
 	
 	@Test
 	void noChildCollision() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+		
 		carrier.getCurrentShips().forEach(s -> assertFalse(carrier.collides(s)));
 		carrier.update();
 		carrier.getCurrentShips().forEach(s -> assertFalse(carrier.collides(s)));
 	}
 	
-	@Test
-	void destroyTest() {
-		carrier.destruct();
-		
-		assertTrue(carrier.isDead());
-	}
 	
 }
