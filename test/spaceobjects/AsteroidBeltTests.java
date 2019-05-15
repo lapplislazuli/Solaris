@@ -14,14 +14,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import fakes.FakeMovingSpaceObject;
-import fakes.interfaces.FakeCollidingObject;
 import fakes.interfaces.FakeDestructibleObject;
 import interfaces.geom.Point;
 import interfaces.logical.MovingUpdatingObject;
 import logic.manager.CollisionManager;
 import space.advanced.Asteroid;
 import space.advanced.AsteroidBelt;
-import space.core.MovingSpaceObject;
 import space.core.Star;
 
 public class AsteroidBeltTests {

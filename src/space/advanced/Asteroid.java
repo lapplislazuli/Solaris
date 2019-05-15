@@ -4,7 +4,6 @@ import org.pmw.tinylog.Logger;
 
 import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
-import geom.AbsolutePoint;
 import geom.Rectangle;
 import interfaces.geom.Point;
 import interfaces.logical.DestructibleObject;
@@ -17,7 +16,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	SpaceObject parent;
 	public enum Type{ORE, ROCK, TRASH;}
-	Type type;
+	private Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(3,3),distance,speed);
 		//Asteroid Types are chosen randomly if not in the Constructor
@@ -30,6 +29,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 			type=Type.TRASH;
 		setColorFromType();
 
+		this.parent=parent;
 		shape.setLevelOfDetail(2);
 	}
 	//Constructor for only one type of Asteroids in the belt
@@ -51,9 +51,6 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		case TRASH:
 			dInfo=new JavaFXDrawingInformation(Color.GRAY);
 			break;
-		default:
-			dInfo=new JavaFXDrawingInformation(Color.BLACK);
-			break;
 		}
 	}
 	
@@ -69,6 +66,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		center.setY(center.getY()+(int)(Math.random()+1)*3);
 	}
 	
+	public Type getType() {return type;}
+	
 	public void destruct() {
 		Logger.trace(toString() + " got destroyed");
 		if(parent!=null)
@@ -78,5 +77,9 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public void remove() {
 		parent.getTrabants().remove(this);
 		parent=null;
+	}
+	
+	public boolean isOrphan() {
+		return parent==null;
 	}
 }
