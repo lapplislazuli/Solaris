@@ -14,11 +14,11 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	}
 	
 	@Override
-	protected void spawnShip() {
+	protected void spawnDrone() {
 		LaserDrone spawned = new LaserDrone(name + "'s ship no." + shipCounter, this, size/2 ,size*3+2,speed*4);
-		spawned.setRelativePos(shipSpawnAngle(shipCounter,maxShips));
+		spawned.setRelativePos(droneSpawnAngle(shipCounter,maxShips));
 		drones.add(spawned);
-		super.spawnShip();
+		super.spawnDrone();
 	}
 
 	public void attack(Point p) {
@@ -27,7 +27,7 @@ public class BattleCarrier extends Carrier implements ArmedSpacecraft{
 	}
 
 	public void attack(SpaceObject o) {
-		launchShips(o);
+		launchDrones(o);
 	}
 	
 	@Override

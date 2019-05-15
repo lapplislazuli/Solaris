@@ -34,7 +34,7 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 	@Override
 	public boolean collides(CollidingObject other) {
 		if(super.collides(other)) {
-			if(other instanceof Carrier && ((Carrier)other).getCurrentShips().contains(this))
+			if(other instanceof Carrier && ((Carrier)other).getDrones().contains(this))
 				return false;
 			if(other instanceof LaserDrone)
 				return false;	

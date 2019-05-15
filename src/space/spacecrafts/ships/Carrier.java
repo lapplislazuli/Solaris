@@ -30,7 +30,7 @@ public abstract class Carrier extends Ship{
 		
 		drones=new LinkedList<CarrierDrone>();
 		for(int i = 0; i<maxShips;i++) {
-			spawnShip();
+			spawnDrone();
 			drones.get(i).move(center);
 		}
 		shipCooldown=0; //For Init no cooldown
@@ -57,37 +57,37 @@ public abstract class Carrier extends Ship{
 	@Override
 	public void update() {
 		super.update();
-		removeDeadShips();
+		removeDeadDrones();
 		
-		if(!hasFullShips()&&shipCooldown<=0)
-			spawnShip();
+		if(!hasFullDrones()&&shipCooldown<=0)
+			spawnDrone();
 		shipCooldown --;
 	}
 	
-	public void launchShips(SpaceObject target) {
+	public void launchDrones(SpaceObject target) {
 		for(CarrierDrone ship : drones) {
 			ship.setTarget(target);
 			ship.launch();
 		}
 	}
 	
-	public void revokeShips() {
+	public void revokeDrones() {
 		for(CarrierDrone ship : drones) {
 			ship.setTarget(this);
 			ship.launch();
 		}
 	}
 	
-	protected void removeDeadShips() {
+	protected void removeDeadDrones() {
 		drones.removeIf(s -> s.isDead());
 	}
 	
-	protected void spawnShip() {
+	protected void spawnDrone() {
 		shipCounter++;
-		setShipCooldown();
+		setDroneCooldown();
 	}
 	
-	protected void setShipCooldown() {
+	protected void setDroneCooldown() {
 		shipCooldown = 30000/25; //UpdateRatio is 25/s so this will take 30 seconds
 	}
 	
@@ -96,14 +96,14 @@ public abstract class Carrier extends Ship{
 	}
 	
 	// Returns an angle depending on the counter i and maxShips max 
-	protected double shipSpawnAngle(int counter, int max) {
+	protected double droneSpawnAngle(int counter, int max) {
 		counter = counter%max;
 		return counter* (Math.PI*2/max);
 	}
 	
-	public void removeFirstShipWithoutTrash() {
+	public void removeFirstDroneWithoutTrash() {
 		drones.get(0).destruct();
-		removeDeadShips();
+		removeDeadDrones();
 		//REMOVE TRASH -- TRASH IS ASTEROID
 		getAllChildren().stream()
 			.filter(t-> t instanceof Asteroid)
@@ -111,7 +111,7 @@ public abstract class Carrier extends Ship{
 			.forEach(a -> a.remove());
 	}
 	
-	public void setMaxShips(int max) {
+	public void setMaxDrones(int max) {
 		if(max<0)
 			throw new IllegalArgumentException("MaxShips cannot be smaller than 0!");
 		if(maxShips > max && drones.size()> max) 
@@ -122,14 +122,13 @@ public abstract class Carrier extends Ship{
 			.filter(t-> t instanceof Asteroid)
 			.map(s -> (Asteroid) s)
 			.forEach(a -> a.remove());
-		removeDeadShips();	
+		removeDeadDrones();	
 		maxShips = max;	
 	}
 	
-	public int getMaxShips() {return maxShips;}
-	public int getCurrentShipCount() {return drones.size();}
-	public boolean hasFullShips() {return drones.size()==maxShips;}
-	public boolean hasNoShips() {return drones.isEmpty();}
-	public List<CarrierDrone> getCurrentShips(){return drones;}
+	public int getMaxDrones() {return maxShips;}
+	public int getCurrentDroneCount() {return drones.size();}
+	public boolean hasFullDrones() {return drones.size()==maxShips;}
+	public List<CarrierDrone> getDrones(){return drones;}
 	
 }
