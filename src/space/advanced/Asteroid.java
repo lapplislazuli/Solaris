@@ -20,7 +20,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(3,3),distance,speed);
 		//Asteroid Types are chosen randomly if not in the Constructor
-		int typeHelper=((int)((Math.random()+1)*3)%3);
+		int typeHelper=(int)Math.random();
 		if(typeHelper==0)
 			type=Type.ORE;
 		else if (typeHelper==1)

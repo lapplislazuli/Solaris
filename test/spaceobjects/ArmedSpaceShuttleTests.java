@@ -161,7 +161,6 @@ class ArmedSpaceShuttleTests {
 		testObject.update();
 		
 		assertTrue(testObject.laserCoolDown<10);
-		assertEquals(9,testObject.laserCoolDown);
 	}
 	
 	@Test

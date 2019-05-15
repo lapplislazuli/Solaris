@@ -30,6 +30,7 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	@Override
 	public void update() {
 		laserCoolDown--;
+		laserCoolDown=Math.max(0,laserCoolDown);
 		super.update();
 	}
 	
@@ -42,8 +43,10 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	}
 	
 	public void shootRocket(SpaceObject targetSpaceObject) {
-		if(rocketsLeft-- >= 0)
+		if(rocketsLeft > 0) {
 			new Rocket("Rocket from " + name, this,4,degreeTo(targetSpaceObject),5);
+			rocketsLeft --;
+		}
 	}
 	public void shootLaser(Point targetPoint) {
 		if(laserCoolDown<=0) {
@@ -54,8 +57,10 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	}
 	
 	public void shootRocket(Point targetPoint) {
-		if(rocketsLeft-- >= 0)
+		if(rocketsLeft> 0) {
 			new Rocket("Rocket from " + name, this,3,center.degreeTo(targetPoint),10);
+			rocketsLeft--;		
+		}
 	}
 
 	@Override
