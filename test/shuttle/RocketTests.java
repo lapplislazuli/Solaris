@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fakes.interfaces.FakeCollidingObject;
+import interfaces.logical.CollidingObject;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
@@ -116,6 +118,20 @@ class RocketTests {
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		assertFalse(testRocket.collides(testEmitter));
+	}
+	
+	@Test
+	public void testCollision_fakeCollider_shouldCollideNormally() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
+	
+		FakeCollidingObject stubCollider = new FakeCollidingObject();
+		stubCollider.collides=true;
+		
+
+		assertTrue(stubCollider.collides(testRocket));
+		assertFalse(testRocket.collides(stubCollider));
 	}
 	
 	@Test
