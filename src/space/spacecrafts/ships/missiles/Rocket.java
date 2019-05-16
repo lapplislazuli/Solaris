@@ -22,8 +22,10 @@ public class Rocket extends Missile implements DestructibleObject {
 	
 	@Override
 	public void destruct() {
-		new Explosion("Explosion from "+name, center, 5,1000, 1.02, new JavaFXDrawingInformation(Color.FIREBRICK));
-		remove();
+		if(!isOrphan()) {
+			new Explosion("Explosion from "+name, center, 5,1000, 1.02, new JavaFXDrawingInformation(Color.FIREBRICK));
+			remove();	
+		}
 	}
 	
 }

@@ -23,7 +23,7 @@ import space.spacecrafts.ships.Ship;
 
 import static helpers.FakeSpaceObjectFactory.*;
 
-public class ShipTests {
+public class ShipTests implements RemovableTests {
 
 	@BeforeEach
 	void initManagerRegistry() {

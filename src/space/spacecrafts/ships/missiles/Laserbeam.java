@@ -39,4 +39,6 @@ public class Laserbeam extends Missile{
 			for(int i=0; i<trail.size(); i++) 
 				((JavaFXDrawingContext)dc).getGraphicsContext().fillOval(trail.get(i).getX(),trail.get(i).getY(), 2, 2);
 	}
+	
+	public List<AbsolutePoint> getTrail() {return trail;}
 }

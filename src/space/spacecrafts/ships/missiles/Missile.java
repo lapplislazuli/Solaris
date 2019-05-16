@@ -6,6 +6,7 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
+import logic.manager.ManagerRegistry;
 import space.core.MovingSpaceObject;
 import space.spacecrafts.ships.Ship;
 
@@ -56,5 +57,9 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		if(other == emitter)
 			return false;
 		return super.collides(other);
+	}
+	
+	public boolean isOrphan() {
+		return emitter==null;
 	}
 }

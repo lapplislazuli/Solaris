@@ -49,4 +49,7 @@ public abstract class LocalizedEffect implements Effect{
 	
 	@Override
 	public String toString() {return name+"@"+center.toString();}
+	
+	// I am orphaned if i am not in the effect Manager
+	public boolean isOrphan() {return !ManagerRegistry.getEffectManager().getRegisteredItems().contains(this);}
 }

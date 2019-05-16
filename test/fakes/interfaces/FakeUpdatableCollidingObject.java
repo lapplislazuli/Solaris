@@ -22,4 +22,7 @@ public class FakeUpdatableCollidingObject extends FakeUpdatingObject implements 
 	public void remove() {}
 	public void destruct() {}
 
+	public boolean isOrphan() {
+		return false;
+	}
 }

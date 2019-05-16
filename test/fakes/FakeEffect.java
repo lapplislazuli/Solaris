@@ -33,5 +33,9 @@ public class FakeEffect implements Effect{
 	public void remove() {
 		removed=true;
 	}
+
+	public boolean isOrphan() {
+		return removed;
+	}
 	
 }

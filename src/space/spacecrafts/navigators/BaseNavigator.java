@@ -78,4 +78,8 @@ public class BaseNavigator implements Navigator{
 	public List<SpaceObject> getRoute() {
 		return route;
 	}
+
+	public boolean isOrphan() {
+		return !ManagerRegistry.getUpdateManager().getRegisteredItems().contains(this);
+	}
 }

@@ -47,6 +47,8 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		}
 	}
 	
+	public boolean isOrphan() {return parent==null;}
+	
 	public static class Builder {
 		private final String name;
 		private SpaceObject parent;

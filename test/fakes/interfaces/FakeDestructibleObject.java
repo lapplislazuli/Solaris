@@ -12,10 +12,16 @@ public class FakeDestructibleObject extends FakeCollidingObject implements Destr
 		destroyed=false;
 	}
 	
-	public void remove() {}
+	public void remove() {
+		removed = true;
+	}
 
 	public void destruct() {
 		destroyed=true;
+	}
+	
+	public boolean isOrphan() {
+		return removed;
 	}
 
 }

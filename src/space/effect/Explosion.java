@@ -26,5 +26,5 @@ public class Explosion extends TimerEffect {
 		else
 			c.radious+=0.3;
 	}
-
+	
 }
