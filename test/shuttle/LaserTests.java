@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fakes.interfaces.FakeCollidingObject;
+import geom.AbsolutePoint;
+import interfaces.geom.Point;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
@@ -36,6 +38,25 @@ public class LaserTests {
 	}
 	
 	@Test
+	void testConstructor_buildOnlyWithEmitter_shouldHaveEmittersRotation() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter);
+		
+		assertEquals(testEmitter.getRotation(),testLaser.getRotation());
+	}
+	
+	@Test
+	void testConstructor_shouldHaveEmptyTrail() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter);
+		
+		assertTrue(testLaser.getTrail().isEmpty());
+	}
+	
+	
+	@Test
 	void testRotate_shouldNotRotate() {
 		SpaceObject shipRoot = fakeStar(0,0);
 		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
@@ -49,7 +70,7 @@ public class LaserTests {
 	}
 	
 	@Test
-	void testMove_shouldBeMoved() {
+	void testUpdate_shouldBeMoved() {
 		SpaceObject shipRoot = fakeStar(0,0);
 		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
@@ -62,7 +83,7 @@ public class LaserTests {
 	}
 	
 	@Test
-	void testMove_checkDistanceToParent_shouldBeHigher() {
+	void testUpdate_checkDistanceToParent_shouldBeHigher() {
 		SpaceObject shipRoot = fakeStar(0,0);
 		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
@@ -72,7 +93,80 @@ public class LaserTests {
 		
 		assertTrue(testLaser.distanceTo(testEmitter)>oldDistanceToParent);
 	}
+	
+	@Test
+	void testUpdate_shouldHaveTrail() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
+		
+		testLaser.update();
+		
+		assertEquals(1,testLaser.getTrail().size());
+	}
 
+	@Test
+	void testMove_withKnownNewPoint_shouldBeInTrail() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
+		
+		Point stubPoint=new AbsolutePoint(100,100);
+		testLaser.move(stubPoint);
+		
+		assertEquals(1,testLaser.getTrail().size());
+		//An absolute Copy of the point is made, so no assertEquals possible
+		assertTrue(stubPoint.samePosition(testLaser.getTrail().get(0)));
+	}
+	
+	@Test
+	void testMove_withOldLaserCenter_shouldBeInTrail() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
+		
+		Point centerBeforeMove=testLaser.getCenter().clone();
+		testLaser.move(centerBeforeMove);
+		
+		Point firstTrailEntry =testLaser.getTrail().get(0);
+		
+		assertEquals(1,testLaser.getTrail().size());
+		//An absolute Copy of the point is made, so no assertEquals possible
+		assertTrue(centerBeforeMove.samePosition(firstTrailEntry));
+	}
+	
+	@Test
+	void testUpdate_safeOldCenter_shouldBeInTrail() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
+		
+		Point centerBeforeMove=testLaser.getCenter().clone();
+		
+		testLaser.update();
+		Point firstTrailEntry =testLaser.getTrail().get(0);
+		
+		assertEquals(1,testLaser.getTrail().size());
+		//An absolute Copy of the point is made, so no assertEquals possible
+		assertTrue(centerBeforeMove.samePosition(firstTrailEntry));	
+	}
+	
+	@Test
+	void testUpdateParent_safeLaserOldCenter_shouldBeInTrail() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,0,1);
+		
+		Point centerBeforeMove=testLaser.getCenter().clone();
+		
+		testEmitter.update();
+		Point firstTrailEntry =testLaser.getTrail().get(0);
+		
+		assertEquals(1,testLaser.getTrail().size());
+		//An absolute Copy of the point is made, so no assertEquals possible
+		assertTrue(centerBeforeMove.samePosition(firstTrailEntry));	
+	}
+	
 	@Test
 	public void testConstructors_IsInParentsChildren() {
 		SpaceObject shipRoot = fakeStar(0,0);

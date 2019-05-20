@@ -6,7 +6,6 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
-import logic.manager.ManagerRegistry;
 import space.core.MovingSpaceObject;
 import space.spacecrafts.ships.Ship;
 
