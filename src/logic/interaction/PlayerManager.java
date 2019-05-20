@@ -28,6 +28,10 @@ public class PlayerManager {
 		playerNavigator=pN;
 	}
 	
+	public static void reset() {
+		INSTANCE=null;
+	}
+	
 	public void registerPlayerShuttle(PlayerSpaceShuttle p) {
 		if(playerShuttle!=null)
 			Logger.info("Overwriting active playershuttle...");
@@ -46,5 +50,9 @@ public class PlayerManager {
 	}
 	public void slowDown() {
 		playerShuttle.setSpeed(playerShuttle.getSpeed()*0.9);
+	}
+	
+	public int getPlayerDeaths() {
+		return deathCount;
 	}
 }
