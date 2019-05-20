@@ -1,4 +1,4 @@
-package spaceobjects;
+package shuttle;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +20,7 @@ import space.core.Planet;
 import space.core.SpaceObject;
 import space.core.Star;
 import space.spacecrafts.ships.Ship;
+import spaceobjects.RemovableTests;
 
 import static helpers.FakeSpaceObjectFactory.*;
 

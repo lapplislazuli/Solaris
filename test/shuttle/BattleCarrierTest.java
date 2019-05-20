@@ -1,4 +1,4 @@
-package spaceobjects;
+package shuttle;
 
 import static helpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.jupiter.api.Assertions.*;
