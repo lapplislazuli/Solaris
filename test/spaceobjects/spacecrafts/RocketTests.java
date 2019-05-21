@@ -1,4 +1,4 @@
-package shuttle;
+package spaceobjects.spacecrafts;
 
 import static org.junit.jupiter.api.Assertions.*;
 

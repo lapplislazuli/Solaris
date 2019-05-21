@@ -1,4 +1,4 @@
-package shuttle;
+package spaceobjects.spacecrafts;
 
 import static helpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertEquals;

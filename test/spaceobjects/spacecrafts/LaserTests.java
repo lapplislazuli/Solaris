@@ -1,4 +1,4 @@
-package shuttle;
+package spaceobjects.spacecrafts;
 
 import static helpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -160,7 +160,7 @@ public class LaserTests {
 		Point centerBeforeMove=testLaser.getCenter().clone();
 		
 		testEmitter.update();
-		Point firstTrailEntry =testLaser.getTrail().get(0);
+		Point firstTrailEntry = testLaser.getTrail().get(0);
 		
 		assertEquals(1,testLaser.getTrail().size());
 		//An absolute Copy of the point is made, so no assertEquals possible
