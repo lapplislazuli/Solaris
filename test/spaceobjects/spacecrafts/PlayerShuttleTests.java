@@ -8,7 +8,8 @@ import static helpers.FakeSpaceObjectFactory.*;
 
 import org.junit.jupiter.api.Test;
 
-import logic.interaction.PlayerManager;
+import logic.manager.ManagerRegistry;
+import logic.manager.PlayerManager;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.PlayerSpaceShuttle;
 import space.spacecrafts.ships.Ship;
@@ -17,7 +18,7 @@ class PlayerShuttleTests {
 
 	@AfterEach
 	void resetPlayerMng() {
-		PlayerManager.reset();
+		ManagerRegistry.getPlayerManager();
 	}
 	
 	@Test
@@ -31,7 +32,7 @@ class PlayerShuttleTests {
 	@Test
 	void testConstructor_shouldBeRegisteredInPlayerManager() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerManager mng = PlayerManager.getInstance();
+		PlayerManager mng = ManagerRegistry.getPlayerManager();
 		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertEquals(mng.getPlayerShuttle(),testObject);
@@ -51,7 +52,7 @@ class PlayerShuttleTests {
 	@Test
 	void testRebuildAt_checkPlayerManager_shouldHaveRebuildAsPlayer() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerManager mng = PlayerManager.getInstance();
+		PlayerManager mng = ManagerRegistry.getPlayerManager();
 		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		PlayerSpaceShuttle copy = testObject.rebuildAt("Copy", root);
@@ -72,7 +73,7 @@ class PlayerShuttleTests {
 	@Test
 	void testDestruct_shouldIncreasePlayerDeaths() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerManager mng = PlayerManager.getInstance();
+		PlayerManager mng = ManagerRegistry.getPlayerManager();
 		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		testObject.destruct();
@@ -83,7 +84,7 @@ class PlayerShuttleTests {
 	@Test
 	void testDestruct_doubleDestruct_shouldIncreasePlayerDeathsOnlyOnce() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerManager mng = PlayerManager.getInstance();
+		PlayerManager mng = ManagerRegistry.getPlayerManager();
 		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		testObject.destruct();

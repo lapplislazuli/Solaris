@@ -4,6 +4,7 @@ package logic.interaction;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import logic.manager.ManagerRegistry;
+import logic.manager.PlayerManager;
 import space.core.SpaceObject;
 import javafx.scene.*;
 
@@ -85,7 +86,7 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	private void shootAtClickedPoint(Point clickedPosition) {
-		PlayerManager.getInstance().getPlayerShuttle().shootRocket(clickedPosition);
+		ManagerRegistry.getPlayerManager().getPlayerShuttle().shootRocket(clickedPosition);
 	}
 	
 	private void registerSpaceObjectToPlayerRoute(Point clickedPosition) {
@@ -96,8 +97,8 @@ public class MouseManager implements UpdatingObject {
 			.filter(t-> t instanceof SpaceObject)
 			.map(t->(SpaceObject)t)
 			.filter(item -> item.getShape().contains(clickedPosition))
-			.forEach(clicked -> PlayerManager.getInstance().getPlayerNavigator().route.add(clicked));
-		Logger.info("New Route:"+PlayerManager.getInstance().getPlayerNavigator().route.toString());
+			.forEach(clicked -> ManagerRegistry.getPlayerManager().getPlayerNavigator().route.add(clicked));
+		Logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().route.toString());
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {

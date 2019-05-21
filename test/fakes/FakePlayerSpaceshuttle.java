@@ -1,5 +1,6 @@
 package fakes;
 
-public class FakePlayerSpaceshuttle {
-
+public class FakePlayerSpaceshuttle extends FakeArmedSpacecraft {
+	
+	boolean isPlayer = true;
 }

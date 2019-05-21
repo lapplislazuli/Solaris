@@ -1,6 +1,7 @@
 package space.spacecrafts.navigators;
 
-import logic.interaction.PlayerManager;
+import logic.manager.ManagerRegistry;
+import logic.manager.PlayerManager;
 import space.spacecrafts.ships.PlayerSpaceShuttle;
 
 public class PlayerNavigator extends ArmedShuttleNavigator{
@@ -9,7 +10,7 @@ public class PlayerNavigator extends ArmedShuttleNavigator{
 	public PlayerNavigator(String name, PlayerSpaceShuttle shuttle) {
 		super(name, shuttle, true);
 		this.shuttle=shuttle;
-		PlayerManager.getInstance().registerPlayerNavigator(this);
+		ManagerRegistry.getPlayerManager().registerPlayerNavigator(this);
 	}
 	
 	@Override

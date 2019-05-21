@@ -1,26 +1,19 @@
-package logic.interaction;
+package logic.manager;
 
 import org.pmw.tinylog.Logger;
 
 import space.spacecrafts.navigators.PlayerNavigator;
 import space.spacecrafts.ships.PlayerSpaceShuttle;
 
-public class PlayerManager {
-
-	private static PlayerManager INSTANCE;
+public class PlayerManager{
 
 	private PlayerSpaceShuttle playerShuttle;
 	private PlayerNavigator playerNavigator;
 	
 	public int deathCount=0;
 	
-	private PlayerManager() {}
+	public PlayerManager() {}
 	
-	public static PlayerManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new PlayerManager();
-		return INSTANCE;
-	}
 	
 	public void registerPlayerNavigator(PlayerNavigator pN){
 		if(playerNavigator!=null)
@@ -28,8 +21,10 @@ public class PlayerManager {
 		playerNavigator=pN;
 	}
 	
-	public static void reset() {
-		INSTANCE=null;
+	public void reset() {
+		playerShuttle=null;
+		playerNavigator=null;
+		deathCount=0;
 	}
 	
 	public void registerPlayerShuttle(PlayerSpaceShuttle p) {

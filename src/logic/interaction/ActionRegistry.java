@@ -24,19 +24,19 @@ public class ActionRegistry {
 						()->ManagerRegistry.getCollisionManager().toggleUpdate()));
 		registerAction(
 				new Action("RouteClear" ,"Cleares all current Items in the Players Route, leaving only current Parent",
-						()->PlayerManager.getInstance().getPlayerNavigator().clearRoute()));
+						()->ManagerRegistry.getPlayerManager().getPlayerNavigator().clearRoute()));
 		registerAction(
 				new Action("ForceSpawn" ,"Kills the playerShip to restart at Parent. Deathcount rises" ,
-						()->PlayerManager.getInstance().forceRespawn()));
+						()->ManagerRegistry.getPlayerManager().forceRespawn()));
 		registerAction(
 				new Action("Quit","Quits the Game" ,
 						()->Program.invokeStop()));
 		registerAction(
 				new Action("Speed+","Speeds up the players ship by 10%" ,
-						()->PlayerManager.getInstance().speedUp()));
+						()->ManagerRegistry.getPlayerManager().speedUp()));
 		registerAction(
 				new Action("Speed-" ,"Slows players Ship by 10%",
-						()->PlayerManager.getInstance().slowDown()));
+						()->ManagerRegistry.getPlayerManager().slowDown()));
 		registerAction(
 				new Action("Shoot", "Shoots at MousePosition",
 						()->MouseManager.getInstance().shootAtMousePos()));
