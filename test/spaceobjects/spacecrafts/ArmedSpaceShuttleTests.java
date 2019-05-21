@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -233,5 +235,15 @@ class ArmedSpaceShuttleTests {
 		Ship copy = testObject.rebuildAt("copy",root);
 		
 		assertTrue(copy instanceof ArmedSpaceShuttle);
+	}
+	
+	@Test
+	void testDestruct_checkPlayerManagerDeathCount_shouldBeZero() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		testObject.destruct();
+		//The armedship is not the player, therefore the PlayerManager should not Care
+		assertEquals(0,ManagerRegistry.getPlayerManager().deathCount);
 	}
 }

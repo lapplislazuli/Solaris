@@ -392,6 +392,16 @@ public class ShipTests implements RemovableTests {
 	}
 	
 	@Test
+	void testDestruct_checkPlayerManagerDeathCount_shouldBeZero() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,150,0);
+		
+		shuttle.destruct();
+		//The ship is not the player, therefore the PlayerManager should not Care
+		assertEquals(0,ManagerRegistry.getPlayerManager().deathCount);
+	}
+	
+	@Test
 	void testDestruct_doubleDestruct_shouldNotDoAnything() {
 		SpaceObject root = fakeStar(0,0);
 		Ship shuttle= new Ship("shuttleOne",root,0,150,0);

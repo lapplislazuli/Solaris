@@ -13,6 +13,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
+import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
@@ -109,6 +110,10 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	public void destruct() {
 		Logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
+			if(isPlayer()) {
+				ManagerRegistry.getPlayerManager().deathCount++;
+				Logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().deathCount);
+			}
 			state=SpacecraftState.DEAD;
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);

@@ -41,7 +41,6 @@ class PlayerShuttleTests {
 	@Test
 	void testConstructor_shouldBePlayer() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerManager mng = ManagerRegistry.getPlayerManager();
 		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertTrue(testObject.isPlayer());
