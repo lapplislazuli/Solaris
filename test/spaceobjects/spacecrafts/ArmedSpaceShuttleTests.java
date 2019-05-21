@@ -42,6 +42,14 @@ class ArmedSpaceShuttleTests {
 	}
 	
 	@Test
+	void testConstructor_shouldNotBePlayer() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		assertFalse(testObject.isPlayer());
+	}
+	
+	@Test
 	void testShootLaserAtPoint_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
 		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);

@@ -12,7 +12,7 @@ import space.core.SpaceObject;
 public class FakeSpacecraft implements Spacecraft{
 	
 	public boolean launched=false,dead=false,collided=false,moved=false,attacked=false,rebuild=false,removed=false;
-	public boolean colliding = false;
+	public boolean colliding = false,isPlayer=false;
 	
 	public SpacecraftState state = SpacecraftState.ORBITING;
 	
@@ -88,6 +88,10 @@ public class FakeSpacecraft implements Spacecraft{
 	public void move(Point point) {
 		moved=true;
 		moveTo = point;
+	}
+
+	public boolean isPlayer() {
+		return isPlayer;
 	}
 
 	

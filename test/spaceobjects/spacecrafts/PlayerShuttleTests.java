@@ -18,7 +18,7 @@ class PlayerShuttleTests {
 
 	@AfterEach
 	void resetPlayerMng() {
-		ManagerRegistry.getPlayerManager();
+		ManagerRegistry.getPlayerManager().reset();
 	}
 	
 	@Test
@@ -36,6 +36,15 @@ class PlayerShuttleTests {
 		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertEquals(mng.getPlayerShuttle(),testObject);
+	}
+	
+	@Test
+	void testConstructor_shouldBePlayer() {
+		SpaceObject root = fakeStar(0,0);
+		PlayerManager mng = ManagerRegistry.getPlayerManager();
+		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		
+		assertTrue(testObject.isPlayer());
 	}
 	
 	@Test
@@ -92,5 +101,6 @@ class PlayerShuttleTests {
 		
 		assertEquals(1,mng.getPlayerDeaths());
 	}
+	
 	
 }

@@ -142,4 +142,8 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	public List<CollidingObject> getDetectedItems() {
 		return sensor.detectedItems;
 	}
+
+	public boolean isPlayer() {
+		return false; // an unarmed Ship is never player
+	}
 }

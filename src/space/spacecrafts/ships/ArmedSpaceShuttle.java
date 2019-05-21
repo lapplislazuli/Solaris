@@ -8,6 +8,7 @@ import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.ArmedSpacecraft;
+import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
@@ -81,6 +82,12 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	public ArmedSpaceShuttle rebuildAt(String name, SpaceObject at) {
 		ArmedSpaceShuttle copy = new ArmedSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
 		return copy;
+	}
+	
+	@Override
+	public boolean isPlayer() {
+		// This way round, otherwise if PlayerManager is empty/new it dies 
+		return equals(ManagerRegistry.getPlayerManager().getPlayerShuttle());
 	}
 
 	public Optional<SpaceObject> getNearestPossibleTarget() {

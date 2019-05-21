@@ -21,7 +21,7 @@ public class PlayerSpaceShuttle extends ArmedSpaceShuttle {
 	
 	@Override
 	public void destruct() {
-		if(isPlayer) {
+		if(isPlayer()) {
 			ManagerRegistry.getPlayerManager().deathCount++;
 			Logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().deathCount);
 		}

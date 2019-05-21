@@ -34,7 +34,14 @@ public class ShipTests implements RemovableTests {
 	void resteManagerRegistry() {
 		ManagerRegistry.reset();
 	}
-	
+
+	@Test
+	void testConstructor_shouldBePlayer() {
+		SpaceObject root = fakeStar(0,0);
+		Ship testObject= new Ship("shuttleOne",root,0,50,Math.PI);
+		
+		assertFalse(testObject.isPlayer());
+	}
 	@Test
 	void testConstructor_ValuesShouldBeAsExpected() {
 		SpaceObject root = fakeStar(0,0);
@@ -117,6 +124,7 @@ public class ShipTests implements RemovableTests {
 
 		assertEquals(shuttle.getDistance(),(int)shuttle.distanceTo(target));
 	}
+	
 	
 	@Test
 	void testLaunch_InspectRelativePos_shouldBeDegreeToTarget() {

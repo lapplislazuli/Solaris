@@ -26,5 +26,7 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	public double degreeTo(SpaceObject parent); //TODO: Move this somewhere better!
 	
 	public List<CollidingObject> getDetectedItems();
+	
+	public boolean isPlayer();
 }
 
