@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import fakes.FakePlayerSpaceshuttle;
+import fakes.FakeArmedSpacecraft;
 import interfaces.spacecraft.ArmedSpacecraft;
 import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
@@ -27,7 +27,7 @@ class PlayerManagerTests {
 	void testSetPlayerShuttle_shouldBeTheSetValue() {
 		PlayerManager mng = new PlayerManager();
 		
-		FakePlayerSpaceshuttle stub = new FakePlayerSpaceshuttle();
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
 		
 		//mng.registerPlayerShuttle(stub);
 		fail("Not Yet Implemented");
