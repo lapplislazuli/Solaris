@@ -14,6 +14,7 @@ import logic.manager.ManagerRegistry;
 import space.advanced.FixStar;
 import space.core.SpaceObject;
 import space.effect.Explosion;
+import space.spacecrafts.ships.Sensor;
 import space.spacecrafts.ships.SensorArray;
 import space.spacecrafts.ships.Ship;
 
@@ -34,7 +35,7 @@ public class SensorArrayTests {
 	@Test
 	public void testConstructor_shouldHaveNoCollisions() {
 		FakeSpacecraft root = new FakeSpacecraft();
-		SensorArray testObject = new SensorArray (root,50);
+		Sensor testObject = new SensorArray (root,50);
 		
 		assertTrue(testObject.getDetectedItems().isEmpty());
 	}

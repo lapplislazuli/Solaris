@@ -7,6 +7,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.MovingObject;
 import space.core.SpaceObject;
+import space.spacecrafts.ships.Sensor;
 
 public interface Spacecraft extends DestructibleObject,MovingObject{
 
@@ -31,5 +32,7 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	public boolean isPlayer();
 
 	public Point getCenter();
+	
+	public void setSensor(Sensor val);
 }
 

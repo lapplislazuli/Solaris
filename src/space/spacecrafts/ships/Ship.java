@@ -25,7 +25,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	protected SpaceObject parent;
 	protected double orbitingDistance;
 	
-	protected SensorArray sensor;
+	protected Sensor sensor;
 	protected SpacecraftState state = SpacecraftState.ORBITING;
 	
 	protected int size;
@@ -150,5 +150,9 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 
 	public boolean isPlayer() {
 		return false; // an unarmed Ship is never player
+	}
+
+	public void setSensor(Sensor val) {
+		sensor=val;
 	}
 }

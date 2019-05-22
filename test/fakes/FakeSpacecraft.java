@@ -8,6 +8,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import space.core.SpaceObject;
+import space.spacecrafts.ships.Sensor;
 
 public class FakeSpacecraft implements Spacecraft{
 	
@@ -100,6 +101,8 @@ public class FakeSpacecraft implements Spacecraft{
 	public Point getCenter() {
 		return fakeCenter;
 	}
+
+	public void setSensor(Sensor val) {}
 
 	
 }

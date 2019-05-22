@@ -17,7 +17,7 @@ import space.core.SpaceObject;
  * This SensorArray is a collidable item, which Pseudocollides with everything in the radius 
  * The pseudocollided items will be reportet to parent-spaceshuttle, yet wont explode or anything
  */
-public class SensorArray implements UpdatingObject,MovingObject{
+public class SensorArray implements UpdatingObject,MovingObject, Sensor{
 	
 	int radius;
 	Point center;
