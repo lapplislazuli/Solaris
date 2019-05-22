@@ -97,8 +97,8 @@ public class MouseManager implements UpdatingObject {
 			.filter(t-> t instanceof SpaceObject)
 			.map(t->(SpaceObject)t)
 			.filter(item -> item.getShape().contains(clickedPosition))
-			.forEach(clicked -> ManagerRegistry.getPlayerManager().getPlayerNavigator().route.add(clicked));
-		Logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().route.toString());
+			.forEach(clicked -> ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().add(clicked));
+		Logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().toString());
 	}
 	
 	private void showInformationOnClick(Point clickedPosition) {

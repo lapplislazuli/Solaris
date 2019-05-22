@@ -5,6 +5,7 @@ import java.util.Optional;
 import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
+import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 
 public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNavigator{
@@ -19,6 +20,13 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 		this.shuttle=shuttle;
 	}
 	
+
+	public static ArmedShuttleNavigator PlayerNavigator(String name, ArmedSpacecraft shuttle) {
+		ArmedShuttleNavigator nav = new ArmedShuttleNavigator(name, shuttle, true);
+		ManagerRegistry.getPlayerManager().registerPlayerNavigator(nav);
+		return nav;
+	}
+	
 	@Override
 	public void update(){
 		super.update();
@@ -28,7 +36,7 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	
 	@Override
 	protected void rebuildShuttle() {
-		shuttle = (ArmedSpacecraft) shuttle.rebuildAt(name+"s Ship", route.get(0));
+		shuttle = (ArmedSpacecraft) shuttle.rebuildAt(name+"s Ship", getRoute().get(0));
 		ship=shuttle;
 	}
 

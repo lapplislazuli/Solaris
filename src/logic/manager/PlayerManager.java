@@ -2,20 +2,20 @@ package logic.manager;
 
 import org.pmw.tinylog.Logger;
 
+import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
-import space.spacecrafts.navigators.PlayerNavigator;
 
 public class PlayerManager{
 
 	private ArmedSpacecraft playerShuttle;
-	private PlayerNavigator playerNavigator;
+	private AggressiveNavigator playerNavigator;
 	
 	public int deathCount=0;
 	
 	public PlayerManager() {}
 	
 	
-	public void registerPlayerNavigator(PlayerNavigator pN){
+	public void registerPlayerNavigator(AggressiveNavigator pN){
 		if(playerNavigator!=null)
 			Logger.info("Overwriting active playerNavigator...");
 		playerNavigator=pN;
@@ -34,7 +34,7 @@ public class PlayerManager{
 	}
 	
 	public ArmedSpacecraft getPlayerShuttle() {return playerShuttle;}
-	public PlayerNavigator getPlayerNavigator() {return playerNavigator;}
+	public AggressiveNavigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {
 		playerShuttle.destruct();

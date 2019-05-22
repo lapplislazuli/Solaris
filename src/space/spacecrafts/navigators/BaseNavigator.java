@@ -15,7 +15,7 @@ public class BaseNavigator implements Navigator{
 
 	String name;
 	private int currentPointer=0;
-	public List<SpaceObject> route;
+	private List<SpaceObject> route;
 	
 	protected Spacecraft ship;
 	

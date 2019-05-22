@@ -7,7 +7,6 @@ import space.core.Satellite;
 import space.core.SpaceObject;
 import space.core.Star;
 import space.spacecrafts.navigators.BaseNavigator;
-import space.spacecrafts.navigators.PlayerNavigator;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
@@ -19,6 +18,7 @@ import config.interfaces.LoggerSettings;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
+import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
 import javafx.application.*;
 import javafx.stage.Stage;
@@ -153,7 +153,7 @@ public class Program extends Application{
 		
 		//TODO: Builder Patttern!
 		ArmedSpacecraft pS = ArmedSpaceShuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
-		PlayerNavigator playerNav = new PlayerNavigator("Nasa",pS);
+		AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",pS);
 		playerNav.getRoute().add(mars);
 		
 		Satellite astra = (new Satellite.Builder("Astra", earth))
