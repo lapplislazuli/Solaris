@@ -2,6 +2,7 @@ package interfaces.spacecraft;
 
 import java.util.List;
 
+import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.MovingObject;
@@ -28,5 +29,7 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	public List<CollidingObject> getDetectedItems();
 	
 	public boolean isPlayer();
+
+	public Point getCenter();
 }
 

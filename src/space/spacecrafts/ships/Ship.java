@@ -145,7 +145,7 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 
 	public List<CollidingObject> getDetectedItems() {
-		return sensor.detectedItems;
+		return sensor.getDetectedItems();
 	}
 
 	public boolean isPlayer() {

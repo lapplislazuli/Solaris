@@ -8,6 +8,7 @@ import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingObject;
 import interfaces.logical.UpdatingObject;
+import interfaces.spacecraft.Spacecraft;
 import logic.manager.ManagerRegistry;
 import space.advanced.FixStar;
 import space.core.SpaceObject;
@@ -20,10 +21,10 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	
 	int radius;
 	Point center;
-	Ship emitter;
-	public List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
+	Spacecraft emitter;
+	private List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
 	
-	public SensorArray (Ship emitter,int radius) {
+	public SensorArray (Spacecraft emitter,int radius) {
 		this.emitter=emitter;
 		center=emitter.getCenter();
 		this.radius=radius;
@@ -57,6 +58,10 @@ public class SensorArray implements UpdatingObject,MovingObject{
 	public void setSpeed(double val) {
 		// I should not be able to set my speed
 		// I only have the Speed of my Emitter
+	}
+
+	public List<CollidingObject> getDetectedItems() {
+		return detectedItems;
 	}
 
 }

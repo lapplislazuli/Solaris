@@ -20,7 +20,7 @@ public class FakeSpacecraft implements Spacecraft{
 	
 	public SpaceObject parent,target;
 	
-	public Point moveFrom,moveTo;
+	public Point moveFrom,moveTo,fakeCenter;
 	
 	public List<CollidingObject> itemsToDetect= new LinkedList<CollidingObject>();
 	
@@ -95,6 +95,10 @@ public class FakeSpacecraft implements Spacecraft{
 	public void setSpeed(double val) {
 		speedSet=true;
 		speed=val;
+	}
+
+	public Point getCenter() {
+		return fakeCenter;
 	}
 
 	
