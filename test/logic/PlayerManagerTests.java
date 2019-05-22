@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import fakes.FakePlayerSpaceshuttle;
+import interfaces.spacecraft.ArmedSpacecraft;
 import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.PlayerSpaceShuttle;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
 
 class PlayerManagerTests {
 
@@ -45,7 +46,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertEquals(testObject,mng.getPlayerShuttle());
 	}

@@ -11,7 +11,6 @@ import space.spacecrafts.navigators.PlayerNavigator;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
-import space.spacecrafts.ships.PlayerSpaceShuttle;
 import space.spacecrafts.ships.Ship;
 import config.JSON.JSONConfig;
 import config.JSON.JSONConfigFactory;
@@ -20,6 +19,7 @@ import config.interfaces.LoggerSettings;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
+import interfaces.spacecraft.ArmedSpacecraft;
 import javafx.application.*;
 import javafx.stage.Stage;
 import logic.interaction.KeyBoardManager;
@@ -152,7 +152,7 @@ public class Program extends Application{
 				.build();
 		
 		//TODO: Builder Patttern!
-		PlayerSpaceShuttle pS = new PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
+		ArmedSpacecraft pS = ArmedSpaceShuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
 		PlayerNavigator playerNav = new PlayerNavigator("Nasa",pS);
 		playerNav.getRoute().add(mars);
 		

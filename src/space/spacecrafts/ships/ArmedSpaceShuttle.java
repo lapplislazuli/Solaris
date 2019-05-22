@@ -28,6 +28,18 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 		super(name, parent,dinfo,s, size, orbitingDistance, speed);
 	}
 	
+	public static ArmedSpaceShuttle PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
+		ArmedSpaceShuttle player =new ArmedSpaceShuttle(name, parent, size, orbitingDistance, speed);
+		ManagerRegistry.getPlayerManager().registerPlayerShuttle(player);
+		return player;
+	}
+	
+	public static ArmedSpaceShuttle PlayerSpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
+		ArmedSpaceShuttle player =new ArmedSpaceShuttle(name, parent,dinfo,s, size, orbitingDistance, speed);
+		ManagerRegistry.getPlayerManager().registerPlayerShuttle(player);
+		return player;
+	}
+	
 	@Override
 	public void update() {
 		laserCoolDown--;
@@ -80,8 +92,12 @@ public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
 	
 	@Override
 	public ArmedSpaceShuttle rebuildAt(String name, SpaceObject at) {
-		ArmedSpaceShuttle copy = new ArmedSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
-		return copy;
+		if(isPlayer()) {
+			ArmedSpaceShuttle playercopy = PlayerSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
+			return playercopy;
+		}
+		ArmedSpaceShuttle nonplayerCopy = new ArmedSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
+		return nonplayerCopy;
 	}
 	
 	@Override

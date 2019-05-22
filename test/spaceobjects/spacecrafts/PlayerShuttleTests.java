@@ -8,10 +8,11 @@ import static helpers.FakeSpaceObjectFactory.*;
 
 import org.junit.jupiter.api.Test;
 
+import interfaces.spacecraft.ArmedSpacecraft;
 import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.PlayerSpaceShuttle;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.Ship;
 
 class PlayerShuttleTests {
@@ -24,16 +25,16 @@ class PlayerShuttleTests {
 	@Test
 	void testConstructor_shouldBeBuild() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
-		assertEquals(50,testObject.getOrbitingDistance());
+		assertEquals(50,((Ship) testObject).getOrbitingDistance());
 	}
 	
 	@Test
 	void testConstructor_shouldBeRegisteredInPlayerManager() {
 		SpaceObject root = fakeStar(0,0);
 		PlayerManager mng = ManagerRegistry.getPlayerManager();
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertEquals(mng.getPlayerShuttle(),testObject);
 	}
@@ -41,7 +42,7 @@ class PlayerShuttleTests {
 	@Test
 	void testConstructor_shouldBePlayer() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertTrue(testObject.isPlayer());
 	}
@@ -49,21 +50,22 @@ class PlayerShuttleTests {
 	@Test
 	void testRebuildAt_shouldBePlayerShuttle() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
-		PlayerSpaceShuttle copy = testObject.rebuildAt("Copy", root);
+		ArmedSpacecraft copy = (ArmedSpacecraft) testObject.rebuildAt("Copy", root);
 		
-		assertTrue(copy instanceof PlayerSpaceShuttle);
+		assertTrue(copy instanceof ArmedSpacecraft);
 		assertTrue(copy instanceof Ship);
+		assertTrue(copy.isPlayer());
 	}
 	
 	@Test
 	void testRebuildAt_checkPlayerManager_shouldHaveRebuildAsPlayer() {
 		SpaceObject root = fakeStar(0,0);
 		PlayerManager mng = ManagerRegistry.getPlayerManager();
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
-		PlayerSpaceShuttle copy = testObject.rebuildAt("Copy", root);
+		ArmedSpacecraft copy = (ArmedSpacecraft) testObject.rebuildAt("Copy", root);
 		
 		assertEquals(copy,mng.getPlayerShuttle());
 	}
@@ -71,7 +73,7 @@ class PlayerShuttleTests {
 	@Test
 	void testDestruct_shouldBeDead() {
 		SpaceObject root = fakeStar(0,0);
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 	
 		testObject.destruct();
 		
@@ -82,7 +84,7 @@ class PlayerShuttleTests {
 	void testDestruct_shouldIncreasePlayerDeaths() {
 		SpaceObject root = fakeStar(0,0);
 		PlayerManager mng = ManagerRegistry.getPlayerManager();
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		testObject.destruct();
 		
@@ -93,7 +95,7 @@ class PlayerShuttleTests {
 	void testDestruct_doubleDestruct_shouldIncreasePlayerDeathsOnlyOnce() {
 		SpaceObject root = fakeStar(0,0);
 		PlayerManager mng = ManagerRegistry.getPlayerManager();
-		PlayerSpaceShuttle testObject = new PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		testObject.destruct();
 		testObject.destruct();

@@ -86,7 +86,7 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	private void shootAtClickedPoint(Point clickedPosition) {
-		ManagerRegistry.getPlayerManager().getPlayerShuttle().shootRocket(clickedPosition);
+		ManagerRegistry.getPlayerManager().getPlayerShuttle().attack(clickedPosition);
 	}
 	
 	private void registerSpaceObjectToPlayerRoute(Point clickedPosition) {

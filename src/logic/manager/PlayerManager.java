@@ -2,12 +2,12 @@ package logic.manager;
 
 import org.pmw.tinylog.Logger;
 
+import interfaces.spacecraft.ArmedSpacecraft;
 import space.spacecrafts.navigators.PlayerNavigator;
-import space.spacecrafts.ships.PlayerSpaceShuttle;
 
 public class PlayerManager{
 
-	private PlayerSpaceShuttle playerShuttle;
+	private ArmedSpacecraft playerShuttle;
 	private PlayerNavigator playerNavigator;
 	
 	public int deathCount=0;
@@ -27,13 +27,13 @@ public class PlayerManager{
 		deathCount=0;
 	}
 	
-	public void registerPlayerShuttle(PlayerSpaceShuttle p) {
+	public void registerPlayerShuttle(ArmedSpacecraft p) {
 		if(playerShuttle!=null)
 			Logger.info("Overwriting active playershuttle...");
 		playerShuttle=p;
 	}
 	
-	public PlayerSpaceShuttle getPlayerShuttle() {return playerShuttle;}
+	public ArmedSpacecraft getPlayerShuttle() {return playerShuttle;}
 	public PlayerNavigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {
@@ -41,10 +41,10 @@ public class PlayerManager{
 	}
 	
 	public void speedUp() {
-		playerShuttle.setSpeed(playerShuttle.getSpeed()*1.1);
+	//	playerShuttle.setSpeed(playerShuttle.getSpeed()*1.1);
 	}
 	public void slowDown() {
-		playerShuttle.setSpeed(playerShuttle.getSpeed()*0.9);
+	//	playerShuttle.setSpeed(playerShuttle.getSpeed()*0.9);
 	}
 	
 	public int getPlayerDeaths() {

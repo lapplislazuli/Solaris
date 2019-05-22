@@ -162,9 +162,19 @@ public class LaserTests {
 		testEmitter.update();
 		Point firstTrailEntry = testLaser.getTrail().get(0);
 		
-		assertEquals(1,testLaser.getTrail().size());
 		//An absolute Copy of the point is made, so no assertEquals possible
 		assertTrue(centerBeforeMove.samePosition(firstTrailEntry));	
+	}
+	
+	@Test
+	void testUpdateParent_checkTrail_shouldHaveOneItem() {
+		SpaceObject shipRoot = fakeStar(0,0);
+		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
+		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,0,1);
+		
+		testEmitter.update();
+		
+		assertEquals(1,testLaser.getTrail().size());
 	}
 	
 	@Test
