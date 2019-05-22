@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fakes.FakeSensor;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.MovingUpdatingObject;
@@ -434,5 +435,28 @@ public class ShipTests implements RemovableTests {
 		
 		assertTrue(shuttle.isDead());
 	}
+
+	@Test
+	void testDetectedItems_SensorIsEmpty_ShouldBeEmpty() {
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,50,0);
+		
+		FakeSensor stub = new FakeSensor();
+		shuttle.setSensor(stub);
+		
+		assertTrue(shuttle.getDetectedItems().isEmpty());
+	}
 	
+	@Test
+	void testDetectedItems_SensorHasItems_shouldBeTheSameAsFakeSensor(){
+		SpaceObject root = fakeStar(0,0);
+		Ship shuttle= new Ship("shuttleOne",root,0,50,0);
+		
+		FakeSensor stub = new FakeSensor();
+		shuttle.setSensor(stub);
+		stub.detectedItems.add(root);
+		
+		assertTrue(shuttle.getDetectedItems().contains(root));
+		assertEquals(1,shuttle.getDetectedItems().size());		
+	}
 }

@@ -4,70 +4,71 @@ import static helpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import fakes.FakeSensor;
 import fakes.interfaces.FakeCollidingObject;
-import geom.AbsolutePoint;
-import interfaces.geom.Point;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
+import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
-import space.spacecrafts.ships.Carrier;
+import space.spacecrafts.ships.LaserDrone;
 
-class BattleCarrierTest {
+class LaserDroneTests {
 
 	@Test
-	void testConstructor_shouldBeBuild() {
-		SpaceObject carrierRoot = fakeStar(0,0);
-		Carrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
-	
-		assertEquals(Math.PI/2,carrier.getSpeed(),00000001);
-		assertEquals("TestCarrier",carrier.getName());
+	public void testConstructor_shouldNotFail() {
+		SpaceObject root = fakeStar(0,0);
+		new LaserDrone("TestObject", root,0,10, 0);
+		
+		return;
+	}
+
+	@Test
+	public void testShootLaser_shouldSpawnLaser() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
+		
+		testObject.shootLaser(root);
+		
+		assertFalse(testObject.getTrabants().isEmpty());
+		assertEquals(1,testObject.getTrabants().size());
 	}
 	
 	@Test
-	void testAttackTargetSpaceObject_shouldEqualLaunchShips() {
-		//For more Input on Launching Ships check Carrier Tests
-		SpaceObject carrierRoot = fakeStar(0,0);
-		BattleCarrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
-
-		SpaceObject droneTarget = fakeStar(1000,1000);
-		carrier.attack(droneTarget);
-		assertEquals(3, droneTarget.getTrabants().size());
-	}
-	
-	@Test
-	void testAttackTargetPoint_shouldNotLaunchShips() {
-		//For more Input on Launching Ships check Carrier Tests
-		SpaceObject carrierRoot = fakeStar(0,0);
-		BattleCarrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
+	public void testShootLaser_shouldSetCooldown() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
 		
-		Point target = new AbsolutePoint(1000,100);
-		carrier.attack(target);
+		testObject.shootLaser(root);
 		
-		assertEquals(3,carrier.getTrabants().size());
-	}
-	
-	@Test
-	void rebuildAt_shouldBeInstanceOfBattleCarrier() {
-		SpaceObject carrierRoot = fakeStar(0,0);
-		BattleCarrier carrier = new BattleCarrier("TestCarrier",carrierRoot,5,6,Math.PI/2);
-		
-		Carrier copy = carrier.rebuildAt("copy",carrierRoot);
-		
-		assertTrue(copy instanceof BattleCarrier);
+		assertTrue(testObject.laserCoolDown>0);
 	}
 	
 
+	@Test
+	void testShootLaser_hasCooldown_shouldNotSpawnLaser() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
+		
+		testObject.laserCoolDown=1000;
+		
+		testObject.shootLaser(root);
+		
+		assertTrue(testObject.getTrabants().isEmpty());
+	}
 	
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
 			
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
+		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
 		
@@ -77,7 +78,9 @@ class BattleCarrierTest {
 	@Test
 	void testGetNearestPossibleTarget_notDestructible_shouldBeEmptyOptional(){
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -89,7 +92,9 @@ class BattleCarrierTest {
 	@Test
 	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -101,7 +106,9 @@ class BattleCarrierTest {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -115,7 +122,9 @@ class BattleCarrierTest {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldReturnTheDestructibleInOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -131,7 +140,9 @@ class BattleCarrierTest {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -147,7 +158,9 @@ class BattleCarrierTest {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldReturnFirst() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -167,27 +180,31 @@ class BattleCarrierTest {
 	
 
 	@Test
-	void testGetNearestPossibleTarget_OnlyDronesInSensor_shouldBeEmptyOptional() {
+	void testGetNearestPossibleTarget_OnlyOtherDronesInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
 		
-		stubSensor.detectedItems.addAll(testObject.getDrones());
+		stubSensor.detectedItems.addAll(testObjectSource.getDrones());
 
 		assertFalse(testObject.getNearestPossibleTarget().isPresent());
 	}
 	
 	@Test
-	void testGetNearestPossibleTarget_CarriesIsInSensor_shouldBeEmptyOptional() {
+	void testGetNearestPossibleTarget_CarrierIsInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObject = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		
+		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
 		
-		stubSensor.detectedItems.add(testObject);
+		stubSensor.detectedItems.add(testObjectSource);
 
 		assertFalse(testObject.getNearestPossibleTarget().isPresent());
 	}

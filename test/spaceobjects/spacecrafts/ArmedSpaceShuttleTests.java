@@ -5,16 +5,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fakes.FakeSensor;
+import fakes.interfaces.FakeCollidingObject;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.MovingUpdatingObject;
 import logic.manager.ManagerRegistry;
+import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.Ship;
@@ -246,4 +250,107 @@ class ArmedSpaceShuttleTests {
 		//The armedship is not the player, therefore the PlayerManager should not Care
 		assertEquals(0,ManagerRegistry.getPlayerManager().getPlayerDeaths());
 	}
+	
+	@Test
+	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		
+		assertFalse(testObject.getNearestPossibleTarget().isPresent());
+	}
+	
+	@Test
+	void testGetNearestPossibleTarget_notDestructible_shouldBeEmptyOptional(){
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		stubSensor.detectedItems.add(root);
+		
+		assertFalse(testObject.getNearestPossibleTarget().isPresent());
+	}
+	
+	@Test
+	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		stubSensor.detectedItems.add(new FakeCollidingObject());
+		
+		assertFalse(testObject.getNearestPossibleTarget().isPresent());
+	}
+	
+	@Test
+	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldBeNonEmptyOptional() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		
+		Asteroid a = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(a);
+		
+		assertTrue(testObject.getNearestPossibleTarget().isPresent());
+	}
+	
+	@Test
+	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldReturnTheDestructibleInOptional() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		
+		Asteroid a = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(a);
+		
+		Optional<SpaceObject> expected = Optional.of(a);
+		Optional<SpaceObject> result = testObject.getNearestPossibleTarget();
+		
+		assertEquals(expected,result);
+	}
+	@Test
+	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		
+		Asteroid a = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(a);
+		Asteroid b = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(b);
+		
+		assertTrue(testObject.getNearestPossibleTarget().isPresent());
+	}
+	
+	@Test
+	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldReturnFirst() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		
+		FakeSensor stubSensor = new FakeSensor();
+		testObject.setSensor(stubSensor);
+		
+		Asteroid a = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(a);
+		Asteroid b = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(b);
+		Asteroid c = new Asteroid("stubDestructible",root,0,0);
+		stubSensor.detectedItems.add(c);
+		
+		Optional<SpaceObject> expected = Optional.of(a);
+		Optional<SpaceObject> result = testObject.getNearestPossibleTarget();
+		
+		assertEquals(expected,result);
+	}
+
 }

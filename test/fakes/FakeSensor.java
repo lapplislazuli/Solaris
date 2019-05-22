@@ -9,7 +9,7 @@ import space.spacecrafts.ships.Sensor;
 
 public class FakeSensor implements Sensor {
 	
-	List<CollidingObject> detectedItems = new LinkedList<CollidingObject>();
+	public List<CollidingObject> detectedItems = new LinkedList<CollidingObject>();
 
 	public void update() {}
 
