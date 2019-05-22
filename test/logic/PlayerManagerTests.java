@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import fakes.FakeArmedNavigator;
 import fakes.FakeArmedSpacecraft;
 import interfaces.spacecraft.ArmedSpacecraft;
 import logic.manager.ManagerRegistry;
@@ -24,20 +25,51 @@ class PlayerManagerTests {
 	}
 	
 	@Test
-	void testSetPlayerShuttle_shouldBeTheSetValue() {
+	void testRegisterPlayerShuttle_shouldBeTheSetValue() {
 		PlayerManager mng = new PlayerManager();
 		
 		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
 		
-		//mng.registerPlayerShuttle(stub);
-		fail("Not Yet Implemented");
+		mng.registerPlayerShuttle(stub);
+		assertEquals(stub,mng.getPlayerShuttle());
+	}
+
+	@Test
+	void testRegisterShuttle_doubleRegister_shouldBeOverwritten() {
+		PlayerManager mng = new PlayerManager();
+		
+
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeArmedSpacecraft replacement = new FakeArmedSpacecraft();
+		
+		mng.registerPlayerShuttle(stub);
+		mng.registerPlayerShuttle(replacement);
+		
+		assertEquals(replacement,mng.getPlayerShuttle());
 	}
 	
 	@Test
-	void testSetPlayerNavigator_shouldBeTheSetValue() {
+	void testRegisterPlayerNavigator_shouldBeTheSetValue() {
 		PlayerManager mng = new PlayerManager();
 		
-		fail("Not Yet Implemented");
+		FakeArmedNavigator stub = new FakeArmedNavigator();
+		
+		mng.registerPlayerNavigator(stub);
+		
+		assertEquals(stub,mng.getPlayerNavigator());
+	}
+	
+	@Test
+	void testRegisterPlayerNavigator_doubleRegister_shouldBeOverwritten() {
+		PlayerManager mng = new PlayerManager();
+		
+		FakeArmedNavigator stub = new FakeArmedNavigator();
+		FakeArmedNavigator replacement = new FakeArmedNavigator();
+		
+		mng.registerPlayerNavigator(stub);
+		mng.registerPlayerNavigator(replacement);
+		
+		assertEquals(replacement,mng.getPlayerNavigator());
 	}
 	
 	@Test
@@ -55,7 +87,10 @@ class PlayerManagerTests {
 	void testReset_afterSetSomeValues_shouldBeStandard() {
 		PlayerManager mng = new PlayerManager();
 		
-		//ADD SOME STUFF
+		FakeArmedNavigator navStub = new FakeArmedNavigator();
+		mng.registerPlayerNavigator(navStub);
+		FakeArmedSpacecraft shuttleStub = new FakeArmedSpacecraft();
+		mng.registerPlayerShuttle(shuttleStub);
 		
 		mng.reset();
 		
@@ -65,44 +100,100 @@ class PlayerManagerTests {
 	}
 	
 	@Test
-	void testForceDestruct_nullShuttle_shouldNotThrowError() {
-
-		fail("Not Yet Implemented");
+	void testForceRespawn_nullShuttle_shouldNotThrowError() {
+		PlayerManager mng = new PlayerManager();
+		
+		mng.forceRespawn();
+		
+		return; //Return means autopass
 	}
 	
 	@Test
-	void testForceDestruct_checkShuttle_shouldBeDead() {
-
-		fail("Not Yet Implemented");
+	void testForceRespawn_checkShuttle_shouldBeDead() {
+		PlayerManager mng = new PlayerManager();
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		mng.registerPlayerShuttle(stub);
+		
+		mng.forceRespawn();
+		
+		assertTrue(stub.isDead());
 	}
 	
 	@Test
 	void testForceDestruct_checkPlayerDeaths_shouldBeOne() {
+		PlayerManager mng = new PlayerManager();
+		ManagerRegistry.getInstance().setPlayerManager(mng);
 
-		fail("Not Yet Implemented");
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		
+		mng.forceRespawn();
+		
+		assertEquals(1,mng.getPlayerDeaths());
 	}
 	
 	@Test
 	void testSpeedUp_nullShuttle_shouldNotThrowError() {
-
-		fail("Not Yet Implemented");
+		PlayerManager mng = new PlayerManager();
+		
+		mng.speedUp();
+		
+		return; //Return means autopass
 	}
 	
 	@Test
 	void testSpeedUp_checkShuttleSpeed_shouldBe10PercentHigher() {
-
-		fail("Not Yet Implemented");
+		PlayerManager mng = new PlayerManager();
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		mng.registerPlayerShuttle(stub);
+		
+		stub.speed=100;
+		mng.speedUp();
+		
+		assertEquals(110,stub.speed,0.001);
 	}
 	
 	@Test
+	void testSpeedUp_checkShuttleSpeedChanged_shouldbeChanged() {
+		PlayerManager mng = new PlayerManager();
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		mng.registerPlayerShuttle(stub);
+		
+		mng.speedUp();
+		
+		assertTrue(stub.speedSet);	
+	}
+	
+	
+	@Test
 	void testSlowDown_nullShuttle_shouldNotThrowError() {
-
-		fail("Not Yet Implemented");
+		PlayerManager mng = new PlayerManager();
+		
+		mng.slowDown();
+		
+		return; //Return means autopass
 	}
 	
 	@Test
 	void testSlowDown_checkShuttleSpeed_shouldBe10PercentLower() {
-
-		fail("Not Yet Implemented");
+		PlayerManager mng = new PlayerManager();
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		mng.registerPlayerShuttle(stub);
+		
+		stub.speed=100;
+		mng.slowDown();
+		
+		assertEquals(90,stub.speed,0.001);
+	}
+	
+	@Test
+	void testSlowDown_checkShuttleSpeedChanged_shouldbeChanged() {
+		PlayerManager mng = new PlayerManager();
+		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		mng.registerPlayerShuttle(stub);
+		
+		mng.slowDown();
+		
+		assertTrue(stub.speedSet);	
 	}
 }

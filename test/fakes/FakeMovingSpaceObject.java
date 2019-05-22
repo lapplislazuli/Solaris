@@ -32,5 +32,10 @@ public class FakeMovingSpaceObject implements MovingUpdatingObject {
 		if(updating)
 			updated=true;
 	}
+	public double getSpeed() {
+		return 0;
+	}
+
+	public void setSpeed(double val) {}
 
 }

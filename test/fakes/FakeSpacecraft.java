@@ -13,6 +13,8 @@ public class FakeSpacecraft implements Spacecraft{
 	
 	public boolean launched=false,dead=false,collided=false,moved=false,attacked=false,rebuild=false,removed=false;
 	public boolean colliding = false,isPlayer=false;
+	public double speed=0;
+	public boolean speedSet=false;
 	
 	public SpacecraftState state = SpacecraftState.ORBITING;
 	
@@ -36,7 +38,7 @@ public class FakeSpacecraft implements Spacecraft{
 	}
 
 	public double getSpeed() {
-		return 0;
+		return speed;
 	}
 
 	public void setTarget(SpaceObject target) {
@@ -59,12 +61,10 @@ public class FakeSpacecraft implements Spacecraft{
 		return 0;
 	}
 
-	@Override
 	public List<CollidingObject> getDetectedItems() {
 		return itemsToDetect;
 	}
 
-	@Override
 	public void destruct() {
 		dead=true;
 	}
@@ -79,12 +79,10 @@ public class FakeSpacecraft implements Spacecraft{
 		removed=true;
 	}
 
-	@Override
 	public boolean isOrphan() {
 		return dead;
 	}
 
-	@Override
 	public void move(Point point) {
 		moved=true;
 		moveTo = point;
@@ -92,6 +90,11 @@ public class FakeSpacecraft implements Spacecraft{
 
 	public boolean isPlayer() {
 		return isPlayer;
+	}
+
+	public void setSpeed(double val) {
+		speedSet=true;
+		speed=val;
 	}
 
 	

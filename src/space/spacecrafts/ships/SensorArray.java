@@ -50,4 +50,13 @@ public class SensorArray implements UpdatingObject,MovingObject{
 			&&	otherX>=center.getX()-radius && otherX<=center.getX()+radius;
 	}
 
+	public double getSpeed() {
+		return emitter.getSpeed();
+	}
+
+	public void setSpeed(double val) {
+		// I should not be able to set my speed
+		// I only have the Speed of my Emitter
+	}
+
 }

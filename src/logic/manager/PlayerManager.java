@@ -10,7 +10,7 @@ public class PlayerManager{
 	private ArmedSpacecraft playerShuttle;
 	private AggressiveNavigator playerNavigator;
 	
-	public int deathCount=0;
+	private int deathCount=0;
 	
 	public PlayerManager() {}
 	
@@ -37,17 +37,25 @@ public class PlayerManager{
 	public AggressiveNavigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {
-		playerShuttle.destruct();
+		if(playerShuttle!=null)
+			playerShuttle.destruct();
 	}
 	
 	public void speedUp() {
-	//	playerShuttle.setSpeed(playerShuttle.getSpeed()*1.1);
+		if(playerShuttle!=null)
+			playerShuttle.setSpeed(playerShuttle.getSpeed()*1.1);
 	}
+	
 	public void slowDown() {
-	//	playerShuttle.setSpeed(playerShuttle.getSpeed()*0.9);
+		if(playerShuttle!=null)
+			playerShuttle.setSpeed(playerShuttle.getSpeed()*0.9);
 	}
 	
 	public int getPlayerDeaths() {
 		return deathCount;
+	}
+	
+	public void increasePlayerDeaths() {
+		deathCount++;
 	}
 }

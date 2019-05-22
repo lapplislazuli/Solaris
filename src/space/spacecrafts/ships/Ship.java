@@ -111,8 +111,8 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 		Logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
 			if(isPlayer()) {
-				ManagerRegistry.getPlayerManager().deathCount++;
-				Logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().deathCount);
+				ManagerRegistry.getPlayerManager().increasePlayerDeaths();
+				Logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().getPlayerDeaths());
 			}
 			state=SpacecraftState.DEAD;
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));

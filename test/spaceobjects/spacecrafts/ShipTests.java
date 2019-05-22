@@ -398,7 +398,7 @@ public class ShipTests implements RemovableTests {
 		
 		shuttle.destruct();
 		//The ship is not the player, therefore the PlayerManager should not Care
-		assertEquals(0,ManagerRegistry.getPlayerManager().deathCount);
+		assertEquals(0,ManagerRegistry.getPlayerManager().getPlayerDeaths());
 	}
 	
 	@Test

@@ -244,6 +244,6 @@ class ArmedSpaceShuttleTests {
 		
 		testObject.destruct();
 		//The armedship is not the player, therefore the PlayerManager should not Care
-		assertEquals(0,ManagerRegistry.getPlayerManager().deathCount);
+		assertEquals(0,ManagerRegistry.getPlayerManager().getPlayerDeaths());
 	}
 }
