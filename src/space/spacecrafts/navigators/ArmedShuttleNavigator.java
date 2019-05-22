@@ -12,8 +12,7 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	
 	private ArmedSpacecraft shuttle;
 	
-	boolean isPlayer;
-	boolean doesAutoAttack = false;
+	protected boolean doesAutoAttack = false;
 	
 	public ArmedShuttleNavigator(String name, ArmedSpacecraft shuttle, boolean respawn) {
 		super(name, shuttle,respawn);
@@ -57,4 +56,8 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	public boolean doesAutoAttack() {return doesAutoAttack;}
 	public void setAutoAttack(boolean doesit) {doesAutoAttack=doesit;}
 	public void toggleAutoAttack() {doesAutoAttack= !doesAutoAttack;}
+
+	public boolean isPlayer() {
+		return equals(ManagerRegistry.getPlayerManager().getPlayerNavigator());
+	}
 }

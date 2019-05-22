@@ -11,4 +11,5 @@ public interface AggressiveNavigator extends Navigator{
 	
 	public void autoAttack();
 	
+	public boolean isPlayer();
 }

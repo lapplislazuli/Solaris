@@ -9,7 +9,7 @@ import space.core.SpaceObject;
 
 public class FakeNavigator implements Navigator {
 	
-	boolean updated=false,removed=false, routeCleared =false;
+	boolean updated=false,removed=false, routeCleared =false,launchCommandet=false;
 	
 	public SpaceObject fakeNextWayPoint;
 	public Spacecraft shuttle;
@@ -33,8 +33,7 @@ public class FakeNavigator implements Navigator {
 	}
 
 	public List<SpaceObject> getRoute() {
-		// TODO Auto-generated method stub
-		return null;
+		return route;
 	}
 
 	public void clearRoute() {
@@ -47,6 +46,10 @@ public class FakeNavigator implements Navigator {
 			return fakeNextWayPoint;
 		else
 			return route.get(1);
+	}
+
+	public void commandLaunch() {
+		launchCommandet=true;
 	}
 
 }

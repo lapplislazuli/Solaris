@@ -8,6 +8,7 @@ public class FakeArmedNavigator extends FakeNavigator implements AggressiveNavig
 	
 	boolean attacked=false,autoattacked=false;
 	boolean doesAutoAttack = false;
+	boolean isPlayer = false;
 	
 	public void attack(Point p) {
 		attacked=true;
@@ -20,6 +21,10 @@ public class FakeArmedNavigator extends FakeNavigator implements AggressiveNavig
 	public void autoAttack() {
 		if(doesAutoAttack)
 			autoattacked=true;
+	}
+
+	public boolean isPlayer() {
+		return isPlayer;
 	}
 
 }

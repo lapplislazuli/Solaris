@@ -23,4 +23,6 @@ public interface Navigator extends UpdatingObject,RemovableObject{
 	}
 	
 	public SpaceObject getNextWayPoint();
+	
+	public void commandLaunch();
 }

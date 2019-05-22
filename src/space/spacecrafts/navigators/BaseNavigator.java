@@ -13,14 +13,14 @@ import space.core.SpaceObject;
 
 public class BaseNavigator implements Navigator{
 
-	String name;
-	private int currentPointer=0;
-	private List<SpaceObject> route;
+	protected String name;
+	protected int currentPointer=0;
+	protected List<SpaceObject> route;
 	
 	protected Spacecraft ship;
 	
-	boolean respawn; //Bool whether new Ships will be spawned
-	double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
+	protected boolean respawn; //Bool whether new Ships will be spawned
+	protected double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	
 	public BaseNavigator(String name, Spacecraft ship, boolean respawn) {
 		route= new LinkedList<SpaceObject>();
@@ -37,10 +37,7 @@ public class BaseNavigator implements Navigator{
 		else if(getShuttle().getState() == SpacecraftState.ORBITING) {
 			currentIdle+=Math.abs(getShuttle().getSpeed());
 			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextWayPoint())) { //SpaceShuttle idled some time
-				getShuttle().setTarget(getNextWayPoint());
-				getShuttle().launch();
-				currentIdle=0;
-				incrementPointer();
+				commandLaunch();
 			}
 		}
 	}
@@ -81,5 +78,12 @@ public class BaseNavigator implements Navigator{
 
 	public boolean isOrphan() {
 		return !ManagerRegistry.getUpdateManager().getRegisteredItems().contains(this);
+	}
+
+	public void commandLaunch() {
+		getShuttle().setTarget(getNextWayPoint());
+		getShuttle().launch();
+		currentIdle=0;
+		incrementPointer();
 	}
 }
