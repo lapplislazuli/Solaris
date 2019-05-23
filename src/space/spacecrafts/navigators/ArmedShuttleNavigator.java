@@ -34,7 +34,7 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	}
 	
 	@Override
-	protected void rebuildShuttle() {
+	public void rebuildShuttle() {
 		shuttle = (ArmedSpacecraft) shuttle.rebuildAt(name+"s Ship", getRoute().get(0));
 		ship=shuttle;
 	}

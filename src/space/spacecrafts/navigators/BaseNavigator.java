@@ -23,12 +23,19 @@ public class BaseNavigator implements Navigator{
 	protected double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	
 	public BaseNavigator(String name, Spacecraft ship, boolean respawn) {
+		if(name==null||name.isEmpty())
+			throw new IllegalArgumentException("Name cannot be null or empty");
+		if(ship==null)
+			throw new IllegalArgumentException("Ship cannot be null");
+		
 		route= new LinkedList<SpaceObject>();
 		route.add(ship.getParent());
 		this.ship=ship;
 		this.name=name;
 		this.respawn=respawn;
 		Logger.info("Initiated " + name + " with Shuttle " + ship.toString());
+		
+		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 	
 	public void update() {
@@ -60,7 +67,7 @@ public class BaseNavigator implements Navigator{
 			currentPointer=0;
 	}
 	
-	protected void rebuildShuttle() {
+	public void rebuildShuttle() {
 		ship = ship.rebuildAt(name+"s Ship", route.get(0));
 	}
 
