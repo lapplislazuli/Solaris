@@ -54,7 +54,7 @@ class RocketTests {
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		double oldDistance = testRocket.getDistance();
 		
-		testRocket.update();
+		testEmitter.update();
 		
 		assertTrue(testRocket.getDistance()>oldDistance);
 	}
@@ -66,7 +66,7 @@ class RocketTests {
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		double oldDistanceToParent = testRocket.distanceTo(testEmitter);
 		
-		testRocket.update();
+		testEmitter.update();
 		
 		assertTrue(testRocket.distanceTo(testEmitter)>oldDistanceToParent);
 	}
@@ -187,7 +187,7 @@ class RocketTests {
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		for(int i=0;i<500;i++) {
-			testRocket.update();
+			testEmitter.update();
 		}
 		
 		assertTrue(testRocket.isOrphan());

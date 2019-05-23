@@ -209,11 +209,6 @@ public class Program extends Application{
 		updateManager.addSpaceObject(sun);
 		
 		updateManager.update();
-		
-		updateManager.registerItem(playerNav);
-		updateManager.registerItem(carrierNav);
-		updateManager.registerItem(aliens);
-		updateManager.registerItem(chinNav);
 	}
 
 

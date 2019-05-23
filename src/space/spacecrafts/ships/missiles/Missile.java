@@ -26,7 +26,6 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	
 	@Override
 	public void update() {
-		move(center);
 		if(distance>=250 || center.getX()<=0 || center.getY() <=0) 
 			remove();
 	}

@@ -28,7 +28,7 @@ public class Laserbeam extends Missile{
 
 	@Override
 	public void move(Point oldPosition) {
-		AbsolutePoint trailPoint = new AbsolutePoint(oldPosition.getX(),oldPosition.getY());
+		AbsolutePoint trailPoint = getCenter().absoluteClone();
 	    trail.add(trailPoint);
 		super.move(oldPosition);
 	}

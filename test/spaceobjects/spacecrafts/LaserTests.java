@@ -77,7 +77,7 @@ public class LaserTests {
 		
 		double oldDistance = testLaser.getDistance();
 		
-		testLaser.update();
+		testEmitter.update();
 		
 		assertTrue(testLaser.getDistance()>oldDistance);
 	}
@@ -89,7 +89,7 @@ public class LaserTests {
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		double oldDistanceToParent = testLaser.distanceTo(testEmitter);
 		
-		testLaser.update();
+		testEmitter.update();
 		
 		assertTrue(testLaser.distanceTo(testEmitter)>oldDistanceToParent);
 	}
@@ -100,23 +100,9 @@ public class LaserTests {
 		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
-		testLaser.update();
+		testEmitter.update();
 		
 		assertEquals(1,testLaser.getTrail().size());
-	}
-
-	@Test
-	void testMove_withKnownNewPoint_shouldBeInTrail() {
-		SpaceObject shipRoot = fakeStar(0,0);
-		ArmedSpaceShuttle testEmitter = new ArmedSpaceShuttle("test",shipRoot,5,5,5);
-		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
-		
-		Point stubPoint=new AbsolutePoint(100,100);
-		testLaser.move(stubPoint);
-		
-		assertEquals(1,testLaser.getTrail().size());
-		//An absolute Copy of the point is made, so no assertEquals possible
-		assertTrue(stubPoint.samePosition(testLaser.getTrail().get(0)));
 	}
 	
 	@Test
@@ -143,7 +129,7 @@ public class LaserTests {
 		
 		Point centerBeforeMove=testLaser.getCenter().clone();
 		
-		testLaser.update();
+		testLaser.move(centerBeforeMove);
 		Point firstTrailEntry =testLaser.getTrail().get(0);
 		
 		assertEquals(1,testLaser.getTrail().size());
@@ -248,7 +234,7 @@ public class LaserTests {
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		for(int i=0;i<500;i++) {
-			testLaser.update();
+			testEmitter.update();
 		}
 		
 		assertTrue(testLaser.isOrphan());
