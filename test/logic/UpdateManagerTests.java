@@ -4,14 +4,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import fakes.interfaces.FakeUpdatableCollidingObject;
 import fakes.interfaces.FakeUpdatingObject;
+import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
+import space.core.SpaceObject;
 import interfaces.logical.CollidingObject;
+import interfaces.logical.MovingUpdatingObject;
+
+import static helpers.FakeSpaceObjectFactory.fakeStar;
+import static helpers.FakeSpaceObjectFactory.fakePlanet;
 
 class UpdateManagerTests implements SharedManagerTests{
+	
+	@AfterEach
+	void resetManagers() {
+		ManagerRegistry.reset();
+	}
 	
 	@Test
 	void testUpdate_objectCanbeUpdatet_shouldBeUpdatet() {
@@ -222,4 +234,39 @@ class UpdateManagerTests implements SharedManagerTests{
 		
 		assertTrue(results.isEmpty());
 	}
+	
+	@Test
+	public void testAddSpaceObject_ObjectIsInUpdateManager() {
+		UpdateManager source = new UpdateManager();
+		
+		SpaceObject stub = fakeStar(0,0);
+		
+		source.addSpaceObject(stub);
+		
+		assertTrue(source.getRegisteredItems().contains(stub));
+	}
+	
+	@Test
+	public void testAddSpaceObject_ObjectIsInDrawingmanager() {
+		UpdateManager source = new UpdateManager();
+		
+		SpaceObject stub = fakeStar(0,0);
+		
+		source.addSpaceObject(stub);
+		
+		assertTrue(ManagerRegistry.getDrawingManager().getRegisteredItems().contains(stub));
+	}
+	
+	@Test
+	public void testAddSpaceObject_TrabantsAreInCollisionManager() {
+		UpdateManager source = new UpdateManager();
+		
+		SpaceObject stub = fakeStar(0,0);
+		MovingUpdatingObject stubChild = fakePlanet(stub,10);
+		
+		source.addSpaceObject(stub);
+		
+		assertTrue(ManagerRegistry.getCollisionManager().getRegisteredItems().contains(stubChild));
+	}
+	
 }
