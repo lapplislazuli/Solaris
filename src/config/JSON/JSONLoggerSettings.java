@@ -16,8 +16,8 @@ public class JSONLoggerSettings implements LoggerSettings {
 		append = configJSON.getBoolean("append");
 	}
 	
-	private Level tryParseLogLevel(String s){
-		String normed = s.toLowerCase(); //TODO: CLear Whitespaces
+	public static Level tryParseLogLevel(String s){
+		String normed = s.toLowerCase().trim();
 		switch (normed){
 			case "error":	return Level.ERROR;
 			case "warn": 	return Level.WARNING;
