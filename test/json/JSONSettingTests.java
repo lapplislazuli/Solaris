@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import config.JSON.JSONSettings;
 import config.interfaces.Settings;
 
+import static helpers.TestJSONFactory.*;
+
 class JSONSettingTests implements JSONTests {
 
 	@Test
@@ -26,6 +28,13 @@ class JSONSettingTests implements JSONTests {
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JSONObject toLoad = makeEmptySettingsJSON();
+		assertThrows(Exception.class,
+				() -> new JSONSettings(toLoad));
+	}
+	
+	@Test
+	public void testLoadFromJSON_FaultyJSONObject_ShouldFail() {
+		JSONObject toLoad = makeFaultySettingsJSON();
 		assertThrows(Exception.class,
 				() -> new JSONSettings(toLoad));
 	}
@@ -72,21 +81,5 @@ class JSONSettingTests implements JSONTests {
 		assertTrue(testResult.isCollision());
 	}
 	
-	
-	
-	public static JSONObject makeFullSettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("screenWidth", 200);
-		obj.put("screenHeight", 200);
-		obj.put("paused", true);
-		obj.put("updateIntervall", 50);
-		obj.put("collision", true);
-		return obj;
-	}
-	
-	public static JSONObject makeEmptySettingsJSON() {
-		JSONObject obj = new JSONObject();
-		return obj;
-	}
 	
 }

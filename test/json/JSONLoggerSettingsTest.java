@@ -9,6 +9,8 @@ import org.pmw.tinylog.Level;
 import config.JSON.JSONLoggerSettings;
 import config.interfaces.LoggerSettings;
 
+import static helpers.TestJSONFactory.*;
+
 class JSONLoggerSettingsTest implements JSONTests {
 
 	@Test
@@ -163,25 +165,6 @@ class JSONLoggerSettingsTest implements JSONTests {
 		Level result = JSONLoggerSettings.tryParseLogLevel("WA RN");
 		
 		assertEquals(Level.ERROR,result);
-	}
-	
-	public static JSONObject makeFullLoggerSettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("level", "ERROR"); //Should work
-		obj.put("logfile","TestFile.txt");
-		obj.put("append", true);
-		return obj;
-	}
-	
-	public static JSONObject makeFaultyLoggerSettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("rubbish", "ERROR");
-		return obj;
-	}
-	
-	public static JSONObject makeEmptySettingsJSON() {
-		JSONObject obj = new JSONObject();
-		return obj;
 	}
 	
 }

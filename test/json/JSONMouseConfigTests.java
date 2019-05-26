@@ -13,6 +13,8 @@ import javafx.scene.input.MouseButton;
 import config.JSON.JSONMouseConfig;
 import config.interfaces.MouseConfig;
 
+import static helpers.TestJSONFactory.*;
+
 @SuppressWarnings("restriction")
 class JSONMouseConfigTests implements JSONTests{
 
@@ -102,58 +104,4 @@ class JSONMouseConfigTests implements JSONTests{
 		assertEquals("ACTION3",result.getKeyBindings().get(MouseButton.MIDDLE));
 	}
 	
-	public static JSONArray makeJSONMouseConfigWithEntries() {
-		JSONArray bindings =  new JSONArray();
-		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("button","PRIMARY");
-		firstBinding.put("action","ACTION1");
-		
-		JSONObject secondBinding = new JSONObject();
-		secondBinding.put("button","SECONDARY");
-		secondBinding.put("action", "ACTION2");
-		
-		JSONObject thirdBinding = new JSONObject();
-		thirdBinding.put("button","MIDDLE");
-		thirdBinding.put("action", "ACTION3");
-		
-		bindings.put(firstBinding);
-		bindings.put(secondBinding);
-		bindings.put(thirdBinding);
-		
-		return bindings;
-	}
-	
-	public static JSONArray makeFaultyJSONMouseConfig() {
-		JSONArray bindings =  new JSONArray();
-		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("somethingElse","rubbish");
-		firstBinding.put("action","ACTION1");
-		
-		
-		bindings.put(firstBinding);
-		
-		return bindings;
-	}
-	
-	public static JSONArray makeEmptyMouseConfigJSONArray() {
-		JSONArray bindings =  new JSONArray();
-		return bindings;
-	}
-	
-	public static boolean compareArrays (JSONArray left, JSONArray right) {
-		if(left.length()!=right.length())
-			return false;
-
-		List<Object> rightToCheck = right.toList();
-		List<Object> leftToCheck =  left.toList();
-		for(Object o : rightToCheck)
-			if(!leftToCheck.contains(o))
-				return false;
-		for(Object o : leftToCheck)
-			if(!rightToCheck.contains(o))
-				return false;		
-		return true;
-	}
 }

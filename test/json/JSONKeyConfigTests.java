@@ -1,11 +1,9 @@
 package json;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
+import static helpers.TestJSONFactory.*;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONKeyConfig;
@@ -15,7 +13,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
-		JSONArray stubBindings = makeJSONWithEntries();
+		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		KeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
@@ -24,7 +22,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testLoadFromJSON_validJSONArray_BindingsShouldBeAccessible() {
-		JSONArray stubBindings = makeJSONWithEntries();
+		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		KeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
@@ -52,7 +50,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
-		JSONArray stubBindings = makeJSONWithEntries();
+		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		JSONKeyConfig testObject = new JSONKeyConfig(stubBindings);
 		JSONArray result = testObject.toJSON();
@@ -63,7 +61,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
-		JSONArray stubBindings = makeJSONWithEntries();
+		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		JSONKeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
@@ -75,7 +73,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
-		JSONArray stubBindings = makeJSONWithEntries();
+		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		JSONKeyConfig testObject = new JSONKeyConfig(stubBindings);
 		JSONArray intermediate = testObject.toJSON();
@@ -87,52 +85,4 @@ class JSONKeyConfigTests implements JSONTests{
 		assertEquals("ACTION2",result.getKeyBindings().get("KEY2"));
 	}
 	
-	public static JSONArray makeJSONWithEntries() {
-		JSONArray bindings =  new JSONArray();
-		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("key","KEY1");
-		firstBinding.put("action","ACTION1");
-		
-		JSONObject secondBinding = new JSONObject();
-		secondBinding.put("key","KEY2");
-		secondBinding.put("action", "ACTION2");
-		
-		bindings.put(firstBinding);
-		bindings.put(secondBinding);
-		
-		return bindings;
-	}
-	
-	public static JSONArray makeEmptyJSONArray() {
-		JSONArray bindings =  new JSONArray();
-		return bindings;
-	}
-	
-	public static boolean compareArrays (JSONArray left, JSONArray right) {
-		if(left.length()!=right.length())
-			return false;
-
-		List<Object> rightToCheck = right.toList();
-		List<Object> leftToCheck =  left.toList();
-		for(Object o : rightToCheck)
-			if(!leftToCheck.contains(o))
-				return false;
-		for(Object o : leftToCheck)
-			if(!rightToCheck.contains(o))
-				return false;		
-		return true;
-	}
-
-	public static JSONArray makeFaultyJSONKeyConfig() {
-		JSONArray bindings =  new JSONArray();
-		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("rubbish","some more rubbish");
-		firstBinding.put("action","ACTION1");
-		
-		bindings.put(firstBinding);
-		
-		return bindings;
-	}
 }
