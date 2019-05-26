@@ -46,6 +46,10 @@ class JSONSettingTests implements JSONTests {
 		JSONSettings testObject = new JSONSettings(toLoad);
 		
 		testObject.setCollision(false);
+		testObject.setPaused(false);
+		testObject.setScreenHeight(500);
+		testObject.setScreenWidth(200);
+		testObject.setUpdateIntervall(51);
 		
 		JSONObject result = testObject.toJSON();
 		
