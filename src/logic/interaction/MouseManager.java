@@ -26,13 +26,13 @@ public class MouseManager implements UpdatingObject {
 	private AbsolutePoint mousePos;
 	
 	private ActionRegistry actions;
-	private final Map<MouseButton,Action> mouseBindings;
+	private final Map<MouseButton,SimpleAction> mouseBindings;
 	
 	private static MouseManager INSTANCE;
 	
 	private MouseManager() {
 		actions=ActionRegistry.getInstance();
-		mouseBindings=new HashMap<MouseButton,Action>();
+		mouseBindings=new HashMap<MouseButton,SimpleAction>();
 	};
 
 	public static MouseManager getInstance() {
@@ -53,7 +53,7 @@ public class MouseManager implements UpdatingObject {
 			mouseBindings.put(binding.getKey(),actions.getActionByName(binding.getValue()));
 	}
 	
-	public void registerMouseBindings(MouseButton button, Action action) {
+	public void registerMouseBindings(MouseButton button, SimpleAction action) {
 		if(mouseBindings.get(button)!=null)
 			Logger.info("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
 		mouseBindings.put(button,action);

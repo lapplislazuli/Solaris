@@ -20,10 +20,10 @@ public class KeyBoardManager implements UpdatingObject {
 
 	private static KeyBoardManager INSTANCE;
 	private ActionRegistry actions;
-	private Map<Character,Action> keyBindings;
+	private Map<Character,SimpleAction> keyBindings;
 	
 	private KeyBoardManager() {
-		keyBindings=new HashMap<Character,Action> ();
+		keyBindings=new HashMap<Character,SimpleAction> ();
 		actions= ActionRegistry.getInstance();
 	};
 	
@@ -71,7 +71,7 @@ public class KeyBoardManager implements UpdatingObject {
 		
 	}
 	
-	public void registerKeyBinding(Character key, Action action) {
+	public void registerKeyBinding(Character key, SimpleAction action) {
 		if(keyBindings.get(key)!=null)
 			Logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
 		keyBindings.put(key,action);

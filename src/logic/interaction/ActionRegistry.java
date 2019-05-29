@@ -8,43 +8,43 @@ import logic.manager.ManagerRegistry;
 
 public class ActionRegistry {
 	private static ActionRegistry INSTANCE;
-	private Map<String,Action> registeredActions;
+	private Map<String,SimpleAction> registeredActions;
 	
 	private ActionRegistry() {
-		registeredActions=new HashMap<String,Action> ();
+		registeredActions=new HashMap<String,SimpleAction> ();
 		initStandardActions();
 	};
 	
 	private void initStandardActions() {
 		registerAction(
-				new Action("TogglePause" ,"Pauses or Starts the update-Cycle",
+				new SimpleAction("TogglePause" ,"Pauses or Starts the update-Cycle",
 						()->ManagerRegistry.getUpdateManager().toggleUpdate()));
 		registerAction(
-				new Action("ToggleCollision" ,"Pauses or Starts the Collision" ,
+				new SimpleAction("ToggleCollision" ,"Pauses or Starts the Collision" ,
 						()->ManagerRegistry.getCollisionManager().toggleUpdate()));
 		registerAction(
-				new Action("RouteClear" ,"Cleares all current Items in the Players Route, leaving only current Parent",
+				new SimpleAction("RouteClear" ,"Cleares all current Items in the Players Route, leaving only current Parent",
 						()->ManagerRegistry.getPlayerManager().getPlayerNavigator().clearRoute()));
 		registerAction(
-				new Action("ForceSpawn" ,"Kills the playerShip to restart at Parent. Deathcount rises" ,
+				new SimpleAction("ForceSpawn" ,"Kills the playerShip to restart at Parent. Deathcount rises" ,
 						()->ManagerRegistry.getPlayerManager().forceRespawn()));
 		registerAction(
-				new Action("Quit","Quits the Game" ,
+				new SimpleAction("Quit","Quits the Game" ,
 						()->Program.invokeStop()));
 		registerAction(
-				new Action("Speed+","Speeds up the players ship by 10%" ,
+				new SimpleAction("Speed+","Speeds up the players ship by 10%" ,
 						()->ManagerRegistry.getPlayerManager().speedUp()));
 		registerAction(
-				new Action("Speed-" ,"Slows players Ship by 10%",
+				new SimpleAction("Speed-" ,"Slows players Ship by 10%",
 						()->ManagerRegistry.getPlayerManager().slowDown()));
 		registerAction(
-				new Action("Shoot", "Shoots at MousePosition",
+				new SimpleAction("Shoot", "Shoots at MousePosition",
 						()->MouseManager.getInstance().shootAtMousePos()));
 		registerAction(
-				new Action("AddToRoute", "Adds Planet at MousePosition to Player-Route",
+				new SimpleAction("AddToRoute", "Adds Planet at MousePosition to Player-Route",
 						()->MouseManager.getInstance().registerSpaceObjectToPlayerRoute()));
 		registerAction(
-				new Action("ItemInfo", "Shows Itemname and Koords at MousePos",
+				new SimpleAction("ItemInfo", "Shows Itemname and Koords at MousePos",
 						()->MouseManager.getInstance().showInformation()));
 	}
 
@@ -54,11 +54,11 @@ public class ActionRegistry {
 		return INSTANCE;
 	}
 	
-	public void registerAction(Action a) {
+	public void registerAction(SimpleAction a) {
 		registeredActions.put(a.getName(),a);
 	}
 	
-	public Action getActionByName(String name) {
+	public SimpleAction getActionByName(String name) {
 		return registeredActions.get(name);
 	}
 	
