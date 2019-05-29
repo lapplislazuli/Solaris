@@ -12,6 +12,7 @@ import interfaces.logical.UpdatingObject;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import logic.manager.ManagerRegistry;
 
 @SuppressWarnings("restriction")
 public class KeyBoardManager implements UpdatingObject {
@@ -19,12 +20,12 @@ public class KeyBoardManager implements UpdatingObject {
 	private char currentPressed;
 
 	private static KeyBoardManager INSTANCE;
-	private ActionRegistry actions;
-	private Map<Character,SimpleAction> keyBindings;
+	private ActionManager actions;
+	private Map<Character,Action> keyBindings;
 	
 	private KeyBoardManager() {
-		keyBindings=new HashMap<Character,SimpleAction> ();
-		actions= ActionRegistry.getInstance();
+		keyBindings=new HashMap<Character,Action> ();
+		actions= ManagerRegistry.getActionManager();
 	};
 	
 	public static KeyBoardManager getInstance() {

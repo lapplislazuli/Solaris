@@ -6,13 +6,14 @@ import java.util.Map;
 import logic.Program;
 import logic.manager.ManagerRegistry;
 
-public class ActionRegistry {
-	private static ActionRegistry INSTANCE;
-	private Map<String,SimpleAction> registeredActions;
+public class ActionManager{
 	
-	private ActionRegistry() {
-		registeredActions=new HashMap<String,SimpleAction> ();
-		initStandardActions();
+	private Map<String,Action> registeredActions;
+	
+	public ActionManager(boolean defaultActions) {
+		registeredActions=new HashMap<String,Action> ();
+		if(defaultActions)
+			initStandardActions();
 	};
 	
 	private void initStandardActions() {
@@ -48,21 +49,19 @@ public class ActionRegistry {
 						()->MouseManager.getInstance().showInformation()));
 	}
 
-	public static ActionRegistry getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new ActionRegistry();
-		return INSTANCE;
-	}
-	
-	public void registerAction(SimpleAction a) {
+	public void registerAction(Action a) {
 		registeredActions.put(a.getName(),a);
 	}
 	
-	public SimpleAction getActionByName(String name) {
-		return registeredActions.get(name);
+	public int countRegisteredActions(){
+		return registeredActions.size();
 	}
 	
-	public Action getAction(Action a) {
-		return registeredActions.get(a.getName());
+	public Action getActionByName(String name) {
+		return registeredActions.get(name);
+	}
+
+	public void reset() {
+		registeredActions.clear();
 	}
 }

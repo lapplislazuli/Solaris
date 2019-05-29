@@ -4,7 +4,6 @@ package logic.interaction;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import logic.manager.ManagerRegistry;
-import logic.manager.PlayerManager;
 import space.core.SpaceObject;
 import javafx.scene.*;
 
@@ -25,14 +24,14 @@ public class MouseManager implements UpdatingObject {
 	private Scene scene;
 	private AbsolutePoint mousePos;
 	
-	private ActionRegistry actions;
-	private final Map<MouseButton,SimpleAction> mouseBindings;
+	private ActionManager actions;
+	private final Map<MouseButton,Action> mouseBindings;
 	
 	private static MouseManager INSTANCE;
 	
 	private MouseManager() {
-		actions=ActionRegistry.getInstance();
-		mouseBindings=new HashMap<MouseButton,SimpleAction>();
+		actions=ManagerRegistry.getActionManager();
+		mouseBindings=new HashMap<MouseButton,Action>();
 	};
 
 	public static MouseManager getInstance() {

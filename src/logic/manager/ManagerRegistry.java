@@ -1,6 +1,7 @@
 package logic.manager;
 
 import config.interfaces.Config;
+import logic.interaction.ActionManager;
 
 public class ManagerRegistry {
 	
@@ -9,8 +10,10 @@ public class ManagerRegistry {
 	private static DrawingManager drwmng;
 	private static CollisionManager colmng;
 	private static PlayerManager plrmng;
+	private static ActionManager actmng;
 	
 	private static ManagerRegistry INSTANCE;
+	
 	public static ManagerRegistry getInstance() {
 		if(INSTANCE==null)
 			INSTANCE= new ManagerRegistry();
@@ -23,6 +26,7 @@ public class ManagerRegistry {
 		drwmng=new DrawingManager();
 		colmng=new CollisionManager();
 		plrmng=new PlayerManager();
+		actmng=new ActionManager(true);
 	}
 	
 	public void init(Config conf) {
@@ -42,13 +46,14 @@ public class ManagerRegistry {
 	public static DrawingManager getDrawingManager() 		{return drwmng;}
 	public static CollisionManager getCollisionManager() 	{return colmng;}
 	public static PlayerManager getPlayerManager() 			{return plrmng;}
-	
+	public static ActionManager getActionManager()			{return actmng;}
 	
 	public static void setUpdateManager(UpdateManager newmgr) 		{uptmng=newmgr;}
 	public static void setEffectManager(EffectManager newmgr) 		{efxmng=newmgr;}
 	public static void setDrawingManager(DrawingManager newmgr) 	{drwmng=newmgr;}
 	public static void setCollisionManager(CollisionManager newmgr) {colmng=newmgr;}
 	public static void setPlayerManager(PlayerManager newmgr) 		{plrmng=newmgr;}
+	public static void setActionManager(ActionManager newmgr)		{actmng=newmgr;}
 	
 	public static void reset() {
 		INSTANCE= new ManagerRegistry();
