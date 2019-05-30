@@ -12,7 +12,7 @@ import org.pmw.tinylog.Logger;
 
 import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
-import interfaces.logical.ManagerObject;
+import interfaces.logical.UpdatingManager;
 import interfaces.logical.RecursiveObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
@@ -21,7 +21,7 @@ import javafx.application.Platform;
 import space.core.SpaceObject;
 
 @SuppressWarnings("restriction")
-public class UpdateManager implements TimerObject,ManagerObject<UpdatingObject>{
+public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject>{
 
 	private List<UpdatingObject> registeredItems;
 	private Timer timer;

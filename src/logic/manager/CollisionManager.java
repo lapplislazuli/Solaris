@@ -9,9 +9,9 @@ import org.pmw.tinylog.Logger;
 import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import interfaces.logical.ManagerObject;
+import interfaces.logical.UpdatingManager;
 
-public class CollisionManager implements ManagerObject<CollidingObject>{
+public class CollisionManager implements UpdatingManager<CollidingObject>{
 	
 	private Set<CollidingObject> registeredItems;
 	private Set<DestructibleObject> registeredDestructibles;

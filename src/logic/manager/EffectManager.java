@@ -10,9 +10,9 @@ import config.interfaces.Config;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingObject;
 import interfaces.logical.Effect;
-import interfaces.logical.ManagerObject;
+import interfaces.logical.UpdatingManager;
 
-public class EffectManager implements ManagerObject<Effect>,DrawingObject {
+public class EffectManager implements UpdatingManager<Effect>,DrawingObject {
 	
 	private List<Effect> registeredItems = new LinkedList<Effect>();
 	private boolean running=true;

@@ -9,9 +9,9 @@ import org.pmw.tinylog.Logger;
 import config.interfaces.Config;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingObject;
-import interfaces.logical.ManagerObject;
+import interfaces.logical.UpdatingManager;
 
-public class DrawingManager implements ManagerObject<DrawingObject> {
+public class DrawingManager implements UpdatingManager<DrawingObject> {
 
 	public Set<DrawingObject> registeredItems;
 	private DrawingContext context;
