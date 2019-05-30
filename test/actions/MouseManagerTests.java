@@ -9,11 +9,14 @@ import config.interfaces.Config;
 import config.interfaces.MouseConfig;
 import fakes.config.FakeConfig;
 import fakes.config.FakeMouseConfig;
+import interfaces.geom.Point;
 import javafx.scene.input.MouseButton;
 import logic.interaction.Action;
 import logic.interaction.MouseManager;
 import logic.interaction.SimpleAction;
 import logic.manager.ManagerRegistry;
+
+import javafx.scene.input.MouseEvent;
 
 @SuppressWarnings("restriction")
 class MouseManagerTests {
@@ -53,6 +56,13 @@ class MouseManagerTests {
 		testObject.registerMouseBindings(right, sampleAction);
 		
 		assertTrue(testObject.getRegisteredItems().contains(sampleAction));
+	}
+	
+	@Test
+	public void testConstructor_MousePosIsNull() {
+		MouseManager testObject = new MouseManager();
+		
+		assertEquals(null,testObject.getMousePos());
 	}
 	
 	@Test
@@ -162,5 +172,51 @@ class MouseManagerTests {
 		
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
+	
+	@Test
+	public void testMouseClicked_NoActionBound_NothingHappens() {
+		MouseManager testObject = new MouseManager();
+		
+		int x=10,y=10;
+		MouseEvent fakeEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+		
+		testObject.mouseClicked(fakeEvent);
+		
+		assertFalse(doneSomething);
+	}
+	
+	@Test
+	public void testMouseClicked_ActionBound_ActionIsPerformed() {
+		MouseManager testObject = new MouseManager();
+		int x=10,y=10;
+		MouseEvent fakeEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+		
+		MouseButton right = MouseButton.PRIMARY;
+		Action sampleAction = new SimpleAction("TestAction",()->doSomething());
+		testObject.registerMouseBindings(right,sampleAction);
+		
+		testObject.mouseClicked(fakeEvent);
+		
+		assertTrue(doneSomething);
+	}
+	
+	@Test
+	public void testMouseClicked_mousePositionIsUpdated() {
+		MouseManager testObject = new MouseManager();
+		int x=10,y=10;
+		MouseEvent fakeEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+		
+		MouseButton right = MouseButton.PRIMARY;
+		Action sampleAction = new SimpleAction("TestAction",()->doSomething());
+		testObject.registerMouseBindings(right,sampleAction);
+		
+		testObject.mouseClicked(fakeEvent);
+		
+		Point result = testObject.getMousePos();
+		
+		assertEquals(x,result.getX());
+		assertEquals(y,result.getY());
+	}
+	
 	
 }

@@ -44,13 +44,13 @@ public class ActionManager implements Manager<Action>{
 						()->ManagerRegistry.getPlayerManager().slowDown()));
 		registerAction(
 				new SimpleAction("Shoot", "Shoots at MousePosition",
-						()->ManagerRegistry.getMouseManager().shootAtMousePos()));
+						()->CommonPlayerActions.shootAtClickedPoint()));
 		registerAction(
 				new SimpleAction("AddToRoute", "Adds Planet at MousePosition to Player-Route",
-						()->ManagerRegistry.getMouseManager().registerSpaceObjectToPlayerRoute()));
+						()->CommonPlayerActions.registerSpaceObjectToPlayerRoute()));
 		registerAction(
 				new SimpleAction("ItemInfo", "Shows Itemname and Koords at MousePos",
-						()->ManagerRegistry.getMouseManager().showInformation()));
+						()->CommonPlayerActions.showInformationOnClick()));
 	}
 
 	public void registerAction(Action a) {

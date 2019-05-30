@@ -11,14 +11,21 @@ import logic.interaction.ActionManager;
 class ActionManagerTests {
 
 	@Test
-	void testActionManager_withDefaultOut_shouldHaveEmptyActions() {
+	void testConstructor_withDefaultOut_shouldHaveEmptyActions() {
 		ActionManager testObject = new ActionManager(false);
 		
 		assertEquals(0,testObject.countRegisteredActions());
 	}
-
+	
 	@Test
-	void testActionManager_withDefaultOn_shouldHaveActions() {
+	void testConstructor_withDefaultOut_getRegisteredItems_shouldBeEmpty() {
+		ActionManager testObject = new ActionManager(false);
+		
+		assertTrue(testObject.getRegisteredItems().isEmpty());
+	}
+	
+	@Test
+	void testConstructor_withDefaultOn_shouldHaveActions() {
 		ActionManager testObject = new ActionManager(true);
 		
 		assertNotEquals(0,testObject.countRegisteredActions());
@@ -34,6 +41,30 @@ class ActionManagerTests {
 		testObject.registerAction(stub);
 
 		assertEquals(1,testObject.countRegisteredActions());
+	}
+	
+	@Test
+	void testRegisterAction_getRegisteredItems_shouldNotBeEmpty() {
+		ActionManager testObject = new ActionManager(false);
+		
+		FakeAction stub = new FakeAction();
+		stub.name="stub";
+		
+		testObject.registerAction(stub);
+
+		assertFalse(testObject.getRegisteredItems().isEmpty());
+	}
+	
+	@Test
+	void testRegisterAction_getRegisteredItems_shouldContainItem() {
+		ActionManager testObject = new ActionManager(false);
+		
+		FakeAction stub = new FakeAction();
+		stub.name="stub";
+		
+		testObject.registerAction(stub);
+
+		assertTrue(testObject.getRegisteredItems().contains(stub));
 	}
 	
 	@Test
@@ -113,6 +144,15 @@ class ActionManagerTests {
 		testObject.reset();
 		
 		assertEquals(0,testObject.countRegisteredActions());
+	}
+	
+	@Test
+	void testInit_doesNothing_isNotRead() {
+		ActionManager testObject = new ActionManager(true);
+
+		testObject.init(null);
+		
+		return;
 	}
 
 }

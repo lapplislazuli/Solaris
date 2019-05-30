@@ -16,6 +16,7 @@ import org.pmw.tinylog.Logger;
 
 import config.interfaces.Config;
 import geom.AbsolutePoint;
+import interfaces.geom.Point;
 import interfaces.logical.UpdatingManager;
 @SuppressWarnings("restriction")
 public class MouseManager implements UpdatingManager<Action> {
@@ -47,11 +48,13 @@ public class MouseManager implements UpdatingManager<Action> {
 		mouseBindings.put(button,action);
 	}
 	
+	/*
 	private void mouseMoved(MouseEvent evt) {
 		
 	}
+	*/
 	
-	private void mouseClicked(MouseEvent evt) {
+	public void mouseClicked(MouseEvent evt) {
 		mousePos = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
 		if(mouseBindings.get(evt.getButton())!=null) {
 			Logger.debug("Player pressed " +evt.getButton().toString() + " and did " + mouseBindings.get(evt.getButton()).getName());
@@ -61,17 +64,7 @@ public class MouseManager implements UpdatingManager<Action> {
 			Logger.debug("No MouseBinding for this Action registered!");
 	}
 	
-	public void shootAtMousePos() {
-		CommonPlayerActions.shootAtClickedPoint(mousePos);
-	}
-	
-	public void registerSpaceObjectToPlayerRoute() {
-		CommonPlayerActions.registerSpaceObjectToPlayerRoute(mousePos);
-	}
-
-	public void showInformation() {
-		CommonPlayerActions.showInformationOnClick(mousePos);
-	}
+	public Point getMousePos() {return mousePos;}
 	
 	public void update() {
 		if(running) {

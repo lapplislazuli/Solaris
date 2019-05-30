@@ -7,9 +7,20 @@ import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 
 public abstract class CommonPlayerActions {
+	
 
-	public static void shootAtClickedPoint(Point clickedPosition) {
+	public static void shootAtClickedPoint() {
+		Point clicked = ManagerRegistry.getMouseManager().getMousePos();
+		shootAtPoint(clicked);
+	}
+	
+	public static void shootAtPoint(Point clickedPosition) {
 		ManagerRegistry.getPlayerManager().getPlayerShuttle().attack(clickedPosition);
+	}
+	
+	public static void registerSpaceObjectToPlayerRoute() {
+		Point clicked = ManagerRegistry.getMouseManager().getMousePos();
+		registerSpaceObjectToPlayerRoute(clicked);
 	}
 	
 	public static void registerSpaceObjectToPlayerRoute(Point clickedPosition) {
@@ -22,6 +33,11 @@ public abstract class CommonPlayerActions {
 			.filter(item -> item.getShape().contains(clickedPosition))
 			.forEach(clicked -> ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().add(clicked));
 		Logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().toString());
+	}
+	
+	public static void showInformationOnClick() {
+		Point clicked = ManagerRegistry.getMouseManager().getMousePos();
+		showInformationOnClick(clicked);
 	}
 	
 	public static void showInformationOnClick(Point clickedPosition) {
