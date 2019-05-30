@@ -4,7 +4,6 @@ package logic.interaction;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import logic.manager.ManagerRegistry;
-import space.core.SpaceObject;
 import javafx.scene.*;
 
 import java.util.Collection;
@@ -16,9 +15,7 @@ import java.util.stream.Collectors;
 import org.pmw.tinylog.Logger;
 
 import config.interfaces.Config;
-import config.interfaces.MouseConfig;
 import geom.AbsolutePoint;
-import interfaces.geom.Point;
 import interfaces.logical.UpdatingManager;
 @SuppressWarnings("restriction")
 public class MouseManager implements UpdatingManager<Action> {
@@ -44,12 +41,7 @@ public class MouseManager implements UpdatingManager<Action> {
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
     }
 	
-	private void initMouseBindings(MouseConfig config) {
-		for(Entry<MouseButton,String> binding : config.getKeyBindings().entrySet())
-			mouseBindings.put(binding.getKey(),actions.getActionByName(binding.getValue()));
-	}
-	
-	public void registerMouseBindings(MouseButton button, SimpleAction action) {
+	public void registerMouseBindings(MouseButton button, Action action) {
 		if(mouseBindings.get(button)!=null)
 			Logger.info("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
 		mouseBindings.put(button,action);
@@ -70,42 +62,15 @@ public class MouseManager implements UpdatingManager<Action> {
 	}
 	
 	public void shootAtMousePos() {
-		shootAtClickedPoint(mousePos);
+		CommonPlayerActions.shootAtClickedPoint(mousePos);
 	}
 	
 	public void registerSpaceObjectToPlayerRoute() {
-		registerSpaceObjectToPlayerRoute(mousePos);
+		CommonPlayerActions.registerSpaceObjectToPlayerRoute(mousePos);
 	}
 
 	public void showInformation() {
-		showInformationOnClick(mousePos);
-	}
-	
-	private void shootAtClickedPoint(Point clickedPosition) {
-		ManagerRegistry.getPlayerManager().getPlayerShuttle().attack(clickedPosition);
-	}
-	
-	private void registerSpaceObjectToPlayerRoute(Point clickedPosition) {
-		ManagerRegistry.getDrawingManager().registeredItems.
-			stream()
-			.filter( drawable -> drawable instanceof SpaceObject)
-			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())
-			.filter(t-> t instanceof SpaceObject)
-			.map(t->(SpaceObject)t)
-			.filter(item -> item.getShape().contains(clickedPosition))
-			.forEach(clicked -> ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().add(clicked));
-		Logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().toString());
-	}
-	
-	private void showInformationOnClick(Point clickedPosition) {
-		ManagerRegistry.getDrawingManager().registeredItems.
-			stream()
-			.filter( drawable -> drawable instanceof SpaceObject)
-			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())
-			.filter(t-> t instanceof SpaceObject)
-			.map(t->(SpaceObject)t)
-			.filter(item -> item.getShape().contains(clickedPosition))
-			.forEach(clicked -> clicked.click());
+		CommonPlayerActions.showInformationOnClick(mousePos);
 	}
 	
 	public void update() {
@@ -115,7 +80,9 @@ public class MouseManager implements UpdatingManager<Action> {
 	}
 
 	public void init(Config c) {
-		initMouseBindings(c.getMouseConfig());
+		for(Entry<MouseButton,String> binding : c.getMouseConfig().getKeyBindings().entrySet())
+			if(actions.getActionByName(binding.getValue())!=null)
+				mouseBindings.put(binding.getKey(),actions.getActionByName(binding.getValue()));
 	}
 
 	public void reset() {
@@ -123,17 +90,14 @@ public class MouseManager implements UpdatingManager<Action> {
 		mouseBindings=new HashMap<MouseButton,Action>();
 	}
 
-	@Override
 	public Collection<Action> getRegisteredItems() {
 		return mouseBindings.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
 	}
 
-	@Override
 	public void toggleUpdate() {
 		running=!running;
 	}
 
-	@Override
 	public boolean isRunning() {
 		return running;
 	}

@@ -47,7 +47,8 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 	
 	public void initKeyBindings(KeyConfig config) {
 		for( Entry<String,String> binding : config.getKeyBindings().entrySet())
-			keyBindings.put(binding.getKey().toCharArray()[0],actions.getActionByName(binding.getValue()));	
+			if(actions.getActionByName(binding.getValue())!=null)
+				keyBindings.put(binding.getKey().toCharArray()[0],actions.getActionByName(binding.getValue()));	
 	}
 	
 	private void keyTyped(KeyEvent evt) {
