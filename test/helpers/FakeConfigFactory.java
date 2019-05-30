@@ -3,6 +3,8 @@ package helpers;
 import config.interfaces.Config;
 import config.interfaces.Settings;
 import fakes.config.FakeConfig;
+import fakes.config.FakeKeyConfig;
+import fakes.config.FakeMouseConfig;
 import fakes.config.FakeSettings;
 
 public abstract class FakeConfigFactory {
@@ -10,6 +12,8 @@ public abstract class FakeConfigFactory {
 	public static Config standardConfig() {
 		Config c = new FakeConfig();
 		c.setSettings(commonFakeSettings());
+		c.setMouseConfig(new FakeMouseConfig());
+		c.setKeyConfig(new FakeKeyConfig());
 		return c;
 	}
 	
@@ -22,5 +26,6 @@ public abstract class FakeConfigFactory {
 		s.setUpdateIntervall(10);
 		return s;
 	}
+	
 	
 }

@@ -8,7 +8,10 @@ import config.interfaces.Settings;
 
 public class FakeConfig implements Config{
 	
-	private FakeSettings settings;
+	public FakeSettings settings;
+	public FakeMouseConfig mouse;
+	public FakeKeyConfig keys;
+	
 	
 	public Settings getSettings() {
 		return settings;
@@ -18,10 +21,18 @@ public class FakeConfig implements Config{
 		if(settings instanceof FakeSettings)
 		this.settings=(FakeSettings)settings;
 	}
-	public KeyConfig getKeyConfig() {return null;}
-	public void setKeyConfig(KeyConfig keyConfig) {}
-	public MouseConfig getMouseConfig() {return null;}
-	public void setMouseConfig(MouseConfig mouseConfig) {}
+	public KeyConfig getKeyConfig() {
+		return keys;
+	}
+	public void setKeyConfig(KeyConfig keyConfig) {
+		keys = (FakeKeyConfig) keyConfig;
+	}
+	public MouseConfig getMouseConfig() {
+		return mouse;
+	}
+	public void setMouseConfig(MouseConfig mouseConfig) {
+		mouse = (FakeMouseConfig) mouseConfig;
+	}
 	public LoggerSettings getLoggerSettings() {return null;}
 	public void setLoggerSettings(LoggerSettings loggerSettings) {}
 
