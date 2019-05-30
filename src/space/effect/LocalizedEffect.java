@@ -10,10 +10,10 @@ import logic.manager.ManagerRegistry;
 
 public abstract class LocalizedEffect implements Effect{
 	
-	String name;
-	Point center;
-	Shape shape;
-	DrawingInformation dInfo;
+	protected String name;
+	protected Point center;
+	protected Shape shape;
+	protected DrawingInformation dInfo;
 	
 	public LocalizedEffect(String name,Point p, Shape s, DrawingInformation dInfo){
 		this.name = name;
@@ -47,9 +47,17 @@ public abstract class LocalizedEffect implements Effect{
 		return dInfo;
 	}
 	
+	public Shape getShape() {
+		return shape;
+	}
+	
 	@Override
-	public String toString() {return name+"@"+center.toString();}
+	public String toString() {
+		return name+"@"+center.toString();
+	}
 	
 	// I am orphaned if i am not in the effect Manager
-	public boolean isOrphan() {return !ManagerRegistry.getEffectManager().getRegisteredItems().contains(this);}
+	public boolean isOrphan() {
+		return !ManagerRegistry.getEffectManager().getRegisteredItems().contains(this);
+	}
 }

@@ -5,8 +5,9 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 
 
-@SuppressWarnings("restriction")
 public class Explosion extends TimerEffect {
+	
+	public static double standardGrowth=0.3;
 	
 	double growthRate=1;
 	
@@ -24,7 +25,7 @@ public class Explosion extends TimerEffect {
 		if(growthRate!=1)
 			c.radious*=growthRate;
 		else
-			c.radious+=0.3;
+			c.radious+=standardGrowth;
 	}
 	
 }
