@@ -19,7 +19,7 @@ import logic.manager.ManagerRegistry;
 import javafx.scene.input.MouseEvent;
 
 @SuppressWarnings("restriction")
-class MouseManagerTests {
+public class MouseManagerTests {
 	
 	@AfterEach
 	public void resetManagerRegistry() {

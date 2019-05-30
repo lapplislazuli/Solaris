@@ -16,7 +16,7 @@ import javafx.scene.input.KeyEvent;
 import logic.manager.ManagerRegistry;
 
 @SuppressWarnings("restriction")
-class KeyBoardManagerTests {
+public class KeyBoardManagerTests {
 	
 	@AfterEach
 	public void resetManagerRegistry() {

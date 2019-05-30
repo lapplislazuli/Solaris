@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import logic.interaction.Action;
 import logic.interaction.SimpleAction;
-import logic.manager.ManagerRegistry;
 
-class SimpleActionTests {
+public class SimpleActionTests {
 	
 	/*
 	 * Easy helpers for very simple actions
