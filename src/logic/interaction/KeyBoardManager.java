@@ -41,8 +41,12 @@ public class KeyBoardManager implements UpdatingManager<Action> {
         scene.addEventHandler(KeyEvent.KEY_RELEASED, evt -> keyReleased(evt));
 	}
 
-	private void keyReleased(KeyEvent evt) {
+	public void keyReleased(KeyEvent evt) {
 		currentPressed = Character.UNASSIGNED;
+	}
+	
+	public char getCurrentPressed() {
+		return currentPressed;
 	}
 	
 	public void initKeyBindings(KeyConfig config) {
@@ -51,7 +55,7 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 				keyBindings.put(binding.getKey().toCharArray()[0],actions.getActionByName(binding.getValue()));	
 	}
 	
-	private void keyTyped(KeyEvent evt) {
+	public void keyTyped(KeyEvent evt) {
 		if(currentPressed==Character.UNASSIGNED) {
 			currentPressed = evt.getCharacter().toCharArray()[0];
 			if(keyBindings.get(currentPressed)!=null) {
@@ -69,7 +73,7 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 		
 	}
 	
-	public void registerKeyBinding(Character key, SimpleAction action) {
+	public void registerKeyBinding(Character key, Action action) {
 		if(keyBindings.get(key)!=null)
 			Logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
 		keyBindings.put(key,action);
