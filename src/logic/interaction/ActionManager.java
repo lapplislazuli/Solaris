@@ -1,12 +1,16 @@
 package logic.interaction;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import config.interfaces.Config;
+import interfaces.logical.Manager;
 import logic.Program;
 import logic.manager.ManagerRegistry;
 
-public class ActionManager{
+public class ActionManager implements Manager<Action>{
 	
 	private Map<String,Action> registeredActions;
 	
@@ -40,13 +44,13 @@ public class ActionManager{
 						()->ManagerRegistry.getPlayerManager().slowDown()));
 		registerAction(
 				new SimpleAction("Shoot", "Shoots at MousePosition",
-						()->MouseManager.getInstance().shootAtMousePos()));
+						()->ManagerRegistry.getMouseManager().shootAtMousePos()));
 		registerAction(
 				new SimpleAction("AddToRoute", "Adds Planet at MousePosition to Player-Route",
-						()->MouseManager.getInstance().registerSpaceObjectToPlayerRoute()));
+						()->ManagerRegistry.getMouseManager().registerSpaceObjectToPlayerRoute()));
 		registerAction(
 				new SimpleAction("ItemInfo", "Shows Itemname and Koords at MousePos",
-						()->MouseManager.getInstance().showInformation()));
+						()->ManagerRegistry.getMouseManager().showInformation()));
 	}
 
 	public void registerAction(Action a) {
@@ -63,5 +67,11 @@ public class ActionManager{
 
 	public void reset() {
 		registeredActions.clear();
+	}
+
+	public void init(Config c) {}
+
+	public Collection<Action> getRegisteredItems() {
+		return registeredActions.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
 	}
 }

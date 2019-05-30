@@ -1,48 +1,44 @@
 package logic.interaction;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
 
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
-import interfaces.logical.UpdatingObject;
-
+import interfaces.logical.UpdatingManager;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import logic.manager.ManagerRegistry;
 
 @SuppressWarnings("restriction")
-public class KeyBoardManager implements UpdatingObject {
+public class KeyBoardManager implements UpdatingManager<Action> {
 	
 	private char currentPressed;
 
-	private static KeyBoardManager INSTANCE;
 	private ActionManager actions;
 	private Map<Character,Action> keyBindings;
+	private boolean running=true;
 	
-	private KeyBoardManager() {
+	public KeyBoardManager() {
 		keyBindings=new HashMap<Character,Action> ();
 		actions= ManagerRegistry.getActionManager();
 	};
 	
-	public static KeyBoardManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new KeyBoardManager();
-		return INSTANCE;
-	}
-
 	@Override
 	public void update() {
-		// Maybe handle stuff that needs longer pressed buttons (like charging a laserbeam)
+		if(running) {
+			// Maybe handle stuff that needs longer pressed buttons (like charging a laserbeam)
+		}
 	}
 	
-	public void init(Scene scene, Config config) {
+	public void initScene(Scene scene) {
         scene.addEventHandler(KeyEvent.KEY_TYPED, evt -> keyTyped(evt));
         scene.addEventHandler(KeyEvent.KEY_RELEASED, evt -> keyReleased(evt));
-        initKeyBindings(config.getKeyConfig());
 	}
 
 	private void keyReleased(KeyEvent evt) {
@@ -76,6 +72,27 @@ public class KeyBoardManager implements UpdatingObject {
 		if(keyBindings.get(key)!=null)
 			Logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
 		keyBindings.put(key,action);
+	}
+
+	public void init(Config c) {
+		 initKeyBindings(c.getKeyConfig());
+	}
+
+	public void reset() {
+		keyBindings=new HashMap<Character,Action> ();
+		actions= ManagerRegistry.getActionManager();
+	}
+
+	public Collection<Action> getRegisteredItems() {
+		return keyBindings.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
+	}
+
+	public void toggleUpdate() {
+		running = !running;
+	}
+
+	public boolean isRunning() {
+		return running;
 	}
 	
 }

@@ -7,9 +7,11 @@ import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import javafx.scene.*;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.pmw.tinylog.Logger;
 
@@ -17,34 +19,29 @@ import config.interfaces.Config;
 import config.interfaces.MouseConfig;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
-import interfaces.logical.UpdatingObject;
+import interfaces.logical.UpdatingManager;
 @SuppressWarnings("restriction")
-public class MouseManager implements UpdatingObject {
+public class MouseManager implements UpdatingManager<Action> {
 	
 	private Scene scene;
 	private AbsolutePoint mousePos;
 	
+	private boolean running=true;
+	
 	private ActionManager actions;
-	private final Map<MouseButton,Action> mouseBindings;
+	private Map<MouseButton,Action> mouseBindings;
 	
-	private static MouseManager INSTANCE;
-	
-	private MouseManager() {
+
+	public MouseManager() {
 		actions=ManagerRegistry.getActionManager();
 		mouseBindings=new HashMap<MouseButton,Action>();
 	};
 
-	public static MouseManager getInstance() {
-		if(INSTANCE==null)
-			INSTANCE=new MouseManager();
-		return INSTANCE;
-	}
 	
-	public void init(Scene scene, Config config) {
+	public void initScene(Scene scene) {
 		this.scene=scene;
 		//this.scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
-        initMouseBindings(config.getMouseConfig());
     }
 	
 	private void initMouseBindings(MouseConfig config) {
@@ -112,6 +109,32 @@ public class MouseManager implements UpdatingObject {
 	}
 	
 	public void update() {
-		//Maybe Increase a Timer how long a button has been pressed
+		if(running) {
+			//Maybe Increase a Timer how long a button has been pressed
+		}
+	}
+
+	public void init(Config c) {
+		initMouseBindings(c.getMouseConfig());
+	}
+
+	public void reset() {
+		actions=ManagerRegistry.getActionManager();
+		mouseBindings=new HashMap<MouseButton,Action>();
+	}
+
+	@Override
+	public Collection<Action> getRegisteredItems() {
+		return mouseBindings.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
+	}
+
+	@Override
+	public void toggleUpdate() {
+		running=!running;
+	}
+
+	@Override
+	public boolean isRunning() {
+		return running;
 	}
 }

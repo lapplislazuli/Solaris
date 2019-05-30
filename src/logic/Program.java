@@ -86,8 +86,8 @@ public class Program extends Application{
 	private void initManagers(Scene scene,Config config) {
 		ManagerRegistry.getInstance().init(config);
 		    
-        MouseManager.getInstance().init(scene, config);
-        KeyBoardManager.getInstance().init(scene,config);   
+		ManagerRegistry.getKeyBoardManager().initScene(scene);
+        ManagerRegistry.getMouseManager().initScene(scene);   
 	}
 	
 	// To Call the correct shutdown which needs to be static

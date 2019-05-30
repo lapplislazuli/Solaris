@@ -2,6 +2,8 @@ package logic.manager;
 
 import config.interfaces.Config;
 import logic.interaction.ActionManager;
+import logic.interaction.KeyBoardManager;
+import logic.interaction.MouseManager;
 
 public class ManagerRegistry {
 	
@@ -11,7 +13,9 @@ public class ManagerRegistry {
 	private static CollisionManager colmng;
 	private static PlayerManager plrmng;
 	private static ActionManager actmng;
-	
+	private static MouseManager moumng;
+	private static KeyBoardManager keymng;
+
 	private static ManagerRegistry INSTANCE;
 	
 	public static ManagerRegistry getInstance() {
@@ -27,6 +31,8 @@ public class ManagerRegistry {
 		colmng=new CollisionManager();
 		plrmng=new PlayerManager();
 		actmng=new ActionManager(true);
+		moumng=new MouseManager();
+		keymng=new KeyBoardManager();
 	}
 	
 	public void init(Config conf) {
@@ -38,6 +44,9 @@ public class ManagerRegistry {
 		
 		colmng.init(conf);
 		efxmng.init(conf);
+		
+		moumng.init(conf);
+		keymng.init(conf);
 		//drwmng needs drawingcontext?
 	}
 	
@@ -47,6 +56,8 @@ public class ManagerRegistry {
 	public static CollisionManager getCollisionManager() 	{return colmng;}
 	public static PlayerManager getPlayerManager() 			{return plrmng;}
 	public static ActionManager getActionManager()			{return actmng;}
+	public static MouseManager getMouseManager()			{return moumng;}
+	public static KeyBoardManager getKeyBoardManager()		{return keymng;}
 	
 	public static void setUpdateManager(UpdateManager newmgr) 		{uptmng=newmgr;}
 	public static void setEffectManager(EffectManager newmgr) 		{efxmng=newmgr;}
@@ -54,6 +65,8 @@ public class ManagerRegistry {
 	public static void setCollisionManager(CollisionManager newmgr) {colmng=newmgr;}
 	public static void setPlayerManager(PlayerManager newmgr) 		{plrmng=newmgr;}
 	public static void setActionManager(ActionManager newmgr)		{actmng=newmgr;}
+	public static void setMouseManager(MouseManager newmgr)			{moumng=newmgr;}
+	public static void setKeyboardManager(KeyBoardManager newmgr)	{keymng=newmgr;}
 	
 	public static void reset() {
 		INSTANCE= new ManagerRegistry();
