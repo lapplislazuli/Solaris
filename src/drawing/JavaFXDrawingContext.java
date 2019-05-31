@@ -3,6 +3,7 @@ package drawing;
 import interfaces.drawing.DrawingContext;
 import interfaces.geom.Shape;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
