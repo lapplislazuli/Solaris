@@ -55,7 +55,7 @@ class JSONConfigTests implements JSONTests {
 		assertEquals(testObject.toString(),result.toString());
 	}
 	
-	//Doesn´t make much sense
+	//Doesnï¿½t make much sense
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
 		return;
 	}

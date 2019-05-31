@@ -81,7 +81,7 @@ class DistantGalaxyTest {
 		testObject.update();
 		//This Sometimes fails, as maybe the update kills the first star.
 		//assertEquals(10,testObject.getStars().size());
-		//Workaround so the logic doesn´t hit and the chance to fail is reduced rapildy
+		//Workaround so the logic doesnï¿½t hit and the chance to fail is reduced rapildy
 		assertTrue(testObject.getStars().size()>5);
 	}
 	

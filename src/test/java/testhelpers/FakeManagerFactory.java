@@ -1,4 +1,4 @@
-package helpers;
+package testhelpers;
 
 import fakes.interfaces.FakeDrawingContext;
 import logic.manager.CollisionManager;

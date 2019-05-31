@@ -1,4 +1,4 @@
-package helpers;
+package testhelpers;
 
 import config.interfaces.Config;
 import config.interfaces.Settings;

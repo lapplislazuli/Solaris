@@ -167,7 +167,7 @@ public class ShipTests implements RemovableTests {
 		 * I had a very special problem that the ships do teleport after
 		 * launching and doing an update. This was probably related to relativePos
 		 * But i want to check it separetly 
-		 * It didn´t occur with 0 speed
+		 * It didnï¿½t occur with 0 speed
 		 */
 		
 		SpaceObject root = fakeStar(0,0);

@@ -41,8 +41,8 @@ class JSONKeyConfigTests implements JSONTests{
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JSONArray stubBindings = makeEmptyJSONArray();
-		// Other items file, but i think it´s perfectly reasonable to have no key bindings
-		// So it´s ok but should be Empty
+		// Other items file, but i think itï¿½s perfectly reasonable to have no key bindings
+		// So itï¿½s ok but should be Empty
 		KeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
 		assertEquals(0,testObject.getKeyBindings().size());

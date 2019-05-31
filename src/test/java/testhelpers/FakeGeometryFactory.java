@@ -1,4 +1,4 @@
-package helpers;
+package testhelpers;
 
 import geom.AbsolutePoint;
 import geom.Circle;
