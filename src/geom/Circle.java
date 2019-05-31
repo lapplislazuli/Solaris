@@ -3,7 +3,6 @@ package geom;
 import interfaces.geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 
-@SuppressWarnings("restriction")
 public class Circle extends BaseShape{
 	public double radious;
 	

@@ -7,10 +7,8 @@ import drawing.JavaFXDrawingContext;
 import interfaces.drawing.DrawingContext;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
-
 import javafx.scene.canvas.GraphicsContext;
 
-@SuppressWarnings("restriction")
 public abstract class BaseShape implements Shape{
 	public Point center;
 	public List<Point> outLine= new LinkedList<Point>();

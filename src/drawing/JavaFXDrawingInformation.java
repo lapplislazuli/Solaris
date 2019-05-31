@@ -6,15 +6,13 @@ import java.util.List;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import javafx.scene.canvas.GraphicsContext;
-
-import javafx.scene.effect.*;
+import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.transform.Affine;
 
-@SuppressWarnings("restriction")
 public class JavaFXDrawingInformation implements DrawingInformation{
 	
 	public boolean hasColorEffect=false;

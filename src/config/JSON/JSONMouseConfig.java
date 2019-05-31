@@ -9,7 +9,6 @@ import org.json.*;
 import config.interfaces.MouseConfig;
 import javafx.scene.input.MouseButton;
 
-@SuppressWarnings("restriction")
 public class JSONMouseConfig implements MouseConfig {
 
 	private final Map<MouseButton,String> mouseBindings = new HashMap<MouseButton,String>();

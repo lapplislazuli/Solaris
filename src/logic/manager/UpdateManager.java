@@ -17,10 +17,8 @@ import interfaces.logical.RecursiveObject;
 import interfaces.logical.TimerObject;
 import interfaces.logical.UpdatingObject;
 import javafx.application.Platform;
-
 import space.core.SpaceObject;
 
-@SuppressWarnings("restriction")
 public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject>{
 
 	private List<UpdatingObject> registeredItems;

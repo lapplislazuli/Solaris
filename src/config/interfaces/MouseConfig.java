@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javafx.scene.input.MouseButton;
 
+
 public interface MouseConfig {
 
 	Map<MouseButton, String> getKeyBindings();

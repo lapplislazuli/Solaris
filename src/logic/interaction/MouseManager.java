@@ -1,11 +1,7 @@
 package logic.interaction;
 
 
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import logic.manager.ManagerRegistry;
-import javafx.scene.*;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +14,10 @@ import config.interfaces.Config;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.logical.UpdatingManager;
-@SuppressWarnings("restriction")
+import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+
 public class MouseManager implements UpdatingManager<Action> {
 	
 	private Scene scene;
