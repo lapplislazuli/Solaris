@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import logic.manager.ManagerRegistry;
 
-@SuppressWarnings("restriction")
 public class KeyBoardManager implements UpdatingManager<Action> {
 	
 	private char currentPressed;

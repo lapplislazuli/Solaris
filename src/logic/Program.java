@@ -20,22 +20,19 @@ import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
-import javafx.application.*;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import logic.interaction.KeyBoardManager;
-import logic.interaction.MouseManager;
 import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
-import javafx.scene.*;
-
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Level;
 import org.pmw.tinylog.Logger;
 import org.pmw.tinylog.writers.FileWriter;
 import org.pmw.tinylog.writers.Writer;
 
-import javafx.scene.paint.Color;
-@SuppressWarnings("restriction")
 public class Program extends Application{
 	
 	JSONConfig config;
