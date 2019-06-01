@@ -2,3 +2,8 @@ log.txt
 bin/**
 /bin/
 /target/
+out/**
+out
+other/**
+other
+config.json
