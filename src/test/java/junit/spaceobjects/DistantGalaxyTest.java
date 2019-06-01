@@ -4,10 +4,8 @@ package junit.spaceobjects;
 import static junit.testhelpers.FakeManagerFactory.freshNewCollisionManager;
 import static junit.testhelpers.FakeSpaceObjectFactory.fakePlanet;
 import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.LinkedList;
 import java.util.List;

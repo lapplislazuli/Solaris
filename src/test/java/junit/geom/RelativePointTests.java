@@ -51,7 +51,7 @@ class RelativePointTests {
 		assertEquals(offset,testy.getZ());
 	}
 	
-	
+	/*
 	@ParameterizedTest
 	@ValueSource(ints = {0,10,30,75,100})
 	void testAnkerChanged_AnkerIsOnewPos_ShouldHaveNewPosition(int moved){
@@ -59,12 +59,12 @@ class RelativePointTests {
 		Point newAnker = fakeAbsolutePoint(moved,moved);
 		RelativePoint testy = fakeRelativePoint(oldAnker);
 		
-		testy.anker=newAnker;
+		testy.=newAnker;
 		
 		assertEquals(newAnker.getX(),testy.getX());
 		assertEquals(newAnker.getY(),testy.getY());
 	}
-	
+	*/
 	@ParameterizedTest
 	@ValueSource(ints = {-100,-10,-5,0,10,30,75,100})
 	void testSetRelative_PointShouldBeOnNewValues(int dest){
@@ -162,7 +162,7 @@ class RelativePointTests {
 		Point anchor = fakeAbsolutePoint();
 		RelativePoint raw = fakeRelativePoint(anchor,0,0);
 		
-		assertNotEquals(new LinkedList(),raw);
+		assertNotEquals(new LinkedList<Object>(),raw);
 	}
 	
 	@Test

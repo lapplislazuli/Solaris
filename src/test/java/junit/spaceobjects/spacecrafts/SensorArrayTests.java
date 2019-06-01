@@ -3,8 +3,8 @@ package junit.spaceobjects.spacecrafts;
 
 
 import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
