@@ -1,9 +1,9 @@
 package junit.spaceobjects;
 
-import static helpers.FakeSpaceObjectFactory.*;
-import static helpers.FakeGeometryFactory.*;
-import static helpers.FakeManagerFactory.*;
 
+import static junit.testhelpers.FakeGeometryFactory.fakeAbsolutePoint;
+import static junit.testhelpers.FakeManagerFactory.freshNewCollisionManager;
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;

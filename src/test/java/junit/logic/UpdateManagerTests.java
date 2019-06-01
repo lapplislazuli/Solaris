@@ -1,22 +1,25 @@
 package junit.logic;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakePlanet;
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import logic.manager.ManagerRegistry;
-import logic.manager.UpdateManager;
-import space.core.SpaceObject;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingUpdatingObject;
 import junit.fakes.interfaces.FakeUpdatableCollidingObject;
 import junit.fakes.interfaces.FakeUpdatingObject;
-
-import static helpers.FakeSpaceObjectFactory.fakeStar;
-import static helpers.FakeSpaceObjectFactory.fakePlanet;
+import logic.manager.ManagerRegistry;
+import logic.manager.UpdateManager;
+import space.core.SpaceObject;
 
 class UpdateManagerTests implements SharedManagerTests{
 	

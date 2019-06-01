@@ -1,5 +1,7 @@
 package junit.spaceobjects.spacecrafts;
 
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,8 +24,6 @@ import space.core.Planet;
 import space.core.SpaceObject;
 import space.core.Star;
 import space.spacecrafts.ships.Ship;
-
-import static helpers.FakeSpaceObjectFactory.*;
 
 public class ShipTests implements RemovableTests {
 

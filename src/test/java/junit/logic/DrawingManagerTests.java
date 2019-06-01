@@ -1,5 +1,8 @@
 package junit.logic;
 
+
+
+import static junit.testhelpers.FakeManagerFactory.fakeDrawingManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import junit.fakes.interfaces.FakeDrawingContext;
 import junit.fakes.interfaces.FakeDrawingObject;
 import logic.manager.DrawingManager;
-
-import static helpers.FakeManagerFactory.fakeDrawingManager;
 
 public class DrawingManagerTests implements SharedManagerTests {
 	

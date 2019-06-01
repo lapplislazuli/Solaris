@@ -1,5 +1,7 @@
 package junit.spaceobjects;
 
+
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,7 +11,7 @@ import org.junit.Test;
 import space.core.Planet;
 import space.core.Star;
 
-import static helpers.FakeSpaceObjectFactory.*;
+import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 
 public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {

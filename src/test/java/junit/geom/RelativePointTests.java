@@ -2,11 +2,14 @@ package junit.geom;
 
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static junit.testhelpers.FakeGeometryFactory.fakeAbsolutePoint;
+import static junit.testhelpers.FakeGeometryFactory.fakeRelativePoint;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
-
-import static junit.testhelpers.FakeGeometryFactory.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

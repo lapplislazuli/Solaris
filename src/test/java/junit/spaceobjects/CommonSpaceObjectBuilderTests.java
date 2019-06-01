@@ -1,6 +1,5 @@
 package junit.spaceobjects;
 
-import org.junit.Test;
 
 public interface CommonSpaceObjectBuilderTests {
 

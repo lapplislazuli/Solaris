@@ -1,5 +1,8 @@
 package junit.spaceobjects.spacecrafts;
 
+
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -17,8 +20,6 @@ import space.effect.Explosion;
 import space.spacecrafts.ships.Sensor;
 import space.spacecrafts.ships.SensorArray;
 import space.spacecrafts.ships.Ship;
-
-import static helpers.FakeSpaceObjectFactory.*;
 
 public class SensorArrayTests {
 	

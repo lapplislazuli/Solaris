@@ -1,5 +1,7 @@
 package junit.logic;
 
+
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +10,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 
 import config.interfaces.Config;
-import helpers.FakeConfigFactory;
+import junit.testhelpers.FakeConfigFactory;
 import logic.interaction.KeyBoardManager;
 import logic.interaction.MouseManager;
 import logic.manager.CollisionManager;

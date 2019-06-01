@@ -1,5 +1,8 @@
 package junit.spaceobjects;
 
+
+import static junit.testhelpers.FakeManagerFactory.freshNewCollisionManager;
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -12,9 +15,6 @@ import junit.fakes.interfaces.FakeDestructibleObject;
 import logic.manager.CollisionManager;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
-
-import static helpers.FakeManagerFactory.freshNewCollisionManager;
-import static helpers.FakeSpaceObjectFactory.*;
 
 public class AsteroidTests {
 	

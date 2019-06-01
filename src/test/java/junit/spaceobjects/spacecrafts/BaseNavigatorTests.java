@@ -1,6 +1,12 @@
 package junit.spaceobjects.spacecrafts;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
@@ -11,8 +17,6 @@ import junit.fakes.FakeSpacecraft;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.navigators.BaseNavigator;
-
-import static helpers.FakeSpaceObjectFactory.*;
 
 class BaseNavigatorTests {
 

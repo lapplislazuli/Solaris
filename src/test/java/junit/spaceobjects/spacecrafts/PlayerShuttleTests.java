@@ -1,10 +1,11 @@
 package junit.spaceobjects.spacecrafts;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
 
-import static helpers.FakeSpaceObjectFactory.*;
+import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 import org.junit.jupiter.api.Test;
 

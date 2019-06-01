@@ -1,5 +1,6 @@
 package junit.logic;
 
+
 import org.junit.Test;
 
 import junit.fakes.FakeEffect;
@@ -11,8 +12,8 @@ import logic.manager.DrawingManager;
 import logic.manager.EffectManager;
 import logic.manager.ManagerRegistry;
 
-import static helpers.FakeManagerFactory.fakeEfxManager;
-import static helpers.FakeManagerFactory.fakeDrawingManager;
+import static junit.testhelpers.FakeManagerFactory.fakeEfxManager;
+import static junit.testhelpers.FakeManagerFactory.fakeDrawingManager;
 
 public class DrawEffectTests {
 	

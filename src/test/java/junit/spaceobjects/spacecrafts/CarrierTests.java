@@ -1,5 +1,6 @@
 package junit.spaceobjects.spacecrafts;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
@@ -13,7 +14,7 @@ import space.core.SpaceObject;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Carrier;
 
-import static helpers.FakeSpaceObjectFactory.*;
+import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 class CarrierTests {
 	

@@ -1,5 +1,7 @@
 package junit.logic;
 
+
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import junit.fakes.FakeEffect;
 import logic.manager.EffectManager;
-import static helpers.FakeManagerFactory.fakeEfxManager;
+import static junit.testhelpers.FakeManagerFactory.fakeEfxManager;
 
 public class EffectManagerTests implements SharedManagerTests {
 	

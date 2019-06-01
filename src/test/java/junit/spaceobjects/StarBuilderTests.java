@@ -1,5 +1,7 @@
 package junit.spaceobjects;
 
+
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -7,7 +9,7 @@ import org.junit.Test;
 
 import geom.AbsolutePoint;
 import space.core.Star;
-import static helpers.FakeGeometryFactory.fakeAbsolutePoint;
+import static junit.testhelpers.FakeGeometryFactory.fakeAbsolutePoint;
 
 public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 

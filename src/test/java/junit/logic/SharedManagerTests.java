@@ -1,5 +1,6 @@
 package junit.logic;
 
+
 public interface SharedManagerTests {
 	
 	public void testRegisterItems_registeredObjectShouldContainItem_shouldBeTrue();

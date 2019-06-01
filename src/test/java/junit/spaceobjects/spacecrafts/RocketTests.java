@@ -1,18 +1,20 @@
 package junit.spaceobjects.spacecrafts;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import interfaces.logical.CollidingObject;
 import junit.fakes.interfaces.FakeCollidingObject;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.missiles.Rocket;
-import static helpers.FakeSpaceObjectFactory.*;
 
 class RocketTests {
 	

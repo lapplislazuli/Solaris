@@ -1,6 +1,9 @@
 package junit.spaceobjects.spacecrafts;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
@@ -15,8 +18,6 @@ import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
-
-import static helpers.FakeSpaceObjectFactory.*;
 
 class ArmedShuttleNavigatorTests {
 
