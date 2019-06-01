@@ -1,5 +1,7 @@
 package junit.fakes.interfaces;
 
+
+
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.RecursiveObject;

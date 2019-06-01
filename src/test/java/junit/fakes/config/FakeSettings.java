@@ -1,5 +1,7 @@
 package junit.fakes.config;
 
+
+
 import config.interfaces.Settings;
 
 public class FakeSettings implements Settings {

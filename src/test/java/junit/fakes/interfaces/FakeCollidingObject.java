@@ -1,5 +1,7 @@
 package junit.fakes.interfaces;
 
+
+
 import interfaces.logical.CollidingObject;
 
 public class FakeCollidingObject implements CollidingObject{

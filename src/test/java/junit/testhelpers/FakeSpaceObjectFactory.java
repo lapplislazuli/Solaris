@@ -1,5 +1,7 @@
 package junit.testhelpers;
 
+
+
 import geom.AbsolutePoint;
 import space.advanced.FixStar;
 import space.core.Planet;

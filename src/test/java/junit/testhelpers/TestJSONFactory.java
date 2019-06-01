@@ -1,5 +1,8 @@
 package junit.testhelpers;
 
+
+
+
 import java.util.List;
 
 import org.json.JSONArray;
@@ -7,7 +10,6 @@ import org.json.JSONObject;
 
 public abstract class TestJSONFactory {
 
-	
 	public static JSONObject makeFullSettingsJSON() {
 		JSONObject obj = new JSONObject();
 		obj.put("screenWidth", 200);

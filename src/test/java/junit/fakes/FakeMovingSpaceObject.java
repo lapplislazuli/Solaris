@@ -1,5 +1,6 @@
 package junit.fakes;
 
+
 import interfaces.geom.Point;
 import interfaces.logical.MovingUpdatingObject;
 

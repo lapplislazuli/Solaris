@@ -1,5 +1,6 @@
 package junit.testhelpers;
 
+
 import geom.AbsolutePoint;
 import geom.Circle;
 import geom.Rectangle;

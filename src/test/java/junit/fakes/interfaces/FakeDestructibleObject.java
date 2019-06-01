@@ -1,5 +1,7 @@
 package junit.fakes.interfaces;
 
+
+
 import interfaces.logical.DestructibleObject;
 
 public class FakeDestructibleObject extends FakeCollidingObject implements DestructibleObject {

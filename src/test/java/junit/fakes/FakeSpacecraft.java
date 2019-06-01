@@ -1,5 +1,6 @@
 package junit.fakes;
 
+
 import java.util.LinkedList;
 import java.util.List;
 

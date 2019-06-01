@@ -1,5 +1,7 @@
 package junit.fakes;
 
+
+
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.logical.Effect;

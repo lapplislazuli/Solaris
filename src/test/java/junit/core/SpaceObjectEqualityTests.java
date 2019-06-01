@@ -1,5 +1,7 @@
 package junit.core;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
@@ -8,7 +10,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import space.core.SpaceObject;
-import static helpers.FakeSpaceObjectFactory.*;
+import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 class SpaceObjectEqualityTests {
 

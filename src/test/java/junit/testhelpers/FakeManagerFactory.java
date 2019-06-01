@@ -1,5 +1,6 @@
 package junit.testhelpers;
 
+
 import junit.fakes.interfaces.FakeDrawingContext;
 import logic.manager.CollisionManager;
 import logic.manager.DrawingManager;

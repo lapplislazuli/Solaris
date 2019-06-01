@@ -1,5 +1,6 @@
 package junit.fakes.config;
 
+
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
 import config.interfaces.LoggerSettings;

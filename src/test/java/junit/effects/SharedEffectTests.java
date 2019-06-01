@@ -1,7 +1,5 @@
 package junit.effects;
 
-import org.junit.jupiter.api.Test;
-
 interface SharedEffectTests {
 
 	void testConstructor_shouldBeInEffectManager();

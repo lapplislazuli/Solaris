@@ -1,5 +1,7 @@
 package junit.fakes;
 
+
+
 import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
 import space.core.SpaceObject;

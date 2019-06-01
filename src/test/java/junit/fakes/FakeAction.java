@@ -1,5 +1,7 @@
 package junit.fakes;
 
+
+
 import logic.interaction.Action;
 
 public class FakeAction implements Action {
