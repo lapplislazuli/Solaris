@@ -7,3 +7,4 @@ out
 other/**
 other
 config.json
+/config.json
