@@ -79,6 +79,8 @@
                 <version>0.0.2</version>
                 <configuration>              
                     <mainClass>logic.Program</mainClass>
+                    <jlinkImageName>Solaris</jlinkImageName>
+                    <launcher>logic.Program</launcher>
                 </configuration>
             </plugin>   
             <plugin>
