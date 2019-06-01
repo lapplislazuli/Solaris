@@ -1,7 +1,9 @@
 package junit.json;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
-import static helpers.TestJSONFactory.*;
+import static junit.testhelpers.TestJSONFactory.*;
 
 import org.json.JSONArray;
 import org.junit.jupiter.api.Test;

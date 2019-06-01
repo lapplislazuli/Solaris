@@ -1,5 +1,7 @@
 package junit.json;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.json.JSONObject;
@@ -9,7 +11,7 @@ import org.pmw.tinylog.Level;
 import config.JSON.JSONLoggerSettings;
 import config.interfaces.LoggerSettings;
 
-import static helpers.TestJSONFactory.*;
+import static junit.testhelpers.TestJSONFactory.*;
 
 class JSONLoggerSettingsTest implements JSONTests {
 

@@ -1,19 +1,22 @@
 package junit.json;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
+
+import static junit.testhelpers.TestJSONFactory.compareArrays;
+import static junit.testhelpers.TestJSONFactory.makeEmptyMouseConfigJSONArray;
+import static junit.testhelpers.TestJSONFactory.makeFaultyJSONMouseConfig;
+import static junit.testhelpers.TestJSONFactory.makeJSONMouseConfigWithEntries;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-
-import javafx.scene.input.MouseButton;
 
 import config.JSON.JSONMouseConfig;
 import config.interfaces.MouseConfig;
-
-import static helpers.TestJSONFactory.*;
+import javafx.scene.input.MouseButton;
 
 @SuppressWarnings("restriction")
 class JSONMouseConfigTests implements JSONTests{

@@ -62,14 +62,14 @@ public class KeyBoardManagerTests {
 		
 		assertTrue(testObject.getRegisteredItems().contains(sampleAction));
 	}
-	
+	/*
 	@Test
 	public void testConstructor_MousePosIsNull() {
 		KeyBoardManager testObject = new KeyBoardManager();
 		
 		//assertEquals(null,testObject.getMousePos());
 	}
-	
+	*/
 	@Test
 	public void registerAction_registerTwice_shouldBeOverwritten() {
 		KeyBoardManager testObject = new KeyBoardManager();

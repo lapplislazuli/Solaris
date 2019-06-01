@@ -1,5 +1,7 @@
 package junit.geom;
 
+
+
 public interface ShapeTests {
 
 	void testContains_pointIsInShape_shouldSucceed(int dist);

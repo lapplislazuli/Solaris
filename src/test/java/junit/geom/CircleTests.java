@@ -1,5 +1,7 @@
 package junit.geom;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.LinkedList;
@@ -11,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import geom.Circle;
 import interfaces.geom.Point;
 
-import static helpers.FakeGeometryFactory.*;
+import static junit.testhelpers.FakeGeometryFactory.*;
 
 class CircleTests implements ShapeTests{
 	

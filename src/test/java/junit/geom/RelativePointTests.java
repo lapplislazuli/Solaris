@@ -1,10 +1,12 @@
 package junit.geom;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.LinkedList;
 
-import static helpers.FakeGeometryFactory.*;
+import static junit.testhelpers.FakeGeometryFactory.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

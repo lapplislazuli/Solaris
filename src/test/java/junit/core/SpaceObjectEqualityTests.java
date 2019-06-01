@@ -2,7 +2,11 @@ package junit.core;
 
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static junit.testhelpers.FakeSpaceObjectFactory.fakePlanet;
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +14,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import space.core.SpaceObject;
-import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 class SpaceObjectEqualityTests {
 

@@ -1,16 +1,16 @@
 package junit.geom;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import geom.AbsolutePoint;
 import geom.Circle;
 import geom.Rectangle;
 
-class BaseGeomCollisionTests {
+public class BaseGeomCollisionTests {
 	
 	static Rectangle rect,distantRect;
 	static Circle smallCircle,bigCircle;

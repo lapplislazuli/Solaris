@@ -1,16 +1,21 @@
 package junit.geom;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+
+import static junit.testhelpers.FakeGeometryFactory.fakeAbsolutePoint;
+import static junit.testhelpers.FakeGeometryFactory.fakeRectangle;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
 
-import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import geom.Rectangle;
 import interfaces.geom.Point;
-import static helpers.FakeGeometryFactory.*;
 
 class RectangleTests implements ShapeTests{
 	

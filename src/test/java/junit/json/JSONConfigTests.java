@@ -1,5 +1,7 @@
 package junit.json;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.json.JSONObject;
@@ -7,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONConfig;
 import config.interfaces.Config;
-import static helpers.TestJSONFactory.*;
+import static junit.testhelpers.TestJSONFactory.*;
 
 class JSONConfigTests implements JSONTests {
 

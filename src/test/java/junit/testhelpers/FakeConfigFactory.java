@@ -7,6 +7,7 @@ import junit.fakes.config.FakeKeyConfig;
 import junit.fakes.config.FakeMouseConfig;
 import junit.fakes.config.FakeSettings;
 
+
 public abstract class FakeConfigFactory {
 	
 	public static Config standardConfig() {

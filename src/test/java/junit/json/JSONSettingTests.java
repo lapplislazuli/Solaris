@@ -1,14 +1,20 @@
 package junit.json;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+
+import static junit.testhelpers.TestJSONFactory.makeEmptySettingsJSON;
+import static junit.testhelpers.TestJSONFactory.makeFaultySettingsJSON;
+import static junit.testhelpers.TestJSONFactory.makeFullSettingsJSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONSettings;
 import config.interfaces.Settings;
-
-import static helpers.TestJSONFactory.*;
 
 class JSONSettingTests implements JSONTests {
 

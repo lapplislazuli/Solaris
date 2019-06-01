@@ -1,6 +1,5 @@
 package junit.json;
 
-import org.junit.jupiter.api.Test;
 
 interface JSONTests {
 
