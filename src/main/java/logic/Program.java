@@ -53,8 +53,6 @@ public class Program extends Application{
 		
 		config = JSONConfigFactory.read("./config.json");
 		
-		//initLogger(config.getLoggerSettings());
-		
 		Group root = new Group();
 		
 		Scene scene=initScene(config,root);
@@ -212,14 +210,4 @@ public class Program extends Application{
 		updateManager.update();
 	}
 
-
-/*
-	private void initLogger(LoggerSettings settings) {
-		Writer w = new FileWriter(settings.getLogfile(),false,settings.isAppend());
-		Configurator.defaultConfig()
-		   .writer(w)
-		   .level(Level.INFO)
-		   .activate();
-	}
-	*/
 }

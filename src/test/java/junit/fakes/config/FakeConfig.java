@@ -3,7 +3,6 @@ package junit.fakes.config;
 
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
-import config.interfaces.LoggerSettings;
 import config.interfaces.MouseConfig;
 import config.interfaces.Settings;
 
@@ -34,7 +33,5 @@ public class FakeConfig implements Config{
 	public void setMouseConfig(MouseConfig mouseConfig) {
 		mouse = (FakeMouseConfig) mouseConfig;
 	}
-	public LoggerSettings getLoggerSettings() {return null;}
-	public void setLoggerSettings(LoggerSettings loggerSettings) {}
 
 }

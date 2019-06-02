@@ -15,8 +15,4 @@ public interface Config {
 
 	void setMouseConfig(MouseConfig mouseConfig);
 
-	LoggerSettings getLoggerSettings();
-
-	void setLoggerSettings(LoggerSettings loggerSettings);
-
 }

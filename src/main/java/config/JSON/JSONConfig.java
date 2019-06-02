@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
-import config.interfaces.LoggerSettings;
 import config.interfaces.MouseConfig;
 import config.interfaces.Settings;
 
@@ -13,7 +12,6 @@ public class JSONConfig implements Config {
 	private JSONSettings settings;
 	private JSONKeyConfig keyConfig;
 	private JSONMouseConfig mouseConfig;
-	private JSONLoggerSettings loggerSettings;
 	private String path; //So i can save it where it was drawn from
 	
 	public JSONConfig(String path, JSONObject obj) {
@@ -28,8 +26,6 @@ public class JSONConfig implements Config {
 		JSONArray mouseBindingsJSON = obj.getJSONArray("mouseBindings");
 		mouseConfig=new JSONMouseConfig(mouseBindingsJSON);
 		
-		JSONObject loggerJSON = obj.getJSONObject("loggerSettings");
-		loggerSettings = new JSONLoggerSettings(loggerJSON);
 	}
 	
 	public JSONObject toJSON() {
@@ -37,7 +33,6 @@ public class JSONConfig implements Config {
 		json.put("settings",settings.toJSON());
 		json.put("keyBindings",keyConfig.toJSON());
 		json.put("mouseBindings",mouseConfig.toJSON());
-		json.put("loggerSettings", loggerSettings.toJSON());
 		return json;
 	}
 
@@ -66,15 +61,6 @@ public class JSONConfig implements Config {
 	public void setMouseConfig(MouseConfig mouseConfig) {
 		if(mouseConfig instanceof JSONMouseConfig)
 			this.mouseConfig = (JSONMouseConfig)mouseConfig;
-	}
-
-	public LoggerSettings getLoggerSettings() {
-		return loggerSettings;
-	}
-
-	public void setLoggerSettings(LoggerSettings loggerSettings) {
-		if(loggerSettings instanceof JSONLoggerSettings)
-			this.loggerSettings = (JSONLoggerSettings)loggerSettings;
 	}
 	
 	public String getPath() {return path;}
