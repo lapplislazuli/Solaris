@@ -4,10 +4,9 @@ package junit.json;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.apache.logging.log4j.Level;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.pmw.tinylog.Level;
-
 import config.JSON.JSONLoggerSettings;
 import config.interfaces.LoggerSettings;
 
@@ -130,10 +129,17 @@ class JSONLoggerSettingsTest implements JSONTests {
 		assertEquals(Level.INFO,result);
 	}
 	@Test
+	public void testParseLogLevel_EnterOff_shouldBeOff() {
+		Level result = JSONLoggerSettings.tryParseLogLevel("OFF");
+		
+		assertEquals(Level.OFF,result);
+	}
+	
+	@Test
 	public void testParseLogLevel_EnterWarn_shouldBeWarn() {
 		Level result = JSONLoggerSettings.tryParseLogLevel("WARN");
 		
-		assertEquals(Level.WARNING,result);
+		assertEquals(Level.WARN,result);
 	}
 	@Test
 	public void testParseLogLevel_EnterError_shouldBeError() {
@@ -152,14 +158,14 @@ class JSONLoggerSettingsTest implements JSONTests {
 	public void testParseLogLevel_enterStringWithLeadingWhiteSpace_shouldBeParsedCorrect() {
 		Level result = JSONLoggerSettings.tryParseLogLevel(" WARN");
 		
-		assertEquals(Level.WARNING,result);
+		assertEquals(Level.WARN,result);
 	}
 	
 	@Test
 	public void testParseLogLevel_enterStringWithTailingWhiteSpace_shouldBeParsedCorrect() {
 		Level result = JSONLoggerSettings.tryParseLogLevel("WARN ");
 		
-		assertEquals(Level.WARNING,result);
+		assertEquals(Level.WARN,result);
 	}
 	
 	@Test
