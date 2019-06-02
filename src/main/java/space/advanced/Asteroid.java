@@ -1,7 +1,5 @@
 package space.advanced;
 
-import org.pmw.tinylog.Logger;
-
 import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
 import geom.Rectangle;
@@ -69,7 +67,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public Type getType() {return type;}
 	
 	public void destruct() {
-		Logger.trace(toString() + " got destroyed");
+		logger.trace(toString() + " got destroyed");
 		if(parent!=null)
 			remove();
 	}	

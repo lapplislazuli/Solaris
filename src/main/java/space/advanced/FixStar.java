@@ -15,7 +15,6 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.TimerObject;
 import javafx.scene.canvas.GraphicsContext;
 
-@SuppressWarnings("restriction")
 public class FixStar extends Star implements TimerObject {
 	private double relativeX,relativeY; //Shows Percentage of screen for resize-functions
 	public boolean dead=false;

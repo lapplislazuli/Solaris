@@ -9,7 +9,6 @@ import interfaces.geom.Shape;
 import interfaces.logical.TimerObject;
 import javafx.application.Platform;
 
-@SuppressWarnings("restriction")
 public abstract class TimerEffect extends LocalizedEffect implements TimerObject{
 	
 	public TimerEffect(String name, Point p, Shape s, int lifetime, DrawingInformation dInfo) {

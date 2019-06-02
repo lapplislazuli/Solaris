@@ -2,8 +2,6 @@ package space.spacecrafts.ships;
 
 import java.util.List;
 
-import org.pmw.tinylog.Logger;
-
 import drawing.JavaFXDrawingInformation;
 import geom.HShape;
 import interfaces.drawing.DrawingInformation;
@@ -108,11 +106,11 @@ public class Ship extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	public void destruct() {
-		Logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
+		logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
 			if(isPlayer()) {
 				ManagerRegistry.getPlayerManager().increasePlayerDeaths();
-				Logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().getPlayerDeaths());
+				logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().getPlayerDeaths());
 			}
 			state=SpacecraftState.DEAD;
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));

@@ -18,7 +18,6 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import space.core.SpaceObject;
 
-@SuppressWarnings("restriction")
 public class DistantGalaxy extends SpaceObject{
 	
 	private List<FixStar> stars = new LinkedList<FixStar>();

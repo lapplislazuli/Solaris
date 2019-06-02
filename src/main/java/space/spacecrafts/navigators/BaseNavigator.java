@@ -3,7 +3,8 @@ package space.spacecrafts.navigators;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
@@ -12,7 +13,9 @@ import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 
 public class BaseNavigator implements Navigator{
-
+	
+	private static Logger logger = LogManager.getLogger(BaseNavigator.class);
+	
 	protected String name;
 	protected int currentPointer=0;
 	protected List<SpaceObject> route;
@@ -33,7 +36,7 @@ public class BaseNavigator implements Navigator{
 		this.ship=ship;
 		this.name=name;
 		this.respawn=respawn;
-		Logger.info("Initiated " + name + " with Shuttle " + ship.toString());
+		logger.info("Initiated " + name + " with Shuttle " + ship.toString());
 		
 		ManagerRegistry.getUpdateManager().registerItem(this);
 	}

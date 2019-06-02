@@ -1,6 +1,6 @@
 package config.interfaces;
 
-import org.pmw.tinylog.Level;
+import org.apache.logging.log4j.Level;
 
 public interface LoggerSettings {
 

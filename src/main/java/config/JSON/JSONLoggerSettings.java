@@ -1,8 +1,7 @@
 package config.JSON;
 
+import org.apache.logging.log4j.Level;
 import org.json.JSONObject;
-import org.pmw.tinylog.Level;
-
 import config.interfaces.LoggerSettings;
 public class JSONLoggerSettings implements LoggerSettings {
 	
@@ -20,10 +19,11 @@ public class JSONLoggerSettings implements LoggerSettings {
 		String normed = s.toLowerCase().trim();
 		switch (normed){
 			case "error":	return Level.ERROR;
-			case "warn": 	return Level.WARNING;
+			case "warn": 	return Level.WARN;
 			case "info": 	return Level.INFO;
 			case "debug": 	return Level.DEBUG;
 			case "trace": 	return Level.TRACE;
+			case "off": 	return Level.OFF;
 		}
 		return Level.ERROR; //Default is highest loglevel
 	}

@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.effect.Glow;
 
-@SuppressWarnings("restriction")
 public class Star extends SpaceObject {
 	private int size;
 	public boolean isCentered=true;
