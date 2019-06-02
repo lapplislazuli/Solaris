@@ -8,3 +8,6 @@ other/**
 other
 config.json
 /config.json
+shade/**
+shade
+**.jar
