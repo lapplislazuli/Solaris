@@ -1,7 +1,5 @@
 package space.core;
 
-import java.awt.LinearGradientPaint;
-import java.awt.geom.Point2D;
 import java.util.Random;
 
 import drawing.JavaFXDrawingContext;
