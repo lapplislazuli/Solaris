@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONConfig;
-import config.interfaces.Config;
 import static junit.testhelpers.TestJSONFactory.*;
 
 class JSONConfigTests implements JSONTests {
@@ -21,7 +20,6 @@ class JSONConfigTests implements JSONTests {
 		
 		// Sample one Attribute of every Child
 		assertTrue(testObject.getSettings().isCollision());
-		assertTrue(testObject.getLoggerSettings().isAppend());
 		assertEquals(2,testObject.getKeyConfig().getKeyBindings().size());
 		assertEquals(3,testObject.getMouseConfig().getKeyBindings().size());
 		assertEquals("path",testObject.getPath());
@@ -72,7 +70,6 @@ class JSONConfigTests implements JSONTests {
 		
 		// Sample one Attribute of every Child
 		assertTrue(testResult.getSettings().isCollision());
-		assertTrue(testResult.getLoggerSettings().isAppend());
 		assertEquals(2,testResult.getKeyConfig().getKeyBindings().size());
 		assertEquals(3,testResult.getMouseConfig().getKeyBindings().size());
 	}

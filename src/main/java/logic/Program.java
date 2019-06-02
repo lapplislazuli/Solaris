@@ -51,7 +51,7 @@ public class Program extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		INSTANCE = this;
 		
-		config = JSONConfigFactory.read("./config.json");
+		config = JSONConfigFactory.read("config.json");
 		
 		Group root = new Group();
 		
