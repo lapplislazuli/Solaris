@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import config.interfaces.Config;
 import interfaces.drawing.DrawingContext;
@@ -16,10 +17,12 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	public Set<DrawingObject> registeredItems;
 	private DrawingContext context;
 	private boolean running=true;
+
+	private static Logger logger = LogManager.getLogger(DrawingManager.class);
 	
 	public DrawingManager() {
 		registeredItems=new HashSet<DrawingObject>();
-		Logger.debug("Build DrawingManager");
+		logger.debug("Build DrawingManager");
 	}
 	
 	private void drawAll() {
@@ -30,7 +33,7 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	
 	public void initDrawingManager(DrawingContext dc) {
 		this.context = dc;
-		Logger.debug("Initialised DrawingManager");
+		logger.debug("Initialised DrawingManager");
 	}
 	
 	@Override

@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
@@ -16,6 +17,8 @@ import javafx.scene.input.KeyEvent;
 import logic.manager.ManagerRegistry;
 
 public class KeyBoardManager implements UpdatingManager<Action> {
+
+	private static Logger logger = LogManager.getLogger(KeyBoardManager.class);
 	
 	private char currentPressed;
 
@@ -58,23 +61,23 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 		if(currentPressed==Character.UNASSIGNED) {
 			currentPressed = evt.getCharacter().toCharArray()[0];
 			if(keyBindings.get(currentPressed)!=null) {
-				Logger.debug("Player pressed " + currentPressed + " and do Action " + keyBindings.get(currentPressed).getName());
+				logger.debug("Player pressed " + currentPressed + " and do Action " + keyBindings.get(currentPressed).getName());
 				keyBindings.get(currentPressed).doAction();
 			}
 			else
-				Logger.debug("Player pressed " + currentPressed + " which has no action Bound!");
+				logger.debug("Player pressed " + currentPressed + " which has no action Bound!");
 		}
 		else if (currentPressed==evt.getCharacter().toCharArray()[0]) {
 			//Someone is keeping the same Character pressed
 		}
 		else
-			Logger.trace("Player presses "  + currentPressed + "- needs to release first for new Input");
+			logger.trace("Player presses "  + currentPressed + "- needs to release first for new Input");
 		
 	}
 	
 	public void registerKeyBinding(Character key, Action action) {
 		if(keyBindings.get(key)!=null)
-			Logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
+			logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
 		keyBindings.put(key,action);
 	}
 

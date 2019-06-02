@@ -1,13 +1,16 @@
 package logic.interaction;
 
-import org.pmw.tinylog.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import interfaces.geom.Point;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 
 public abstract class CommonPlayerActions {
-	
+
+	private static Logger logger = LogManager.getLogger(CommonPlayerActions.class);
 
 	public static void shootAtClickedPoint() {
 		Point clicked = ManagerRegistry.getMouseManager().getMousePos();
@@ -32,7 +35,7 @@ public abstract class CommonPlayerActions {
 			.map(t->(SpaceObject)t)
 			.filter(item -> item.getShape().contains(clickedPosition))
 			.forEach(clicked -> ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().add(clicked));
-		Logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().toString());
+		logger.info("New Route:"+ManagerRegistry.getPlayerManager().getPlayerNavigator().getRoute().toString());
 	}
 	
 	public static void showInformationOnClick() {

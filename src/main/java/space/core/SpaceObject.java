@@ -3,10 +3,10 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import drawing.EmptyJFXDrawingInformation;
-import geom.AbsolutePoint;
 import interfaces.drawing.ComplexDrawingObject;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
@@ -24,6 +24,8 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	protected String name;
 	protected Point center;
 
+	protected static Logger logger = LogManager.getLogger(SpaceObject.class);
+	
 	protected DrawingInformation dInfo;
 	
 	protected List<MovingUpdatingObject> trabants=new LinkedList<MovingUpdatingObject>();
@@ -41,7 +43,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 			dInfo=new EmptyJFXDrawingInformation();
 		else
 			this.dInfo=dInfo;
-		Logger.debug("Build " + name + center.toString());
+		logger.debug("Build " + name + center.toString());
 	}
 	
 	public void update() {
@@ -95,7 +97,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public void click() {
-		Logger.info("Clicked: " + toString());
+		logger.info("Clicked: " + toString());
 	}
 	
 	public void updateHitbox() {

@@ -6,11 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import drawing.JavaFXDrawingInformation;
-import geom.AbsolutePoint;
 import geom.Circle;
 import interfaces.logical.MovingUpdatingObject;
 
-@SuppressWarnings("restriction")
 public class Planet extends MovingSpaceObject {
 
 	public static class Builder {

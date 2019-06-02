@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import config.interfaces.Config;
 import interfaces.drawing.DrawingContext;
@@ -16,11 +17,13 @@ public class EffectManager implements UpdatingManager<Effect>,DrawingObject {
 	
 	private List<Effect> registeredItems = new LinkedList<Effect>();
 	private boolean running=true;
+
+	private static Logger logger = LogManager.getLogger(EffectManager.class);
 	
 	public EffectManager() {
 		registeredItems = new LinkedList<Effect>();
 		running=true;
-		Logger.debug("Build EffectManager");
+		logger.debug("Build EffectManager");
 	}
 	
 	public void update() {
@@ -40,6 +43,7 @@ public class EffectManager implements UpdatingManager<Effect>,DrawingObject {
 	public void reset() {
 		 registeredItems = new LinkedList<Effect>();
 		 running=true;
+		 logger.debug("EffectManager reset");
 		 ManagerRegistry.getDrawingManager().registerItem(this);
 	}
 

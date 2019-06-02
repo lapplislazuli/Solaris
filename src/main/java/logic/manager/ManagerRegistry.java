@@ -1,5 +1,8 @@
 package logic.manager;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import config.interfaces.Config;
 import logic.interaction.ActionManager;
 import logic.interaction.KeyBoardManager;
@@ -15,7 +18,9 @@ public class ManagerRegistry {
 	private static ActionManager actmng;
 	private static MouseManager moumng;
 	private static KeyBoardManager keymng;
-
+	
+	private static Logger logger = LogManager.getLogger(ManagerRegistry.class);
+	
 	private static ManagerRegistry INSTANCE;
 	
 	public static ManagerRegistry getInstance() {
@@ -33,6 +38,8 @@ public class ManagerRegistry {
 		actmng=new ActionManager(true);
 		moumng=new MouseManager();
 		keymng=new KeyBoardManager();
+		
+		logger.info("ManagerRegistry (freshly) build");
 	}
 	
 	public void init(Config conf) {
@@ -48,6 +55,8 @@ public class ManagerRegistry {
 		moumng.init(conf);
 		keymng.init(conf);
 		//drwmng needs drawingcontext?
+		
+		logger.info("ManagerRegistry initialized with config");
 	}
 	
 	public static UpdateManager getUpdateManager() 			{return uptmng;}
@@ -69,6 +78,7 @@ public class ManagerRegistry {
 	public static void setKeyboardManager(KeyBoardManager newmgr)	{keymng=newmgr;}
 	
 	public static void reset() {
+		logger.info("Reset ManagerRegistry...");
 		INSTANCE= new ManagerRegistry();
 	}
 }

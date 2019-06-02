@@ -11,10 +11,13 @@ import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.Ship;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import config.JSON.JSONConfig;
 import config.JSON.JSONConfigFactory;
 import config.interfaces.Config;
-import config.interfaces.LoggerSettings;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
@@ -27,13 +30,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
-import org.pmw.tinylog.Configurator;
-import org.pmw.tinylog.Level;
-import org.pmw.tinylog.Logger;
-import org.pmw.tinylog.writers.FileWriter;
-import org.pmw.tinylog.writers.Writer;
+
+
 
 public class Program extends Application{
+
+	private static Logger logger = LogManager.getLogger(Program.class);
+
 	
 	JSONConfig config;
 	
@@ -49,7 +52,7 @@ public class Program extends Application{
 		
 		config = JSONConfigFactory.read("./config.json");
 		
-		initLogger(config.getLoggerSettings());
+		//initLogger(config.getLoggerSettings());
 		
 		Group root = new Group();
 		
@@ -59,7 +62,7 @@ public class Program extends Application{
         initDrawingContextAndManager(root,scene);
         
 		
-        Logger.info("Loaded Config and Managers, now loading Galaxy");
+        logger.info("Loaded Config and Managers, now loading Galaxy");
         initSpace();
         initPrimaryStage(primaryStage,scene);
 	}
@@ -95,9 +98,9 @@ public class Program extends Application{
 	
 	@Override
 	public void stop() {
-		Logger.info("Saving Config");
+		logger.info("Saving Config");
 		JSONConfigFactory.save(config);
-		Logger.info("Closing Solaris");
+		logger.info("Closing Solaris");
 		System.exit(0);
 	}
 	
@@ -209,7 +212,7 @@ public class Program extends Application{
 	}
 
 
-
+/*
 	private void initLogger(LoggerSettings settings) {
 		Writer w = new FileWriter(settings.getLogfile(),false,settings.isAppend());
 		Configurator.defaultConfig()
@@ -217,5 +220,5 @@ public class Program extends Application{
 		   .level(Level.INFO)
 		   .activate();
 	}
-	
+	*/
 }

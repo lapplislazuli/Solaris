@@ -1,27 +1,13 @@
 package space.core;
 
-import java.util.Random;
-
-import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
-import geom.TShape;
-import geom.BaseShape;
-import geom.AbsolutePoint;
 import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
-import interfaces.logical.MovingObject;
 import interfaces.logical.MovingUpdatingObject;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Glow;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.transform.Affine;
 
-@SuppressWarnings({ "restriction", "unused" })
 public abstract class MovingSpaceObject extends SpaceObject implements MovingUpdatingObject {	
 	protected int distance;
 	protected double speed, relativePos,rotation, rotationSpeed; //Everything in Radians

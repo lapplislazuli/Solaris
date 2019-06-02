@@ -8,7 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
@@ -25,9 +26,11 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	private Timer timer;
 	private boolean running=true;
 	
+	private static Logger logger = LogManager.getLogger(UpdateManager.class);
+	
 	public UpdateManager() {
 		registeredItems=new LinkedList<UpdatingObject>();
-		Logger.debug("Build UpdateManager");
+		logger.debug("Build UpdateManager");
 	}
 	
 	
@@ -85,7 +88,7 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 
 	public void toggleUpdate() {
 		running=!running;
-		Logger.debug("Updatemanager set to running:" + running);
+		logger.debug("Updatemanager set to running:" + running);
 	}
 	
 	public void reset() {

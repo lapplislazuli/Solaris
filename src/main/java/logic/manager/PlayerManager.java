@@ -1,6 +1,7 @@
 package logic.manager;
 
-import org.pmw.tinylog.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
@@ -9,6 +10,8 @@ public class PlayerManager{
 
 	private ArmedSpacecraft playerShuttle;
 	private AggressiveNavigator playerNavigator;
+
+	private static Logger logger = LogManager.getLogger(EffectManager.class);
 	
 	private int deathCount=0;
 	
@@ -17,7 +20,7 @@ public class PlayerManager{
 	
 	public void registerPlayerNavigator(AggressiveNavigator pN){
 		if(playerNavigator!=null)
-			Logger.info("Overwriting active playerNavigator...");
+			logger.info("Overwriting active playerNavigator...");
 		playerNavigator=pN;
 	}
 	
@@ -29,7 +32,7 @@ public class PlayerManager{
 	
 	public void registerPlayerShuttle(ArmedSpacecraft p) {
 		if(playerShuttle!=null)
-			Logger.info("Overwriting active playershuttle...");
+			logger.info("Overwriting active playershuttle...");
 		playerShuttle=p;
 	}
 	
