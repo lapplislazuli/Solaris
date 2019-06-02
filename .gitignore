@@ -11,3 +11,5 @@ config.json
 shade/**
 shade
 **.jar
+Solaris.log
+Config.json
