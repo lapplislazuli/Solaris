@@ -10,6 +10,7 @@ public class Explosion extends TimerEffect {
 	public static double standardGrowth=0.3;
 	
 	double growthRate=1;
+	static double growthAlternative=0.3;
 	
 	public Explosion(String name, Point p,int radious, int lifetime,DrawingInformation dInfo){
 		super(name,p, new Circle(p,radious),lifetime,dInfo);
