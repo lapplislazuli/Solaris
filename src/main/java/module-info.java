@@ -1,9 +1,0 @@
-module Solaris {
-    requires javafx.controls;
-    requires transitive javafx.graphics;
-
-    requires org.apache.logging.log4j;
-    requires org.json;
-    
-    exports logic;
-}
