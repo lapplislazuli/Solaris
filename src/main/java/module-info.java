@@ -1,10 +1,9 @@
 module Solaris {
     requires javafx.controls;
     requires transitive javafx.graphics;
-    
-    requires org.json;
+
     requires org.apache.logging.log4j;
-    requires org.apache.logging.log4j.core;
+    requires org.json;
     
     exports logic;
 }
