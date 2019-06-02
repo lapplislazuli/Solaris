@@ -1,4 +1,4 @@
-log.txt
+# No Artifacts and Builded Stuff for the Repo
 bin/**
 /bin/
 /target/
@@ -6,10 +6,17 @@ out/**
 out
 other/**
 other
-config.json
-/config.json
 shade/**
 shade
 **.jar
+# No Logfiles and (changing) Configs
 Solaris.log
 Config.json
+log.txt
+config.json
+/config.json
+# These are some eclipse and maven properties I do not care for 
+.factorypath
+.settings/**
+.settings
+.settings/*
