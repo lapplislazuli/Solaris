@@ -98,15 +98,17 @@
                 </configuration>
             </plugin>
             
-            <plugin>
+			  <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.2</version>
-                <configuration>              
-                    <mainClass>logic.Program</mainClass>
+                <configuration>
+                    <release>12</release>
+                    <jlinkImageName>Solaris</jlinkImageName>
+                    <launcher>launcher</launcher>
+                    <mainClass>solaris/logic.Launcher</mainClass>
                 </configuration>
-            </plugin>
-			
+			</plugin>
             <plugin>
 	            <groupId>org.apache.maven.plugins</groupId>
 	            <artifactId>maven-shade-plugin</artifactId>
