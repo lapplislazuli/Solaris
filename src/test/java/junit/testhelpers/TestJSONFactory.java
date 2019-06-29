@@ -1,5 +1,7 @@
 package junit.testhelpers;
 
+import java.util.Arrays;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -67,15 +69,23 @@ public abstract class TestJSONFactory {
 		return bindings.build();
 	}
 	
+	
 	public static boolean compareArrays (JsonArray left, JsonArray right) {
+		// Shortcut: Two Arrays of different size can never be the same
 		if(left.size()!=right.size())
 			return false;
-
-		var rightToCheck = right.toArray();
-		var leftToCheck = left.toArray();
+		// I check for every left item if its in the right one
+		for(var e : left)
+			if (!right.contains(e))
+				return false;
+		// I check for every right item if its in the left one
+		for(var e : right)
+			if(!right.contains(e))
+				return false;
 		
-		return rightToCheck==leftToCheck;
+		return true;
 	}
+	
 
 	public static JsonArray makeFaultyJSONKeyConfig() {
 		var bindings =  Json.createArrayBuilder();
