@@ -3,12 +3,16 @@ package config.JSON;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.json.JSONObject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 
 public class JSONConfigFactory {
 	
@@ -22,7 +26,11 @@ public class JSONConfigFactory {
 			String completeFile = "";
 			for(String line : allLines)
 				completeFile+=line;
-			JSONObject read = new JSONObject(completeFile);
+			
+			JsonReader jsonReader = Json.createReader(new StringReader(completeFile));
+			JsonObject read = jsonReader.readObject();
+			jsonReader.close();
+			
 			return new JSONConfig(path,read);
 		}
 		catch(Exception e) {
@@ -39,7 +47,7 @@ public class JSONConfigFactory {
 			if(!f.exists())
 				f.createNewFile();
 			FileWriter fW = new FileWriter(f);
-			config.toJSON().write(fW);
+			fW.write(config.toJSON().toString());
 			fW.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,7 +62,7 @@ public class JSONConfigFactory {
 			if(!f.exists())
 				f.createNewFile();
 			FileWriter fW = new FileWriter(f);
-			config.toJSON().write(fW);
+			fW.write(config.toJSON().toString());
 			fW.close();
 		} catch (IOException e) {
 			e.printStackTrace();

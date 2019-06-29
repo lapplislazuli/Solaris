@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
 import config.interfaces.KeyConfig;
 
@@ -12,11 +14,11 @@ public class JSONKeyConfig implements KeyConfig {
 	
 	private final Map<String,String> keyBindings = new HashMap<String,String>();
 	
-	public JSONKeyConfig(JSONArray bindings) {
-		for (int i = 0; i < bindings.length(); i++)
+	public JSONKeyConfig(JsonArray bindings) {
+		for (int i = 0; i < bindings.size(); i++)
 		{
-		    String key = bindings.getJSONObject(i).getString("key");
-		    String actionName = bindings.getJSONObject(i).getString("action");
+		    String key = bindings.getJsonObject(i).getString("key");
+		    String actionName = bindings.getJsonObject(i).getString("action");
 		    keyBindings.put(key, actionName);
 		}
 	}
@@ -29,14 +31,17 @@ public class JSONKeyConfig implements KeyConfig {
 		keyBindings.put(key, actionName);
 	}
 	
-	public JSONArray toJSON() {
-		JSONArray bindings =  new JSONArray();
-		for(Entry<String,String> e : keyBindings.entrySet()) {
-			JSONObject binding = new JSONObject();
-			binding.put("key",e.getKey());
-			binding.put("action", e.getValue());
-			bindings.put(binding);
+
+	public JsonArray toJSON() {
+		var bindingsbuilder = Json.createArrayBuilder();
+		for(Entry<String, String> e : keyBindings.entrySet()) {
+			JsonObject binding = Json.createObjectBuilder()
+			.add("key",e.getKey())
+			.add("action", e.getValue())
+			.build();
+			bindingsbuilder.add(binding);
 		}
-		return bindings;
+		return bindingsbuilder.build();
 	}
+	
 }

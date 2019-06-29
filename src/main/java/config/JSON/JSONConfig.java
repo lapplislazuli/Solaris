@@ -1,7 +1,9 @@
 package config.JSON;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
 import config.interfaces.Config;
 import config.interfaces.KeyConfig;
@@ -14,26 +16,26 @@ public class JSONConfig implements Config {
 	private JSONMouseConfig mouseConfig;
 	private String path; //So i can save it where it was drawn from
 	
-	public JSONConfig(String path, JSONObject obj) {
+	public JSONConfig(String path, JsonObject obj) {
 		this.path=path;
 		
-		JSONObject generalConfigJSON= obj.getJSONObject("settings");
+		JsonObject generalConfigJSON= obj.getJsonObject("settings");
 		settings=new JSONSettings(generalConfigJSON);
 		
-		JSONArray keyBindingsJSON = obj.getJSONArray("keyBindings");
+		JsonArray keyBindingsJSON = obj.getJsonArray("keyBindings");
 		keyConfig=new JSONKeyConfig(keyBindingsJSON);
 		
-		JSONArray mouseBindingsJSON = obj.getJSONArray("mouseBindings");
+		JsonArray mouseBindingsJSON = obj.getJsonArray("mouseBindings");
 		mouseConfig=new JSONMouseConfig(mouseBindingsJSON);
 		
 	}
 	
-	public JSONObject toJSON() {
-		JSONObject json = new JSONObject();
-		json.put("settings",settings.toJSON());
-		json.put("keyBindings",keyConfig.toJSON());
-		json.put("mouseBindings",mouseConfig.toJSON());
-		return json;
+	public JsonObject toJSON() {
+		return Json.createObjectBuilder()
+		.add("settings",settings.toJSON())
+		.add("keyBindings",keyConfig.toJSON())
+		.add("mouseBindings",mouseConfig.toJSON())
+		.build();
 	}
 
 	public Settings getSettings() {

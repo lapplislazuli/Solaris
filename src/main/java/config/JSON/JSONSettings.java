@@ -1,7 +1,7 @@
 package config.JSON;
 
-import org.json.*;
-
+import javax.json.Json;
+import javax.json.JsonObject;
 import config.interfaces.Settings;
 
 public class JSONSettings implements Settings {
@@ -11,7 +11,7 @@ public class JSONSettings implements Settings {
 	private boolean paused;
 	private boolean collision;
 	
-	public JSONSettings(JSONObject configJSON) {
+	public JSONSettings(JsonObject configJSON) {
 		screenWidth = configJSON.getInt("screenWidth");
 		screenHeight = configJSON.getInt("screenHeight");
 		updateIntervall = configJSON.getInt("updateIntervall");
@@ -19,14 +19,13 @@ public class JSONSettings implements Settings {
 		collision = configJSON.getBoolean("collision");
 	}
 
-	public JSONObject toJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("screenWidth", screenWidth);
-		obj.put("screenHeight", screenHeight);
-		obj.put("paused", paused);
-		obj.put("updateIntervall", updateIntervall);
-		obj.put("collision", collision);
-		return obj;
+	public JsonObject toJSON() {
+		return Json.createObjectBuilder()
+		.add("screenWidth", screenWidth)
+		.add("screenHeight", screenHeight)
+		.add("paused", paused)
+		.add("updateIntervall", updateIntervall)
+		.add("collision", collision).build();
 	}
 
 	public int getScreenWidth() {

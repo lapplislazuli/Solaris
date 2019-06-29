@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
 import config.interfaces.MouseConfig;
 import javafx.scene.input.MouseButton;
@@ -13,11 +15,11 @@ public class JSONMouseConfig implements MouseConfig {
 
 	private final Map<MouseButton,String> mouseBindings = new HashMap<MouseButton,String>();
 	
-	public JSONMouseConfig(JSONArray bindings) {
-		for (int i = 0; i < bindings.length(); i++)
+	public JSONMouseConfig(JsonArray bindings) {
+		for (int i = 0; i < bindings.size(); i++)
 		{
-		    String key = bindings.getJSONObject(i).getString("button");
-		    String actionName = bindings.getJSONObject(i).getString("action");
+		    String key = bindings.getJsonObject(i).getString("button");
+		    String actionName = bindings.getJsonObject(i).getString("action");
 		    mouseBindings.put(parseButtonFromString(key), actionName);
 		}
 	}
@@ -33,15 +35,16 @@ public class JSONMouseConfig implements MouseConfig {
 		mouseBindings.put(parseButtonFromString(buttonString), actionName);
 	}
 	
-	public JSONArray toJSON() {
-		JSONArray bindings =  new JSONArray();
+	public JsonArray toJSON() {
+		var bindingsbuilder = Json.createArrayBuilder();
 		for(Entry<MouseButton,String> e : mouseBindings.entrySet()) {
-			JSONObject binding = new JSONObject();
-			binding.put("button", parseButtonToString(e.getKey()));
-			binding.put("action", e.getValue());
-			bindings.put(binding);
+			JsonObject binding = Json.createObjectBuilder()
+			.add("button", parseButtonToString(e.getKey()))
+			.add("action", e.getValue())
+			.build();
+			bindingsbuilder.add(binding);
 		}
-		return bindings;
+		return bindingsbuilder.build();
 	}
 	
 	private String parseButtonToString(MouseButton b) {
