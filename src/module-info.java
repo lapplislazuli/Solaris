@@ -5,7 +5,7 @@ module Solaris {
     
     requires org.apache.logging.log4j;
     
-    requires org.glassfish.java.json;
+    requires java.json;
 	
     exports logic;
 }

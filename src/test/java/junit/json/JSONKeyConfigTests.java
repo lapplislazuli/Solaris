@@ -3,9 +3,11 @@ package junit.json;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-import static junit.testhelpers.TestJSONFactory.*;
 
-import org.json.JSONArray;
+import javax.json.JsonArray;
+
+import static junit.testhelpers.TestJSONFactory.*;
+ 
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONKeyConfig;
@@ -15,7 +17,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
-		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
+		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		KeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
@@ -23,8 +25,8 @@ class JSONKeyConfigTests implements JSONTests{
 	}
 
 	@Test
-	public void testLoadFromJSON_validJSONArray_BindingsShouldBeAccessible() {
-		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
+	public void testLoadFromJSON_validJsonArray_BindingsShouldBeAccessible() {
+		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		KeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
@@ -34,7 +36,7 @@ class JSONKeyConfigTests implements JSONTests{
 	
 	@Test
 	public void testLoadFromJSON_faultyFormat_ShouldFail() {
-		JSONArray stubBindings = makeFaultyJSONKeyConfig();
+		JsonArray stubBindings = makeFaultyJSONKeyConfig();
 		
 		assertThrows(Exception.class,
 				() ->new JSONKeyConfig(stubBindings));
@@ -42,7 +44,7 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
-		JSONArray stubBindings = makeEmptyJSONArray();
+		JsonArray stubBindings = makeEmptyJsonArray();
 		// Other items file, but i think it�s perfectly reasonable to have no key bindings
 		// So it�s ok but should be Empty
 		KeyConfig testObject = new JSONKeyConfig(stubBindings);
@@ -52,10 +54,10 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
-		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
+		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		JSONKeyConfig testObject = new JSONKeyConfig(stubBindings);
-		JSONArray result = testObject.toJSON();
+		JsonArray result = testObject.toJSON();
 		
 		// I cannot use assertEquals as JSON Things behave quite strange
 		assertTrue(compareArrays(stubBindings,result));
@@ -63,22 +65,22 @@ class JSONKeyConfigTests implements JSONTests{
 
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
-		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
+		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		JSONKeyConfig testObject = new JSONKeyConfig(stubBindings);
 		
 		testObject.putKeyBinding("KEY3","ACTION3");
-		JSONArray result = testObject.toJSON();
+		JsonArray result = testObject.toJSON();
 		
 		assertNotEquals(stubBindings.toString(),result.toString());
 	}
 
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
-		JSONArray stubBindings = makeJSONKeyConfigWithEntries();
+		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
 		
 		JSONKeyConfig testObject = new JSONKeyConfig(stubBindings);
-		JSONArray intermediate = testObject.toJSON();
+		JsonArray intermediate = testObject.toJSON();
 		
 		JSONKeyConfig result = new JSONKeyConfig(intermediate);
 		
