@@ -106,7 +106,7 @@
                     <release>12</release>
                     <jlinkImageName>Solaris</jlinkImageName>
                     <launcher>launcher</launcher>
-                    <mainClass>solaris/logic.Launcher</mainClass>
+                    <mainClass>logic.Program</mainClass>
                 </configuration>
 			</plugin>
             <plugin>
