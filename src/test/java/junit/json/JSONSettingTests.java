@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.json.JSONObject;
+import javax.json.JsonObject;
+
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONSettings;
@@ -21,7 +22,7 @@ class JSONSettingTests implements JSONTests {
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		//Also check getters on the way
-		JSONObject toLoad = makeFullSettingsJSON();
+		JsonObject toLoad = makeFullSettingsJSON();
 		Settings testObject = new JSONSettings(toLoad);
 		
 		assertEquals(200,testObject.getScreenHeight());
@@ -33,31 +34,31 @@ class JSONSettingTests implements JSONTests {
 	
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
-		JSONObject toLoad = makeEmptySettingsJSON();
+		JsonObject toLoad = makeEmptySettingsJSON();
 		assertThrows(Exception.class,
 				() -> new JSONSettings(toLoad));
 	}
 	
 	@Test
 	public void testLoadFromJSON_FaultyJSONObject_ShouldFail() {
-		JSONObject toLoad = makeFaultySettingsJSON();
+		JsonObject toLoad = makeFaultySettingsJSON();
 		assertThrows(Exception.class,
 				() -> new JSONSettings(toLoad));
 	}
 	
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
-		JSONObject toLoad = makeFullSettingsJSON();
+		JsonObject toLoad = makeFullSettingsJSON();
 		JSONSettings testObject = new JSONSettings(toLoad);
 		
-		JSONObject result = testObject.toJSON();
+		JsonObject result = testObject.toJSON();
 		
 		assertEquals(toLoad.toString(),result.toString());
 	}
 	
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
-		JSONObject toLoad = makeFullSettingsJSON();
+		JsonObject toLoad = makeFullSettingsJSON();
 		JSONSettings testObject = new JSONSettings(toLoad);
 		
 		testObject.setCollision(false);
@@ -66,17 +67,17 @@ class JSONSettingTests implements JSONTests {
 		testObject.setScreenWidth(200);
 		testObject.setUpdateIntervall(51);
 		
-		JSONObject result = testObject.toJSON();
+		JsonObject result = testObject.toJSON();
 		
 		assertNotEquals(toLoad,result);
 	}
 	
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
-		JSONObject toLoad = makeFullSettingsJSON();
+		JsonObject toLoad = makeFullSettingsJSON();
 		JSONSettings testObject = new JSONSettings(toLoad);
 		
-		JSONObject intermediate = testObject.toJSON();
+		JsonObject intermediate = testObject.toJSON();
 		
 		JSONSettings testResult = new JSONSettings(intermediate);
 		

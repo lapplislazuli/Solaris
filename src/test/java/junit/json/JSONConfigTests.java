@@ -4,7 +4,8 @@ package junit.json;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.json.JSONObject;
+import javax.json.JsonObject;
+
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONConfig;
@@ -15,7 +16,7 @@ class JSONConfigTests implements JSONTests {
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		//Also check getters on the way
-		JSONObject toLoad = makeFullConfigJSON();
+		JsonObject toLoad = makeFullConfigJSON();
 		JSONConfig testObject = new JSONConfig("path",toLoad);
 		
 		// Sample one Attribute of every Child
@@ -27,30 +28,30 @@ class JSONConfigTests implements JSONTests {
 	
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
-		JSONObject toLoad = makeEmptySettingsJSON();
+		JsonObject toLoad = makeEmptySettingsJSON();
 		assertThrows(Exception.class,
 				() -> new JSONConfig("test",toLoad));
 	}
 	
 	@Test
 	public void testLoadFromJSON_faultyToplevel_ShouldFail() {
-		JSONObject toLoad = makeFaultyConfigJSON();
+		JsonObject toLoad = makeFaultyConfigJSON();
 		assertThrows(Exception.class,
 				() -> new JSONConfig("test",toLoad));
 	}
 	
 	@Test
 	public void testLoadFromJSON_faultyChild_ShouldFail() {
-		JSONObject toLoad = makeConfigJSONWithFaultrySubJSON();
+		JsonObject toLoad = makeConfigJSONWithFaultrySubJSON();
 		assertThrows(Exception.class,
 				() -> new JSONConfig("test",toLoad));
 	}
 	
 	public void testPushToJSON_shouldBeSameAsLoaded() {
-		JSONObject toLoad = makeFullConfigJSON();
+		JsonObject toLoad = makeFullConfigJSON();
 		JSONConfig testObject = new JSONConfig("path",toLoad);
 		
-		JSONObject result = testObject.toJSON();
+		JsonObject result = testObject.toJSON();
 		//Fails because the keyBindings are the wrong way round after importing
 		assertEquals(testObject.toString(),result.toString());
 	}
@@ -62,10 +63,10 @@ class JSONConfigTests implements JSONTests {
 	
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
-		JSONObject toLoad = makeFullConfigJSON();
+		JsonObject toLoad = makeFullConfigJSON();
 		JSONConfig testObject = new JSONConfig("path",toLoad);
 		
-		JSONObject intermediate = testObject.toJSON();
+		JsonObject intermediate = testObject.toJSON();
 		JSONConfig testResult = new JSONConfig("path",intermediate);
 		
 		// Sample one Attribute of every Child
