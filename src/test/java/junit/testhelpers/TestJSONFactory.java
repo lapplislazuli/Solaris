@@ -1,159 +1,172 @@
 package junit.testhelpers;
 
+import java.util.Arrays;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
-
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public abstract class TestJSONFactory {
 
-	public static JSONObject makeFullSettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("screenWidth", 200);
-		obj.put("screenHeight", 200);
-		obj.put("paused", true);
-		obj.put("updateIntervall", 50);
-		obj.put("collision", true);
-		return obj;
+	public static JsonObject makeFullSettingsJSON() {
+		var obj = Json.createObjectBuilder()
+		.add("screenWidth", 200)
+		.add("screenHeight", 200)
+		.add("paused", true)
+		.add("updateIntervall", 50)
+		.add("collision", true);
+		return obj.build();
 	}
 	
-	public static JSONObject makeFaultySettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("rubbish", 133769420);
-		return obj;
+	public static JsonObject makeFaultySettingsJSON() {
+		var obj = Json.createObjectBuilder()
+		.add("rubbish", 133769420);
+		return obj.build();
 	}
 	
-	public static JSONObject makeEmptySettingsJSON() {
-		JSONObject obj = new JSONObject();
-		return obj;
+	public static JsonObject makeEmptySettingsJSON() {
+		var obj = Json.createObjectBuilder();
+		return obj.build();
 	}
 
-	public static JSONObject makeFullLoggerSettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("level", "ERROR"); //Should work
-		obj.put("logfile","TestFile.txt");
-		obj.put("append", true);
-		return obj;
+	public static JsonObject makeFullLoggerSettingsJSON() {
+		var obj = Json.createObjectBuilder()
+		.add("level", "ERROR") //Should work
+		.add("logfile","TestFile.txt")
+		.add("append", true);
+		return obj.build();
 	}
 	
-	public static JSONObject makeFaultyLoggerSettingsJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("rubbish", "ERROR");
-		return obj;
+	public static JsonObject makeFaultyLoggerSettingsJSON() {
+		var obj = Json.createObjectBuilder()
+		.add("rubbish", "ERROR");
+		return obj.build();
 	}
-	public static JSONArray makeJSONKeyConfigWithEntries() {
-		JSONArray bindings =  new JSONArray();
+	public static JsonArray makeJSONKeyConfigWithEntries() {
 		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("key","KEY1");
-		firstBinding.put("action","ACTION1");
+		var bindings = Json.createArrayBuilder();
 		
-		JSONObject secondBinding = new JSONObject();
-		secondBinding.put("key","KEY2");
-		secondBinding.put("action", "ACTION2");
+		var firstBinding = Json.createObjectBuilder()
+		.add("key","KEY1")
+		.add("action","ACTION1")
+		.build();
 		
-		bindings.put(firstBinding);
-		bindings.put(secondBinding);
+		var secondBinding = Json.createObjectBuilder()
+		.add("key","KEY2")
+		.add("action", "ACTION2")
+		.build();
 		
-		return bindings;
-	}
-	
-	public static JSONArray makeEmptyJSONArray() {
-		JSONArray bindings =  new JSONArray();
-		return bindings;
+		bindings.add(firstBinding);
+		bindings.add(secondBinding);
+		
+		return bindings.build();
 	}
 	
-	public static boolean compareArrays (JSONArray left, JSONArray right) {
-		if(left.length()!=right.length())
+	public static JsonArray makeEmptyJsonArray() {
+		var bindings =  Json.createArrayBuilder();
+		
+		return bindings.build();
+	}
+	
+	
+	public static boolean compareArrays (JsonArray left, JsonArray right) {
+		// Shortcut: Two Arrays of different size can never be the same
+		if(left.size()!=right.size())
 			return false;
-
-		List<Object> rightToCheck = right.toList();
-		List<Object> leftToCheck =  left.toList();
-		for(Object o : rightToCheck)
-			if(!leftToCheck.contains(o))
+		// I check for every left item if its in the right one
+		for(var e : left)
+			if (!right.contains(e))
 				return false;
-		for(Object o : leftToCheck)
-			if(!rightToCheck.contains(o))
-				return false;		
+		// I check for every right item if its in the left one
+		for(var e : right)
+			if(!right.contains(e))
+				return false;
+		
 		return true;
 	}
+	
 
-	public static JSONArray makeFaultyJSONKeyConfig() {
-		JSONArray bindings =  new JSONArray();
+	public static JsonArray makeFaultyJSONKeyConfig() {
+		var bindings =  Json.createArrayBuilder();
 		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("rubbish","some more rubbish");
-		firstBinding.put("action","ACTION1");
+		var obj = Json.createObjectBuilder()
+		.add("rubbish","some more rubbish")
+		.add("action","ACTION1")
+		.build();
 		
-		bindings.put(firstBinding);
+		bindings.add(obj);
 		
-		return bindings;
+		return bindings.build();
 	}
-	public static JSONArray makeJSONMouseConfigWithEntries() {
-		JSONArray bindings =  new JSONArray();
+	public static JsonArray makeJSONMouseConfigWithEntries() {
+		var bindings =  Json.createArrayBuilder();
 		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("button","PRIMARY");
-		firstBinding.put("action","ACTION1");
+		var firstBinding = Json.createObjectBuilder()
+		.add("button","PRIMARY")
+		.add("action","ACTION1")
+		.build();
 		
-		JSONObject secondBinding = new JSONObject();
-		secondBinding.put("button","SECONDARY");
-		secondBinding.put("action", "ACTION2");
+		var secondBinding = Json.createObjectBuilder()
+		.add("button","SECONDARY")
+		.add("action", "ACTION2")
+		.build();
 		
-		JSONObject thirdBinding = new JSONObject();
-		thirdBinding.put("button","MIDDLE");
-		thirdBinding.put("action", "ACTION3");
+		var thirdBinding = Json.createObjectBuilder()
+		.add("button","MIDDLE")
+		.add("action", "ACTION3")
+		.build();
 		
-		bindings.put(firstBinding);
-		bindings.put(secondBinding);
-		bindings.put(thirdBinding);
+		bindings.add(firstBinding);
+		bindings.add(secondBinding);
+		bindings.add(thirdBinding);
 		
-		return bindings;
-	}
-	
-	public static JSONArray makeFaultyJSONMouseConfig() {
-		JSONArray bindings =  new JSONArray();
-		
-		JSONObject firstBinding = new JSONObject();
-		firstBinding.put("somethingElse","rubbish");
-		firstBinding.put("action","ACTION1");
-		
-		
-		bindings.put(firstBinding);
-		
-		return bindings;
+		return bindings.build();
 	}
 	
-	public static JSONArray makeEmptyMouseConfigJSONArray() {
-		JSONArray bindings =  new JSONArray();
-		return bindings;
-	}
+	public static JsonArray makeFaultyJSONMouseConfig() {
+		var bindings =  Json.createArrayBuilder();
 
-	
-	public static JSONObject makeFullConfigJSON() {
-		JSONObject json = new JSONObject();
-		json.put("settings",makeFullSettingsJSON());
-		json.put("keyBindings",makeJSONKeyConfigWithEntries());
-		json.put("mouseBindings",makeJSONMouseConfigWithEntries());
-		json.put("loggerSettings", makeFullLoggerSettingsJSON());
-		return json;
+		var firstBinding = Json.createObjectBuilder()
+		.add("somethingElse","rubbish")
+		.add("action","ACTION1")
+		.build();
+		
+		
+		bindings.add(firstBinding);
+		
+		return bindings.build();
 	}
 	
-	public static JSONObject makeFaultyConfigJSON() {
-		JSONObject json = new JSONObject();
-		json.put("rubbish","More Rubbish");
-		return json;
+	public static JsonArray makeEmptyMouseConfigJsonArray() {
+		var bindings =  Json.createArrayBuilder();
+		return bindings.build();
 	}
 
-	public static JSONObject makeConfigJSONWithFaultrySubJSON() {
-		JSONObject json = new JSONObject();
-		json.put("settings",makeFaultySettingsJSON());
-		json.put("keyBindings",makeJSONKeyConfigWithEntries());
-		json.put("mouseBindings",makeJSONMouseConfigWithEntries());
-		json.put("loggerSettings", makeFullLoggerSettingsJSON());
-		return json;
+	
+	public static JsonObject makeFullConfigJSON() {
+		var json = Json.createObjectBuilder()
+		.add("settings",makeFullSettingsJSON())
+		.add("keyBindings",makeJSONKeyConfigWithEntries())
+		.add("mouseBindings",makeJSONMouseConfigWithEntries())
+		.add("loggerSettings", makeFullLoggerSettingsJSON());
+		
+		return json.build();
+	}
+	
+	public static JsonObject makeFaultyConfigJSON() {
+		var json = Json.createObjectBuilder()
+		.add("rubbish","More Rubbish");
+		return json.build();
+	}
+
+	public static JsonObject makeConfigJSONWithFaultrySubJSON() {
+		var json = Json.createObjectBuilder()
+		.add("settings",makeFaultySettingsJSON())
+		.add("keyBindings",makeJSONKeyConfigWithEntries())
+		.add("mouseBindings",makeJSONMouseConfigWithEntries())
+		.add("loggerSettings", makeFullLoggerSettingsJSON());
+
+		return json.build();
 	}
 }
