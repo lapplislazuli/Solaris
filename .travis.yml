@@ -1,5 +1,9 @@
 language: java
 jdk: openjdk12
 
+os:
+  - linux
+  - osx
+
 install: true
 script: mvn clean install
