@@ -16,13 +16,14 @@ Feel free to extract code, share your oppinion or contribute!
 * reading, altering and saving a JSON configurationfile, including keybindings and general settings (see package *config*) 
 * Simple logging with [Log4J2](https://logging.apache.org/log4j/2.x/) and simple sample-loggersettings
 * Its a Maven and Java12 Project!
+* It is modular!
+* Travis CI 
 
 **Further Goals:**
 * reading the Galaxy from a file (either .json or .xml)
 * Use of the [Factory Pattern](https://en.wikipedia.org/wiki/Factory_method_pattern), connected to reading galaxy-files
 * Extend the game with states and different screens (start-screen, game-screen, deathscreen)
-* Making it Modular like Java 9 wants it to be 
-* Travis CI 
+
 
 However, some minor features and refactoring are always ongoing. 
 ## How to Build and run
@@ -47,6 +48,8 @@ to compile a runnable jar into /shade/
 You can leave the `clean` from every goal, however the caching from maven can hurt you sometimes really bad. 
 
 If you are aware of your dependencies and clean manually when required, these can be left out. For an easy and failsafe entry I spared you those. 
+
+**With Console:** you have to put `mvn` in front of the build goals, e.g. `mvn clean install`. Don´t forget to navigate to the root of the folder where the pom.xml is. 
 
 ### The .Jar
 Once Solaris.jar is build, you can run it via 
