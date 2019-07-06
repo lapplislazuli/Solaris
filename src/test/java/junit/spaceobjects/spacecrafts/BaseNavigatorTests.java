@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import interfaces.spacecraft.SpacecraftState;
@@ -24,6 +26,8 @@ class BaseNavigatorTests {
 		ManagerRegistry.reset();
 	}
 	
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testConstructor_shouldBeBuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -32,12 +36,18 @@ class BaseNavigatorTests {
 		return;
 	}
 
+	@Tag("Shuttle")
+	@Tag("fast")
+	@RepeatedTest(2)
 	@Test
 	void testConstructor_NullShip_shouldThrowException() {
 		assertThrows(IllegalArgumentException.class, 
 				() -> new BaseNavigator("Test",null,true)
 		);
 	}
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testConstructor_NullName_shouldThrowException() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -46,6 +56,9 @@ class BaseNavigatorTests {
 		);
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testConstructor_EmptyName_shouldThrowException() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -54,14 +67,22 @@ class BaseNavigatorTests {
 		);
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testConstructor_shouldNotBeOrphaned() {
+		ManagerRegistry.getInstance();
+		
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
 		
 		assertFalse(testObject.isOrphan());
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testConstructor_shouldHaveShipsParentInRoute() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -73,6 +94,9 @@ class BaseNavigatorTests {
 		assertEquals(1,testObject.getRoute().size());
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testClearRoute_shouldNotHaveEmptyRoute() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -86,6 +110,9 @@ class BaseNavigatorTests {
 		assertEquals(1,testObject.getRoute().size());
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testGetNextWayPoint_currentPointerIsFirst_shouldBeSecondElement() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -99,6 +126,9 @@ class BaseNavigatorTests {
 		assertEquals(stubTarget,testObject.getNextWayPoint());
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testGetNextWayPoint_currentPointerIsLastWayPoint_shouldBeFirstElement() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -113,6 +143,9 @@ class BaseNavigatorTests {
 		assertEquals(stubRoot,testObject.getNextWayPoint());
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testRebuildShuttle_shouldBeRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -123,6 +156,9 @@ class BaseNavigatorTests {
 		assertTrue(stub.rebuild);
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testIsInGoodLaunchPosition_shuttleIsDead_shouldBeFalse() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -134,6 +170,9 @@ class BaseNavigatorTests {
 		assertFalse(testObject.isInGoodLaunchPosition(stubTarget));
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testRemove_shouldBeOrphaned() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -144,6 +183,9 @@ class BaseNavigatorTests {
 		assertTrue(testObject.isOrphan());
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testCommandLaunch_allGood_ShuttleShouldBeLaunched() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -158,6 +200,9 @@ class BaseNavigatorTests {
 		assertTrue(stub.launched);
 	}
 	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testCommandLaunch_threeWayPoints_shouldHaveNewWayPoint() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -174,6 +219,9 @@ class BaseNavigatorTests {
 		assertEquals(finalTarget,testObject.getNextWayPoint());
 	}
 	
+	
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testUpdate_shuttleIsDeadAndRespawns_shuttleIsRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -185,7 +233,9 @@ class BaseNavigatorTests {
 		
 		assertTrue(stub.rebuild);
 	}
-	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testUpdate_shuttleIsDeadAndDoesNotRespawn_shuttleStaysDead() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -197,7 +247,9 @@ class BaseNavigatorTests {
 		
 		assertFalse(stub.rebuild);
 	}
-	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testUpdate_shuttleIsAlive_shuttleIsNotBeRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -209,7 +261,9 @@ class BaseNavigatorTests {
 		
 		assertFalse(stub.rebuild);
 	}
-	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testUpdate_shuttleIsFlying_NothingHappens() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -227,7 +281,9 @@ class BaseNavigatorTests {
 		assertEquals(stubTarget,testObject.getNextWayPoint());
 		assertFalse(stub.launched);
 	}
-	
+
+	@Tag("Shuttle")
+	@Tag("fast")
 	@Test
 	void testUpdate_shuttleIsOrbiting_OrbitingForLongTime_ButIsNotInGoodLaunchPosition_shouldNotBeLaunched() {
 		FakeSpacecraft stub = new FakeSpacecraft();
@@ -243,21 +299,5 @@ class BaseNavigatorTests {
 		
 		assertFalse(stub.launched);
 	}
-	/*
-	@Ignore
-	void testUpdate_shuttleIsOrbiting_OrbitingForLongTime_shouldBeLaunched() {
-		FakeSpacecraft stub = new FakeSpacecraft();
-		SpaceObject stubRoot = fakeStar(0,0);
-		SpaceObject stubTarget = fakeStar(500,500);
-		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
-		testObject.getRoute().add(stubTarget);
-		
-		stub.state=SpacecraftState.ORBITING;
-		for(int i=0;i<5000;i++)
-			testObject.update();
-		
-		assertTrue(stub.launched);
-	}
-	*/
+	
 }
