@@ -3,74 +3,113 @@ package junit.core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import geom.AbsolutePoint;
 import space.core.Planet;
-import space.core.Star;
+import space.core.SpaceObject;
+
+import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 
 class RotationTests {
 	
-	static Star anker;
-	static Planet slow, fast, reverse;
-	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		anker= new Star("anker", null, new AbsolutePoint(250, 250), 250);
-		slow= (new Planet.Builder("SlowPlanet", anker))
+	@Tag("fast")
+	@Tag("core")
+	@ParameterizedTest
+	@ValueSource(ints = {0,1,50,360 })
+	void testRotate_itemHasRotation_shouldRotateByItsRotationSpeed(int degree) {
+		SpaceObject anker = fakeStar(250,250);
+		Planet rotater= (new Planet.Builder("RotatingPlanet", anker))
 				.size(250)
 				.distance(250)
-				.rotationSpeed(Math.PI/360) //1 Degree per rotate()
+				.rotationSpeed(Math.PI/degree)
 				.build();
-				
-		fast= (new Planet.Builder("FastPlanet", anker))
-				.size(250)
+		
+		rotater.setRotation(0);
+		
+		rotater.rotate(); 
+		assertEquals(rotater.getRotationSpeed(), rotater.getRotation());
+	}
+	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
+	@Test
+	void testRotate_rotateForMoreThan360Degree_shouldBeReset() {
+		SpaceObject anker = fakeStar(250,250);
+		Planet rotater= (new Planet.Builder("SlowPlanet", anker))
+				.size(10)
 				.distance(250)
 				.rotationSpeed(Math.PI/2) //90 Degree per rotate()
 				.build();
-		reverse= (new Planet.Builder("ReversePlanet", anker))
-				.size(250)
+		
+		rotater.setRotation(0);
+		
+		//Rotate for more than 2 PI
+		for(int i=0;i<5;i++)
+			rotater.rotate(); 
+		
+		assertEquals(Math.PI/2, rotater.getRotation());
+	}
+	
+	@Tag("fast")
+	@Tag("core")
+	@Test
+	void testRotate_negativeRotationSpeed_shouldBePositiveRotationDegree() {
+		SpaceObject anker = fakeStar(250,250);
+		Planet rotater= (new Planet.Builder("SlowPlanet", anker))
+				.size(10)
 				.distance(250)
 				.rotationSpeed(-Math.PI/2) //-90 Degree per rotate()
 				.build();
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-		slow.setRotation(0);
-		fast.setRotation(0);
-		reverse.setRotation(0);
-	}
-
-	@Test
-	void rotate() {
-		slow.rotate(); 
-		assertEquals(slow.getRotationSpeed(), slow.getRotation());
-		fast.rotate(); 
-		assertEquals(fast.getRotationSpeed(), fast.getRotation());
-	}
-	@Test
-	void rotateReset() {
-		//Rotate for more than 2 PI
-		for(int i=0;i<5;i++)
-			fast.rotate(); 
-		assertEquals(Math.PI/2, fast.getRotation());
 		
-		for(int i=0;i<721;i++)
-			slow.rotate();
+		rotater.setRotation(0);
 		
-		assertEquals(Math.round(Math.PI/360), Math.round(slow.getRotation()));
+		rotater.rotate(); 
+		
+		assertTrue(rotater.getRotation()>0);
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test
-	void reverseRotation() {
-		reverse.rotate(); 
-		reverse.rotate();
-		assertEquals(Math.PI, reverse.getRotation());
-		for(int i=0;i<4;i++)
-			reverse.rotate();
-		assertEquals(Math.PI, reverse.getRotation());
+	void testRotate_negativeRotationSpeedOf90Degree_rotateTwice_shouldBeMathPi() {
+		SpaceObject anker = fakeStar(250,250);
+		Planet rotater= (new Planet.Builder("SlowPlanet", anker))
+				.size(10)
+				.distance(250)
+				.rotationSpeed(-Math.PI/2) //-90 Degree per rotate()
+				.build();
+		
+		rotater.setRotation(0);
+		
+		rotater.rotate(); 
+		rotater.rotate();
+		
+		assertEquals(Math.PI, rotater.getRotation());
+	}
+	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
+	@Test
+	void testRotate_negativeRotation_rotateOver2Pi_shouldBeReset() {
+		SpaceObject anker = fakeStar(250,250);
+		Planet rotater= (new Planet.Builder("SlowPlanet", anker))
+				.size(10)
+				.distance(250)
+				.rotationSpeed(-Math.PI/2) //-90 Degree per rotate()
+				.build();
+		
+		rotater.setRotation(0);
+		
+		for(int i = 0; i<6;i++)
+			rotater.rotate(); // Rotate 6 times for 90 Degree each
+		
+		assertEquals(Math.PI, rotater.getRotation());
 	}
 }
