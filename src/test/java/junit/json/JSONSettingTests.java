@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.json.JsonObject;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONSettings;
@@ -19,6 +21,8 @@ import config.interfaces.Settings;
 
 class JSONSettingTests implements JSONTests {
 
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		//Also check getters on the way
@@ -32,6 +36,8 @@ class JSONSettingTests implements JSONTests {
 		assertTrue(testObject.isCollision());
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JsonObject toLoad = makeEmptySettingsJSON();
@@ -39,6 +45,8 @@ class JSONSettingTests implements JSONTests {
 				() -> new JSONSettings(toLoad));
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_FaultyJSONObject_ShouldFail() {
 		JsonObject toLoad = makeFaultySettingsJSON();
@@ -46,6 +54,9 @@ class JSONSettingTests implements JSONTests {
 				() -> new JSONSettings(toLoad));
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
 		JsonObject toLoad = makeFullSettingsJSON();
@@ -56,6 +67,8 @@ class JSONSettingTests implements JSONTests {
 		assertEquals(toLoad.toString(),result.toString());
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
 		JsonObject toLoad = makeFullSettingsJSON();
@@ -72,6 +85,9 @@ class JSONSettingTests implements JSONTests {
 		assertNotEquals(toLoad,result);
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
 		JsonObject toLoad = makeFullSettingsJSON();

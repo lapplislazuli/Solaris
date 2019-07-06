@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.json.JsonArray;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import config.JSON.JSONMouseConfig;
@@ -20,7 +22,9 @@ import config.interfaces.MouseConfig;
 import javafx.scene.input.MouseButton;
 
 class JSONMouseConfigTests implements JSONTests{
-
+	
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		JsonArray stubBindings = makeJSONMouseConfigWithEntries();
@@ -30,6 +34,8 @@ class JSONMouseConfigTests implements JSONTests{
 		assertEquals(3,testObject.getKeyBindings().size());
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_validJsonArray_BindingsShouldBeAccessible() {
 		JsonArray stubBindings = makeJSONMouseConfigWithEntries();
@@ -41,6 +47,8 @@ class JSONMouseConfigTests implements JSONTests{
 		assertEquals("ACTION3",testObject.getKeyBindings().get(MouseButton.MIDDLE));
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_faultyFormat_ShouldFail() {
 		JsonArray stubBindings = makeFaultyJSONMouseConfig();
@@ -49,6 +57,8 @@ class JSONMouseConfigTests implements JSONTests{
 				() ->new JSONMouseConfig(stubBindings));
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JsonArray stubBindings = makeEmptyMouseConfigJsonArray();
@@ -59,6 +69,9 @@ class JSONMouseConfigTests implements JSONTests{
 		assertEquals(0,testObject.getKeyBindings().size());
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
 		JsonArray stubBindings = makeJSONMouseConfigWithEntries();
@@ -70,6 +83,8 @@ class JSONMouseConfigTests implements JSONTests{
 		assertTrue(compareArrays(stubBindings,result));
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
 		JsonArray stubBindings = makeJSONMouseConfigWithEntries();
@@ -82,6 +97,8 @@ class JSONMouseConfigTests implements JSONTests{
 		assertNotEquals(stubBindings.toString(),result.toString());
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void putMouseBinding_overExistingBinding_shouldBeNew() {
 		JsonArray stubBindings = makeJSONMouseConfigWithEntries();
@@ -92,6 +109,9 @@ class JSONMouseConfigTests implements JSONTests{
 		assertEquals("NEWACTION",testObject.getKeyBindings().get(MouseButton.PRIMARY));
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
 		JsonArray stubBindings = makeJSONMouseConfigWithEntries();
