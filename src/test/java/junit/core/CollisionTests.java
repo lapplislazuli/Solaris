@@ -3,6 +3,8 @@ package junit.core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import space.core.Planet;
@@ -11,7 +13,10 @@ import space.core.SpaceObject;
 import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 class CollisionTests {
-	
+
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_noCollision_shouldNotCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -20,7 +25,10 @@ class CollisionTests {
 		
 		assertFalse(anchor.collides(planet));
 	}
-	
+
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_noCollision_shouldBeSymmetric() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -29,7 +37,10 @@ class CollisionTests {
 		
 		assertTrue(anchor.collides(planet)==planet.collides(anchor));
 	}
-	
+
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_collision_shouldCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -38,6 +49,9 @@ class CollisionTests {
 		assertTrue(anchor.collides(collider));
 	}
 	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_ElementsAreInEachOther_innerShouldCollideOuter() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -45,7 +59,9 @@ class CollisionTests {
 		
 		assertTrue(anchor.collides(inAnchor));
 	}
-	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_ElementsAreInEachOther_outerShouldCollideInner() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -54,6 +70,9 @@ class CollisionTests {
 		assertTrue(inAnchor.collides(anchor));
 	}
 	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_selfCollision_shouldNotCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -61,6 +80,9 @@ class CollisionTests {
 		assertFalse(anchor.collides(anchor));
 	}
 	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_ElementsAreTangenting_shouldCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -69,6 +91,9 @@ class CollisionTests {
 		assertTrue(anchor.collides(toucher));
 	}
 	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_multipleItemsCollide_allCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -80,6 +105,9 @@ class CollisionTests {
 		assertTrue(otheranchor.collides(thirdCollider));
 	}
 	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_NotCollideableItem_colliderShouldCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);
@@ -91,6 +119,9 @@ class CollisionTests {
 		assertTrue(anchor.collides(uncollider));
 	}
 	
+	@Tag("core")
+	@Tag("logic")
+	@RepeatedTest(10)
 	@Test
 	void testCollision_NotCollideableItem_uncolliderShouldNotCollide() {
 		SpaceObject anchor= fakeStar(0,0,25);

@@ -11,12 +11,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import space.core.SpaceObject;
 
 class SpaceObjectEqualityTests {
 
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test 
 	public void testEquality_selfEquality_shouldBeTrue() {
 		SpaceObject self = fakeStar(0,0);
@@ -24,6 +29,9 @@ class SpaceObjectEqualityTests {
 		assertTrue(self.equals(self));
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test 
 	public void testEquality_sameAttributes_shouldBeTrue() {
 		SpaceObject obj = fakeStar(0,0);
@@ -32,6 +40,9 @@ class SpaceObjectEqualityTests {
 		assertTrue(obj.equals(sameObj));
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test 
 	public void testEquality_differentKoords_shouldBeFalse() {
 		SpaceObject obj = fakeStar(0,0);
@@ -40,6 +51,9 @@ class SpaceObjectEqualityTests {
 		assertFalse(obj.equals(diff));	
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test 
 	public void testEquality_sameKoordsDifferentClass_shouldBeFalse() {
 		SpaceObject obj = fakeStar(0,0);
@@ -48,6 +62,9 @@ class SpaceObjectEqualityTests {
 		assertFalse(obj.equals(diff));	
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test 
 	public void testEquality_symmetry_shouldBeTrue() {
 		SpaceObject obj = fakeStar(0,0);
@@ -56,6 +73,9 @@ class SpaceObjectEqualityTests {
 		assertTrue(obj.equals(sameObj)==sameObj.equals(obj));
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test 
 	public void testEquality_transity_shouldBeTrue() {
 		SpaceObject first = fakeStar(0,0);
@@ -65,7 +85,9 @@ class SpaceObjectEqualityTests {
 		assertTrue(first.equals(second)==second.equals(third));
 	}
 	
-	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test
 	public void testEquality_addSameItemToSet_shouldDisappear() {
 		SpaceObject obj = fakeStar(0,0);
@@ -76,7 +98,9 @@ class SpaceObjectEqualityTests {
 		assertEquals(1,sOs.size());
 	}
 	
-	
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test
 	public void testEquality_addOtherItemToSet_shouldDisappear() {
 		SpaceObject obj = fakeStar(0,0);
