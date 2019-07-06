@@ -2,7 +2,7 @@ package geom;
 
 import interfaces.geom.Point;
 
-public class AbsolutePoint implements Point {
+public class AbsolutePoint implements Point,Cloneable {
 	protected int x,y,z;
 	
 	public AbsolutePoint(int x, int y) {

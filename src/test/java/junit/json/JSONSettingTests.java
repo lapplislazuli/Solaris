@@ -23,6 +23,7 @@ class JSONSettingTests implements JSONTests {
 
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		//Also check getters on the way
@@ -38,6 +39,7 @@ class JSONSettingTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JsonObject toLoad = makeEmptySettingsJSON();
@@ -47,6 +49,7 @@ class JSONSettingTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_FaultyJSONObject_ShouldFail() {
 		JsonObject toLoad = makeFaultySettingsJSON();
@@ -56,6 +59,7 @@ class JSONSettingTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
@@ -69,6 +73,7 @@ class JSONSettingTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
 		JsonObject toLoad = makeFullSettingsJSON();
@@ -87,6 +92,7 @@ class JSONSettingTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {

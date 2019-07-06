@@ -33,6 +33,8 @@ class BaseNavigatorTests {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
 		
+		testObject.toString();
+		
 		return;
 	}
 

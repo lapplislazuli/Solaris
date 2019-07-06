@@ -2,7 +2,7 @@ package geom;
 
 import interfaces.geom.Point;
 
-public class RelativePoint implements Point{
+public class RelativePoint implements Point,Cloneable{
 	
 	protected Point anker;
 	protected int xDif,yDif,zDif;

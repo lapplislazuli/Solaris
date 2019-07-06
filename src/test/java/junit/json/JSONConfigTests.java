@@ -18,6 +18,7 @@ class JSONConfigTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		//Also check getters on the way
@@ -33,6 +34,7 @@ class JSONConfigTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JsonObject toLoad = makeEmptySettingsJSON();
@@ -42,6 +44,7 @@ class JSONConfigTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_faultyToplevel_ShouldFail() {
 		JsonObject toLoad = makeFaultyConfigJSON();
@@ -51,6 +54,7 @@ class JSONConfigTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_faultyChild_ShouldFail() {
 		JsonObject toLoad = makeConfigJSONWithFaultrySubJSON();
@@ -74,6 +78,7 @@ class JSONConfigTests implements JSONTests {
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {

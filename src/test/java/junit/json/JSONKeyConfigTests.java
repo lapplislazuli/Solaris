@@ -19,6 +19,7 @@ class JSONKeyConfigTests implements JSONTests{
 	
 	@Tag("JSON")
 	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
@@ -29,6 +30,7 @@ class JSONKeyConfigTests implements JSONTests{
 	}
 	
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_validJsonArray_BindingsShouldBeAccessible() {
@@ -41,6 +43,7 @@ class JSONKeyConfigTests implements JSONTests{
 	}
 	
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_faultyFormat_ShouldFail() {
@@ -51,6 +54,7 @@ class JSONKeyConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
@@ -63,6 +67,7 @@ class JSONKeyConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@RepeatedTest(3)
 	@Test

@@ -13,15 +13,12 @@ import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Missile;
 
-@SuppressWarnings("restriction")
 public abstract class Carrier extends Ship{
 	
 	protected int maxShips = 3; // How Many Ships can the carrier have active?
 	protected List<CarrierDrone> drones; 
 	protected int shipCounter = 0; // Overall Ships Build, for numbering and statistics
 	protected int shipCooldown = 0; 
-	
-	protected int size;
 	
 	public Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);

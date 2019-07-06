@@ -98,6 +98,7 @@ class DistantGalaxyTest {
 
 	@Tag("fast")
 	@Tag("core")
+	@RepeatedTest(3)
 	@Test
 	void testCollision_shouldNotDestroyAnyOther() {
 		CollisionManager mnger = freshNewCollisionManager();
@@ -124,6 +125,7 @@ class DistantGalaxyTest {
 
 	@Tag("fast")
 	@Tag("core")
+	@RepeatedTest(3)
 	@Test
 	void testUpdate_withDeadStar_deadStarShouldNotBeinStars() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",1);

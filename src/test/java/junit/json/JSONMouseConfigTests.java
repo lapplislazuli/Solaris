@@ -24,6 +24,7 @@ import javafx.scene.input.MouseButton;
 class JSONMouseConfigTests implements JSONTests{
 	
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
@@ -35,6 +36,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_validJsonArray_BindingsShouldBeAccessible() {
@@ -48,6 +50,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_faultyFormat_ShouldFail() {
@@ -58,6 +61,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 	
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
@@ -70,6 +74,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@RepeatedTest(3)
 	@Test
@@ -84,6 +89,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
@@ -98,6 +104,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@Test
 	public void putMouseBinding_overExistingBinding_shouldBeNew() {
@@ -110,6 +117,7 @@ class JSONMouseConfigTests implements JSONTests{
 	}
 	
 	@Tag("JSON")
+	@Tag("config")
 	@Tag("fast")
 	@RepeatedTest(3)
 	@Test

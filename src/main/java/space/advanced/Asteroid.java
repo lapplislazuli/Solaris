@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
-@SuppressWarnings("restriction")
 public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	SpaceObject parent;
@@ -18,7 +17,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(3,3),distance,speed);
 		//Asteroid Types are chosen randomly if not in the Constructor
-		int typeHelper=(int)Math.random();
+		int typeHelper=(int)(Math.random()*2);
 		if(typeHelper==0)
 			type=Type.ORE;
 		else if (typeHelper==1)

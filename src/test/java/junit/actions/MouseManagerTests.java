@@ -3,6 +3,8 @@ package junit.actions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import config.interfaces.Config;
@@ -31,20 +33,32 @@ public class MouseManagerTests {
 		doneSomething=true;
 	}
 	
+
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testConstructor_hasNoRegisteredItems() {
 		MouseManager testObject = new MouseManager();
 		
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
-	
+
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testConstructor_shouldBeRunning() {
 		MouseManager testObject = new MouseManager();
 		
 		assertTrue(testObject.isRunning());
 	}
-	
+
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test
 	public void registerAction_shouldBeRegistered() {
 		MouseManager testObject = new MouseManager();
@@ -57,6 +71,9 @@ public class MouseManagerTests {
 		assertTrue(testObject.getRegisteredItems().contains(sampleAction));
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testConstructor_MousePosIsNull() {
 		MouseManager testObject = new MouseManager();
@@ -64,6 +81,9 @@ public class MouseManagerTests {
 		assertEquals(null,testObject.getMousePos());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void registerAction_registerTwice_shouldBeOverwritten() {
 		MouseManager testObject = new MouseManager();
@@ -79,6 +99,10 @@ public class MouseManagerTests {
 		assertTrue(testObject.getRegisteredItems().contains(sampleOverwrite));
 	}
 	
+	@Tag("logic")
+	@Tag("config")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testInit_emptyConfig_hasNoRegisteredItems() {
 		MouseManager testObject = new MouseManager();
@@ -92,6 +116,10 @@ public class MouseManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("config")
+	@Tag("manager")
 	@Test
 	public void testInit_configHasItem_isNotInActionManager_shouldBeEmpty() {
 		MouseManager testObject = new MouseManager();
@@ -107,6 +135,10 @@ public class MouseManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("config")
+	@Tag("manager")
 	@Test
 	public void testInit_configHasItem_shouldNotBeEmpty() {
 		MouseManager testObject = new MouseManager();
@@ -123,6 +155,10 @@ public class MouseManagerTests {
 		assertFalse(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("config")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testInit_configHasQuitAction_shouldContainQuitAction() {
 		MouseManager testObject = new MouseManager();
@@ -139,6 +175,9 @@ public class MouseManagerTests {
 		assertTrue(testObject.getRegisteredItems().contains(ManagerRegistry.getActionManager().getActionByName("Quit")));
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testToggleUpdate_WasOff_shouldBeOn() {
 		MouseManager testObject = new MouseManager();
@@ -149,6 +188,9 @@ public class MouseManagerTests {
 		assertTrue(testObject.isRunning());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testToggleUpdate_WasOn_shouldBeOff() {
 		MouseManager testObject = new MouseManager();
@@ -158,6 +200,9 @@ public class MouseManagerTests {
 		assertFalse(testObject.isRunning());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testReset_shouldHaveNoRegisteredItems() {
 		MouseManager testObject = new MouseManager();
@@ -172,6 +217,11 @@ public class MouseManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(3)
+	@Tag("manager")
 	@Test
 	public void testMouseClicked_NoActionBound_NothingHappens() {
 		MouseManager testObject = new MouseManager();
@@ -184,6 +234,11 @@ public class MouseManagerTests {
 		assertFalse(doneSomething);
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("core")
+	@Tag("manager")
+	@RepeatedTest(3)
 	@Test
 	public void testMouseClicked_ActionBound_ActionIsPerformed() {
 		MouseManager testObject = new MouseManager();
@@ -199,6 +254,9 @@ public class MouseManagerTests {
 		assertTrue(doneSomething);
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testMouseClicked_mousePositionIsUpdated() {
 		MouseManager testObject = new MouseManager();
