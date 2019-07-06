@@ -5,7 +5,8 @@ package junit.spaceobjects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
@@ -14,6 +15,10 @@ import static junit.testhelpers.FakeGeometryFactory.fakeAbsolutePoint;
 
 public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 
+
+	@Tag("fast")
+	@Tag("builder")
+	@RepeatedTest(3)
 	@Test
 	public void testBuilder_EverythingIsFine_ShouldBeBuild() {
 		AbsolutePoint center = fakeAbsolutePoint();
@@ -27,7 +32,9 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 
 		assertEquals(center,testObject.getCenter());
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_BuildWithXY_ShouldBeBuild() {
 		AbsolutePoint center = fakeAbsolutePoint();
@@ -39,7 +46,9 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 		assertEquals(center.getX(),testObject.getCenter().getX());
 		assertEquals(center.getY(),testObject.getCenter().getY());
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeSize_shouldThrowError() {
 			assertThrows(IllegalArgumentException.class,
@@ -47,6 +56,8 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 				);		
 	}
 
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeLevelOfDetail_shouldThrowError() {
 		assertThrows(IllegalArgumentException.class,
@@ -54,6 +65,8 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 			);		
 	}
 
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NoName_shouldThrowError() {
 		assertThrows(IllegalArgumentException.class,
@@ -61,6 +74,8 @@ public class StarBuilderTests implements CommonSpaceObjectBuilderTests {
 			);		
 	}
 
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NullName_shouldThrowError() {
 		assertThrows(IllegalArgumentException.class,

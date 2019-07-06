@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import interfaces.logical.MovingUpdatingObject;
@@ -21,20 +23,24 @@ import space.core.Planet;
 import space.core.Star;
 
 class DistantGalaxyTest {
+
+	@Tag("fast")
 	@Test
 	void testConstructor_buildWithoutName_shouldThrowError(){
 		assertThrows(IllegalArgumentException.class,
 				() ->  new DistantGalaxy("",10)
 			);
 	}
-	
+
+	@Tag("fast")
 	@Test
 	void testConstructor_buildWithNullName_shouldThrowError(){
 		assertThrows(IllegalArgumentException.class,
 				() ->  new DistantGalaxy(null,10)
 			);
 	}
-	
+
+	@Tag("fast")
 	@Test
 	void testConstructor_oKValues_shouldBeFine(){
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
@@ -42,7 +48,8 @@ class DistantGalaxyTest {
 		assertEquals(10,testObject.getMaxStars());
 		assertEquals(10,testObject.getStars().size());
 	}
-	
+
+	@Tag("fast")
 	@Test
 	void testFillStars_biggerMaxStars_shouldHaveMoreStars(){
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
@@ -52,7 +59,8 @@ class DistantGalaxyTest {
 		
 		assertEquals(15,testObject.getStars().size());
 	}
-	
+
+	@Tag("fast")
 	@Test
 	void testFillStars_smallerMaxStars_shouldbeSameAmountOfStars(){
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
@@ -62,7 +70,8 @@ class DistantGalaxyTest {
 		
 		assertEquals(10,testObject.getStars().size());
 	}
-	
+
+	@Tag("fast")
 	@Test
 	void testUpdate_setMoreMaxStars_shouldRefill() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
@@ -72,7 +81,8 @@ class DistantGalaxyTest {
 		
 		assertEquals(15,testObject.getStars().size());
 	}
-	
+
+	@Tag("fast")
 	@Test
 	void testUpdate_setLessMaxStars_shouldHaveSameStars() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",20);
@@ -85,7 +95,9 @@ class DistantGalaxyTest {
 		assertTrue(testObject.getStars().size()>5);
 	}
 	
-	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	void testCollision_shouldNotDestroyAnyOther() {
 		CollisionManager mnger = freshNewCollisionManager();
@@ -99,7 +111,9 @@ class DistantGalaxyTest {
 		
 		assertFalse(fakeDestructibleObject.destroyed);
 	}
-	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	void testDistanceTo_shouldBeMax() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
@@ -107,7 +121,9 @@ class DistantGalaxyTest {
 		
 		assertEquals(Double.MAX_VALUE, testObject.distanceTo(fakeAnchor),0);
 	}
-	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	void testUpdate_withDeadStar_deadStarShouldNotBeinStars() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",1);
@@ -118,7 +134,10 @@ class DistantGalaxyTest {
 		
 		assertFalse(testObject.getStars().contains(first));
 	}
-	
+
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(10)
 	@Test
 	void testUpdate_withDeadStar_shouldSpawnNewStar() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",1);
@@ -129,7 +148,9 @@ class DistantGalaxyTest {
 		
 		assertEquals(1,testObject.getStars().size());
 	}
-	
+
+	@Tag("fast")
+	@RepeatedTest(2)
 	@Test
 	void testGetTrabants_shouldBeEmptyList() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
@@ -137,6 +158,10 @@ class DistantGalaxyTest {
 		assertTrue(testObject.getTrabants().isEmpty());
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
+	@RepeatedTest(3)
 	@Test
 	void testSetAndGetTrabants_shouldBeEmptyList() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);

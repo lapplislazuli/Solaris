@@ -7,7 +7,6 @@ import interfaces.drawing.DrawingContext;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 
-@SuppressWarnings("restriction")
 public abstract class CombinedShape implements Shape{
 	
 	protected List<Shape> parts;

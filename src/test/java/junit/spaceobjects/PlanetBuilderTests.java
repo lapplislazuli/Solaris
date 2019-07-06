@@ -5,9 +5,9 @@ package junit.spaceobjects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -19,6 +19,9 @@ import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 	
+	@Tag("fast")
+	@Tag("core")
+	@Tag("builder")
 	@Test
 	public void testBuilder_EverythingIsFine_ShouldBeBuild() {
 		Star anchor = fakeStar(0,0);
@@ -34,7 +37,9 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 		assertEquals(10,testObject.getShape().getLevelOfDetail());
 		
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeSize_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -45,7 +50,9 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 			);
 		
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeLevelOfDetail_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -57,6 +64,8 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 		
 	}
 
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeDistance_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -67,7 +76,9 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 			);
 		
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NoParent_shouldThrowError() {
 		assertThrows(
@@ -76,6 +87,8 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 			);
 	}
 	
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NoName_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -85,6 +98,8 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 			);		
 	}
 	
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NullName_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -94,6 +109,9 @@ public class PlanetBuilderTests implements CommonSpaceObjectBuilderTests {
 			);		
 	}
 	
+	@Tag("fast")
+	@Tag("core")
+	@Tag("builder")
 	@Test
 	public void testBuilder_addTrabant_shouldBeInTrabants() {
 		Star anchor = fakeStar(0,0);
