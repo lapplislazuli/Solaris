@@ -10,7 +10,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import config.JSON.JSONConfig;
+import config.json.JSONConfig;
+
 import static junit.testhelpers.TestJSONFactory.*;
 
 class JSONConfigTests implements JSONTests {

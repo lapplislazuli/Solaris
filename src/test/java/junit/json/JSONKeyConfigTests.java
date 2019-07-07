@@ -12,8 +12,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import config.JSON.JSONKeyConfig;
 import config.interfaces.KeyConfig;
+import config.json.JSONKeyConfig;
 
 class JSONKeyConfigTests implements JSONTests{
 	

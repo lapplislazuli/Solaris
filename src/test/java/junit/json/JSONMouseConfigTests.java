@@ -17,8 +17,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import config.JSON.JSONMouseConfig;
 import config.interfaces.MouseConfig;
+import config.json.JSONMouseConfig;
 import javafx.scene.input.MouseButton;
 
 class JSONMouseConfigTests implements JSONTests{

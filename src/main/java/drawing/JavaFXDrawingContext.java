@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-public class JavaFXDrawingContext implements DrawingContext{
+public class JavaFXDrawingContext implements DrawingContext {
 	
 	private Canvas canvas;
 	private GraphicsContext gc;
@@ -23,16 +23,16 @@ public class JavaFXDrawingContext implements DrawingContext{
 	public GraphicsContext getGraphicsContext() {return gc;}
 
 	
-	public void drawShape(Shape s) {
+	public final void drawShape(Shape s) {
 		s.draw(this);
 	}
 	
-	public void bindSizeProperties(Scene scene) {
+	public final void bindSizeProperties(Scene scene) {
 		canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
 	};
 	
-	public void resetContext() {
+	public final void resetContext() {
 		gc.restore();
 		gc.setEffect(null);
 		gc.setFill(null);
@@ -40,7 +40,7 @@ public class JavaFXDrawingContext implements DrawingContext{
 	}
 
 	@Override
-	public void saveContext() {
+	public final void saveContext() {
 		gc.save();
 	}
 	

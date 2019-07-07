@@ -1,4 +1,4 @@
-package config.JSON;
+package config.json;
 
 
 import javax.json.Json;

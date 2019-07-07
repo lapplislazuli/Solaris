@@ -46,13 +46,14 @@ public class JavaFXDrawingInformation implements DrawingInformation{
 	}
 
 	private void applyFill(GraphicsContext gc) {
-		if (hasColorEffect && color!=null) {
+		if (hasColorEffect && color != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
 					new Stop(0.0, color),
 					new Stop(1.0, color.darker())));
 		}
-		else
+		else {
 			gc.setFill(color);
+		}
 	}
 
 }

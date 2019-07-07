@@ -1,4 +1,4 @@
-package config.JSON;
+package config.json;
 
 import java.util.HashMap;
 import java.util.Map;
