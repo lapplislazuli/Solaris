@@ -118,19 +118,21 @@ class DistantGalaxyTest {
 		
 		assertFalse(testObject.getStars().contains(first));
 	}
-	
-	@Test
-	void testUpdate_withDeadStar_shouldSpawnNewStar() {
-		DistantGalaxy testObject = new DistantGalaxy("Test",1);
-		FixStar first = testObject.getStars().get(0);
-		first.die();
-		
-		testObject.update();
-		
-		assertEquals(1,testObject.getStars().size());
-	}
-	
-	@Test
+
+    @Test
+    void testUpdate_withDeadStar_shouldSpawnNewStars() {
+        DistantGalaxy testObject = new DistantGalaxy("Test",5);
+        for(FixStar star:testObject.getStars()) {
+            star.die();
+        }
+
+        testObject.update();
+
+        assertEquals(5,testObject.getStars().size());
+        assertEquals("Star#6",testObject.getStars().get(0).getName());
+    }
+
+    @Test
 	void testGetTrabants_shouldBeEmptyList() {
 		DistantGalaxy testObject = new DistantGalaxy("Test",10);
 		
