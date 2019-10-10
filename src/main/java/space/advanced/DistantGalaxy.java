@@ -22,6 +22,7 @@ public class DistantGalaxy extends SpaceObject{
 	
 	private List<FixStar> stars = new LinkedList<FixStar>();
 	private int maxStars;
+	private long nextStarNo = 1L;
 	private final Random r =new Random();
 	
     public DistantGalaxy(String name,int stars) {
@@ -64,7 +65,7 @@ public class DistantGalaxy extends SpaceObject{
 	
     public void fillStars() {
     	while(stars.size()<maxStars)
-    		stars.add(new FixStar("Star#"+stars.size(),r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
+    		stars.add(new FixStar("Star#"+nextStarNo++,r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
     }
     
     public List<FixStar> getStars() {return stars;}
