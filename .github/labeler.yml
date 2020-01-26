@@ -2,7 +2,8 @@ Test:
 - src/test/*
 
 Documentation:
-- *.md
+- ./*.md
+- ./**/*.md
 
 Configuration:
 - .github/*.yml
