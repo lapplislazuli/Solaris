@@ -1,0 +1,23 @@
+Test:
+- src/test/*
+
+Documentation:
+- *.md
+
+Configuration:
+- .github/*.yml
+- .github/*.yaml
+- .github/**/*.yml
+- .github/**/*.yaml
+- .github/workflow/*
+- ./**/*.yml
+- ./**/*.yaml
+- ./**/*.json
+- ./**/*.xml
+- .gitignore
+- config.json
+
+
+Git:
+- .github/*
+- .gitignore
