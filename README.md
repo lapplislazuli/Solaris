@@ -1,5 +1,5 @@
 # Solaris
-[![Build](https://github.com/Twonki/Solaris/workflows/mavenBuild/badge.svg)](https://github.com/Twonki/Solaris/actions)
+[![Build](https://github.com/Twonki/Solaris/workflows/javaCI/badge.svg)](https://github.com/Twonki/Solaris/actions)
 ![License: MIT](https://img.shields.io/badge/License-MIT-hotpink.svg)
 
 This repository contains a sample-java-project of a solar system for programmer-trainees.
