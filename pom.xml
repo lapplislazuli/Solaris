@@ -9,8 +9,8 @@
   <description>A simple Solar System</description>
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>13</maven.compiler.source>
-        <maven.compiler.target>13</maven.compiler.target>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -27,29 +27,29 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>13.0.2</version>
+            <version>14-ea+9</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>13.0.2</version>
+            <version>14-ea+9</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>13.0.2</version>
+            <version>14-ea+9</version>
             <classifier>win</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>13.0.2</version>
+            <version>14-ea+9</version>
             <classifier>linux</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>13.0.2</version>
+            <version>14-ea+9</version>
             <classifier>mac</classifier>
         </dependency>
 		
