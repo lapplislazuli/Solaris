@@ -3,7 +3,7 @@ package views;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import config.JSON.JSONConfig;
+import config.json.JSONConfig;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

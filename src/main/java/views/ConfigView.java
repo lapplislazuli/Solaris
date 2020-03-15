@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import config.JSON.JSONConfig;
+import config.json.JSONConfig;
+
 
 public class ConfigView {
 	

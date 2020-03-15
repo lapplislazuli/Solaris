@@ -5,8 +5,8 @@ import views.StartView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import config.JSON.JSONConfig;
-import config.JSON.JSONConfigFactory;
+import config.json.JSONConfig;
+import config.json.JSONConfigFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import logic.manager.ManagerRegistry;
