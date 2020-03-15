@@ -35,6 +35,7 @@ public class GalaxyView {
 	JSONConfig config;
 	
 	public GalaxyView (JSONConfig config,Stage primaryStage) {
+		
 		Group center = new Group();
 
 		Scene scene=initScene(config,center);
@@ -59,16 +60,13 @@ public class GalaxyView {
 	}
 
 	private void initPrimaryStage(Stage primaryStage, Scene scene) {
-		primaryStage.setTitle("Solaris");
         primaryStage.setScene(scene);
         primaryStage.show();
 	}
 
 
 	
-	private void initManagers(Scene scene,Config config) {
-		ManagerRegistry.getInstance().init(config);
-		    
+	private void initManagers(Scene scene,Config config) {	    
 		ManagerRegistry.getKeyBoardManager().initScene(scene);
         ManagerRegistry.getMouseManager().initScene(scene);   
 	}
