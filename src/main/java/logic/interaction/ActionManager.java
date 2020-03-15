@@ -9,6 +9,7 @@ import config.interfaces.Config;
 import interfaces.logical.Manager;
 import logic.Program;
 import logic.manager.ManagerRegistry;
+import views.KeybindingAlert;
 
 public class ActionManager implements Manager<Action>{
 	
@@ -51,6 +52,9 @@ public class ActionManager implements Manager<Action>{
 		registerAction(
 				new SimpleAction("ItemInfo", "Shows Itemname and Koords at MousePos",
 						()->CommonPlayerActions.showInformationOnClick()));
+		registerAction(
+				new SimpleAction("KeyBindings", "Shows Actions and Keybindings",
+						()->KeybindingAlert.display()));
 	}
 
 	public void registerAction(Action a) {

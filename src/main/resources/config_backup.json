@@ -14,7 +14,8 @@
 		{key:"d",action:"RouteClear"},
 		{key:"k",action:"Speed+"},
 		{key:"j",action:"Speed-"},
-		{key:"f",action:"ForceSpawn"}
+		{key:"f",action:"ForceSpawn"},
+		{"key":"i","action":"KeyBindings"}
 	],
 
 	mouseBindings: [
