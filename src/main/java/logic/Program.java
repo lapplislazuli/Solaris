@@ -34,6 +34,7 @@ public class Program extends Application{
 		config = JSONConfigFactory.read("config.json");
 		
 		primaryStage.setTitle("Solaris");
+		primaryStage.centerOnScreen();
 		
 		ManagerRegistry.getInstance().init(config);
 		logger.info("Configuration read - starting welcome view");
