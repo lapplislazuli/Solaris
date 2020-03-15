@@ -93,6 +93,10 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 	public Collection<Action> getRegisteredItems() {
 		return keyBindings.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
 	}
+	
+	public Map<Character,Action> getKeyBindings(){
+		return keyBindings;
+	}
 
 	public void toggleUpdate() {
 		running = !running;
