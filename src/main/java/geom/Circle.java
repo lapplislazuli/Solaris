@@ -1,5 +1,7 @@
 package geom;
 
+import java.util.Collection;
+
 import interfaces.geom.Point;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -54,5 +56,10 @@ public class Circle extends BaseShape{
 		if(!getCenter().equals(otherParsed.getCenter()))
 			return false;
 		return otherParsed.radious==radious;
+	}
+
+	@Override
+	public Collection<Point> getOutline() {
+		return outLine;
 	}
 }

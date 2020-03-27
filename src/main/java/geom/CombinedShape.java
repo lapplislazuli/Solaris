@@ -1,7 +1,9 @@
 package geom;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import interfaces.drawing.DrawingContext;
 import interfaces.geom.Point;
@@ -24,31 +26,22 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public double area() {
-		double sum=0;
-		for(Shape part:parts)
-			sum+=part.area();
-		return sum;
+		return parts.stream().mapToDouble(p -> p.area()).sum();
 	}
 
 	public boolean intersects(Shape other) {
-		for(Shape part : parts)
-			if(part.intersects(other))
-				return true;
-		return false;
+		 return parts.stream().anyMatch(p -> p.intersects(other));
 	}
 	
 	public boolean covers(Shape other) {
-		for(Shape part:parts)
-			if(part.covers(other))
-				return true;
-		return false;
+		return other.getOutline().stream()
+		.allMatch(
+			p -> parts.stream().anyMatch(k -> k.contains(p))			
+		);
 	}
 	
 	public boolean contains(Point p) {
-		for(Shape part:parts)
-			if(part.contains(p))
-				return true;
-		return false;
+		 return parts.stream().anyMatch(a-> a.contains(p));
 	}
 	
 	public void updateOrInitOutline() {
@@ -87,5 +80,10 @@ public abstract class CombinedShape implements Shape{
 		levelOfDetail=lod;
 		for(Shape part : parts)
 			part.setLevelOfDetail(lod);
+	}
+
+	@Override
+	public Collection<Point> getOutline() {
+		return parts.stream().flatMap(p -> p.getOutline().stream()).collect(Collectors.toList());
 	}
 }
