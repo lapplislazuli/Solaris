@@ -3,7 +3,9 @@ package drawing;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import geom.AbsolutePoint;
 import interfaces.drawing.DrawingContext;
+import interfaces.drawing.DrawingInformation;
 import interfaces.drawing.DrawingObject;
 import interfaces.geom.Point;
 import interfaces.logical.RemovableObject;
@@ -16,14 +18,19 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 	
 	private String text;
 	private Point position;
+	private int size,lifetime;
+	private DrawingInformation drawingInfo;
 	
-	public PopupText(String text, Point position,int lifeTime) {
-		this.text=text;
-		this.position=position;
+	private PopupText(Builder builder) {
+		this.text=builder.text;
+		this.size=builder.size;
+		this.position=builder.position;
+		this.drawingInfo = builder.drawingInfo;
+		this.lifetime = builder.lifetime;
 		
 		ManagerRegistry.getDrawingManager().registerItem(this);
 		
-		setTimer(lifeTime);
+		setTimer(this.lifetime);
 	}
 	
 	@Override
@@ -38,7 +45,6 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 
 	@Override
 	public boolean isOrphan() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -58,12 +64,62 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 		if (dc instanceof JavaFXDrawingContext) {
 			var dccasted = (JavaFXDrawingContext) dc;
 			var gc = dccasted.getGraphicsContext();
-			gc.setLineWidth(1.0);
-			// Set fill color
-			gc.setFill(Color.RED);
-			 
-			// Draw a filled Text
+			
+			gc.setLineWidth(size);
+			
+			if (drawingInfo instanceof JavaFXDrawingInformation) {
+				var dinfocasted = (JavaFXDrawingInformation) drawingInfo;
+				gc.setFill(dinfocasted.color);
+			}
+			else 
+				gc.setFill(Color.BLACK);
+			
 			gc.fillText(text, position.getX(), position.getY());
+		}
+	}
+	
+	public static class Builder {
+		private final String text;
+		private Color color= Color.BLACK;
+		private int size = 0,lifetime=100;
+		private Point position = new AbsolutePoint(0,0);
+		private DrawingInformation drawingInfo;
+
+		public Builder(String name) throws IllegalArgumentException{
+			if(name==null||name.isEmpty())
+				throw new IllegalArgumentException("Text cannot be null or empty");
+			this.text=name;
+		}
+		
+		public Builder color(Color val){ 
+			color= val; 
+			return this;
+		}
+		
+		public Builder size(int val){
+			if(val<0)
+				throw new IllegalArgumentException("Size cannot be smaller than 0");
+			size= val; 
+			return this;
+		}
+		
+		public Builder position(Point p) {
+			position=p;
+			return this;
+		}
+		
+		public Builder lifetime(int ms) {
+			lifetime=ms;
+			return this;
+		}
+		
+		public PopupText build() {
+			if(color!=Color.BLACK) {
+				drawingInfo = new JavaFXDrawingInformation(color);
+			} else {
+				drawingInfo = new EmptyJFXDrawingInformation();
+			}
+			return new PopupText(this);
 		}
 	}
 

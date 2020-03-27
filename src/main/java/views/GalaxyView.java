@@ -7,6 +7,7 @@ import config.json.JSONConfig;
 import config.interfaces.Config;
 import drawing.JavaFXDrawingContext;
 import drawing.JavaFXDrawingInformation;
+import drawing.PopupText;
 import geom.AbsolutePoint;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
@@ -174,6 +175,14 @@ public class GalaxyView {
 		
 		updateManager.addSpaceObject(milkyway);
 		updateManager.addSpaceObject(sun);
+		
+		//var test_popup = //new PopupText("Hey I am the sun",sun.getCenter(),1500);
+		var test_popup = new PopupText.Builder("Hey, I am a popup!")
+				.color(Color.ALICEBLUE)
+				.size(2)
+				.lifetime(2000)
+				.position(new AbsolutePoint(100,100))
+				.build();
 		
 		updateManager.update();
 	}
