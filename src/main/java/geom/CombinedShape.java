@@ -37,7 +37,7 @@ public abstract class CombinedShape implements Shape{
 		return other.getOutline().stream()
 		.allMatch(
 			p -> parts.stream().anyMatch(k -> k.contains(p))			
-		);
+		);	
 	}
 	
 	public boolean contains(Point p) {
