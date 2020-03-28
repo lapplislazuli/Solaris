@@ -133,36 +133,6 @@ public final class GalaxyFactory {
 			updateManager.addSpaceObject(milkyway);
 			updateManager.addSpaceObject(sun);
 			
-			/*
-			var test_popup = new PopupText.Builder("Hey, I am a popup!")
-					.color(Color.ALICEBLUE)
-					.size(2)
-					.lifetime(2000)
-					.position(new AbsolutePoint(100,100))
-					.build();
-	
-			var test_polylineshape = new EdgyPolylineShape.Builder(new AbsolutePoint(250,250))
-					.nextPoint(sun.getCenter())
-					.nextPoint(earth.getCenter())
-					.nextPoint(500,200)
-					.nextPoint(phobos.getCenter())
-					.fillcolor(Color.GREENYELLOW)
-					.fillShape(false)
-					.edgecolor(Color.BLACK)
-					.build();
-			ManagerRegistry.getDrawingManager().registerItem(test_polylineshape);
-					
-			var test_polylineshape = new CurvyPolylineShape.Builder(new AbsolutePoint(250,250))
-					.nextPoint(sun.getCenter(),deimos.getCenter())
-					.nextPoint(earth.getCenter(),sun.getCenter())
-					.nextPoint(500,200,400,400)
-					.nextPoint(phobos.getCenter(),mars.getCenter())
-					.fillcolor(Color.GREENYELLOW)
-					.edgecolor(Color.BLACK)
-					.build(earth.getCenter());
-			
-			ManagerRegistry.getDrawingManager().registerItem(test_polylineshape);	
-			*/
 			updateManager.update();
 	}
 }
