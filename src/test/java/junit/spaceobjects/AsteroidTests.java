@@ -7,6 +7,7 @@ import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -20,6 +21,8 @@ import space.core.SpaceObject;
 
 public class AsteroidTests {
 	
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testConstructors_buildAsTrash_ShouldBeTrash(){
 		SpaceObject root = fakeStar(0,0);
@@ -29,6 +32,9 @@ public class AsteroidTests {
 		assertEquals(Asteroid.Type.TRASH,testObject.getType());
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testConstructors_buildWithoutType_shouldBeRandomAndNotTrash(){
 		SpaceObject root = fakeStar(0,0);
@@ -39,6 +45,8 @@ public class AsteroidTests {
 		assertNotEquals(null,testObject.getType());
 	}
 	
+
+	@Tag("fast")
 	@Test
 	public void testConstructors_NullType_ShouldThrowNullPointer(){
 		SpaceObject root = fakeStar(0,0);
@@ -47,6 +55,8 @@ public class AsteroidTests {
 				() -> new Asteroid("test",root,30,10,null));
 	}
 	
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testConstructors_IsInParentsChildren(){
 		SpaceObject root = fakeStar(0,0);
@@ -56,6 +66,8 @@ public class AsteroidTests {
 		assertTrue(root.getTrabants().contains(testObject));
 	}
 	
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testConstructors_isNotOrphaned(){
 		SpaceObject root = fakeStar(0,0);
@@ -65,6 +77,9 @@ public class AsteroidTests {
 		assertFalse(testObject.isOrphan());
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testRemove_isNotInParentsChildren() {
 		SpaceObject root = fakeStar(0,0);
@@ -75,6 +90,9 @@ public class AsteroidTests {
 		assertFalse(root.getTrabants().contains(testObject));
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testRemove_isOrphaned() {
 		SpaceObject root = fakeStar(0,0);
@@ -85,6 +103,8 @@ public class AsteroidTests {
 		assertTrue(testObject.isOrphan());
 	}
 	
+
+	@Tag("fast")
 	@Test
 	public void testRemove_doubleRemove_shouldThrowNullpoint() {
 		SpaceObject root = fakeStar(0,0);
@@ -96,6 +116,9 @@ public class AsteroidTests {
 				() -> testObject.remove());
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testCollision_shouldBeRemoved() {
 		CollisionManager mnger = freshNewCollisionManager();
@@ -112,6 +135,9 @@ public class AsteroidTests {
 		assertFalse(root.getTrabants().contains(testObject));
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test 
 	public void testDestruct_isNotInParentsChildren() {
 		SpaceObject root = fakeStar(0,0);
@@ -121,7 +147,9 @@ public class AsteroidTests {
 		
 		assertFalse(root.getTrabants().contains(testObject));
 	}
-	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testDestruct_doubleDestruct_shouldSucceed() {
 		SpaceObject root = fakeStar(0,0);
@@ -133,6 +161,8 @@ public class AsteroidTests {
 		assertFalse(root.getTrabants().contains(testObject));
 	}
 	
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testDestruct_isOrphaned() {
 		SpaceObject root = fakeStar(0,0);

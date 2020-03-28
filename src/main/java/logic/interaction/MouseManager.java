@@ -88,7 +88,11 @@ public class MouseManager implements UpdatingManager<Action> {
 	public Collection<Action> getRegisteredItems() {
 		return mouseBindings.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
 	}
-
+	
+	public Map<MouseButton, Action> getMouseBindings(){
+		return mouseBindings;
+	}
+	
 	public void toggleUpdate() {
 		running=!running;
 	}

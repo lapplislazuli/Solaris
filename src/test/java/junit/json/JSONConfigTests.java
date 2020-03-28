@@ -6,13 +6,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import javax.json.JsonObject;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import config.JSON.JSONConfig;
+import config.json.JSONConfig;
+
 import static junit.testhelpers.TestJSONFactory.*;
 
 class JSONConfigTests implements JSONTests {
 
+	
+	@Tag("JSON")
+	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		//Also check getters on the way
@@ -26,6 +33,9 @@ class JSONConfigTests implements JSONTests {
 		assertEquals("path",testObject.getPath());
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JsonObject toLoad = makeEmptySettingsJSON();
@@ -33,6 +43,9 @@ class JSONConfigTests implements JSONTests {
 				() -> new JSONConfig("test",toLoad));
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_faultyToplevel_ShouldFail() {
 		JsonObject toLoad = makeFaultyConfigJSON();
@@ -40,6 +53,9 @@ class JSONConfigTests implements JSONTests {
 				() -> new JSONConfig("test",toLoad));
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_faultyChild_ShouldFail() {
 		JsonObject toLoad = makeConfigJSONWithFaultrySubJSON();
@@ -61,6 +77,10 @@ class JSONConfigTests implements JSONTests {
 		return;
 	}
 	
+	@Tag("JSON")
+	@Tag("fast")
+	@Tag("config")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
 		JsonObject toLoad = makeFullConfigJSON();

@@ -1,5 +1,7 @@
 package interfaces.geom;
 
+import java.util.Collection;
+
 import interfaces.drawing.DrawingObject;
 
 public interface Shape extends DrawingObject{
@@ -17,4 +19,6 @@ public interface Shape extends DrawingObject{
 	public void setLevelOfDetail(int levelOfDetail);
 	
 	public boolean sameShape(Shape shape);
+	
+	public Collection<Point> getOutline();
 }

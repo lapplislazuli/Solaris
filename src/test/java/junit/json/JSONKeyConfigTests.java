@@ -7,14 +7,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import javax.json.JsonArray;
 
 import static junit.testhelpers.TestJSONFactory.*;
- 
+
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import config.JSON.JSONKeyConfig;
 import config.interfaces.KeyConfig;
+import config.json.JSONKeyConfig;
 
 class JSONKeyConfigTests implements JSONTests{
-
+	
+	@Tag("JSON")
+	@Tag("fast")
+	@Tag("config")
 	@Test
 	public void testLoadFromJSON_allItemsThere_shouldBeRead() {
 		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
@@ -23,7 +28,10 @@ class JSONKeyConfigTests implements JSONTests{
 		
 		assertEquals(2,testObject.getKeyBindings().size());
 	}
-
+	
+	@Tag("JSON")
+	@Tag("config")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_validJsonArray_BindingsShouldBeAccessible() {
 		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
@@ -34,6 +42,9 @@ class JSONKeyConfigTests implements JSONTests{
 		assertEquals("ACTION2",testObject.getKeyBindings().get("KEY2"));
 	}
 	
+	@Tag("JSON")
+	@Tag("config")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_faultyFormat_ShouldFail() {
 		JsonArray stubBindings = makeFaultyJSONKeyConfig();
@@ -42,6 +53,9 @@ class JSONKeyConfigTests implements JSONTests{
 				() ->new JSONKeyConfig(stubBindings));
 	}
 
+	@Tag("JSON")
+	@Tag("config")
+	@Tag("fast")
 	@Test
 	public void testLoadFromJSON_someItemsAreMissing_ShouldFail() {
 		JsonArray stubBindings = makeEmptyJsonArray();
@@ -52,6 +66,10 @@ class JSONKeyConfigTests implements JSONTests{
 		assertEquals(0,testObject.getKeyBindings().size());
 	}
 
+	@Tag("JSON")
+	@Tag("config")
+	@Tag("fast")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_shouldBeSameAsLoaded() {
 		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
@@ -63,6 +81,8 @@ class JSONKeyConfigTests implements JSONTests{
 		assertTrue(compareArrays(stubBindings,result));
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
 	@Test
 	public void testPushToJSON_someThingAltered_shouldBeDifferent() {
 		JsonArray stubBindings = makeJSONKeyConfigWithEntries();
@@ -75,6 +95,9 @@ class JSONKeyConfigTests implements JSONTests{
 		assertNotEquals(stubBindings.toString(),result.toString());
 	}
 
+	@Tag("JSON")
+	@Tag("fast")
+	@RepeatedTest(3)
 	@Test
 	public void testPushToJSON_reload_shouldBeRead() {
 		JsonArray stubBindings = makeJSONKeyConfigWithEntries();

@@ -26,7 +26,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 
 	protected static Logger logger = LogManager.getLogger(SpaceObject.class);
 	
-	protected DrawingInformation dInfo;
+	protected DrawingInformation dInfo=new EmptyJFXDrawingInformation();
 	
 	protected List<MovingUpdatingObject> trabants=new LinkedList<MovingUpdatingObject>();
 	protected float rotation = 0; //in radiant-degree
@@ -39,9 +39,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		this.center=center;
 		this.shape=shape;
 		this.shape.setCenter(center); //To center the Area around this object - improvement possible
-		if(dInfo==null)
-			dInfo=new EmptyJFXDrawingInformation();
-		else
+		if(dInfo!=null)
 			this.dInfo=dInfo;
 		logger.debug("Build " + name + center.toString());
 	}

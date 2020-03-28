@@ -3,16 +3,16 @@ package config.interfaces;
 
 public interface Config {
 
-	Settings getSettings();
+	public Settings getSettings();
 
-	void setSettings(Settings settings);
+	public void setSettings(Settings settings);
 
-	KeyConfig getKeyConfig();
+	public KeyConfig getKeyConfig();
 
-	void setKeyConfig(KeyConfig keyConfig);
+	public void setKeyConfig(KeyConfig keyConfig);
 
-	MouseConfig getMouseConfig();
+	public MouseConfig getMouseConfig();
 
-	void setMouseConfig(MouseConfig mouseConfig);
+	public void setMouseConfig(MouseConfig mouseConfig);
 
 }

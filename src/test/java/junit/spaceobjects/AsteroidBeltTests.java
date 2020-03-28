@@ -8,6 +8,7 @@ import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -27,6 +28,10 @@ import space.core.Star;
 
 public class AsteroidBeltTests {
 
+
+	@Tag("fast")
+	@Tag("core")
+	@Tag("builder")
 	@Test
 	public void testBuilder_EverythingIsFine_ShouldBeBuild() {
 		Star anchor = fakeStar(0,0);
@@ -41,6 +46,9 @@ public class AsteroidBeltTests {
 		assertEquals(10,testObject.getAllChildren().size());
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testInit_IsBuildOnParent_shouldBeTrue() {
 		Star anchor = fakeStar(0,0);
@@ -53,6 +61,7 @@ public class AsteroidBeltTests {
 		assertEquals(0,testObject.distanceTo(anchor),0);
 	}
 	
+	@Tag("fast")
 	@Test
 	public void testInit_CheckTrabants_ShouldAllBeAsteroids() {
 		Star anchor = fakeStar(0,0);
@@ -65,7 +74,9 @@ public class AsteroidBeltTests {
 		for(MovingUpdatingObject r : testObject.getTrabants())
 			assertTrue(r instanceof Asteroid);
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeAsteroids_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -75,7 +86,8 @@ public class AsteroidBeltTests {
 				.asteroids(-50));	
 	}
 	
-
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NegativeDistance_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -84,14 +96,18 @@ public class AsteroidBeltTests {
 				() ->  (new AsteroidBelt.Builder("Test",anchor))
 				.distance(-5));
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NoParent_shouldThrowError() {
 		assertThrows(
 				IllegalArgumentException.class,
 				(() ->  new AsteroidBelt.Builder("Error", null)));
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NoName_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -99,7 +115,9 @@ public class AsteroidBeltTests {
 		assertThrows(IllegalArgumentException.class,
 				() ->  new AsteroidBelt.Builder("",anchor));		
 	}
-	
+
+	@Tag("fast")
+	@Tag("builder")
 	@Test
 	public void testBuilder_NullName_shouldThrowError() {
 		Star anchor = fakeStar(0,0);
@@ -107,7 +125,9 @@ public class AsteroidBeltTests {
 		assertThrows(IllegalArgumentException.class,
 				() ->  new AsteroidBelt.Builder(null,anchor));		
 	}
-	
+
+	@Tag("fast")
+	@Tag("core")
 	@ParameterizedTest
 	@ValueSource(ints = {-1000,-100,0,100,1000})
 	public void testMove_parentMoved_shouldBeOnParent(int offset) {
@@ -123,6 +143,9 @@ public class AsteroidBeltTests {
 		assertEquals(newCenter,testObject.getCenter());
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testCollision_doesNotCollide() {
 		CollisionManager mnger = freshNewCollisionManager();
@@ -139,6 +162,9 @@ public class AsteroidBeltTests {
 		assertFalse(fakeDestructibleObject.destroyed);
 	}
 	
+
+	@Tag("fast")
+	@Tag("core")
 	@Test
 	public void testMove_childrenMoved_shouldBeMoved() {
 		Star anchor = fakeStar(0,0);

@@ -1,4 +1,4 @@
-package config.JSON;
+package config.json;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -40,7 +40,7 @@ public class JSONConfigFactory {
 	}
 	
 	static public void save(JSONConfig config) {
-		if(config.getPath()==null||config.getPath()=="")
+		if(config.getPath().isEmpty() || config.getPath().isBlank())
 			return;
 		try {
 			File f = new File(config.getPath());

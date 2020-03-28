@@ -9,7 +9,6 @@ import space.core.SpaceObject;
 
 public class FakeArmedSpacecraft extends FakeSpacecraft implements ArmedSpacecraft{
 	
-	public boolean attacked = false;
 	public Optional<SpaceObject> nearestTarget = Optional.empty();
 	
 	public ArmedSpacecraft rebuildAt (String name, SpaceObject at) {

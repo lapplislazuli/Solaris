@@ -1,5 +1,6 @@
 package geom;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,6 +74,10 @@ public abstract class BaseShape implements Shape{
 		else
 			throw new UnsupportedOperationException("Unsupported DrawingContext!");
 	}
-	
+
+	@Override
+	public Collection<Point> getOutline() {
+		return outLine;
+	}
 	public abstract void draw(GraphicsContext gc);
 }

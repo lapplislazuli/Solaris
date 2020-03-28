@@ -23,7 +23,7 @@ public class ManagerRegistry {
 	
 	private static ManagerRegistry INSTANCE;
 	
-	public static ManagerRegistry getInstance() {
+	public final static ManagerRegistry getInstance() {
 		if(INSTANCE==null)
 			INSTANCE= new ManagerRegistry();
 		return INSTANCE;
@@ -42,7 +42,7 @@ public class ManagerRegistry {
 		logger.info("ManagerRegistry (freshly) build");
 	}
 	
-	public void init(Config conf) {
+	public final void init(Config conf) {
 		uptmng.init(conf);
 		
 		uptmng.registerItem(efxmng);
@@ -77,7 +77,7 @@ public class ManagerRegistry {
 	public static void setMouseManager(MouseManager newmgr)			{moumng=newmgr;}
 	public static void setKeyboardManager(KeyBoardManager newmgr)	{keymng=newmgr;}
 	
-	public static void reset() {
+	public final static void reset() {
 		logger.info("Reset ManagerRegistry...");
 		INSTANCE= new ManagerRegistry();
 	}

@@ -3,6 +3,8 @@ package junit.actions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import config.interfaces.Config;
@@ -31,6 +33,9 @@ public class KeyBoardManagerTests {
 		doneSomething=false;
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testConstructor_hasNoRegisteredItems() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -38,12 +43,18 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testConstructor_shouldBeRunning() {
 		KeyBoardManager testObject = new KeyBoardManager();
 		assertTrue(testObject.isRunning());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testConstructor_noButtonIsPressed() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -51,6 +62,11 @@ public class KeyBoardManagerTests {
 		assertEquals(Character.UNASSIGNED,testObject.getCurrentPressed());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("core")
+	@Tag("manager")
+	@RepeatedTest(2)
 	@Test
 	public void registerAction_shouldBeRegistered() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -62,14 +78,11 @@ public class KeyBoardManagerTests {
 		
 		assertTrue(testObject.getRegisteredItems().contains(sampleAction));
 	}
-	/*
-	@Test
-	public void testConstructor_MousePosIsNull() {
-		KeyBoardManager testObject = new KeyBoardManager();
-		
-		//assertEquals(null,testObject.getMousePos());
-	}
-	*/
+	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("core")
+	@Tag("manager")
 	@Test
 	public void registerAction_registerTwice_shouldBeOverwritten() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -85,6 +98,10 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.getRegisteredItems().contains(sampleOverwrite));
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("config")
 	@Test
 	public void testInit_emptyConfig_hasNoRegisteredItems() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -99,6 +116,10 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("config")
+	@Tag("manager")
 	@Test
 	public void testInit_configHasItem_isNotInActionManager_shouldBeEmpty() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -114,6 +135,10 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("config")
+	@Tag("manager")
 	@Test
 	public void testInit_configHasItem_shouldNotBeEmpty() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -131,6 +156,10 @@ public class KeyBoardManagerTests {
 		assertFalse(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("config")
 	@Test
 	public void testInit_configHasQuitAction_shouldContainQuitAction() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -147,6 +176,9 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.getRegisteredItems().contains(ManagerRegistry.getActionManager().getActionByName("Quit")));
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testToggleUpdate_WasOff_shouldBeOn() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -157,6 +189,9 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.isRunning());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testToggleUpdate_WasOn_shouldBeOff() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -166,6 +201,9 @@ public class KeyBoardManagerTests {
 		assertFalse(testObject.isRunning());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testReset_shouldHaveNoRegisteredItems() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -179,6 +217,11 @@ public class KeyBoardManagerTests {
 		assertTrue(testObject.getRegisteredItems().isEmpty());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test
 	public void testPressButton_NoActionAssigned_NothingHappens() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -190,6 +233,11 @@ public class KeyBoardManagerTests {
 		assertFalse(doneSomething);
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("core")
+	@RepeatedTest(2)
 	@Test
 	public void testPressButton_ActionAssigned_ActionIsDone() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -205,6 +253,11 @@ public class KeyBoardManagerTests {
 		assertTrue(doneSomething);
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("core")
+	@RepeatedTest(5)
 	@Test
 	public void testPressButton_ButtonIsAlreadyPressed_ActionIsNotPerformedTwice() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -222,6 +275,11 @@ public class KeyBoardManagerTests {
 		assertFalse(doneSomething);
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@Tag("core")
+	@RepeatedTest(3)
 	@Test
 	public void testPressButton_AnotherButtonIsAlreadyPressed_newActionIsNotPerformed() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -245,6 +303,9 @@ public class KeyBoardManagerTests {
 		assertTrue(doneSomething);
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
 	@Test
 	public void testPressButton_currentPressedButtonIsSet() {
 		KeyBoardManager testObject = new KeyBoardManager();
@@ -260,6 +321,10 @@ public class KeyBoardManagerTests {
 		assertEquals(a,testObject.getCurrentPressed());
 	}
 	
+	@Tag("logic")
+	@Tag("fast")
+	@Tag("manager")
+	@RepeatedTest(2)
 	@Test
 	public void testReleaseButton_currentPressedButtonIsReset() {
 		KeyBoardManager testObject = new KeyBoardManager();
