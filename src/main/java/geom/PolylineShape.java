@@ -2,11 +2,14 @@ package geom;
 
 import java.util.List;
 
+import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
 
 public abstract class PolylineShape extends BaseShape {
 
+	protected DrawingInformation drawingInfo;
+	protected boolean fillShape,fillBorder;
 	
 	protected PolylineShape(Point center,List<Point> outline) {
 		this.outLine=outline;

@@ -69,7 +69,7 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 			
 			if (drawingInfo instanceof JavaFXDrawingInformation) {
 				var dinfocasted = (JavaFXDrawingInformation) drawingInfo;
-				gc.setFill(dinfocasted.color);
+				gc.setFill(dinfocasted.primarycolor);
 			}
 			else 
 				gc.setFill(Color.BLACK);
@@ -80,7 +80,7 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 	
 	public static class Builder {
 		private final String text;
-		private Color color= Color.BLACK;
+		private Color textcolor= Color.BLACK ;
 		private int size = 0,lifetime=100;
 		private Point position = new AbsolutePoint(0,0);
 		private DrawingInformation drawingInfo;
@@ -92,10 +92,10 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 		}
 		
 		public Builder color(Color val){ 
-			color= val; 
+			textcolor= val; 
 			return this;
 		}
-		
+
 		public Builder size(int val){
 			if(val<0)
 				throw new IllegalArgumentException("Size cannot be smaller than 0");
@@ -114,8 +114,8 @@ public class PopupText implements DrawingObject, TimerObject, RemovableObject {
 		}
 		
 		public PopupText build() {
-			if(color!=Color.BLACK) {
-				drawingInfo = new JavaFXDrawingInformation(color);
+			if(textcolor!=Color.BLACK) {
+				drawingInfo = new JavaFXDrawingInformation(textcolor);
 			} else {
 				drawingInfo = new EmptyJFXDrawingInformation();
 			}

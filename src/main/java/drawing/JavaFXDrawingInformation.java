@@ -16,13 +16,14 @@ import javafx.scene.transform.Affine;
 public class JavaFXDrawingInformation implements DrawingInformation{
 	
 	public boolean hasColorEffect=false;
-	public Color color;
+	public Color primarycolor;
+	public Color secondaryColor;
 	
 	public List<Effect> effects = new LinkedList<Effect>();
 	public List<Affine> transformations = new LinkedList<Affine>();
 	
 	public JavaFXDrawingInformation(Color color) {
-		this.color=color;
+		this.primarycolor=color;
 	}
 	
 	@Override
@@ -46,13 +47,13 @@ public class JavaFXDrawingInformation implements DrawingInformation{
 	}
 
 	private void applyFill(GraphicsContext gc) {
-		if (hasColorEffect && color != null) {
+		if (hasColorEffect && primarycolor != null) {
 			gc.setFill(new LinearGradient(0, 0, 0.8, 0.5, true, CycleMethod.NO_CYCLE, 
-					new Stop(0.0, color),
-					new Stop(1.0, color.darker())));
+					new Stop(0.0, primarycolor),
+					new Stop(1.0, primarycolor.darker())));
 		}
 		else {
-			gc.setFill(color);
+			gc.setFill(primarycolor);
 		}
 	}
 
