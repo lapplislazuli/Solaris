@@ -17,11 +17,18 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 	private BaseShip parent;
 	
 	public LaserCannon(BaseShip mount) {
+		if(mount == null)
+			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
+		
 		this.parent=mount;
 		this.max_cooldown=Laserbeam.COMMON_MAX_COOLDOWN;
 	}
 	
 	public LaserCannon(BaseShip mount,double max_cooldown) {
+		if(mount == null)
+			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
+		if(max_cooldown <= 0)
+			throw new IllegalArgumentException("Laser Cooldown cannot be equal or lower than 0");
 		this.parent=mount;
 		this.max_cooldown=max_cooldown;
 	}
@@ -63,6 +70,11 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 
 	@Override
 	public void update() {
-		cooldown --;
+		if (cooldown > 0)
+			cooldown --;
+	}
+	
+	public double currentCooldown() {
+		return cooldown;
 	}
 }

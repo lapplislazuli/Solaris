@@ -7,7 +7,6 @@ import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
-import space.core.SpaceObject;
 import space.spacecrafts.ships.BaseShip;
 
 public abstract class Missile extends MovingSpaceObject implements RemovableObject {

@@ -14,6 +14,10 @@ public class RocketLauncher implements MountedWeapon {
 	private BaseShip parent;
 	
 	public RocketLauncher(BaseShip mount,int magazineSize) {
+		if(mount == null)
+			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
+		if(magazineSize < 0)
+			throw new IllegalArgumentException("MagazineSize cannot be lower than 0");
 		this.parent=mount;
 		rockets=magazineSize;
 	}
@@ -52,5 +56,8 @@ public class RocketLauncher implements MountedWeapon {
 	public boolean isReady() {
 		return rockets > 0 && targetDirection != 0;
 	}
-
+	
+	public int getRemainingRockets() {
+		return rockets;
+	}
 }
