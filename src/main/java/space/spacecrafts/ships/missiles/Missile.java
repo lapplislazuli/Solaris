@@ -7,18 +7,19 @@ import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
 import space.core.MovingSpaceObject;
-import space.spacecrafts.ships.Ship;
+import space.core.SpaceObject;
+import space.spacecrafts.ships.BaseShip;
 
 public abstract class Missile extends MovingSpaceObject implements RemovableObject {
 	
-	Ship emitter; //who shot me
+	BaseShip emitter; //who shot me
 	/*
 	 * Rotation will be used as the direction of the missile
 	 * speed will be used to move in direction, this will be an absolute value not relative to parents location
 	 * Distance will be used to measure the flown distance, for remove logic
 	 */
 
-	public Missile(String name, Ship emitter, BaseShape area,DrawingInformation dInfo, double direction, double speed) {
+	public Missile(String name, BaseShip emitter, BaseShape area,DrawingInformation dInfo, double direction, double speed) {
 		super(name, emitter, dInfo, area, 0,speed);
 		this.emitter=emitter;
 		rotation=direction;

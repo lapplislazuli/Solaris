@@ -19,7 +19,7 @@ import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.Ship;
+import space.spacecrafts.ships.BaseShip;
 import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
 import space.spacecrafts.ships.missiles.Rocket;
@@ -234,7 +234,7 @@ class ArmedSpaceShuttleTests {
 		SpaceObject root = fakeStar(0,0);
 		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
 		
-		Ship copy = testObject.rebuildAt("copy",root);
+		BaseShip copy = testObject.rebuildAt("copy",root);
 		
 		assertTrue(copy instanceof ArmedSpaceShuttle);
 	}

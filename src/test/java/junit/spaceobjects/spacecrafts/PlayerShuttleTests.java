@@ -14,7 +14,7 @@ import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.Ship;
+import space.spacecrafts.ships.BaseShip;
 
 class PlayerShuttleTests {
 
@@ -28,7 +28,7 @@ class PlayerShuttleTests {
 		SpaceObject root = fakeStar(0,0);
 		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
-		assertEquals(50,((Ship) testObject).getOrbitingDistance());
+		assertEquals(50,((BaseShip) testObject).getOrbitingDistance());
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ class PlayerShuttleTests {
 		ArmedSpacecraft copy = (ArmedSpacecraft) testObject.rebuildAt("Copy", root);
 		
 		assertTrue(copy instanceof ArmedSpacecraft);
-		assertTrue(copy instanceof Ship);
+		assertTrue(copy instanceof BaseShip);
 		assertTrue(copy.isPlayer());
 	}
 	

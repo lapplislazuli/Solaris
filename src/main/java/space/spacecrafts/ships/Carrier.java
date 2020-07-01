@@ -13,7 +13,7 @@ import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Missile;
 
-public abstract class Carrier extends Ship{
+public abstract class Carrier extends BaseShip{
 	
 	protected int maxShips = 3; // How Many Ships can the carrier have active?
 	protected List<CarrierDrone> drones; 
@@ -41,8 +41,8 @@ public abstract class Carrier extends Ship{
 			if(other instanceof Missile) {	// Don't collide with Childrens missiles
 				if (drones.stream()
 						.filter(d -> d instanceof ArmedSpacecraft)
-						.filter(d -> d instanceof Ship)
-						.map(d -> (Ship)d )
+						.filter(d -> d instanceof BaseShip)
+						.map(d -> (BaseShip)d )
 						.anyMatch(d-> d.getAllChildren().contains(other)))
 					return false;
 			}

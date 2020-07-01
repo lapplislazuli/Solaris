@@ -1,16 +1,7 @@
 package logic.loader;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import drawing.JavaFXDrawingInformation;
-import drawing.PopupText;
 import geom.AbsolutePoint;
-import geom.CurvyPolylineShape;
-import geom.EdgyPolylineShape;
-import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.ArmedSpacecraft;
 import javafx.scene.paint.Color;
@@ -26,7 +17,7 @@ import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.navigators.BaseNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
 import space.spacecrafts.ships.BattleCarrier;
-import space.spacecrafts.ships.Ship;
+import space.spacecrafts.ships.BaseShip;
 
 public final class GalaxyFactory {
 	
@@ -121,7 +112,7 @@ public final class GalaxyFactory {
 			aliens.getRoute().add(sun);
 			aliens.setAutoAttack(true);
 			
-			Ship chineseShip = new Ship("Chinese",sun,3,50,Math.PI/100);
+			BaseShip chineseShip = new ArmedSpaceShuttle("Chinese",sun,3,50,Math.PI/100);
 			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 			chinNav.getRoute().add(mars);
 			

@@ -6,10 +6,11 @@ import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.MovingObject;
+import interfaces.logical.MovingUpdatingObject;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.Sensor;
 
-public interface Spacecraft extends DestructibleObject,MovingObject{
+public interface Spacecraft extends DestructibleObject,MovingObject,MovingUpdatingObject{
 
 	public void launch();
 	
@@ -34,5 +35,6 @@ public interface Spacecraft extends DestructibleObject,MovingObject{
 	public Point getCenter();
 	
 	public void setSensor(Sensor val);
+	
 }
 

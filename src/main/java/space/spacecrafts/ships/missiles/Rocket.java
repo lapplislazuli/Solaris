@@ -5,17 +5,20 @@ import geom.Rectangle;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
 import space.effect.Explosion;
-import space.spacecrafts.ships.Ship;
+import space.spacecrafts.ships.BaseShip;
 
-@SuppressWarnings("restriction")
 public class Rocket extends Missile implements DestructibleObject {
+	
+	public static final int ROCKET_SPEED = 10;
+	public static final int ROCKET_SIZE = 3;
 
-	public Rocket(String name, Ship emitter, int size) {
+	
+	public Rocket(String name, BaseShip emitter, int size) {
 		super(name, emitter,  new Rectangle(emitter.getCenter(),size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),emitter.getRotation(), emitter.getSpeed());
 		shape.setLevelOfDetail(2);
 	}
 	
-	public Rocket(String name, Ship emitter, int size,double rotation, int speed) {
+	public Rocket(String name, BaseShip emitter, int size,double rotation, int speed) {
 		super(name, emitter, new Rectangle(emitter.getCenter(),size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),rotation,speed);
 		shape.setLevelOfDetail(2);
 	}

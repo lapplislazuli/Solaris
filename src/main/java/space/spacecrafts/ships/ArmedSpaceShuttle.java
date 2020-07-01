@@ -14,7 +14,7 @@ import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
 import space.spacecrafts.ships.missiles.Rocket;
 
-public class ArmedSpaceShuttle extends Ship implements ArmedSpacecraft{
+public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
 	
 	public int rocketsLeft=60, laserCoolDown=0;
 
