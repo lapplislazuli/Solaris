@@ -9,4 +9,6 @@ public interface MountedWeapon extends MountedDevice {
 	public void setTarget(Double dir);
 	public void setTarget(Point p);
 	
+	public boolean isReady();
+	
 }

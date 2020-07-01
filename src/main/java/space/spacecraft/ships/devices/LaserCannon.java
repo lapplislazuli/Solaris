@@ -1,28 +1,36 @@
 package space.spacecraft.ships.devices;
 
 import interfaces.geom.Point;
+import interfaces.logical.UpdatingObject;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.Spacecraft;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.BaseShip;
-import space.spacecrafts.ships.missiles.Rocket;
+import space.spacecrafts.ships.missiles.Laserbeam;
 
-public class RocketLauncher implements MountedWeapon {
+public class LaserCannon implements MountedWeapon, UpdatingObject {
+
 	
-	private double targetDirection; // In radiant from the emiter
-	private int rockets; 
+	private double targetDirection; // In radiant from the emitter
+	private double cooldown;
+	private final double max_cooldown;
 	private BaseShip parent;
 	
-	public RocketLauncher(BaseShip mount,int magazineSize) {
+	public LaserCannon(BaseShip mount) {
 		this.parent=mount;
-		rockets=magazineSize;
+		this.max_cooldown=Laserbeam.COMMON_MAX_COOLDOWN;
+	}
+	
+	public LaserCannon(BaseShip mount,double max_cooldown) {
+		this.parent=mount;
+		this.max_cooldown=max_cooldown;
 	}
 	
 	@Override
 	public void activate() {
 		if(isReady()) {
-			new Rocket("Rocket from " + parent.getName(), parent,Rocket.ROCKET_SIZE,targetDirection,Rocket.ROCKET_SPEED);
-			rockets--;				
+			new Laserbeam("Rocket from " + parent.getName(), parent,targetDirection,Laserbeam.COMMON_LASER_SPEED);
+			cooldown = max_cooldown;			
 			// Alter parameters to not be ready next time without newly set target
 			targetDirection=0;
 		}
@@ -50,7 +58,11 @@ public class RocketLauncher implements MountedWeapon {
 
 	@Override
 	public boolean isReady() {
-		return rockets > 0 && targetDirection != 0;
+		return cooldown <= 0 && targetDirection != 0;
 	}
 
+	@Override
+	public void update() {
+		cooldown --;
+	}
 }

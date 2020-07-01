@@ -14,15 +14,18 @@ import space.spacecrafts.ships.BaseShip;
 
 @SuppressWarnings("restriction")
 public class Laserbeam extends Missile{
-
+	
+	public static final double COMMON_MAX_COOLDOWN = 3000/25;//@UpdateRatio 25ms its every 3 Seconds:
+	public static final double COMMON_LASER_SPEED = 5;
+	
 	private List<AbsolutePoint> trail=new LinkedList<AbsolutePoint>();
 	
 	public Laserbeam(String name, BaseShip emitter) {
-		super(name, emitter,new Circle(emitter.getCenter().absoluteClone(),2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.getRotation(), 3);
+		super(name, emitter,new Circle(emitter.getCenter().absoluteClone(),2), new JavaFXDrawingInformation(Color.LIGHTGREEN), emitter.getRotation(), COMMON_LASER_SPEED);
 		
 	}
 	
-	public Laserbeam(String name, BaseShip emitter,  double direction, int speed) {
+	public Laserbeam(String name, BaseShip emitter,  double direction, double speed) {
 		super(name, emitter, new Circle(emitter.getCenter().absoluteClone(),2),new JavaFXDrawingInformation(Color.LIGHTGREEN),direction, speed);
 	}
 
