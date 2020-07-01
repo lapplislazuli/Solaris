@@ -8,24 +8,32 @@ import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.ArmedSpacecraft;
+import interfaces.spacecraft.MountedWeapon;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.missiles.Laserbeam;
+import space.spacecraft.ships.devices.LaserCannon;
+import space.spacecraft.ships.devices.RocketLauncher;
 import space.spacecrafts.ships.missiles.Missile;
-import space.spacecrafts.ships.missiles.Rocket;
 
 public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
-	
-	public int rocketsLeft=60, laserCoolDown=0;
 
 	protected boolean isPlayer;
 	
+	private LaserCannon laserCannon;
+	private MountedWeapon rocketLauncher;
+	
 	public ArmedSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
+		
+		laserCannon = new LaserCannon(this);
+		rocketLauncher = new RocketLauncher(this,60);
 	}
 	
 	public ArmedSpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
 		super(name, parent,dinfo,s, size, orbitingDistance, speed);
+		
+		laserCannon = new LaserCannon(this);
+		rocketLauncher = new RocketLauncher(this,60);
 	}
 	
 	public static ArmedSpaceShuttle PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -42,38 +50,27 @@ public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
 	
 	@Override
 	public void update() {
-		laserCoolDown--;
-		laserCoolDown=Math.max(0,laserCoolDown);
+		laserCannon.update();
 		super.update();
 	}
 	
 	public void shootLaser(SpaceObject targetSpaceObject) {
-		if(laserCoolDown==0) {
-			new Laserbeam("Laser from " + name, this,degreeTo(targetSpaceObject),5);
-			//@UpdateRatio 25ms its every 3 Seconds:
-			laserCoolDown= 3000/25;
-		}
+		laserCannon.setTarget(targetSpaceObject);
+		laserCannon.activate();
 	}
 	
 	public void shootRocket(SpaceObject targetSpaceObject) {
-		if(rocketsLeft > 0) {
-			new Rocket("Rocket from " + name, this,4,degreeTo(targetSpaceObject),5);
-			rocketsLeft --;
-		}
+		rocketLauncher.setTarget(targetSpaceObject);
+		rocketLauncher.activate();
 	}
 	public void shootLaser(Point targetPoint) {
-		if(laserCoolDown==0) {
-			new Laserbeam("Laser from " + name, this,center.degreeTo(targetPoint),5);
-			//@UpdateRatio 25ms its every 3 Seconds:
-			laserCoolDown= 3000/25;
-		}
+		laserCannon.setTarget(targetPoint);
+		laserCannon.activate();
 	}
 	
 	public void shootRocket(Point targetPoint) {
-		if(rocketsLeft> 0) {
-			new Rocket("Rocket from " + name, this,3,center.degreeTo(targetPoint),10);
-			rocketsLeft--;		
-		}
+		rocketLauncher.setTarget(targetPoint);
+		rocketLauncher.activate();
 	}
 
 	@Override

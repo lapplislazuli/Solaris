@@ -37,28 +37,6 @@ class LaserDroneTests {
 		assertEquals(1,testObject.getTrabants().size());
 	}
 	
-	@Test
-	public void testShootLaser_shouldSetCooldown() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
-		
-		testObject.shootLaser(root);
-		
-		assertTrue(testObject.laserCoolDown>0);
-	}
-	
-
-	@Test
-	void testShootLaser_hasCooldown_shouldNotSpawnLaser() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
-		
-		testObject.laserCoolDown=1000;
-		
-		testObject.shootLaser(root);
-		
-		assertTrue(testObject.getTrabants().isEmpty());
-	}
 	
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {

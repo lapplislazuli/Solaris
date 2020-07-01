@@ -40,9 +40,6 @@ class ArmedSpaceShuttleTests {
 	void testConstructor_shouldBeBuild() {
 		SpaceObject root = fakeStar(0,0);
 		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		
-		assertEquals(0,testObject.laserCoolDown);
-		assertTrue(testObject.rocketsLeft>0);
 	}
 	
 	@Test
@@ -81,17 +78,6 @@ class ArmedSpaceShuttleTests {
 	}
 
 	@Test
-	void testShootLaser_checkCooldown_shouldBeSet() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		
-		testObject.shootLaser(target);
-		
-		assertNotEquals(0,testObject.laserCoolDown);
-	}
-
-	@Test
 	void testShootRocketAtPoint_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
 		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
@@ -116,65 +102,8 @@ class ArmedSpaceShuttleTests {
 	    assertTrue(missile instanceof Missile);
 		assertTrue(missile instanceof Rocket);
 	}
-	
-	@Test
-	void testShootRocket_checkRockets_shouldBeOneLess() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		int startingRockets = testObject.rocketsLeft;
-		
-		testObject.shootRocket(target);
-		
-		assertEquals(startingRockets-1,testObject.rocketsLeft);
-	}
-	
-	@Test
-	void testShootLaser_hasCooldown_shouldNotSpawnLaser() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		testObject.laserCoolDown=1000;
-		
-		testObject.shootLaser(target);
-		
-		assertTrue(testObject.getTrabants().isEmpty());
-	}
-	
-	@Test
-	void testShootRocket_NoRocketsLeft_shouldNotShoot() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		testObject.rocketsLeft=0;
-		
-		testObject.shootRocket(target);
-		
-		assertTrue(testObject.getTrabants().isEmpty());
-	}
-	
-	@Test
-	void testUpdate_laserCoolDownAtMinimum_shouldNotChange() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		testObject.laserCoolDown=0;
-		
-		testObject.update();
-		
-		assertEquals(0,testObject.laserCoolDown);
-	}
-	
-	@Test
-	void testUpdate_laserCoolDownFresh_shouldBeLowerThanBefore() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
-		testObject.laserCoolDown=10;
-		
-		testObject.update();
-		
-		assertTrue(testObject.laserCoolDown<10);
-	}
-	
+
+
 	@Test
 	void testCollision_doesNotCollideOwnLasers() {
 		SpaceObject root = fakeStar(0,0);
