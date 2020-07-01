@@ -1,15 +1,19 @@
 package junit.spaceobjects.spacecrafts;
 
 
-import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
+import static junit.testhelpers.FakeSpaceObjectFactory.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import junit.fakes.FakeSensor;
 import junit.fakes.interfaces.FakeCollidingObject;
+import logic.manager.ManagerRegistry;
+
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
@@ -17,7 +21,16 @@ import space.spacecrafts.ships.BattleCarrier;
 import space.spacecrafts.ships.LaserDrone;
 
 class LaserDroneTests {
-
+	
+	@BeforeEach
+	void initManagerRegistry() {
+		ManagerRegistry.getInstance();
+	}
+	@AfterEach
+	void resetManagerRegistry() {
+		ManagerRegistry.reset();
+	}
+	
 	@Test
 	public void testConstructor_shouldNotFail() {
 		SpaceObject root = fakeStar(0,0);

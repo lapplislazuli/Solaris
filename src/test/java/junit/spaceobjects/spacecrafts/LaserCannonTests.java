@@ -28,61 +28,10 @@ public class LaserCannonTests {
 		ManagerRegistry.getInstance();
 	}
 	@AfterEach
-	void resteManagerRegistry() {
+	void resetManagerRegistry() {
 		ManagerRegistry.reset();
 	}
 
-	/*
-	@Test
-	void testShootRocketAtPoint_shouldBeShot() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		
-		emitter.shootRocket(target);
-		
-		MovingUpdatingObject missile = emitter.getTrabants().get(0);
-	    assertTrue(missile instanceof Missile);
-		assertTrue(missile instanceof Rocket);
-	}
-	
-	@Test
-	void testShootRocketAtTarget_shouldBeShot() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
-		SpaceObject target = fakeStar(1000,1000);
-		
-		emitter.shootRocket(target);
-		
-		MovingUpdatingObject missile = emitter.getTrabants().get(0);
-	    assertTrue(missile instanceof Missile);
-		assertTrue(missile instanceof Rocket);
-	}
-	@Test
-	void testShootRocket_NoRocketsLeft_shouldNotShoot() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		emitter.rocketsLeft=0;
-		
-		emitter.shootRocket(target);
-		
-		assertTrue(emitter.getTrabants().isEmpty());
-	}
-	
-	@Test
-	void testShootRocket_checkRockets_shouldBeOneLess() {
-		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
-		Point target = new AbsolutePoint(1000,1000);
-		int startingRockets = emitter.rocketsLeft;
-		
-		emitter.shootRocket(target);
-		
-		assertEquals(startingRockets-1,emitter.rocketsLeft);
-	}
-	
-	*/
 	@Test
 	void testActivate_noTargetSet_doesNotSpawnLaser() {
 		SpaceObject root = fakeStar(0,0);

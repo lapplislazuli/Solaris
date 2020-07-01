@@ -12,9 +12,10 @@ import javafx.scene.paint.Color;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 
-@SuppressWarnings("restriction")
 public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
-
+	
+	public static final double STANDARD_REBUILD_TIME = 10000/25; //That is ~10 seconds with an update rate of 25ms
+	
 	public LaserDrone(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent,new JavaFXDrawingInformation(Color.BLANCHEDALMOND), new UShape(size*2,size*2,size/2), size, orbitingDistance, speed);
 		this.shape.setLevelOfDetail(2);
@@ -45,6 +46,11 @@ public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
 				.filter(c -> ! (c instanceof LaserDrone)) 
 				.findFirst();
 		return possibleTarget;
+	}
+	
+	@Override
+	public LaserDrone rebuildAt(String name,SpaceObject at) {
+		return new LaserDrone(name,at,this.size,(int)this.orbitingDistance,this.speed);	
 	}
 	
 	@Override

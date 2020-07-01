@@ -60,4 +60,9 @@ public class RocketLauncher implements MountedWeapon {
 	public int getRemainingRockets() {
 		return rockets;
 	}
+
+	@Override
+	public void update() {
+		//Empty, Rockets are managed somewhere else
+	}
 }
