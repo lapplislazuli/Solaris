@@ -1,5 +1,7 @@
 package space.spacecrafts.ships;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import interfaces.drawing.DrawingInformation;
@@ -7,6 +9,7 @@ import interfaces.geom.Point;
 import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
+import interfaces.logical.UpdatingObject;
 import interfaces.spacecraft.ArmedSpacecraft;
 import interfaces.spacecraft.MountedWeapon;
 import logic.manager.ManagerRegistry;
@@ -19,21 +22,26 @@ public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
 
 	protected boolean isPlayer;
 	
-	private LaserCannon laserCannon;
-	private MountedWeapon rocketLauncher;
+	private MountedWeapon primaryWeapon,secondaryWeapon;
+	private List<MountedWeapon> weapons = new ArrayList<>();
+	
+	private void setStandardWeapons() {
+
+		primaryWeapon = new LaserCannon(this);
+		secondaryWeapon = new RocketLauncher(this,60);
+		
+		weapons.add(primaryWeapon);
+		weapons.add(secondaryWeapon);
+	}
 	
 	public ArmedSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, size, orbitingDistance, speed);
-		
-		laserCannon = new LaserCannon(this);
-		rocketLauncher = new RocketLauncher(this,60);
+		setStandardWeapons();
 	}
 	
 	public ArmedSpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
 		super(name, parent,dinfo,s, size, orbitingDistance, speed);
-		
-		laserCannon = new LaserCannon(this);
-		rocketLauncher = new RocketLauncher(this,60);
+		setStandardWeapons();
 	}
 	
 	public static ArmedSpaceShuttle PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -50,27 +58,27 @@ public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
 	
 	@Override
 	public void update() {
-		laserCannon.update();
+		weapons.stream().filter(o -> o instanceof UpdatingObject).map(o -> (UpdatingObject)o).forEach(o -> o.update());
 		super.update();
 	}
 	
 	public void shootLaser(SpaceObject targetSpaceObject) {
-		laserCannon.setTarget(targetSpaceObject);
-		laserCannon.activate();
+		primaryWeapon.setTarget(targetSpaceObject);
+		primaryWeapon.activate();
 	}
 	
 	public void shootRocket(SpaceObject targetSpaceObject) {
-		rocketLauncher.setTarget(targetSpaceObject);
-		rocketLauncher.activate();
+		secondaryWeapon.setTarget(targetSpaceObject);
+		secondaryWeapon.activate();
 	}
 	public void shootLaser(Point targetPoint) {
-		laserCannon.setTarget(targetPoint);
-		laserCannon.activate();
+		primaryWeapon.setTarget(targetPoint);
+		primaryWeapon.activate();
 	}
 	
 	public void shootRocket(Point targetPoint) {
-		rocketLauncher.setTarget(targetPoint);
-		rocketLauncher.activate();
+		secondaryWeapon.setTarget(targetPoint);
+		secondaryWeapon.activate();
 	}
 
 	@Override
@@ -81,10 +89,12 @@ public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
 	}
 	
 	public void attack(Point p) {
-		shootLaser(p);
+		primaryWeapon.setTarget(p);
+		primaryWeapon.activate();
 	}
 	public void attack(SpaceObject o) {
-		shootLaser(o);
+		primaryWeapon.setTarget(o);
+		primaryWeapon.activate();
 	}
 	
 	@Override
