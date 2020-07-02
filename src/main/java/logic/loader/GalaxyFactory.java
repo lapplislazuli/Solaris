@@ -16,7 +16,7 @@ import space.core.Star;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.navigators.BaseNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.BattleCarrier;
+import space.spacecrafts.ships.Carrier;
 import space.spacecrafts.ships.BaseShip;
 
 public final class GalaxyFactory {
@@ -116,7 +116,7 @@ public final class GalaxyFactory {
 			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 			chinNav.getRoute().add(mars);
 			
-			BattleCarrier mothership = new BattleCarrier("Mothership", sun,6, 480, Math.PI/500);
+			Carrier mothership = new Carrier("Mothership", sun,6, 480, Math.PI/500);
 			ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,false);
 			carrierNav.getRoute().add(earth);
 			carrierNav.setAutoAttack(true);

@@ -2,10 +2,13 @@ package space.spacecrafts.ships;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import drawing.JavaFXDrawingInformation;
 import geom.LolliShape;
+import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
+import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.ArmedSpacecraft;
 import interfaces.spacecraft.CarrierDrone;
 import javafx.scene.paint.Color;
@@ -13,7 +16,7 @@ import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.missiles.Missile;
 
-public abstract class Carrier extends BaseShip{
+public class Carrier extends BaseShip implements ArmedSpacecraft{
 	
 	protected int maxShips = 3; // How Many Ships can the carrier have active?
 	protected List<CarrierDrone> drones; 
@@ -36,12 +39,15 @@ public abstract class Carrier extends BaseShip{
 	@Override
 	public boolean collides(CollidingObject other) {
 		if(super.collides(other)) {
-			if(other instanceof CarrierDrone && drones.contains((CarrierDrone)other)) //Don't collide with Children
-				return false;
+			if(other instanceof CarrierDrone && trabants.contains((CarrierDrone)other)) {//Don't collide with Children
+				var otherCasted = (CarrierDrone) other;
+				return otherCasted.getParent().equals(this);
+			}
 			if(other instanceof Missile) {	// Don't collide with Childrens missiles
-				if (drones.stream()
-						.filter(d -> d instanceof ArmedSpacecraft)
-						.filter(d -> d instanceof BaseShip)
+				if (trabants.stream()
+						.filter(d -> d instanceof CarrierDrone)
+						.map(d -> (CarrierDrone)d)
+						.filter(d -> d.getParent().equals(this))
 						.map(d -> (BaseShip)d )
 						.anyMatch(d-> d.getAllChildren().contains(other)))
 					return false;
@@ -77,11 +83,6 @@ public abstract class Carrier extends BaseShip{
 	
 	protected void removeDeadDrones() {
 		drones.removeIf(s -> s.isDead());
-	}
-	
-	protected void spawnDrone() {
-		shipCounter++;
-		setDroneCooldown();
 	}
 	
 	protected void setDroneCooldown() {
@@ -127,5 +128,41 @@ public abstract class Carrier extends BaseShip{
 	public int getCurrentDroneCount() {return drones.size();}
 	public boolean hasFullDrones() {return drones.size()==maxShips;}
 	public List<CarrierDrone> getDrones(){return drones;}
+	
+	protected void spawnDrone() {
+		LaserDrone spawned = new LaserDrone(name + "'s ship no." + shipCounter, this, size/2 ,size*3+2,speed*4);
+		spawned.setRelativePos(droneSpawnAngle(shipCounter,maxShips));
+		drones.add(spawned);
+		shipCounter++;
+		setDroneCooldown();
+	}
+
+	public void attack(Point p) {
+		// Carriers cannot attack points?
+		// TODO: SensorArray for Point p with given Radious and spread attack for every found valid target!
+	}
+
+	public void attack(SpaceObject o) {
+		launchDrones(o);
+	}
+	
+	public Carrier rebuildAt(String name, SpaceObject at) {
+		Carrier copy = new Carrier(name,at,size,(int) orbitingDistance,speed);
+		return copy;
+	}
+	
+	@Override
+	public Optional<SpaceObject> getNearestPossibleTarget() {
+		Optional<SpaceObject> possibleTarget = Optional.empty();
+		if(!sensor.getDetectedItems().isEmpty())
+			possibleTarget=sensor.getDetectedItems().stream()
+				.filter(c->c instanceof DestructibleObject)
+				.filter(c -> c instanceof SpaceObject)
+				.map(c-> (SpaceObject)c)
+				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
+				.filter(c -> ! drones.contains(c)) 
+				.findFirst();
+		return possibleTarget;
+	}
 	
 }

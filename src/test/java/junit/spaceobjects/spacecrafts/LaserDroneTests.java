@@ -17,7 +17,7 @@ import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.BattleCarrier;
+import space.spacecrafts.ships.Carrier;
 import space.spacecrafts.ships.LaserDrone;
 
 class LaserDroneTests {
@@ -54,7 +54,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 			
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -67,7 +67,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_notDestructible_shouldBeEmptyOptional(){
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -81,7 +81,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -95,7 +95,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -111,7 +111,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldReturnTheDestructibleInOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -129,7 +129,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -147,7 +147,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldReturnFirst() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -171,7 +171,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_OnlyOtherDronesInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -186,7 +186,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_CarrierIsInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		BattleCarrier testObjectSource = new BattleCarrier("TestCarrier",root,5,6,Math.PI/2);
+		Carrier testObjectSource = new Carrier("TestCarrier",root,5,6,Math.PI/2);
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
