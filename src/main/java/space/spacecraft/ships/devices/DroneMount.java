@@ -1,5 +1,7 @@
 package space.spacecraft.ships.devices;
 
+import java.util.function.Supplier;
+
 import interfaces.geom.Point;
 import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
@@ -20,9 +22,12 @@ public class DroneMount implements MountedWeapon {
 	Spacecraft parent;
 	CarrierDrone drone;
 	
+	Supplier<CarrierDrone> factoryMethod = () -> null;
+	
 	private double rebuild_cooldown = LaserDrone.STANDARD_REBUILD_TIME;
 	public boolean drone_launched = false;
 	
+	@Deprecated
 	public DroneMount(Spacecraft mount,CarrierDrone drone) {
 		if(mount == null)
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
@@ -30,6 +35,14 @@ public class DroneMount implements MountedWeapon {
 			throw new IllegalArgumentException("Drone cannot be null");
 		this.parent=mount;
 		this.drone=drone;
+	}
+	
+	public DroneMount(Supplier<CarrierDrone> droneSupplier) {
+		this.factoryMethod = droneSupplier;
+		this.drone = droneSupplier.get();
+		if(drone==null)
+			throw new IllegalArgumentException("The supplierfunction returned a null value - it is invalid");
+		this.parent = (Spacecraft) drone.getParent();	
 	}
 	
 	@Override
@@ -71,7 +84,8 @@ public class DroneMount implements MountedWeapon {
 	@Override
 	public void update() {
 		if(drone.isDead() && rebuild_cooldown <=0) {
-			drone = (CarrierDrone) drone.rebuildAt(drone.toString(), (SpaceObject) parent);
+			this.drone = factoryMethod.get();
+			this.parent = (Spacecraft) drone.getParent();
 			var droneCasted = (MovingSpaceObject) drone;
 			droneCasted.setRelativePos(droneSpawnAngle());
 			setDroneCooldown();
@@ -109,6 +123,10 @@ public class DroneMount implements MountedWeapon {
 		int currentAlive = ((SpaceObject) parent).getTrabants().size();
 		int max = currentAlive*2;
 		return currentAlive* (Math.PI*2/max);
+	}
+	
+	public CarrierDrone getDrone() {
+		return drone;
 	}
 	
 }

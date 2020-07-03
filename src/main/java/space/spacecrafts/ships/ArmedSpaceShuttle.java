@@ -22,8 +22,8 @@ public class ArmedSpaceShuttle extends BaseShip implements ArmedSpacecraft{
 
 	protected boolean isPlayer;
 	
-	private MountedWeapon primaryWeapon,secondaryWeapon;
-	private List<MountedWeapon> weapons = new ArrayList<>();
+	protected MountedWeapon primaryWeapon,secondaryWeapon;
+	protected List<MountedWeapon> weapons = new ArrayList<>();
 	
 	private void setStandardWeapons() {
 

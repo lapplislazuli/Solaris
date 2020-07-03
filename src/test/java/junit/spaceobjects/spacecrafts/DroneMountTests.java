@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.function.Supplier;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -232,18 +234,78 @@ public class DroneMountTests {
 	}
 	
 	@Test
+	void testUpdate_DroneWasDead_updateTooLittleTimes_DroneIsNotRebuild() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+
+		DroneMount testObject = new DroneMount(supplierFn);
+		
+		testObject.getDrone().destruct();
+		
+		for(int i = 0;i<10;i++)
+			testObject.update();
+		
+		assertFalse(testObject.isReady());
+	}
+	
+	@Test
 	void testUpdate_DroneWasDead_UpdateManyTimes_DroneIsRebuild() {
 		SpaceObject root = fakeStar(0,0);
 		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
-		DroneMount testObject = new DroneMount(emitter,testDrone);
+		DroneMount testObject = new DroneMount(supplierFn);
+
+		testObject.getDrone().destruct();
 		
-		testDrone.destruct();
-		
-		for(int i = 0;i<5000;i++)
+		for(int i = 0;i<10000;i++)
 			testObject.update();
 		
 		assertTrue(testObject.isReady());
 	}
+	
+	
+	@Test
+	void testConstructor_sampleHowToUseSupplierConstructor() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+
+		DroneMount testObject = new DroneMount(supplierFn);
+		
+		return;
+	}
+	
+	@Test
+	void testConstructor_supplierConstructor_shouldSpawnDroneForCarrier() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+
+		DroneMount testObject = new DroneMount(supplierFn);
+		
+		assertEquals(1,emitter.getTrabants().size());
+	}
+	
+	@Test
+	void testConstructor_supplierConstructor_droneMountsCarrierIsSet() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+
+		DroneMount testObject = new DroneMount(supplierFn);
+		
+		assertEquals(emitter,testObject.getParent());
+	}
+	
+	@Test
+	void testConstructor_supplierConstructor_faultySupplyFunction_throwsIllegalArgumentException() {
+		SpaceObject root = fakeStar(0,0);
+		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Supplier<CarrierDrone> supplierFn = () -> null;
+
+		
+		assertThrows(IllegalArgumentException.class,()->new DroneMount(supplierFn));
+	}	
 }

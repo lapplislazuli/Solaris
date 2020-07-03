@@ -13,14 +13,15 @@ import org.junit.jupiter.api.function.Executable;
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import interfaces.spacecraft.CarrierDrone;
+import javafx.scene.paint.Color;
 import junit.fakes.FakeSensor;
 import junit.fakes.interfaces.FakeCollidingObject;
 import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
+import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.Carrier;
-import space.spacecrafts.ships.Carrier;
-
+import space.spacecrafts.ships.DroneFactory;
 import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 class CarrierTests {
@@ -33,6 +34,88 @@ class CarrierTests {
 	void resteManagerRegistry() {
 		ManagerRegistry.reset();
 	}
+	
+	@Test
+	void testBuilder_allValuesFine_shouldBuild() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<4;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		
+		var carrier = 
+				b.color(Color.ALICEBLUE)
+				 .size(4)
+				 .distance_to_parent(40)
+				 .rotationSpeed(Math.PI)
+				 .speed(-Math.PI)
+				 .levelOfDetail(3)
+				 .addMountedWeapon(WeaponFactory::standardRocketLauncher)
+				 .addMountedWeapon(WeaponFactory::standardRocketLauncher)
+				 .addMountedWeapon(WeaponFactory::standardLaserCannon)
+				 .build();
+		
+		assertEquals(4,carrier.getTrabants().size());
+	}
+	
+
+	@Test
+	void testBuilder_minimalBuilder_EmptyDrones_shouldBuild() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var carrier = new Carrier.Builder("TestCarrier", carrierRoot).build();
+		
+		assertEquals(0,carrier.getTrabants().size());
+	}
+	
+	
+	@Test
+	void testBuilder_negativeSize_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		
+		assertThrows(IllegalArgumentException.class, () -> b.size(-1));
+	}
+	@Test
+	void testBuilder_negativeDistance_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		
+		assertThrows(IllegalArgumentException.class, () -> b.distance_to_parent(-1));
+	}
+	@Test
+	void testBuilder_negativeLevelOfDetail_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		
+		assertThrows(IllegalArgumentException.class, () -> b.levelOfDetail(-1));
+	}
+	@Test
+	void testBuilder_LevelOfDetailZero_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		
+		assertThrows(IllegalArgumentException.class, () -> b.levelOfDetail(0));
+	}
+	
+
+	@Test
+	void testBuilder_emptyName_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		assertThrows(IllegalArgumentException.class, () ->new Carrier.Builder("", carrierRoot));
+	}
+	@Test
+	void testBuilder_nullName_shouldThrowError() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		assertThrows(IllegalArgumentException.class, () ->new Carrier.Builder(null, carrierRoot));
+	}	
+	@Test
+	void testBuilder_nullRoot_shouldThrowError() {
+		assertThrows(IllegalArgumentException.class, () ->new Carrier.Builder("TestCarrier", null));
+	}
+	
+	/*
+	 * Legacy Tests, might be deprecated
+	 */
 	
 	@Test
 	void testConstructor_shouldHaveSetValues() {
