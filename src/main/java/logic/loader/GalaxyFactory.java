@@ -13,6 +13,7 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.SpaceObject;
 import space.core.Star;
+import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.navigators.BaseNavigator;
 import space.spacecrafts.ships.ArmedSpaceShuttle;
@@ -116,7 +117,14 @@ public final class GalaxyFactory {
 			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 			chinNav.getRoute().add(mars);
 			
-			Carrier mothership = new Carrier("Mothership", sun,6, 480, Math.PI/500);
+			Carrier mothership = new Carrier.Builder("Mothership",sun)
+					.size(6)
+					.speed(Math.PI/500)
+					.distance_to_parent(480)
+					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
+					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
+					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
+					.build();
 			ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,false);
 			carrierNav.getRoute().add(earth);
 			carrierNav.setAutoAttack(true);
