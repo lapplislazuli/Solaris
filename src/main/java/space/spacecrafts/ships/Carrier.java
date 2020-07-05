@@ -2,7 +2,6 @@ package space.spacecrafts.ships;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -10,16 +9,12 @@ import java.util.stream.Collectors;
 import drawing.JavaFXDrawingInformation;
 import geom.LolliShape;
 import interfaces.geom.Point;
-import interfaces.logical.CollidingObject;
-import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
-import interfaces.spacecraft.Spacecraft;
 import javafx.scene.paint.Color;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.DroneMount;
 import space.spacecraft.ships.devices.WeaponFactory;
-import space.spacecrafts.ships.missiles.Missile;
 
 public class Carrier extends Spaceshuttle{
 	
@@ -28,33 +23,18 @@ public class Carrier extends Spaceshuttle{
 		this.size=size;
 		this.weapons = weapons;
 	}
-	
-	@Override
-	public boolean collides(CollidingObject other) {
-		if(super.collides(other)) {
-			if(other instanceof CarrierDrone && trabants.contains((CarrierDrone)other)) {//Don't collide with Children
-				var otherCasted = (CarrierDrone) other;
-				return otherCasted.getParent().equals(this);
-			}
-			if(other instanceof Missile) {	// Don't collide with Childrens missiles
-				if (trabants.stream()
-						.filter(d -> d instanceof CarrierDrone)
-						.map(d -> (CarrierDrone)d)
-						.filter(d -> d.getParent().equals(this))
-						.map(d -> (Spaceshuttle)d )
-						.anyMatch(d-> d.getAllChildren().contains(other)))
-					return false;
-			}
-			return true;
-		}
-		return false;
-	}	
+		
 
 	public void attack(Point p) {
 		// Carriers cannot attack points?
 		// TODO: SensorArray for Point p with given Radious and spread attack for every found valid target!
 	}
-
+	
+	@Override
+	public boolean isCarrier() {
+		return true;
+	}
+	
 	public void attack(SpaceObject o) {
 		primaryWeapon.setTarget(o);
 		primaryWeapon.activate();
@@ -63,27 +43,6 @@ public class Carrier extends Spaceshuttle{
 	public Carrier rebuildAt(String name, SpaceObject at) {
 		Carrier copy = new Carrier(name,at,size,(int) orbitingDistance,speed,weapons);
 		return copy;
-	}
-	
-	@Override
-	public Optional<SpaceObject> getNearestPossibleTarget() {
-		Optional<SpaceObject> possibleTarget = Optional.empty();
-		if(!sensor.getDetectedItems().isEmpty())
-			possibleTarget=sensor.getDetectedItems().stream()
-				.filter(c->c instanceof DestructibleObject)
-				.filter(c -> c instanceof SpaceObject)
-				.map(c-> (SpaceObject)c)
-				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
-				.filter(c -> {
-					return ! weapons.stream()
-							.filter(w -> w instanceof DroneMount)
-							.map(d -> (DroneMount)d)
-							.map(d -> d.getDrone())
-							.anyMatch(u -> u.equals(c));
-					}
-				) 
-				.findFirst();
-		return possibleTarget;
 	}
 	
 	public List<CarrierDrone> getDrones(){

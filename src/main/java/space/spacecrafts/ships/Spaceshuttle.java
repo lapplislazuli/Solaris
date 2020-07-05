@@ -14,6 +14,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.UpdatingObject;
 import interfaces.spacecraft.ArmedSpacecraft;
+import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
@@ -22,6 +23,7 @@ import space.advanced.Asteroid;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 import space.effect.Explosion;
+import space.spacecraft.ships.devices.DroneMount;
 import space.spacecraft.ships.devices.LaserCannon;
 import space.spacecraft.ships.devices.RocketLauncher;
 import space.spacecrafts.ships.missiles.Missile;
@@ -212,7 +214,27 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	public boolean collides(CollidingObject other) {
 		if(other instanceof Missile && trabants.contains((Missile)other))
 			return false;
-		return super.collides(other);
+		if(super.collides(other)) {
+			if(other instanceof CarrierDrone && trabants.contains((CarrierDrone)other)) {//Don't collide with Children
+				var otherCasted = (CarrierDrone) other;
+				return otherCasted.getParent().equals(this);
+			}
+			if(other instanceof Missile) {	// Don't collide with Childrens missiles
+				if (trabants.stream()
+						.filter(d -> d instanceof CarrierDrone)
+						.map(d -> (CarrierDrone)d)
+						.filter(d -> d.getParent().equals(this))
+						.map(d -> (Spaceshuttle)d )
+						.anyMatch(d-> d.getAllChildren().contains(other)))
+					return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isCarrier(){
+		return weapons.stream().anyMatch(w-> w instanceof DroneMount);
 	}
 	
 	public void attack(Point p) {
@@ -247,6 +269,15 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
+				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
+				.filter(c -> {
+					return ! weapons.stream()
+							.filter(w -> w instanceof DroneMount)
+							.map(d -> (DroneMount)d)
+							.map(d -> d.getDrone())
+							.anyMatch(u -> u.equals(c));
+					}
+				) 
 				.findFirst();
 		return possibleTarget;
 	}
