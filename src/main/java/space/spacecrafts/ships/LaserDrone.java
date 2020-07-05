@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 
-public class LaserDrone extends ArmedSpaceShuttle implements CarrierDrone{
+public class LaserDrone extends Spaceshuttle implements CarrierDrone{
 	
 	public static final double STANDARD_REBUILD_TIME = 10000/25; //That is ~10 seconds with an update rate of 25ms
 	

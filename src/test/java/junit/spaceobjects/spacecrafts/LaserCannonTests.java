@@ -15,7 +15,7 @@ import interfaces.logical.MovingUpdatingObject;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.LaserCannon;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
 
@@ -35,7 +35,7 @@ public class LaserCannonTests {
 	@Test
 	void testActivate_noTargetSet_doesNotSpawnLaser() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		
 		LaserCannon testObject = new LaserCannon(emitter);
 		
@@ -47,7 +47,7 @@ public class LaserCannonTests {
 	@Test
 	void testShootLaser_hasCooldown_shouldNotSpawnLaser() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -65,7 +65,7 @@ public class LaserCannonTests {
 	@Test
 	void testShootLaserAtPoint_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -81,7 +81,7 @@ public class LaserCannonTests {
 	@Test
 	void testShootLaserAtTarget_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -98,7 +98,7 @@ public class LaserCannonTests {
 	@Test
 	void testShootLaserAtDegree_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 
 		LaserCannon testObject = new LaserCannon(emitter);
 		
@@ -113,7 +113,7 @@ public class LaserCannonTests {
 	@Test
 	void testShootLaser_checkCooldown_shouldBeSet() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -127,7 +127,7 @@ public class LaserCannonTests {
 	@Test
 	void testUpdate_laserCoolDownAtMinimum_shouldNotChange() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 
 		LaserCannon testObject = new LaserCannon(emitter);
 		
@@ -140,7 +140,7 @@ public class LaserCannonTests {
 	@Test
 	void testShootLaser_laserCooldownShouldBeDefaultMax() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -154,7 +154,7 @@ public class LaserCannonTests {
 	@Test
 	void testUpdate_laserCoolDownFresh_shouldBeLowerThanBefore() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -170,7 +170,7 @@ public class LaserCannonTests {
 	@Test
 	void testConstructor_nonDefaultMaxCooldown_shootLaser_shouldBeNonDefaultMaxCooldown() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		double manual_cooldown = 500;
 
@@ -185,7 +185,7 @@ public class LaserCannonTests {
 	@Test
 	void testGetParent_shouldBeEmitter() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 
 
 		LaserCannon testObject = new LaserCannon(emitter);
@@ -203,14 +203,14 @@ public class LaserCannonTests {
 	@Test
 	void testConstructor_zeroCooldown_shouldThrowError() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		
 		assertThrows(IllegalArgumentException.class, () -> new LaserCannon(emitter,0));
 	}
 	@Test
 	void testConstructor_negativeCooldown_shouldThrowError() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		
 		assertThrows(IllegalArgumentException.class, () -> new LaserCannon(emitter,-42));	
 	}

@@ -14,7 +14,7 @@ import interfaces.logical.MovingUpdatingObject;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.RocketLauncher;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.missiles.Missile;
 import space.spacecrafts.ships.missiles.Rocket;
 
@@ -34,7 +34,7 @@ public class RocketLauncherTests {
 	@Test
 	void testActivate_noTargetSet_doesNotShoot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
 		
@@ -46,7 +46,7 @@ public class RocketLauncherTests {
 	@Test
 	void testActivate_noRocketsLeft_doesNotShoot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		RocketLauncher testObject = new RocketLauncher(emitter,0);
@@ -59,7 +59,7 @@ public class RocketLauncherTests {
 	@Test
 	void testShootRocket_shootTwice_twoShots() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
@@ -76,7 +76,7 @@ public class RocketLauncherTests {
 	@Test
 	void testShootRocket_shootTwice_RunsOutOfMunition_twoShots() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		RocketLauncher testObject = new RocketLauncher(emitter,1);
@@ -93,7 +93,7 @@ public class RocketLauncherTests {
 	@Test
 	void testConstructor_shouldStartWithRightAmountOfMunition() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
@@ -105,7 +105,7 @@ public class RocketLauncherTests {
 	@Test
 	void testShootRocketAtPoint_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
@@ -121,7 +121,7 @@ public class RocketLauncherTests {
 	@Test
 	void testShootRocketAtTarget_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
@@ -138,7 +138,7 @@ public class RocketLauncherTests {
 	@Test
 	void testShootRocketAtDegree_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
 		
@@ -154,7 +154,7 @@ public class RocketLauncherTests {
 	@Test
 	void testGetParent_shouldBeEmitter() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 
 
 		RocketLauncher testObject = new RocketLauncher(emitter,10);
@@ -169,7 +169,7 @@ public class RocketLauncherTests {
 	@Test
 	void testConstructor_negativeCooldown_shouldThrowError() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle emitter= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
 		
 		assertThrows(IllegalArgumentException.class, () -> new RocketLauncher(emitter,-42));	
 	}

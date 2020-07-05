@@ -16,9 +16,8 @@ import space.core.Star;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.navigators.BaseNavigator;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.Carrier;
-import space.spacecrafts.ships.BaseShip;
 
 public final class GalaxyFactory {
 	
@@ -69,7 +68,7 @@ public final class GalaxyFactory {
 					.build();
 			
 			//TODO: Builder Patttern!
-			ArmedSpacecraft pS = ArmedSpaceShuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
+			ArmedSpacecraft pS = Spaceshuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
 			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",pS);
 			playerNav.getRoute().add(mars);
 			
@@ -107,13 +106,13 @@ public final class GalaxyFactory {
 					.color(Color.GRAY)
 					.build();
 			
-			ArmedSpaceShuttle martians = new ArmedSpaceShuttle("Martians",mars,3,50,Math.PI/100);
+			Spaceshuttle martians = new Spaceshuttle("Martians",mars,3,50,Math.PI/100);
 			ArmedShuttleNavigator aliens = new ArmedShuttleNavigator("Alien Invader",martians,true);
 			aliens.getRoute().add(saturn);
 			aliens.getRoute().add(sun);
 			aliens.setAutoAttack(true);
 			
-			BaseShip chineseShip = new ArmedSpaceShuttle("Chinese",sun,3,50,Math.PI/100);
+			Spaceshuttle chineseShip = new Spaceshuttle("Chinese",sun,3,50,Math.PI/100);
 			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 			chinNav.getRoute().add(mars);
 			

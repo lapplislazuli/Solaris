@@ -4,16 +4,16 @@ import interfaces.geom.Point;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.Spacecraft;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.BaseShip;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.missiles.Rocket;
 
 public class RocketLauncher implements MountedWeapon {
 	
 	private double targetDirection; // In radiant from the emiter
 	private int rockets; 
-	private BaseShip parent;
+	private Spaceshuttle parent;
 	
-	public RocketLauncher(BaseShip mount,int magazineSize) {
+	public RocketLauncher(Spaceshuttle mount,int magazineSize) {
 		if(mount == null)
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
 		if(magazineSize < 0)

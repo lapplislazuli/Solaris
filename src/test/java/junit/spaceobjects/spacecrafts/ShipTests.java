@@ -23,7 +23,7 @@ import space.core.MovingSpaceObject;
 import space.core.Planet;
 import space.core.SpaceObject;
 import space.core.Star;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 
 public class ShipTests implements RemovableTests {
 
@@ -39,14 +39,14 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testConstructor_shouldBePlayer() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		
 		assertFalse(testObject.isPlayer());
 	}
 	@Test
 	void testConstructor_ValuesShouldBeAsExpected() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		
 		
 		assertEquals(SpacecraftState.ORBITING,shuttle.getState());
@@ -57,7 +57,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testSetTarget_targetShouldBeSet() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		
 		shuttle.setTarget(target);
@@ -68,7 +68,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testSetTarget_doubleSet_targetBeShouldNewer() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		SpaceObject newertarget = fakeStar(250,250);
 		
@@ -81,7 +81,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_InspectParentAfterLaunch_ParentShouldBeOldTarget() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		
 		shuttle.setTarget(target);
@@ -93,7 +93,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_InspectTargetAfterLaunch_TargetShouldBeNull() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		
 		shuttle.setTarget(target);
@@ -105,7 +105,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_shouldHaveNewState_shouldBeFlying() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		
 		shuttle.setTarget(target);
@@ -117,7 +117,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_InspectDistance_shouldBeDistanceToTarget() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		
 		shuttle.setTarget(target);
@@ -130,7 +130,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_InspectRelativePos_shouldBeDegreeToTarget() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		SpaceObject target = fakeStar(100,100);
 		
 		shuttle.setTarget(target);
@@ -142,7 +142,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_NoTarget_shouldNotChangeState() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		
 		shuttle.setTarget(null);
 		shuttle.launch();
@@ -153,7 +153,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testLaunch_NoTarget_shouldHaveOldParent() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,Math.PI);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		
 		shuttle.setTarget(null);
 		shuttle.launch();
@@ -172,7 +172,7 @@ public class ShipTests implements RemovableTests {
 		
 		SpaceObject root = fakeStar(0,0);
 		double speed= 0.001; //Minimal Speed
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,speed);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,speed);
 		SpaceObject target = fakeStar(1000,1000);
 		
 		Point oldPos= shuttle.getCenter().clone();
@@ -189,7 +189,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	public void testConstructors_IsInParentsChildren(){
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		assertTrue(root.getTrabants().contains(testObject));
 	}
@@ -197,7 +197,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	public void testConstructors_isNotOrphaned(){
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		assertFalse(testObject.isOrphan());
 	}
@@ -205,7 +205,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	public void testRemove_isNotInParentsChildren() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		testObject.remove();
 		
@@ -215,7 +215,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	public void testRemove_isOrphaned() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		testObject.remove();
 		
@@ -225,7 +225,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	public void testRemove_inspectTarget_shouldBeNull() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 		testObject.setTarget(target);
 		
@@ -237,7 +237,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	public void testRemove_doubleRemove_shouldThrowNullpoint() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		testObject.remove();
 		
@@ -250,7 +250,7 @@ public class ShipTests implements RemovableTests {
 		SpaceObject origin = new Star("star",null,new AbsolutePoint(250,250),250);
 		MovingSpaceObject launchedTowards=new Planet.Builder("Forward", origin).speed(Math.PI/2000).distance(300).build();
 		
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",origin,0,50,-Math.PI/400);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",origin,0,50,-Math.PI/400);
 		double oldSpeed=shuttle.getSpeed();
 		origin.update();//To move Planets
 		
@@ -265,7 +265,7 @@ public class ShipTests implements RemovableTests {
 		SpaceObject origin = new Star("star",null,new AbsolutePoint(250,250),250);
 		MovingSpaceObject launchedAway = new Planet.Builder("Flip", origin).speed(Math.PI/80).distance(250).build();
 		
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",origin,0,50,-Math.PI/400);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",origin,0,50,-Math.PI/400);
 		double oldSpeed=shuttle.getSpeed();
 		origin.update();//To move Planets
 		
@@ -279,7 +279,7 @@ public class ShipTests implements RemovableTests {
 	void testMove_isFlying_comesCloserToTarget_shouldBeCloser() {
 		SpaceObject root = fakeStar(0,0);
 		double speed= 1; //Minimal Speed
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,speed);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,speed);
 		SpaceObject target = fakeStar(1000,1000);
 		
 		double oldDistance= shuttle.getDistance();
@@ -296,7 +296,7 @@ public class ShipTests implements RemovableTests {
 	void testMove_isOrbiting_distanceStaysSame() {
 		SpaceObject root = fakeStar(0,0);
 		double speed= 0.001; //Minimal Speed
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,speed);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,speed);
 		
 		double oldDistance= shuttle.getDistance();
 		
@@ -310,7 +310,7 @@ public class ShipTests implements RemovableTests {
 	void testMove_isFlying_CloseEnoughToStay_shouldGetOrbiting() {
 		SpaceObject root = fakeStar(0,0);
 		double speed= 0.001; //Minimal Speed
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,speed);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,speed);
 		SpaceObject target = fakeStar(0,0);
 		
 		shuttle.setTarget(target);
@@ -324,9 +324,9 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testRebuildAt_shouldHaveSameValues() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,1);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,1);
 		
-		ArmedSpaceShuttle copy = shuttle.rebuildAt("copy", root);
+		Spaceshuttle copy = shuttle.rebuildAt("copy", root);
 		
 		assertEquals(150,copy.getOrbitingDistance());
 		assertEquals(1, copy.getSpeed());
@@ -337,12 +337,12 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testRebuildAt_loosesTarget() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		SpaceObject target = fakeStar(600,600);
 		
 		shuttle.setTarget(target);
 		
-		ArmedSpaceShuttle copy = shuttle.rebuildAt("new", root);
+		Spaceshuttle copy = shuttle.rebuildAt("new", root);
 		
 		assertEquals(null ,copy.getTarget());
 	}
@@ -350,9 +350,9 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testRebuildAt_spawnsAtParent() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		
-		ArmedSpaceShuttle copy = shuttle.rebuildAt("new", root);
+		Spaceshuttle copy = shuttle.rebuildAt("new", root);
 		
 		assertEquals(root,copy.getParent());
 	}
@@ -360,12 +360,12 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testRebuildAt_spawnsOrbiting() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		SpaceObject target = fakeStar(0,0);
 		
 		shuttle.setTarget(target);
 		shuttle.launch();
-		ArmedSpaceShuttle copy = shuttle.rebuildAt("new", root);
+		Spaceshuttle copy = shuttle.rebuildAt("new", root);
 		
 		assertEquals(SpacecraftState.ORBITING,copy.getState());
 	}
@@ -373,11 +373,11 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testRebuildAt_OriginalShipWasDead_CopyShouldBeAlive() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		
 		shuttle.destruct();
 		
-		ArmedSpaceShuttle copy = shuttle.rebuildAt("new", root);
+		Spaceshuttle copy = shuttle.rebuildAt("new", root);
 		
 		assertEquals(SpacecraftState.ORBITING,copy.getState());
 	}
@@ -385,7 +385,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDestruct_stateShouldBeDead() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		
 		shuttle.destruct();
 		
@@ -395,7 +395,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDestruct_checkPlayerManagerDeathCount_shouldBeZero() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		
 		shuttle.destruct();
 		//The ship is not the player, therefore the PlayerManager should not Care
@@ -405,7 +405,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDestruct_doubleDestruct_shouldNotDoAnything() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,150,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,150,0);
 		
 		shuttle.destruct();
 		shuttle.destruct();
@@ -416,7 +416,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDestruct_shouldSpawnTrash() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		shuttle.destruct();
 		
@@ -429,7 +429,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDestruct_shouldBeDead() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		shuttle.destruct();
 		
@@ -439,7 +439,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDetectedItems_SensorIsEmpty_ShouldBeEmpty() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		FakeSensor stub = new FakeSensor();
 		shuttle.setSensor(stub);
@@ -450,7 +450,7 @@ public class ShipTests implements RemovableTests {
 	@Test
 	void testDetectedItems_SensorHasItems_shouldBeTheSameAsFakeSensor(){
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle shuttle= new ArmedSpaceShuttle("shuttleOne",root,0,50,0);
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,0);
 		
 		FakeSensor stub = new FakeSensor();
 		shuttle.setSensor(stub);

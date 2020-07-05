@@ -17,7 +17,7 @@ import junit.fakes.FakeArmedSpacecraft;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 
 class ArmedShuttleNavigatorTests {
 
@@ -103,7 +103,7 @@ class ArmedShuttleNavigatorTests {
 	@Test
 	void testRebuild_rebuildShuttleShouldBeArmedSpacecraft() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle stubShip = new ArmedSpaceShuttle("Stub",root,0,0,0);
+		Spaceshuttle stubShip = new Spaceshuttle("Stub",root,0,0,0);
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stubShip,true);
 		

@@ -18,8 +18,7 @@ import junit.fakes.interfaces.FakeCollidingObject;
 import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.BaseShip;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
 import space.spacecrafts.ships.missiles.Rocket;
@@ -39,13 +38,13 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testConstructor_shouldBeBuild() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 	}
 	
 	@Test
 	void testConstructor_shouldNotBePlayer() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		assertFalse(testObject.isPlayer());
 	}
@@ -53,7 +52,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testShootLaserAtPoint_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		testObject.shootLaser(target);
@@ -66,7 +65,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testShootLaserAtTarget_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 		
 
@@ -80,7 +79,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testShootRocketAtPoint_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		testObject.shootRocket(target);
@@ -93,7 +92,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testShootRocketAtTarget_shouldBeShot() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 		
 		testObject.shootRocket(target);
@@ -107,7 +106,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testCollision_doesNotCollideOwnLasers() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 		
 
@@ -121,7 +120,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testCollision_doesNotCollideOwnRockets() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 		
 
@@ -135,7 +134,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testAttackPoint_shouldSpawnLaser() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		Point target = new AbsolutePoint(1000,1000);
 		
 		testObject.attack(target);
@@ -148,7 +147,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testAttackTarget_shouldSpawnLaser() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		SpaceObject target = fakeStar(1000,1000);
 
 		testObject.attack(target);
@@ -161,17 +160,17 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testRebuildAt_checkInstanceOfArmedSpaceShuttle_shouldBeTrue() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
-		BaseShip copy = testObject.rebuildAt("copy",root);
+		Spaceshuttle copy = testObject.rebuildAt("copy",root);
 		
-		assertTrue(copy instanceof ArmedSpaceShuttle);
+		assertTrue(copy instanceof Spaceshuttle);
 	}
 	
 	@Test
 	void testDestruct_checkPlayerManagerDeathCount_shouldBeZero() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		testObject.destruct();
 		//The armedship is not the player, therefore the PlayerManager should not Care
@@ -181,7 +180,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -192,7 +191,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_notDestructible_shouldBeEmptyOptional(){
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -204,7 +203,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -216,7 +215,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -230,7 +229,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldReturnTheDestructibleInOptional() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -246,7 +245,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -262,7 +261,7 @@ class ArmedSpaceShuttleTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldReturnFirst() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new ArmedSpaceShuttle("Army",root,0,50,0);
+		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);

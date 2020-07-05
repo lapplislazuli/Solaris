@@ -14,7 +14,7 @@ import junit.fakes.FakeArmedSpacecraft;
 import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 
 class PlayerManagerTests {
 
@@ -81,7 +81,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertEquals(testObject,mng.getPlayerShuttle());
 	}
@@ -128,7 +128,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpacecraft testObject = ArmedSpaceShuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		ArmedSpacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		mng.forceRespawn();
 		

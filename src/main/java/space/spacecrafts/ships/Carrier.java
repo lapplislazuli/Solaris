@@ -20,7 +20,7 @@ import space.core.SpaceObject;
 import space.spacecraft.ships.devices.DroneMount;
 import space.spacecrafts.ships.missiles.Missile;
 
-public class Carrier extends ArmedSpaceShuttle{
+public class Carrier extends Spaceshuttle{
 	
 	private Carrier(String name, SpaceObject parent, int size, int orbitingDistance, double speed,List<MountedWeapon> weapons) {
 		super(name, parent,new JavaFXDrawingInformation(Color.CORNSILK), new LolliShape(size,size*2,size/2), size, orbitingDistance, speed);
@@ -40,7 +40,7 @@ public class Carrier extends ArmedSpaceShuttle{
 						.filter(d -> d instanceof CarrierDrone)
 						.map(d -> (CarrierDrone)d)
 						.filter(d -> d.getParent().equals(this))
-						.map(d -> (BaseShip)d )
+						.map(d -> (Spaceshuttle)d )
 						.anyMatch(d-> d.getAllChildren().contains(other)))
 					return false;
 			}
@@ -101,8 +101,8 @@ public class Carrier extends ArmedSpaceShuttle{
 		private int distance = 0,size = 0, levelOfDetail=2;
 		private double speed = 0,rotationSpeed=0;
 		
-		private List<Function<ArmedSpaceShuttle,MountedWeapon>> weaponFns = new ArrayList<>();
-		private List<Function<ArmedSpaceShuttle,CarrierDrone>> droneFns = new ArrayList<>();
+		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
+		private List<Function<Spaceshuttle,CarrierDrone>> droneFns = new ArrayList<>();
 		
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
@@ -148,12 +148,12 @@ public class Carrier extends ArmedSpaceShuttle{
 			return this;
 		}
 		
-		public Builder addMountedWeapon(Function<ArmedSpaceShuttle,MountedWeapon> weaponFn){ 
+		public Builder addMountedWeapon(Function<Spaceshuttle,MountedWeapon> weaponFn){ 
 			weaponFns.add(weaponFn); 
 			return this;
 		}
 		
-		public Builder addDroneMount(Function<ArmedSpaceShuttle,CarrierDrone> droneFn) {
+		public Builder addDroneMount(Function<Spaceshuttle,CarrierDrone> droneFn) {
 			droneFns.add(droneFn);
 			return this;
 		}

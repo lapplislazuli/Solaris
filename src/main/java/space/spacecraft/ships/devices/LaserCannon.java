@@ -5,7 +5,7 @@ import interfaces.logical.UpdatingObject;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.Spacecraft;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.BaseShip;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.missiles.Laserbeam;
 
 public class LaserCannon implements MountedWeapon, UpdatingObject {
@@ -14,9 +14,9 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 	private double targetDirection; // In radiant from the emitter
 	private double cooldown;
 	private final double max_cooldown;
-	private BaseShip parent;
+	private Spaceshuttle parent;
 	
-	public LaserCannon(BaseShip mount) {
+	public LaserCannon(Spaceshuttle mount) {
 		if(mount == null)
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
 		
@@ -24,7 +24,7 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 		this.max_cooldown=Laserbeam.COMMON_MAX_COOLDOWN;
 	}
 	
-	public LaserCannon(BaseShip mount,double max_cooldown) {
+	public LaserCannon(Spaceshuttle mount,double max_cooldown) {
 		if(mount == null)
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
 		if(max_cooldown <= 0)

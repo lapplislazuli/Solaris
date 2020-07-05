@@ -19,8 +19,7 @@ import space.core.SpaceObject;
 import space.effect.Explosion;
 import space.spacecrafts.ships.Sensor;
 import space.spacecrafts.ships.SensorArray;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
-import space.spacecrafts.ships.BaseShip;
+import space.spacecrafts.ships.Spaceshuttle;
 
 public class SensorArrayTests {
 	
@@ -112,7 +111,7 @@ public class SensorArrayTests {
 	@Test
 	public void testDetection_addFakeStar_shouldDetectFakeStar() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		BaseShip sensorRoot = new ArmedSpaceShuttle("SensorRoot",shipRoot,0,50,0);
+		Spaceshuttle sensorRoot = new Spaceshuttle("SensorRoot",shipRoot,0,50,0);
 		SensorArray testObject = new SensorArray (sensorRoot,501);
 		ManagerRegistry.getCollisionManager().registerItem(shipRoot);
 		
@@ -126,7 +125,7 @@ public class SensorArrayTests {
 	public void testDetection_addTwoFakeStars_shouldDetectBothFakeStars() {
 		SpaceObject shipRoot = fakeStar(0,0);
 		SpaceObject fakeSecondItem = fakeStar(25,25);
-		BaseShip sensorRoot = new ArmedSpaceShuttle("SensorRoot",shipRoot,0,50,0);
+		Spaceshuttle sensorRoot = new Spaceshuttle("SensorRoot",shipRoot,0,50,0);
 		SensorArray testObject = new SensorArray (sensorRoot,500);
 		
 		ManagerRegistry.getCollisionManager().registerItem(shipRoot);
@@ -143,7 +142,7 @@ public class SensorArrayTests {
 	@Test
 	public void testDetection_CollidedObjectIsNotFullyCovered_shouldNotDetectIt() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		BaseShip sensorRoot = new ArmedSpaceShuttle("SensorRoot",shipRoot,0,50,0);
+		Spaceshuttle sensorRoot = new Spaceshuttle("SensorRoot",shipRoot,0,50,0);
 		//With this size, the Sensor only intersects the object. it is not detected
 		SensorArray testObject = new SensorArray (sensorRoot,50);
 		

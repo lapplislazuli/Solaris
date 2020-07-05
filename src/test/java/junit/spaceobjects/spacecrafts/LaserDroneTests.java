@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.paint.Color;
 import junit.fakes.FakeSensor;
 import junit.fakes.interfaces.FakeCollidingObject;
 import logic.manager.ManagerRegistry;
@@ -18,9 +17,8 @@ import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.WeaponFactory;
-import space.spacecrafts.ships.ArmedSpaceShuttle;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.Carrier;
-import space.spacecrafts.ships.DroneFactory;
 import space.spacecrafts.ships.LaserDrone;
 
 class LaserDroneTests {
@@ -45,7 +43,7 @@ class LaserDroneTests {
 	@Test
 	public void testShootLaser_shouldSpawnLaser() {
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpaceShuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
+		Spaceshuttle testObject= new LaserDrone("TestObject", root,0,10, 0);
 		
 		testObject.shootLaser(root);
 		
