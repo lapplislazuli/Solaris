@@ -1,6 +1,7 @@
 package space.spacecrafts.ships;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -168,17 +169,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		weapons.add(primaryWeapon);
 		weapons.add(secondaryWeapon);
 	}
-	/*
-	public ArmedSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, size, orbitingDistance, speed);
-		setStandardWeapons();
-	}
-	
-	public ArmedSpaceShuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
-		super(name, parent,dinfo,s, size, orbitingDistance, speed);
-		setStandardWeapons();
-	}
-	*/
+
 	public static Spaceshuttle PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		Spaceshuttle player =new Spaceshuttle(name, parent, size, orbitingDistance, speed);
 		ManagerRegistry.getPlayerManager().registerPlayerShuttle(player);
@@ -258,5 +249,9 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				.map(c-> (SpaceObject)c)
 				.findFirst();
 		return possibleTarget;
+	}
+
+	public Collection<MountedWeapon> getWeapons() {
+		return weapons;
 	}
 }

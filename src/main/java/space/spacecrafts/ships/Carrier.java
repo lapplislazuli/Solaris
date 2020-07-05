@@ -18,6 +18,7 @@ import interfaces.spacecraft.Spacecraft;
 import javafx.scene.paint.Color;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.DroneMount;
+import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.missiles.Missile;
 
 public class Carrier extends Spaceshuttle{
@@ -186,61 +187,10 @@ public class Carrier extends Spaceshuttle{
 			.map(fun -> fun.apply(this))
 			.forEach(weapon -> this.weapons.add(weapon));
 		
-		this.primaryWeapon = combineDroneMountsToDroneRack(this);
+		this.primaryWeapon = WeaponFactory.combineDroneMountsToDroneRack(this);
 		this.secondaryWeapon = null;
 	}
 	
-	private static MountedWeapon combineDroneMountsToDroneRack(Carrier carrier) {
-		
-		final class DroneRack implements MountedWeapon{
-			DroneRack(List<DroneMount> drones){
-				this.droneMounts = drones;
-			}
-			
-			final List<DroneMount> droneMounts;
-			@Override
-			public void activate() {
-				for(var d:droneMounts)
-					d.activate();
-			}
-
-			@Override
-			public Spacecraft getParent() {
-				return carrier;
-			}
-
-			@Override
-			public void update() {
-				// The droneMounts are updated separately with all the other potential weapons
-			}
-
-			@Override
-			public void setTarget(SpaceObject o) {
-				for(var d:droneMounts)
-					d.setTarget(o);
-			}
-
-			@Override
-			public void setTarget(Double dir) {
-				for(var d:droneMounts)
-					d.setTarget(dir);
-			}
-
-			@Override
-			public void setTarget(Point p) {
-				for(var d:droneMounts)
-					d.setTarget(p);
-			}
-
-			@Override
-			public boolean isReady() {
-				return true; // The rack is always ready, but not necessarily all of the droneMounts
-			}
-			
-		}
-		var droneMounts = carrier.weapons.stream().filter(w->w instanceof DroneMount).map(w -> (DroneMount) w).collect(Collectors.toList());
-		return new DroneRack(droneMounts);
-	}
 	
 
 }
