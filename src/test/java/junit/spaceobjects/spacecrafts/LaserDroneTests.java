@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.paint.Color;
 import junit.fakes.FakeSensor;
 import junit.fakes.interfaces.FakeCollidingObject;
 import logic.manager.ManagerRegistry;
@@ -18,7 +19,7 @@ import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.Spaceshuttle;
-import space.spacecrafts.ships.Carrier;
+import space.spacecrafts.ships.DroneFactory;
 import space.spacecrafts.ships.LaserDrone;
 
 class LaserDroneTests {
@@ -55,7 +56,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 			
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -68,7 +69,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_notDestructible_shouldBeEmptyOptional(){
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -82,7 +83,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -96,7 +97,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -112,7 +113,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldReturnTheDestructibleInOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -130,7 +131,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -148,7 +149,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldReturnFirst() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -172,7 +173,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_OnlyOtherDronesInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -187,7 +188,7 @@ class LaserDroneTests {
 	@Test
 	void testGetNearestPossibleTarget_CarrierIsInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObjectSource = makeBattleCarrier();
+		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
 		
@@ -199,14 +200,23 @@ class LaserDroneTests {
 		assertFalse(testObject.getNearestPossibleTarget().isPresent());
 	}
 	
-	public static Carrier makeBattleCarrier() {
+	public static Spaceshuttle makeBattleCarrier() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-				
-		return new Carrier.Builder("TestCarrier", carrierRoot)
-				.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
-				.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
-				.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
-				.build();
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<4;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		
+		return b.color(Color.ALICEBLUE)
+				 .size(4)
+				 .distance_to_parent(40)
+				 .rotationSpeed(Math.PI)
+				 .speed(-Math.PI)
+				 .levelOfDetail(3)
+				 .addMountedWeapon(WeaponFactory::standardRocketLauncher)
+				 .addMountedWeapon(WeaponFactory::standardRocketLauncher)
+				 .addMountedWeapon(WeaponFactory::standardLaserCannon)
+				 .build();
 	}
-	
 }
+	

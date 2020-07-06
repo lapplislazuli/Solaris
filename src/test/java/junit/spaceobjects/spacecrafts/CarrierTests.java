@@ -268,8 +268,7 @@ class CarrierTests {
 		
 		assertEquals(expected,result);
 	}
-	
-/*
+
 	@Test
 	void testGetNearestPossibleTarget_OnlyDronesInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
@@ -282,18 +281,13 @@ class CarrierTests {
 
 		assertFalse(testObject.getNearestPossibleTarget().isPresent());
 	}
-	*/
+
+	
 	@Test
-	void testGetNearestPossibleTarget_CarriesIsInSensor_shouldBeEmptyOptional() {
-		SpaceObject root = fakeStar(0,0);
+	void testEquality_selfReflexivity_ShouldBeTrue() {
 		Spaceshuttle testObject = makeBattleCarrier();
 		
-		FakeSensor stubSensor = new FakeSensor();
-		testObject.setSensor(stubSensor);
-		
-		stubSensor.detectedItems.add(testObject);
-
-		assertFalse(testObject.getNearestPossibleTarget().isPresent());
+		assertEquals(testObject,testObject);
 	}
 	
 	public static Spaceshuttle makeBattleCarrier() {

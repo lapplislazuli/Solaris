@@ -250,12 +250,16 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	}
 	
 	public void attack(Point p) {
-		primaryWeapon.setTarget(p);
-		primaryWeapon.activate();
+		if(primaryWeapon!=null) {
+			primaryWeapon.setTarget(p);
+			primaryWeapon.activate();
+		}
 	}
 	public void attack(SpaceObject o) {
-		primaryWeapon.setTarget(o);
-		primaryWeapon.activate();
+		if(primaryWeapon!=null) {
+			primaryWeapon.setTarget(o);
+			primaryWeapon.activate();
+		}
 	}
 	
 	@Override
@@ -281,8 +285,18 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
-				.filter(c -> {return 
-						! ((c instanceof Spaceshuttle) && ((Spaceshuttle) c).isCarrier());
+				.filter(c -> {
+					if(c instanceof Spaceshuttle)
+						return c.equals(this);
+					return true;
+				})
+				.filter(c -> {
+					if(this instanceof CarrierDrone)
+						return !( 														//Return the opposite of 
+									(c instanceof Spaceshuttle) 						//The other is a shuttle
+									&& ((Spaceshuttle) c).getDrones().contains(this)); 	//AND contains me in his drones(I am his drone)
+					else
+						return true;
 				}) 
 				.filter(c -> {
 					return ! weapons.stream()
@@ -305,7 +319,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		private final String name;
 		private SpaceObject parent;
 		private Color color= Color.CORNSILK;
-		private int distance = 0,size = 0, levelOfDetail=2;
+		private int distance = 0,size = 0, levelOfDetail=2,sensorsize=50;
+		private Shape shape;
 		private double speed = 0,rotationSpeed=0;
 		private boolean setStandardWeaponry=false,shallBeCarrier=false;
 		
@@ -376,6 +391,11 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return this;
 		}
 		
+		public Builder sensorSize(int val) {
+			sensorsize=val;
+			return this;
+		}
+		
 		public Spaceshuttle build() {
 			return new Spaceshuttle(this);
 		}
@@ -387,7 +407,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		rotationSpeed=builder.rotationSpeed;
 		distance=(int) (orbitingDistance+distanceTo(parent));
 		
-		sensor = new SensorArray(this,50);
+		sensor = new SensorArray(this,builder.sensorsize);
 		move(parent.getCenter());
 		
 		if(builder.setStandardWeaponry)
