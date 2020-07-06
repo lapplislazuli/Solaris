@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import drawing.JavaFXDrawingInformation;
 import geom.HShape;
+import geom.LolliShape;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
@@ -26,6 +30,7 @@ import space.effect.Explosion;
 import space.spacecraft.ships.devices.DroneMount;
 import space.spacecraft.ships.devices.LaserCannon;
 import space.spacecraft.ships.devices.RocketLauncher;
+import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.missiles.Missile;
 
 public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
@@ -35,9 +40,13 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	
 	protected Sensor sensor;
 	protected SpacecraftState state = SpacecraftState.ORBITING;
+
+	protected MountedWeapon primaryWeapon,secondaryWeapon;
+	protected List<MountedWeapon> weapons = new ArrayList<>();
 	
 	protected int size;
-	
+
+	@Deprecated
 	public Spaceshuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), orbitingDistance , speed);
 		
@@ -53,6 +62,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		setStandardWeapons();
 	}
 	
+	@Deprecated
 	public Spaceshuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
 		super(name, parent, dinfo, s, orbitingDistance , speed);
 		
@@ -114,6 +124,16 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		super.move(parentCenter);
 	}
 	
+	public List<CarrierDrone> getDrones(){
+		return weapons.stream()
+				.filter(w -> w instanceof DroneMount)
+				.map(d -> (DroneMount)d)
+				.map(d -> d.getDrone())
+				.filter(d -> d != null)
+				.collect(Collectors.toList());
+	}
+	
+	
 	public void destruct() {
 		logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
 		if(!isDead()) {
@@ -145,12 +165,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	public SpaceObject getTarget() {return target;}
 	public boolean isOrphan() {return parent==null;}
 	public SpacecraftState getState() {return state;}
-/*
-	public Ship rebuildAt(String name, SpaceObject at) {
-		Ship copy = new Ship(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
-		return copy;
-	}
-*/
+
 	public List<CollidingObject> getDetectedItems() {
 		return sensor.getDetectedItems();
 	}
@@ -159,9 +174,6 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		sensor=val;
 	}
 	protected boolean isPlayer;
-	
-	protected MountedWeapon primaryWeapon,secondaryWeapon;
-	protected List<MountedWeapon> weapons = new ArrayList<>();
 	
 	private void setStandardWeapons() {
 
@@ -269,7 +281,9 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
-				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
+				.filter(c -> {return 
+						! ((c instanceof Spaceshuttle) && ((Spaceshuttle) c).isCarrier());
+				}) 
 				.filter(c -> {
 					return ! weapons.stream()
 							.filter(w -> w instanceof DroneMount)
@@ -284,5 +298,123 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 
 	public Collection<MountedWeapon> getWeapons() {
 		return weapons;
+	}
+	
+	
+	public static class Builder {
+		private final String name;
+		private SpaceObject parent;
+		private Color color= Color.CORNSILK;
+		private int distance = 0,size = 0, levelOfDetail=2;
+		private double speed = 0,rotationSpeed=0;
+		private boolean setStandardWeaponry=false,shallBeCarrier=false;
+		
+		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
+		private List<Function<Spaceshuttle,CarrierDrone>> droneFns = new ArrayList<>();
+		
+		
+		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
+			if(name==null||name.isEmpty())
+				throw new IllegalArgumentException("Name cannot be null or empty");
+			if(parent==null)
+				throw new IllegalArgumentException("Parent cannot be null");
+			this.name=name;
+			this.parent=parent;
+		}
+		
+		public Builder color(Color val){ 
+			color= val; 
+			return this;
+		}
+		
+		public Builder distance_to_parent(int val){
+			if(val<0)
+				throw new IllegalArgumentException("Distance cannot be smaller than 0");
+			distance= val; 
+			return this;
+		}
+		
+		public Builder size(int val){
+			if(val<0)
+				throw new IllegalArgumentException("Size cannot be smaller than 0");
+			size= val; 
+			return this;
+		}
+		
+		public Builder speed(double radiantPerUpdate){
+			speed= radiantPerUpdate; 
+			return this;
+		}
+		public Builder rotationSpeed(double radiantPerUpdate){
+			rotationSpeed= radiantPerUpdate; 
+			return this;
+		}
+		public Builder levelOfDetail(int val){ 
+			if(val<1)
+				throw new IllegalArgumentException("LoD cannot be smaller or equal 0");
+			levelOfDetail= val; 
+			return this;
+		}
+		
+		public Builder addMountedWeapon(Function<Spaceshuttle,MountedWeapon> weaponFn){ 
+			weaponFns.add(weaponFn); 
+			return this;
+		}
+		
+		public Builder addDroneMount(Function<Spaceshuttle,CarrierDrone> droneFn) {
+			droneFns.add(droneFn);
+			return this;
+		}
+		
+		public Builder setStandardWeaponry(boolean val) {
+			setStandardWeaponry=val;
+			return this;
+		}
+		
+		public Builder shallBeCarrier(boolean val) {
+			shallBeCarrier=val;
+			return this;
+		}
+		
+		public Spaceshuttle build() {
+			return new Spaceshuttle(this);
+		}
+	}
+	
+	private Spaceshuttle(Builder builder) {
+		super(builder.name, builder.parent, new JavaFXDrawingInformation(builder.color), new HShape(builder.size*2,builder.size*3,builder.size), builder.distance , builder.speed);
+		this.parent=builder.parent;
+		rotationSpeed=builder.rotationSpeed;
+		distance=(int) (orbitingDistance+distanceTo(parent));
+		
+		sensor = new SensorArray(this,50);
+		move(parent.getCenter());
+		
+		if(builder.setStandardWeaponry)
+			setStandardWeapons();
+		
+		this.size=builder.size;
+		
+		shape.setLevelOfDetail(builder.levelOfDetail);
+		if(getDrawingInformation() instanceof JavaFXDrawingInformation)
+			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect=true;
+		
+		builder.droneFns
+			.stream()
+			.map(fun -> {
+				Supplier<CarrierDrone> supFn = () -> fun.apply(this);
+				return supFn;
+			})
+			.map(supFn -> new DroneMount(supFn))
+			.forEach(mount -> this.weapons.add(mount));
+		
+		builder.weaponFns
+			.stream()
+			.map(fun -> fun.apply(this))
+			.forEach(weapon -> this.weapons.add(weapon));
+		
+		if(!builder.droneFns.isEmpty())
+			this.primaryWeapon = WeaponFactory.combineDroneMountsToDroneRack(this);
+		this.secondaryWeapon = null;
 	}
 }

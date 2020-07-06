@@ -17,8 +17,9 @@ import logic.manager.ManagerRegistry;
 import space.advanced.Asteroid;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.WeaponFactory;
-import space.spacecrafts.ships.Carrier;
+import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.DroneFactory;
+
 import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
 class CarrierTests {
@@ -35,7 +36,7 @@ class CarrierTests {
 	@Test
 	void testBuilder_allValuesFine_shouldBuild() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<4;i++) {
 			b.addDroneMount(DroneFactory::standardLaserDrone);
 		}
@@ -59,7 +60,7 @@ class CarrierTests {
 	@Test
 	void testBuilder_minimalBuilder_EmptyDrones_shouldBuild() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var carrier = new Carrier.Builder("TestCarrier", carrierRoot).build();
+		var carrier = new Spaceshuttle.Builder("TestCarrier", carrierRoot).build();
 		
 		assertEquals(0,carrier.getTrabants().size());
 	}
@@ -68,28 +69,28 @@ class CarrierTests {
 	@Test
 	void testBuilder_negativeSize_shouldThrowError() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.size(-1));
 	}
 	@Test
 	void testBuilder_negativeDistance_shouldThrowError() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.distance_to_parent(-1));
 	}
 	@Test
 	void testBuilder_negativeLevelOfDetail_shouldThrowError() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.levelOfDetail(-1));
 	}
 	@Test
 	void testBuilder_LevelOfDetailZero_shouldThrowError() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.levelOfDetail(0));
 	}
@@ -98,16 +99,16 @@ class CarrierTests {
 	@Test
 	void testBuilder_emptyName_shouldThrowError() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		assertThrows(IllegalArgumentException.class, () ->new Carrier.Builder("", carrierRoot));
+		assertThrows(IllegalArgumentException.class, () ->new Spaceshuttle.Builder("", carrierRoot));
 	}
 	@Test
 	void testBuilder_nullName_shouldThrowError() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		assertThrows(IllegalArgumentException.class, () ->new Carrier.Builder(null, carrierRoot));
+		assertThrows(IllegalArgumentException.class, () ->new Spaceshuttle.Builder(null, carrierRoot));
 	}	
 	@Test
 	void testBuilder_nullRoot_shouldThrowError() {
-		assertThrows(IllegalArgumentException.class, () ->new Carrier.Builder("TestCarrier", null));
+		assertThrows(IllegalArgumentException.class, () ->new Spaceshuttle.Builder("TestCarrier", null));
 	}
 	
 	@Test
@@ -127,15 +128,15 @@ class CarrierTests {
 	}
 	
 	/*
-	 * Battle Carrier Tests
+	 * Battle Spaceshuttle Tests
 	 */
 	
 	
 	@Test
 	void testAttackTargetSpaceObject_shouldEqualLaunchShips() {
-		//For more Input on Launching Ships check Carrier Tests
+		//For more Input on Launching Ships check Spaceshuttle Tests
 		SpaceObject carrierRoot = fakeStar(0,0);
-		Carrier carrier = makeBattleCarrier();
+		Spaceshuttle carrier = makeBattleCarrier();
 
 		SpaceObject droneTarget = fakeStar(1000,1000);
 		carrier.attack(droneTarget);
@@ -144,9 +145,9 @@ class CarrierTests {
 	
 	@Test
 	void testAttackTargetPoint_shouldNotLaunchShips() {
-		//For more Input on Launching Ships check Carrier Tests
+		//For more Input on Launching Ships check Spaceshuttle Tests
 		SpaceObject carrierRoot = fakeStar(0,0);
-		Carrier carrier = makeBattleCarrier();
+		Spaceshuttle carrier = makeBattleCarrier();
 		
 		Point target = new AbsolutePoint(1000,100);
 		carrier.attack(target);
@@ -157,11 +158,11 @@ class CarrierTests {
 	@Test
 	void rebuildAt_shouldBeInstanceOfBattleCarrier() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		Carrier carrier = makeBattleCarrier();
+		Spaceshuttle carrier = makeBattleCarrier();
 		
-		Carrier copy = carrier.rebuildAt("copy",carrierRoot);
+		Spaceshuttle copy = carrier.rebuildAt("copy",carrierRoot);
 		
-		assertTrue(copy instanceof Carrier);
+		assertTrue(copy instanceof Spaceshuttle);
 	}
 	
 
@@ -169,7 +170,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 			
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -180,7 +181,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_notDestructible_shouldBeEmptyOptional(){
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -192,7 +193,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -204,7 +205,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -218,7 +219,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_DestructibleItemInSensor_shouldReturnTheDestructibleInOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -234,7 +235,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -250,7 +251,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldReturnFirst() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -272,7 +273,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_OnlyDronesInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -285,7 +286,7 @@ class CarrierTests {
 	@Test
 	void testGetNearestPossibleTarget_CarriesIsInSensor_shouldBeEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);
-		Carrier testObject = makeBattleCarrier();
+		Spaceshuttle testObject = makeBattleCarrier();
 		
 		FakeSensor stubSensor = new FakeSensor();
 		testObject.setSensor(stubSensor);
@@ -295,9 +296,9 @@ class CarrierTests {
 		assertFalse(testObject.getNearestPossibleTarget().isPresent());
 	}
 	
-	public static Carrier makeBattleCarrier() {
+	public static Spaceshuttle makeBattleCarrier() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Carrier.Builder("TestCarrier", carrierRoot);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<4;i++) {
 			b.addDroneMount(DroneFactory::standardLaserDrone);
 		}

@@ -1,11 +1,8 @@
 package space.spacecrafts.ships;
 
-import java.util.Optional;
-
 import drawing.JavaFXDrawingInformation;
 import geom.UShape;
 import interfaces.logical.CollidingObject;
-import interfaces.logical.DestructibleObject;
 import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
@@ -25,7 +22,7 @@ public class LaserDrone extends Spaceshuttle implements CarrierDrone{
 	@Override
 	public boolean collides(CollidingObject other) {
 		if(super.collides(other)) {
-			if(other instanceof Carrier && ((Carrier)other).getDrones().contains(this))
+			if(other instanceof Spaceshuttle && ((Spaceshuttle)other).getDrones().contains(this))
 				return false;
 			if(other instanceof LaserDrone)
 				return false;	
@@ -34,20 +31,6 @@ public class LaserDrone extends Spaceshuttle implements CarrierDrone{
 		return false;
 	}
 
-	@Override
-	public Optional<SpaceObject> getNearestPossibleTarget() {
-		Optional<SpaceObject> possibleTarget = Optional.empty();
-		if(!sensor.getDetectedItems().isEmpty())
-			possibleTarget=sensor.getDetectedItems().stream()
-				.filter(c->c instanceof DestructibleObject)
-				.filter(c -> c instanceof SpaceObject)
-				.map(c-> (SpaceObject)c)
-				.filter(c -> ! (c instanceof Carrier)) // Papa i shot a man
-				.filter(c -> ! (c instanceof LaserDrone)) 
-				.findFirst();
-		return possibleTarget;
-	}
-	
 	@Override
 	public LaserDrone rebuildAt(String name,SpaceObject at) {
 		return new LaserDrone(name,at,this.size,(int)this.orbitingDistance,this.speed);	

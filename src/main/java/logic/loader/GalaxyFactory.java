@@ -17,7 +17,6 @@ import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.navigators.BaseNavigator;
 import space.spacecrafts.ships.Spaceshuttle;
-import space.spacecrafts.ships.Carrier;
 
 public final class GalaxyFactory {
 	
@@ -116,7 +115,7 @@ public final class GalaxyFactory {
 			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 			chinNav.getRoute().add(mars);
 			
-			Carrier mothership = new Carrier.Builder("Mothership",sun)
+			Spaceshuttle mothership = new Spaceshuttle.Builder("Mothership",sun)
 					.size(6)
 					.speed(Math.PI/500)
 					.distance_to_parent(480)
