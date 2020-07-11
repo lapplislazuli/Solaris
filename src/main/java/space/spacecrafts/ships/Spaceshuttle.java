@@ -299,9 +299,9 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 					if(c instanceof Spaceshuttle) {
 						var casted = (Spaceshuttle) c;
 						return     !this.equals(casted)                 
-								|| !isMyCarrier(casted) 
-								|| !isMyDrone(casted) 
-								|| !isDroneWithSameCarrier(casted);	
+								&& !isMyCarrier(casted) 
+								&& !isMyDrone(casted) 
+								&& !isDroneWithSameCarrier(casted);	
 					}
 					return true; 
 				})
