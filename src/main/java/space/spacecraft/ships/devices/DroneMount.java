@@ -2,6 +2,9 @@ package space.spacecraft.ships.devices;
 
 import java.util.function.Supplier;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import interfaces.geom.Point;
 import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
@@ -9,6 +12,7 @@ import interfaces.spacecraft.Spacecraft;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.LaserDrone;
+import space.spacecrafts.ships.Spaceshuttle;
 
 public class DroneMount implements MountedWeapon {
 	/*
@@ -16,6 +20,8 @@ public class DroneMount implements MountedWeapon {
 	 * The Drone is added to the parents trabants, and has to have automatic logic. 
 	 * The trabants will be handled mostly within the parents (carriers).
 	 */
+
+	protected static Logger logger = LogManager.getLogger(DroneMount.class);
 	
 	
 	SpaceObject target;
@@ -35,6 +41,8 @@ public class DroneMount implements MountedWeapon {
 			throw new IllegalArgumentException("Drone cannot be null");
 		this.parent=mount;
 		this.drone=drone;
+
+		moveDroneToSpawn();
 	}
 	
 	public DroneMount(Supplier<CarrierDrone> droneSupplier) {
@@ -42,7 +50,9 @@ public class DroneMount implements MountedWeapon {
 		this.drone = droneSupplier.get();
 		if(drone==null)
 			throw new IllegalArgumentException("The supplierfunction returned a null value - it is invalid");
-		this.parent = (Spacecraft) drone.getParent();	
+		this.parent = (Spacecraft) drone.getParent();
+
+		moveDroneToSpawn();
 	}
 	
 	@Override
@@ -59,6 +69,14 @@ public class DroneMount implements MountedWeapon {
 		return parent;
 	}
 
+	private void moveDroneToSpawn() {
+		var droneCasted = (MovingSpaceObject) drone;
+		double currentRelativeAngle = droneSpawnAngle();
+		droneCasted.setRelativePos(currentRelativeAngle);
+		droneCasted.move(parent.getCenter());
+		logger.debug("Moved Drone for " + parent.toString() + " with Drone " + drone.toString() + " and set it to " + currentRelativeAngle + " radiant degree to parent");
+	}
+	
 	@Override
 	public void setTarget(SpaceObject o) {
 		if(o == null)
@@ -86,8 +104,7 @@ public class DroneMount implements MountedWeapon {
 		if(drone.isDead() && rebuild_cooldown <=0) {
 			this.drone = factoryMethod.get();
 			this.parent = (Spacecraft) drone.getParent();
-			var droneCasted = (MovingSpaceObject) drone;
-			droneCasted.setRelativePos(droneSpawnAngle());
+			moveDroneToSpawn();
 			setDroneCooldown();
 			drone_launched = false;
 		}
@@ -119,10 +136,11 @@ public class DroneMount implements MountedWeapon {
 	}
 	
 	private double droneSpawnAngle() {
-	//TODO: Rework this? its not smart
-		int currentAlive = ((SpaceObject) parent).getTrabants().size();
-		int max = currentAlive*2;
-		return currentAlive* (Math.PI*2/max);
+		//TODO: Currently, the first drone spawns at 0, second drone at 0 too, third drone spawns at 1/2 rotation, fourth drone at 1/4 rotation (this is bullshit)
+		int currentAlive = ((Spaceshuttle) parent).getDrones().size(); //-1 to readjust for the currently build Drone
+		int currentAliveEscaped = Math.max(currentAlive, 0); // So I don't have negative values for the first drone
+		long maxDrones = ((Spaceshuttle) parent).getWeapons().stream().filter(w-> w instanceof DroneMount).count()+1;
+		return currentAliveEscaped * (Math.PI*2/maxDrones);
 	}
 	
 	public CarrierDrone getDrone() {

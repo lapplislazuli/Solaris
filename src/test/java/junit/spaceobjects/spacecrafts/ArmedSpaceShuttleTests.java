@@ -242,6 +242,7 @@ class ArmedSpaceShuttleTests {
 		
 		assertEquals(expected,result);
 	}
+	
 	@Test
 	void testGetNearestPossibleTarget_MultipleQualifiedItemsInSensor_shouldBeNonEmptyOptional() {
 		SpaceObject root = fakeStar(0,0);

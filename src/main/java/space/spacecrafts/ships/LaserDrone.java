@@ -2,7 +2,6 @@ package space.spacecrafts.ships;
 
 import drawing.JavaFXDrawingInformation;
 import geom.UShape;
-import interfaces.logical.CollidingObject;
 import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
@@ -16,19 +15,6 @@ public class LaserDrone extends Spaceshuttle implements CarrierDrone{
 	public LaserDrone(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent,new JavaFXDrawingInformation(Color.BLANCHEDALMOND), new UShape(size*2,size*2,size/2), size, orbitingDistance, speed);
 		this.shape.setLevelOfDetail(2);
-	}
-
-	
-	@Override
-	public boolean collides(CollidingObject other) {
-		if(super.collides(other)) {
-			if(other instanceof Spaceshuttle && ((Spaceshuttle)other).getDrones().contains(this))
-				return false;
-			if(other instanceof LaserDrone)
-				return false;	
-			return true;
-		}
-		return false;
 	}
 
 	@Override

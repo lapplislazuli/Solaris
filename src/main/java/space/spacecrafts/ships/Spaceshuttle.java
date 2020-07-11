@@ -8,9 +8,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import drawing.JavaFXDrawingInformation;
 import geom.HShape;
-import geom.LolliShape;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
@@ -34,9 +36,14 @@ import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.missiles.Missile;
 
 public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
+	
+	protected static Logger logger = LogManager.getLogger(Spaceshuttle.class);
+	
 	protected SpaceObject target;
 	protected SpaceObject parent;
 	protected double orbitingDistance;
+	protected boolean isPlayer;
+	protected int size;
 	
 	protected Sensor sensor;
 	protected SpacecraftState state = SpacecraftState.ORBITING;
@@ -44,7 +51,6 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	protected MountedWeapon primaryWeapon,secondaryWeapon;
 	protected List<MountedWeapon> weapons = new ArrayList<>();
 	
-	protected int size;
 
 	@Deprecated
 	public Spaceshuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -60,8 +66,13 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		move(parent.getCenter());
 
 		setStandardWeapons();
+		spawnDronesIfAnyAreGiven();
 	}
 	
+	private void spawnDronesIfAnyAreGiven() {
+		weapons.stream().filter(w -> w instanceof DroneMount).map(w -> (DroneMount)w).forEach(dm -> dm.launch_drone());
+	}
+
 	@Deprecated
 	public Spaceshuttle(String name, SpaceObject parent,DrawingInformation dinfo,Shape s, int size, int orbitingDistance, double speed) {
 		super(name, parent, dinfo, s, orbitingDistance , speed);
@@ -74,6 +85,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		shape.setLevelOfDetail(size/2);
 
 		setStandardWeapons();
+		spawnDronesIfAnyAreGiven();
 	}
 	
 	public void launch() {
@@ -173,10 +185,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	public void setSensor(Sensor val) {
 		sensor=val;
 	}
-	protected boolean isPlayer;
 	
 	private void setStandardWeapons() {
-
 		primaryWeapon = new LaserCannon(this);
 		secondaryWeapon = new RocketLauncher(this,60);
 		
@@ -286,15 +296,23 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
 				.filter(c -> {
+					 //Filter myself out,Shuttle cannot be a target for itself
 					if(c instanceof Spaceshuttle)
-						return c.equals(this);
-					return true;
+						return !c.equals(this);
+					return true; 
 				})
 				.filter(c -> {
+					 //If this a CarrierDrone, Filter other Drones of the same Carrier out 
 					if(this instanceof CarrierDrone)
 						return !( 														//Return the opposite of 
 									(c instanceof Spaceshuttle) 						//The other is a shuttle
 									&& ((Spaceshuttle) c).getDrones().contains(this)); 	//AND contains me in his drones(I am his drone)
+					 //If this is a Carrier, Filter out my Drones
+					else if(this.isCarrier())
+						return !( 														//Return the opposite of 
+								(c instanceof Spaceshuttle) 						//The other is a shuttle
+								&& ((Spaceshuttle) c).getDrones().contains(this)); 	//AND contains me in his drones(I am his drone)
+					 //If this is neither a drone, nor a carrier, there is no filter in this step and the predicate returns true for anything
 					else
 						return true;
 				}) 
@@ -310,6 +328,42 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		return possibleTarget;
 	}
 
+	private boolean isMyCarrier(Spaceshuttle other) {
+		if(other==null)
+			return false;
+		if(!other.isCarrier())
+			return false;
+		if(this instanceof CarrierDrone) {
+			var meCasted = (CarrierDrone) this;
+			return other.getDrones().contains(meCasted);
+		}
+		return false;
+	}
+	
+	private boolean isDroneWithSameCarrier(Spaceshuttle other) {
+		if(other==null)
+			return false;
+		if(! (this instanceof CarrierDrone))
+			return false;
+		if(! (other instanceof CarrierDrone))
+			return false;
+		
+		var otherCasted = (CarrierDrone) other;
+		var parentCasted = (Spaceshuttle) parent;
+		
+		return parentCasted.getDrones().contains(otherCasted);
+	}
+	private boolean isMyDrone(Spaceshuttle other) {
+		if(other==null)
+			return false;
+		if(!this.isCarrier())
+			return false;
+		if(! (other instanceof CarrierDrone))
+			return false;
+		var otherCasted = (CarrierDrone) other;
+		return this.getDrones().contains(otherCasted);
+	}
+	
 	public Collection<MountedWeapon> getWeapons() {
 		return weapons;
 	}
@@ -392,6 +446,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		}
 		
 		public Builder sensorSize(int val) {
+			if(val<0)
+				throw new IllegalArgumentException("Sensorsize cannot be smaller than 0");
 			sensorsize=val;
 			return this;
 		}
@@ -436,5 +492,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		if(!builder.droneFns.isEmpty())
 			this.primaryWeapon = WeaponFactory.combineDroneMountsToDroneRack(this);
 		this.secondaryWeapon = null;
+		
+
+		spawnDronesIfAnyAreGiven();
 	}
 }

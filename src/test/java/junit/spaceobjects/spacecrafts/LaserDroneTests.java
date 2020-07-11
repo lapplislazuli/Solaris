@@ -181,8 +181,12 @@ class LaserDroneTests {
 		testObject.setSensor(stubSensor);
 		
 		stubSensor.detectedItems.addAll(testObjectSource.getDrones());
+		//stubSensor.detectedItems.add(testObject);
+		stubSensor.detectedItems.add(testObjectSource);
 
-		assertFalse(testObject.getNearestPossibleTarget().isPresent());
+		var result = testObject.getNearestPossibleTarget();
+		
+		assertFalse(result.isPresent());
 	}
 	
 	@Test

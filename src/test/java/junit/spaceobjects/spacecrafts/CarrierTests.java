@@ -4,10 +4,14 @@ package junit.spaceobjects.spacecrafts;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
 import javafx.scene.paint.Color;
@@ -37,6 +41,7 @@ class CarrierTests {
 	void testBuilder_allValuesFine_shouldBuild() {
 		SpaceObject carrierRoot = fakeStar(0,0);
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		//Add 3 normal Drones
 		for(int i = 0;i<4;i++) {
 			b.addDroneMount(DroneFactory::standardLaserDrone);
 		}
@@ -281,7 +286,46 @@ class CarrierTests {
 
 		assertFalse(testObject.getNearestPossibleTarget().isPresent());
 	}
-
+	
+	@ParameterizedTest
+	@ValueSource(ints = { 0,1,3,5,15})
+	void testConstructor_checkDrones_DronesShouldHaveDifferentPositions(int numberOfDrones) {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", root).distance_to_parent(100);
+		
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier = b.build();
+		var drones = carrier.getDrones();
+		// We get the drones positions and filter them for distinctiveness, the resulting size should be equal to the number of drones
+		var dronePositions = drones.stream().map(d -> d.getCenter()).distinct().collect(Collectors.toSet());
+		
+		boolean samePositionFound = false;
+		for(var p1 : dronePositions)       // Compare Every Drones Position
+			for(var p2: dronePositions)    // To every other Drones Position
+				if(! p1.equals(p2))        // If they are not the same
+					samePositionFound = samePositionFound || (p1.getX() == p2.getX() && p1.getY() == p2.getY());
+		assertFalse(samePositionFound);
+	}
+	
+	@ParameterizedTest
+	@ValueSource(ints = { 0,1,3,15})
+	void testConstructor_checkDrones_DronesShouldHaveDifferentPositionFromCarrier(int numberOfDrones) {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", root).distance_to_parent(100);
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier = b.build();
+		var drones = carrier.getDrones();
+		var dronePositions = drones.stream().map(d -> d.getCenter()).distinct().collect(Collectors.toSet());
+		
+		boolean samePositionFound = false;
+		for(var p1 : dronePositions)
+					samePositionFound = samePositionFound || (p1.getX() == carrier.getCenter().getX() && p1.getY() == carrier.getCenter().getY());
+		assertFalse(samePositionFound);
+	}
 	
 	@Test
 	void testEquality_selfReflexivity_ShouldBeTrue() {
