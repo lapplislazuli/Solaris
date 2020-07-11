@@ -181,8 +181,6 @@ class LaserDroneTests {
 		testObject.setSensor(stubSensor);
 		
 		stubSensor.detectedItems.addAll(testObjectSource.getDrones());
-		//stubSensor.detectedItems.add(testObject);
-		stubSensor.detectedItems.add(testObjectSource);
 
 		var result = testObject.getNearestPossibleTarget();
 		

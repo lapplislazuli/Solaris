@@ -283,8 +283,10 @@ class CarrierTests {
 		testObject.setSensor(stubSensor);
 		
 		stubSensor.detectedItems.addAll(testObject.getDrones());
+		
+		var result = testObject.getNearestPossibleTarget(); 
 
-		assertFalse(testObject.getNearestPossibleTarget().isPresent());
+		assertFalse(result.isPresent());
 	}
 	
 	@ParameterizedTest
@@ -334,16 +336,160 @@ class CarrierTests {
 		assertEquals(testObject,testObject);
 	}
 	
+	@Test
+	void testIsMyDrone_isDroneOfThisCarrier_shouldBeTrue() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertTrue(testCarrier.isMyDrone(drone));
+	}
+	
+	@Test
+	void testIsMyDrone_testNull_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		assertFalse(testCarrier.isMyDrone(null));
+	}
+	
+	@Test
+	void testIsMyDrone_isDroneOfOtherCarrier_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle otherCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) otherCarrier.getDrones().get(0);
+		
+		assertFalse(testCarrier.isMyDrone(drone));
+	}
+	
+	@Test
+	void testIsMyDrone_otherIsCarrierButNotDrone_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle otherCarrier = makeBattleCarrier();
+		
+		assertFalse(testCarrier.isMyDrone(otherCarrier));
+	}
+	
+	@Test
+	void testIsMyDrone_otherIsSpaceshuttle_butNeitherCarrierNotDrone_shouldBeFalse() {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestShuttle", root).distance_to_parent(100);
+		var shuttle = b.build();
+		
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		assertFalse(testCarrier.isMyDrone(shuttle));
+	}	
+	
+	@Test
+	void testIsMyDrone_IAmNotACarrier_shouldBeFalse() {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestShuttle", root).distance_to_parent(100);
+		var shuttle = b.build();
+		
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		assertFalse(shuttle.isMyDrone(shuttle));
+	}
+	
+	@Test
+	void testIsMyCarrier_IAmNotADrone_shouldBeFalse() {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestShuttle", root).distance_to_parent(100);
+		var shuttle = b.build();
+		
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		assertFalse(shuttle.isMyCarrier(testCarrier));
+	}
+	
+	@Test
+	void testIsMyCarrier_IAmHisDrone_shouldBeTrue() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertTrue(drone.isMyCarrier(testCarrier));
+	}
+	
+
+	@Test
+	void testIsMyCarrier_isCarrierButNotMyCarrier_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle otherCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertFalse(drone.isMyCarrier(otherCarrier));
+	}
+	
+	@Test
+	void testIsMyCarrier_isNull_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertFalse(drone.isMyCarrier(null));
+	}
+	
+	@Test
+	void testIsDroneOfSameCarrier_bothDronesFromSameCarrier_shouldBeTrue() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		Spaceshuttle otherDrone = (Spaceshuttle) testCarrier.getDrones().get(1);
+		
+		assertTrue(drone.isDroneWithSameCarrier(otherDrone));
+	}
+	
+	@Test
+	void testIsDroneOfSameCarrier_dronesOfDifferentCarriers_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle otherCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		Spaceshuttle otherDrone = (Spaceshuttle) otherCarrier.getDrones().get(0);
+		
+		boolean result = drone.isDroneWithSameCarrier(otherDrone);
+		
+		assertFalse(result);
+	}
+	
+	@Test
+	void testIsDroneOfSameCarrier_IamNotACarrier_shouldBeFalse() {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestShuttle", root).distance_to_parent(100);
+		var shuttle = b.build();
+		
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertFalse(shuttle.isMyCarrier(drone));
+	}
+	
+	@Test
+	void testIsDroneOfSameCarrier_isNull_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertFalse(drone.isDroneWithSameCarrier(null));
+	}
+	
+	
+	
 	public static Spaceshuttle makeBattleCarrier() {
 		SpaceObject carrierRoot = fakeStar(0,0);
-		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		int randomSeed = (int) (Math.random()*10000);
+		var b = new Spaceshuttle.Builder("TestCarrier"+randomSeed, carrierRoot);
 		for(int i = 0;i<4;i++) {
 			b.addDroneMount(DroneFactory::standardLaserDrone);
 		}
-		
+
+		int randomPos = (int)(Math.random()*100);
 		return b.color(Color.ALICEBLUE)
 				 .size(4)
-				 .distance_to_parent(40)
+				 .distance_to_parent(randomPos)
 				 .rotationSpeed(Math.PI)
 				 .speed(-Math.PI)
 				 .levelOfDetail(3)

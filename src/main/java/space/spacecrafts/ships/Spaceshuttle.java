@@ -296,39 +296,20 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
 				.filter(c -> {
-					 //Filter myself out,Shuttle cannot be a target for itself
-					if(c instanceof Spaceshuttle)
-						return !c.equals(this);
+					if(c instanceof Spaceshuttle) {
+						var casted = (Spaceshuttle) c;
+						return     !this.equals(casted)                 
+								|| !isMyCarrier(casted) 
+								|| !isMyDrone(casted) 
+								|| !isDroneWithSameCarrier(casted);	
+					}
 					return true; 
 				})
-				.filter(c -> {
-					 //If this a CarrierDrone, Filter other Drones of the same Carrier out 
-					if(this instanceof CarrierDrone)
-						return !( 														//Return the opposite of 
-									(c instanceof Spaceshuttle) 						//The other is a shuttle
-									&& ((Spaceshuttle) c).getDrones().contains(this)); 	//AND contains me in his drones(I am his drone)
-					 //If this is a Carrier, Filter out my Drones
-					else if(this.isCarrier())
-						return !( 														//Return the opposite of 
-								(c instanceof Spaceshuttle) 						//The other is a shuttle
-								&& ((Spaceshuttle) c).getDrones().contains(this)); 	//AND contains me in his drones(I am his drone)
-					 //If this is neither a drone, nor a carrier, there is no filter in this step and the predicate returns true for anything
-					else
-						return true;
-				}) 
-				.filter(c -> {
-					return ! weapons.stream()
-							.filter(w -> w instanceof DroneMount)
-							.map(d -> (DroneMount)d)
-							.map(d -> d.getDrone())
-							.anyMatch(u -> u.equals(c));
-					}
-				) 
 				.findFirst();
 		return possibleTarget;
 	}
 
-	private boolean isMyCarrier(Spaceshuttle other) {
+	public boolean isMyCarrier(Spaceshuttle other) {
 		if(other==null)
 			return false;
 		if(!other.isCarrier())
@@ -340,7 +321,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		return false;
 	}
 	
-	private boolean isDroneWithSameCarrier(Spaceshuttle other) {
+	public boolean isDroneWithSameCarrier(Spaceshuttle other) {
 		if(other==null)
 			return false;
 		if(! (this instanceof CarrierDrone))
@@ -353,7 +334,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		
 		return parentCasted.getDrones().contains(otherCasted);
 	}
-	private boolean isMyDrone(Spaceshuttle other) {
+	
+	public boolean isMyDrone(Spaceshuttle other) {
 		if(other==null)
 			return false;
 		if(!this.isCarrier())
@@ -361,7 +343,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		if(! (other instanceof CarrierDrone))
 			return false;
 		var otherCasted = (CarrierDrone) other;
-		return this.getDrones().contains(otherCasted);
+		return otherCasted.getParent().equals(this);
 	}
 	
 	public Collection<MountedWeapon> getWeapons() {
