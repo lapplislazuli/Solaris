@@ -51,7 +51,7 @@ class LaserDroneTests {
 		assertFalse(testObject.getTrabants().isEmpty());
 		assertEquals(1,testObject.getTrabants().size());
 	}
-	
+
 	
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {

@@ -258,6 +258,15 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		return false;
 	}
 	
+	public boolean isDrone() {
+		return ManagerRegistry.getUpdateManager().getAllActiveColliders()
+			.parallelStream()
+			.filter(t -> t instanceof Spaceshuttle)
+			.map(t -> (Spaceshuttle) t)
+			.flatMap( s -> s.getDrones().stream())
+			.anyMatch( d -> d.equals(this));
+	}
+	
 	public boolean isCarrier(){
 		return weapons.stream().anyMatch(w-> w instanceof DroneMount);
 	}
@@ -441,10 +450,18 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			sensorsize=val;
 			return this;
 		}
+
+		public Builder shape(Shape shape) {
+			if(shape==null)
+				throw new IllegalArgumentException("Shape cannot be null");
+			this.shape = shape;
+			return this;
+		}
 		
 		public Spaceshuttle build() {
 			return new Spaceshuttle(this);
 		}
+
 	}
 	
 	private Spaceshuttle(Builder builder) {
@@ -453,6 +470,10 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		rotationSpeed=builder.rotationSpeed;
 		distance=(int) (orbitingDistance+distanceTo(parent));
 		leavesSpaceTrash = builder.leavesSpaceTrash;
+		
+		if(builder.shape!=null) {
+			this.shape=builder.shape;
+		}
 		
 		sensor = new SensorArray(this,builder.sensorsize);
 		move(parent.getCenter());

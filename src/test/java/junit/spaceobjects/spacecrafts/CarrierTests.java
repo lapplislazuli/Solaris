@@ -23,6 +23,7 @@ import space.core.SpaceObject;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.DroneFactory;
+import space.spacecrafts.ships.LaserDrone;
 
 import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
@@ -477,6 +478,30 @@ class CarrierTests {
 	}
 	
 	
+	@Test
+	public void testIsDrone_checkDrone_shouldBeTrue() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		
+		assertTrue(drone.isDrone());
+	}
+	
+	
+	@Test
+	public void testIsDrone_IsCarrier_shouldBeFalse() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		assertFalse(testCarrier.isDrone());
+	}
+	
+	@Test
+	public void testIsDrone_NormalSpaceShip_shouldBeFalse() {
+		SpaceObject root = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestShuttle", root).distance_to_parent(100);
+		var shuttle = b.build();
+		
+		assertFalse(shuttle.isDrone());
+	}
 	
 	public static Spaceshuttle makeBattleCarrier() {
 		SpaceObject carrierRoot = fakeStar(0,0);
