@@ -210,6 +210,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	}
 
 	public static Spaceshuttle PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
+		ManagerRegistry.getInstance(); // Initialise for tests?
 		Spaceshuttle player =new Spaceshuttle(name, parent, size, orbitingDistance, speed);
 		ManagerRegistry.getPlayerManager().registerPlayerShuttle(player);
 		return player;
@@ -249,24 +250,40 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 
 	@Override
 	public boolean collides(CollidingObject other) {
-		if(other instanceof Missile && trabants.contains((Missile)other))
-			return false;
+		// First check: Is there a normal physical collision of shapes - If no, return false, otherwise do extra behaviour
 		if(super.collides(other)) {
-			if(other instanceof Spaceshuttle && trabants.contains((Spaceshuttle)other)) {//Don't collide with Children
-				var otherCasted = (Spaceshuttle) other;
-				return otherCasted.getParent().equals(this);
+			//Special exceptions for Carriers and Drones
+			if(other instanceof Spaceshuttle) {
+				var otherShuttle = (Spaceshuttle) other;
+				//If I am carrier, do not collide with children
+				if(this.isCarrier()) {
+					if(this.isMyDrone(otherShuttle))
+						return false;
+				}
+				//If I am a drone, do not collide with my Carrier or the carriers other drones
+				if(this.isDrone())
+					if(this.isMyCarrier(otherShuttle) || this.isDroneWithSameCarrier(otherShuttle))
+						return false;
 			}
-			if(other instanceof Missile) {	// Don't collide with Childrens missiles
-				if (trabants.stream()
-						.filter(d -> d instanceof Spaceshuttle)
-						.map(d -> (Spaceshuttle)d)
-						.filter(d -> d.getParent().equals(this))
-						.map(d -> (Spaceshuttle)d )
-						.anyMatch(d-> d.getAllChildren().contains(other)))
+			//Special exceptions for missiles
+			if(other instanceof Missile) 
+				//If this is my missile (I shot it), there is no collision
+				if(trabants.contains((Missile)other))
 					return false;
-			}
+				//If i am a carrier, I check if any of my drones is the parent of this missile. 
+				if(isCarrier()) {
+					boolean missileIsFromDrones = getDrones().stream()
+					.map(t->t.getTrabants())
+					.anyMatch(lTrabants -> lTrabants.contains(other));
+					
+					if(missileIsFromDrones)
+						return false;
+				}
+				
+			// There are no further special exceptions to collisions - return true, the items collide
 			return true;
 		}
+		//There was no initial (physical) collision of items - return false
 		return false;
 	}
 	
@@ -348,10 +365,18 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		if(other==null)
 			return false;
 		
-		var otherCasted = (Spaceshuttle) other;
-		var parentCasted = (Spaceshuttle) parent;
+		Optional<Boolean> maybeParent = ManagerRegistry.getUpdateManager().getRegisteredItems().stream().filter(t-> t instanceof Spaceshuttle)
+				.map(t -> (Spaceshuttle)t)
+				.filter(t -> t.isCarrier())
+				.filter(t -> this.isMyCarrier(t))
+				.findFirst()
+				.map(u -> u.getDrones()
+				.contains(other));
 		
-		return parentCasted.getDrones().contains(otherCasted);
+		if(maybeParent.isEmpty())
+			return false;
+		else
+			return maybeParent.get();
 	}
 	
 	public boolean isMyDrone(Spaceshuttle other) {

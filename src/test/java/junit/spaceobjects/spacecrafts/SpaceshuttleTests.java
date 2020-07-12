@@ -278,7 +278,6 @@ public class SpaceshuttleTests implements RemovableTests {
 				() -> testObject.remove());
 	}
 	
-
 	@Tag("Complex")
 	@Test
 	void testLaunch_flipSpeedIfnecessary_shouldNotBeFlipped() {
@@ -673,6 +672,7 @@ public class SpaceshuttleTests implements RemovableTests {
 		assertEquals(4,carrier.getTrabants().size());
 	}
 
+	/*
 	@Tag("Basic")
 	@Test
 	void rebuildAt_ShuttleWasCarrier_shouldBeInstanceOfBattleCarrier() {
@@ -683,6 +683,7 @@ public class SpaceshuttleTests implements RemovableTests {
 		
 		assertTrue(copy.isCarrier());
 	}
+	*/
 
 	@Tag("Basic")
 	@Test
@@ -995,10 +996,11 @@ public class SpaceshuttleTests implements RemovableTests {
 	void testIsDroneOfSameCarrier_bothDronesFromSameCarrier_shouldBeTrue() {
 		Spaceshuttle testCarrier = makeBattleCarrier();
 		
-		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
-		Spaceshuttle otherDrone = (Spaceshuttle) testCarrier.getDrones().get(1);
+		Spaceshuttle drone 		= testCarrier.getDrones().get(0);
+		Spaceshuttle otherDrone = testCarrier.getDrones().get(1);
 		
 		assertTrue(drone.isDroneWithSameCarrier(otherDrone));
+		assertTrue(otherDrone.isDroneWithSameCarrier(drone));
 	}
 
 	@Tag("Complex")
