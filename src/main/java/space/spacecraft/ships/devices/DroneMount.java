@@ -6,12 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import interfaces.geom.Point;
-import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.Spacecraft;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.LaserDrone;
 import space.spacecrafts.ships.Spaceshuttle;
 
 public class DroneMount implements MountedWeapon {
@@ -26,15 +24,15 @@ public class DroneMount implements MountedWeapon {
 	
 	SpaceObject target;
 	Spacecraft parent;
-	CarrierDrone drone;
+	Spaceshuttle drone;
 	
-	Supplier<CarrierDrone> factoryMethod = () -> null;
+	Supplier<Spaceshuttle> factoryMethod = () -> null;
 	
-	private double rebuild_cooldown = LaserDrone.STANDARD_REBUILD_TIME;
+	private double rebuild_cooldown = 10000/25;
 	public boolean drone_launched = false;
 	
 	@Deprecated
-	public DroneMount(Spacecraft mount,CarrierDrone drone) {
+	public DroneMount(Spacecraft mount,Spaceshuttle drone) {
 		if(mount == null)
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
 		if(drone == null)
@@ -45,7 +43,7 @@ public class DroneMount implements MountedWeapon {
 		moveDroneToSpawn();
 	}
 	
-	public DroneMount(Supplier<CarrierDrone> droneSupplier) {
+	public DroneMount(Supplier<Spaceshuttle> droneSupplier) {
 		this.factoryMethod = droneSupplier;
 		this.drone = droneSupplier.get();
 		if(drone==null)
@@ -143,7 +141,7 @@ public class DroneMount implements MountedWeapon {
 		return currentAliveEscaped * (Math.PI*2/maxDrones);
 	}
 	
-	public CarrierDrone getDrone() {
+	public Spaceshuttle getDrone() {
 		return drone;
 	}
 	

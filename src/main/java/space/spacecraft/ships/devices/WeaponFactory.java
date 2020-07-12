@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import interfaces.geom.Point;
-import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.Spacecraft;
 import space.spacecrafts.ships.Spaceshuttle;
@@ -23,7 +22,7 @@ public final class WeaponFactory {
 	}
 	
 	public static final DroneMount standardLaserDroneMount(Spaceshuttle shuttle) {
-		Supplier<CarrierDrone> laserDroneFn = () -> DroneFactory.standardLaserDrone(shuttle);
+		Supplier<Spaceshuttle> laserDroneFn = () -> DroneFactory.standardLaserDrone(shuttle);
 		return new DroneMount(laserDroneFn);
 	}
 	

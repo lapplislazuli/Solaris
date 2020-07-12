@@ -23,7 +23,6 @@ import space.core.SpaceObject;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.Spaceshuttle;
 import space.spacecrafts.ships.DroneFactory;
-import space.spacecrafts.ships.LaserDrone;
 
 import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
@@ -291,7 +290,7 @@ class CarrierTests {
 	}
 	
 	@ParameterizedTest
-	@ValueSource(ints = { 0,1,3,5,15})
+	@ValueSource(ints = { 0,1,3,5,10})
 	void testConstructor_checkDrones_DronesShouldHaveDifferentPositions(int numberOfDrones) {
 		SpaceObject root = fakeStar(0,0);
 		var b = new Spaceshuttle.Builder("TestCarrier", root).distance_to_parent(100);
@@ -481,11 +480,32 @@ class CarrierTests {
 	@Test
 	public void testIsDrone_checkDrone_shouldBeTrue() {
 		Spaceshuttle testCarrier = makeBattleCarrier();
-		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+		Spaceshuttle drone = testCarrier.getDrones().get(0);
+		
+		var items = ManagerRegistry.getUpdateManager().getRegisteredItems();
 		
 		assertTrue(drone.isDrone());
 	}
 	
+	@Test
+	public void testIsDrone_checkAllDrones_shouldAllBeDrones() {
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		
+		testCarrier.getDrones().stream().forEach(d -> assertTrue(d.isDrone()));
+	}
+	
+	@Test
+	public void testIsDrone_checkingOnDrone_otherItemsAndOtherCarriersInManagers_shouldBeTrue() {
+		Spaceshuttle noiseCarrier = makeBattleCarrier();
+		SpaceObject root = fakeStar(0,0);
+		Spaceshuttle noiseShuttle = new Spaceshuttle.Builder("TestShuttle", root).distance_to_parent(100).build();
+		
+		Spaceshuttle testCarrier = makeBattleCarrier();
+		Spaceshuttle drone = (Spaceshuttle) testCarrier.getDrones().get(0);
+	
+		assertTrue(drone.isDrone());
+		
+	}
 	
 	@Test
 	public void testIsDrone_IsCarrier_shouldBeFalse() {

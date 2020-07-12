@@ -20,7 +20,6 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.UpdatingObject;
 import interfaces.spacecraft.ArmedSpacecraft;
-import interfaces.spacecraft.CarrierDrone;
 import interfaces.spacecraft.MountedWeapon;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
@@ -137,7 +136,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		super.move(parentCenter);
 	}
 	
-	public List<CarrierDrone> getDrones(){
+	public List<Spaceshuttle> getDrones(){
 		return weapons.stream()
 				.filter(w -> w instanceof DroneMount)
 				.map(d -> (DroneMount)d)
@@ -165,6 +164,19 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	
 	@Override
 	public void rotate() {rotation=degreeTo(parent);}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this==o)
+			return true;
+		if(!(o instanceof Spaceshuttle))
+			return false;
+		Spaceshuttle otherCasted = (Spaceshuttle) o;
+		return otherCasted.getName().equals(this.getName())
+				&& otherCasted.getCenter().equals(this.getCenter())
+				// Other Attributes?
+		;
+	}
 	
 	public boolean isDead() {return state==SpacecraftState.DEAD;}
 	
@@ -240,14 +252,14 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		if(other instanceof Missile && trabants.contains((Missile)other))
 			return false;
 		if(super.collides(other)) {
-			if(other instanceof CarrierDrone && trabants.contains((CarrierDrone)other)) {//Don't collide with Children
-				var otherCasted = (CarrierDrone) other;
+			if(other instanceof Spaceshuttle && trabants.contains((Spaceshuttle)other)) {//Don't collide with Children
+				var otherCasted = (Spaceshuttle) other;
 				return otherCasted.getParent().equals(this);
 			}
 			if(other instanceof Missile) {	// Don't collide with Childrens missiles
 				if (trabants.stream()
-						.filter(d -> d instanceof CarrierDrone)
-						.map(d -> (CarrierDrone)d)
+						.filter(d -> d instanceof Spaceshuttle)
+						.map(d -> (Spaceshuttle)d)
 						.filter(d -> d.getParent().equals(this))
 						.map(d -> (Spaceshuttle)d )
 						.anyMatch(d-> d.getAllChildren().contains(other)))
@@ -259,8 +271,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	}
 	
 	public boolean isDrone() {
-		return ManagerRegistry.getUpdateManager().getAllActiveColliders()
-			.parallelStream()
+		return ManagerRegistry.getUpdateManager().getRegisteredItems()
+			.stream()
 			.filter(t -> t instanceof Spaceshuttle)
 			.map(t -> (Spaceshuttle) t)
 			.flatMap( s -> s.getDrones().stream())
@@ -326,9 +338,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return false;
 		if(!other.isCarrier())
 			return false;
-		if(this instanceof CarrierDrone) {
-			var meCasted = (CarrierDrone) this;
-			return other.getDrones().contains(meCasted);
+		if(this.isDrone()) {
+			return other.getDrones().contains(this);
 		}
 		return false;
 	}
@@ -336,12 +347,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	public boolean isDroneWithSameCarrier(Spaceshuttle other) {
 		if(other==null)
 			return false;
-		if(! (this instanceof CarrierDrone))
-			return false;
-		if(! (other instanceof CarrierDrone))
-			return false;
 		
-		var otherCasted = (CarrierDrone) other;
+		var otherCasted = (Spaceshuttle) other;
 		var parentCasted = (Spaceshuttle) parent;
 		
 		return parentCasted.getDrones().contains(otherCasted);
@@ -352,10 +359,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return false;
 		if(!this.isCarrier())
 			return false;
-		if(! (other instanceof CarrierDrone))
-			return false;
-		var otherCasted = (CarrierDrone) other;
-		return otherCasted.getParent().equals(this);
+		//TODO: This does not work as intended if drone moved
+		return other.getParent().equals(this);
 	}
 	
 	public Collection<MountedWeapon> getWeapons() {
@@ -373,7 +378,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		private boolean setStandardWeaponry=false,shallBeCarrier=false,leavesSpaceTrash=true;
 		
 		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
-		private List<Function<Spaceshuttle,CarrierDrone>> droneFns = new ArrayList<>();
+		private List<Function<Spaceshuttle,Spaceshuttle>> droneFns = new ArrayList<>();
 		
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
@@ -429,7 +434,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return this;
 		}
 		
-		public Builder addDroneMount(Function<Spaceshuttle,CarrierDrone> droneFn) {
+		public Builder addDroneMount(Function<Spaceshuttle,Spaceshuttle> droneFn) {
 			droneFns.add(droneFn);
 			return this;
 		}
@@ -490,7 +495,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		builder.droneFns
 			.stream()
 			.map(fun -> {
-				Supplier<CarrierDrone> supFn = () -> fun.apply(this);
+				Supplier<Spaceshuttle> supFn = () -> fun.apply(this);
 				return supFn;
 			})
 			.map(supFn -> new DroneMount(supFn))
@@ -507,5 +512,8 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		
 
 		spawnDronesIfAnyAreGiven();
+		
+		//Is this smart?
+		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 }

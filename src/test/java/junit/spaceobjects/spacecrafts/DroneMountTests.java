@@ -13,12 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
 import interfaces.geom.Point;
-import interfaces.spacecraft.CarrierDrone;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecraft.ships.devices.DroneMount;
 import space.spacecrafts.ships.Spaceshuttle;
-import space.spacecrafts.ships.LaserDrone;
+import space.spacecrafts.ships.ShipFactory;
 
 import static junit.testhelpers.FakeSpaceObjectFactory.*;
 
@@ -37,7 +36,8 @@ public class DroneMountTests {
 	void testConstructor_droneIsAlive_shouldBeReady() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 
@@ -48,7 +48,8 @@ public class DroneMountTests {
 	void testIsReady_droneIsDead_shouldBeReady() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 
@@ -61,7 +62,8 @@ public class DroneMountTests {
 	void testGetParent_shouldBeEmitter() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 
@@ -72,7 +74,8 @@ public class DroneMountTests {
 	void testConstructor_nullEmitter_shouldThrowError() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		assertThrows(IllegalArgumentException.class, () -> new DroneMount(null,testDrone));
 	}
@@ -88,7 +91,8 @@ public class DroneMountTests {
 	void testSetTarget_targetIsNull_shouldThrowError() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		
@@ -102,7 +106,8 @@ public class DroneMountTests {
 	void testSetTarget_targetIsNotNull_shouldBeSet() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		
@@ -114,7 +119,8 @@ public class DroneMountTests {
 	void testLaunchDrone_DroneCanBeLaunched_DroneIsInTargetsTrabants() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		SpaceObject target = fakeStar(250,250);
@@ -129,7 +135,8 @@ public class DroneMountTests {
 	void testLaunchDrone_DroneIsDead_TargetHasNoTrabants() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		SpaceObject target = fakeStar(250,250);
@@ -146,7 +153,8 @@ public class DroneMountTests {
 	void testActivate_DroneCanBeLaunched_DroneIsInTargetsTrabants() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		SpaceObject target = fakeStar(250,250);
@@ -161,7 +169,8 @@ public class DroneMountTests {
 	void testActivateTwice_DroneCanBeLaunched_DroneIsNotInTargetsTrabants() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		SpaceObject target = fakeStar(250,250);
@@ -177,7 +186,8 @@ public class DroneMountTests {
 	void testActivateTwice_DroneCanBeLaunched_DroneIsNotInEmittersTrabants() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		SpaceObject target = fakeStar(250,250);
@@ -193,7 +203,8 @@ public class DroneMountTests {
 	void testLaunch_TargetIsSetViaPoint_notLaunched() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		Point target = new AbsolutePoint(250,250);
@@ -207,7 +218,8 @@ public class DroneMountTests {
 	void testLaunch_TargetIsSetViaRadiant_notLaunched() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		
 		testObject.setTarget(Math.PI);
@@ -221,7 +233,8 @@ public class DroneMountTests {
 	void testUpdateTwice_DroneWasDead_DroneShouldNotBeRebuild() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		CarrierDrone testDrone = new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		
+		Spaceshuttle testDrone = ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(emitter,testDrone);
 		
@@ -237,7 +250,7 @@ public class DroneMountTests {
 	void testUpdate_DroneWasDead_updateTooLittleTimes_DroneIsNotRebuild() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		Supplier<Spaceshuttle> supplierFn = () -> ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(supplierFn);
 		
@@ -253,7 +266,7 @@ public class DroneMountTests {
 	void testUpdate_DroneWasDead_UpdateManyTimes_DroneIsRebuild() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		Supplier<Spaceshuttle> supplierFn = () -> ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(supplierFn);
 
@@ -270,7 +283,7 @@ public class DroneMountTests {
 	void testConstructor_sampleHowToUseSupplierConstructor() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		Supplier<Spaceshuttle> supplierFn = () -> ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(supplierFn);
 		
@@ -281,7 +294,7 @@ public class DroneMountTests {
 	void testConstructor_supplierConstructor_shouldSpawnDroneForCarrier() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		Supplier<Spaceshuttle> supplierFn = () -> ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(supplierFn);
 		
@@ -292,7 +305,7 @@ public class DroneMountTests {
 	void testConstructor_supplierConstructor_droneMountsCarrierIsSet() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		Supplier<CarrierDrone> supplierFn = () -> new LaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
+		Supplier<Spaceshuttle> supplierFn = () -> ShipFactory.standardLaserDrone("testDrone", emitter, 2, 10, Math.PI/2);
 
 		DroneMount testObject = new DroneMount(supplierFn);
 		
@@ -303,7 +316,7 @@ public class DroneMountTests {
 	void testConstructor_supplierConstructor_faultySupplyFunction_throwsIllegalArgumentException() {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle emitter= new Spaceshuttle("Army",root,0,50,0);
-		Supplier<CarrierDrone> supplierFn = () -> null;
+		Supplier<Spaceshuttle> supplierFn = () -> null;
 
 		
 		assertThrows(IllegalArgumentException.class,()->new DroneMount(supplierFn));
