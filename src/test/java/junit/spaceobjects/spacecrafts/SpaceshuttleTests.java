@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,8 @@ import space.core.MovingSpaceObject;
 import space.core.Planet;
 import space.core.SpaceObject;
 import space.core.Star;
+import space.spacecraft.ships.devices.LaserCannon;
+import space.spacecraft.ships.devices.RocketLauncher;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.DroneFactory;
 import space.spacecrafts.ships.Spaceshuttle;
@@ -189,8 +192,8 @@ public class SpaceshuttleTests implements RemovableTests {
 		/*
 		 * I had a very special problem that the ships do teleport after
 		 * launching and doing an update. This was probably related to relativePos
-		 * But i want to check it separetly 
-		 * It didn�t occur with 0 speed
+		 * But i want to check it separately 
+		 * It didn't occur with 0 speed
 		 */
 		
 		SpaceObject root = fakeStar(0,0);
@@ -562,7 +565,27 @@ public class SpaceshuttleTests implements RemovableTests {
 		
 		assertEquals(4,carrier.getTrabants().size());
 	}
-	
+
+	@Tag("Basic")
+	@Test
+	void testBuilder_setStandardWeapons_shouldHaveLaserCannonAndRockets() {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		
+		var carrier = 
+				new Spaceshuttle.Builder("TestCarrier", carrierRoot).color(Color.ALICEBLUE)
+				 .size(4)
+				 .distance_to_parent(40)
+				 .rotationSpeed(Math.PI)
+				 .speed(-Math.PI)
+				 .levelOfDetail(3)
+				 .setStandardWeaponry(true)
+				 .build();
+		
+		assertEquals(2,carrier.getWeapons().size());
+		
+		carrier.getWeapons().stream()
+			.forEach(t -> assertTrue(t instanceof LaserCannon || t instanceof RocketLauncher));
+	}
 
 	@Tag("Basic")
 	@Test
@@ -636,21 +659,130 @@ public class SpaceshuttleTests implements RemovableTests {
 		//TODO
 	}
 
-	@Tag("Basic")
-	@Test
-	void testCollision_inspectCarrier_doesNotCollideDrones() {
-		//TODO
+	@Tag("Complex")
+	@ParameterizedTest
+	@ValueSource(ints = { 0,1,3,5,10,100})
+	void testCollision_inspectCarrier_doesNotCollideDrones(int numberOfDrones) {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			assertFalse(carrier.collides(drone));
 	}
 
 	@Tag("Complex")
-	@Test
-	void testCollision_inspectDrones_DoNotCollideCarrier() {
-		//TODO
+	@ParameterizedTest
+	@ValueSource(ints = { 0,1,3,5,10,100})
+	void testCollision_inspectDrones_DoNotCollideCarrier(int numberOfDrones) {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			assertFalse(drone.collides(carrier));
+	}
+
+	@Tag("Complex")
+	@ParameterizedTest
+	@ValueSource(ints = { 0,1,3,5,10,100})
+	void testCollision_inspectDrones_DoNotCollideWithOtherDronesOfSameCarrier(int numberOfDrones) {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			for(Spaceshuttle otherDrone : carrier.getDrones())
+				if(drone != otherDrone)
+					assertFalse(drone.collides(carrier));
+	}
+	
+	@Tag("Complex")
+	@ParameterizedTest
+	@ValueSource(ints = {5,10,100})
+	void testCollision_dronesShooting_shouldNotCollideWithDronesOfSameCarrier(int numberOfDrones) {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		SpaceObject fakeTarget = fakeStar(1000,1000);
+		for(Spaceshuttle drone : carrier.getDrones())
+			drone.attack(fakeTarget);
+		
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		List<Missile> allShots = 
+				carrier.getDrones().stream()
+				.flatMap(d -> d.getTrabants().stream())
+				.filter(m -> m instanceof Missile)
+				.map(m -> (Missile) m)
+				.collect(Collectors.toList());
+
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			for(Missile m : allShots)
+				assertFalse(drone.collides(m));
+	}
+	
+	@Tag("Complex")
+	@ParameterizedTest
+	@ValueSource(ints = {5,10,100})
+	void testCollision_dronesShooting_shouldNotCollideWithCarrier(int numberOfDrones) {
+		SpaceObject carrierRoot = fakeStar(0,0);
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<numberOfDrones;i++) {
+			b.addDroneMount(DroneFactory::standardLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		SpaceObject fakeTarget = fakeStar(1000,1000);
+		for(Spaceshuttle drone : carrier.getDrones()) {
+			drone.shootLaser(fakeTarget);	
+		}
+		
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+
+		List<Missile> allShots = 
+				carrier.getDrones().stream()
+				.flatMap(d -> d.getTrabants().stream())
+				.filter(m -> m instanceof Missile)
+				.map(m -> (Missile) m)
+				.collect(Collectors.toList());
+
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		for(Missile m : allShots)
+			assertFalse(carrier.collides(m));
 	}
 	
 	@Test
 	void testAttackTargetSpaceObject_shouldEqualLaunchShipsForCarrier() {
-		//For more Input on Launching Ships check Spaceshuttle Tests
 		SpaceObject carrierRoot = fakeStar(0,0);
 		Spaceshuttle carrier = makeBattleCarrier();
 

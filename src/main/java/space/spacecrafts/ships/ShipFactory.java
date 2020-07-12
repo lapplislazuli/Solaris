@@ -4,6 +4,7 @@ import geom.UShape;
 import interfaces.geom.Shape;
 import javafx.scene.paint.Color;
 import space.core.SpaceObject;
+import space.spacecraft.ships.devices.WeaponFactory;
 
 public final class ShipFactory {
 	//"Martians",mars,3,50,Math.PI/100
@@ -22,6 +23,7 @@ public final class ShipFactory {
 				.spawnSpaceTrashOnDestruct(false)
 				.color(Color.BLANCHEDALMOND)
 				.shape(droneShape)
+				.addMountedWeapon(WeaponFactory::standardLaserCannon)
 				.build();
 
 		return drone;

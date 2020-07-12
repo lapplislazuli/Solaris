@@ -535,7 +535,9 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			this.primaryWeapon = WeaponFactory.combineDroneMountsToDroneRack(this);
 		this.secondaryWeapon = null;
 		
-
+		if(primaryWeapon==null&&!weapons.isEmpty())
+			primaryWeapon = weapons.get(0);
+		
 		spawnDronesIfAnyAreGiven();
 		
 		//Is this smart?
