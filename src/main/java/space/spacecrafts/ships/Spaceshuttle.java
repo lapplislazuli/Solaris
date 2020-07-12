@@ -44,6 +44,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	protected double orbitingDistance;
 	protected boolean isPlayer;
 	protected int size;
+	protected boolean leavesSpaceTrash = true;
 	
 	protected Sensor sensor;
 	protected SpacecraftState state = SpacecraftState.ORBITING;
@@ -155,7 +156,9 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			}
 			state=SpacecraftState.DEAD;
 			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
-			new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);
+			if(leavesSpaceTrash) {
+				new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);	
+			}
 			remove();
 		}
 	}
@@ -358,7 +361,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		private int distance = 0,size = 0, levelOfDetail=2,sensorsize=50;
 		private Shape shape;
 		private double speed = 0,rotationSpeed=0;
-		private boolean setStandardWeaponry=false,shallBeCarrier=false;
+		private boolean setStandardWeaponry=false,shallBeCarrier=false,leavesSpaceTrash=true;
 		
 		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
 		private List<Function<Spaceshuttle,CarrierDrone>> droneFns = new ArrayList<>();
@@ -407,6 +410,11 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return this;
 		}
 		
+		public Builder spawnSpaceTrashOnDestruct(boolean val) {
+			leavesSpaceTrash = val;
+			return this;
+		}
+		
 		public Builder addMountedWeapon(Function<Spaceshuttle,MountedWeapon> weaponFn){ 
 			weaponFns.add(weaponFn); 
 			return this;
@@ -444,6 +452,7 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		this.parent=builder.parent;
 		rotationSpeed=builder.rotationSpeed;
 		distance=(int) (orbitingDistance+distanceTo(parent));
+		leavesSpaceTrash = builder.leavesSpaceTrash;
 		
 		sensor = new SensorArray(this,builder.sensorsize);
 		move(parent.getCenter());

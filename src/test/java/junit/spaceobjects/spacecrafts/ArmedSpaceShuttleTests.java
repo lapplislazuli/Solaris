@@ -280,4 +280,5 @@ class ArmedSpaceShuttleTests {
 		assertEquals(expected,result);
 	}
 
+	
 }

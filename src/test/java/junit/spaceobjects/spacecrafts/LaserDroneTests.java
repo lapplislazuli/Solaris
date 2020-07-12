@@ -55,7 +55,6 @@ class LaserDroneTests {
 	
 	@Test
 	void testGetNearestPossibleTarget_noItemsDetected_shouldBeEmptyOptional() {
-		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle testObjectSource = makeBattleCarrier();
 			
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
@@ -82,7 +81,6 @@ class LaserDroneTests {
 	
 	@Test
 	void testGetNearestPossibleTarget_SensorNonEmpty_noSpaceObjectInSensor_shouldBeEmptyOptional() {
-		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
@@ -189,7 +187,6 @@ class LaserDroneTests {
 	
 	@Test
 	void testGetNearestPossibleTarget_CarrierIsInSensor_shouldBeEmptyOptional() {
-		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle testObjectSource = makeBattleCarrier();
 		
 		LaserDrone testObject = (LaserDrone) testObjectSource.getDrones().get(0);
