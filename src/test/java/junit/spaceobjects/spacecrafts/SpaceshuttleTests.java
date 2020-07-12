@@ -38,7 +38,7 @@ import space.spacecrafts.ships.missiles.Laserbeam;
 import space.spacecrafts.ships.missiles.Missile;
 import space.spacecrafts.ships.missiles.Rocket;
 
-public class ShipTests implements RemovableTests {
+public class SpaceshuttleTests implements RemovableTests {
 
 	@BeforeEach
 	void initManagerRegistry() {
