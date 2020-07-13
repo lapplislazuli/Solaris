@@ -118,7 +118,7 @@ public final class GalaxyFactory {
 			Spaceshuttle mothership = new Spaceshuttle.Builder("Mothership",sun)
 					.size(6)
 					.speed(Math.PI/500)
-					.distance_to_parent(480)
+					.orbitingDistance(480)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)

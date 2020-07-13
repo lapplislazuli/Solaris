@@ -29,6 +29,7 @@ import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 import space.effect.Explosion;
 import space.spacecraft.ships.devices.DroneMount;
+import space.spacecraft.ships.devices.DroneRack;
 import space.spacecraft.ships.devices.LaserCannon;
 import space.spacecraft.ships.devices.RocketLauncher;
 import space.spacecraft.ships.devices.WeaponFactory;
@@ -315,12 +316,27 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	
 	@Override
 	public Spaceshuttle rebuildAt(String name, SpaceObject at) {
+		var copyBuilder =  new Builder(name,at)
+				.size(this.size)
+				.drawingInformation(this.dInfo)
+				.spawnSpaceTrashOnDestruct(this.leavesSpaceTrash)
+				.rotationSpeed(this.rotationSpeed)
+				.speed(this.speed)
+				.levelOfDetail(this.shape.getLevelOfDetail()+1)
+				.orbitingDistance((int)this.orbitingDistance)
+				//.sensorSize(this.sensor.)//TODO: Sensorsize?
+				.shape(this.shape);
 		if(isPlayer()) {
-			Spaceshuttle playercopy = PlayerSpaceShuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
-			return playercopy;
+			copyBuilder = copyBuilder.isPlayer();
 		}
-		Spaceshuttle nonplayerCopy = new Spaceshuttle(name,at,dInfo,shape,size,(int) orbitingDistance,speed);
-		return nonplayerCopy;
+		
+		Spaceshuttle copy =  copyBuilder.build();
+		
+		copy.weapons=this.weapons;
+		copy.primaryWeapon = this.primaryWeapon;
+		copy.secondaryWeapon = this.secondaryWeapon;
+		
+		return copy;
 	}
 	
 	@Override
@@ -397,10 +413,11 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		private final String name;
 		private SpaceObject parent;
 		private Color color= Color.CORNSILK;
-		private int distance = 0,size = 0, levelOfDetail=2,sensorsize=50;
+		private DrawingInformation dinfo = null;
+		private int orbitingDistance = 100,size = 0, levelOfDetail=2,sensorsize=50;
 		private Shape shape;
 		private double speed = 0,rotationSpeed=0;
-		private boolean setStandardWeaponry=false,shallBeCarrier=false,leavesSpaceTrash=true;
+		private boolean setStandardWeaponry=false,shallBeCarrier=false,leavesSpaceTrash=true,isPlayer=false;;
 		
 		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
 		private List<Function<Spaceshuttle,Spaceshuttle>> droneFns = new ArrayList<>();
@@ -420,10 +437,10 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return this;
 		}
 		
-		public Builder distance_to_parent(int val){
-			if(val<0)
-				throw new IllegalArgumentException("Distance cannot be smaller than 0");
-			distance= val; 
+		public Builder orbitingDistance(int val){
+			if(val<=0)
+				throw new IllegalArgumentException("Distance cannot be smaller than or equal to 0");
+			orbitingDistance = val; 
 			return this;
 		}
 		
@@ -438,6 +455,12 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			speed= radiantPerUpdate; 
 			return this;
 		}
+		
+		public Builder isPlayer() {
+			isPlayer=true;
+			return this;
+		}
+		
 		public Builder rotationSpeed(double radiantPerUpdate){
 			rotationSpeed= radiantPerUpdate; 
 			return this;
@@ -474,6 +497,13 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			return this;
 		}
 		
+		public Builder drawingInformation(DrawingInformation val) {
+			if(val==null)
+				throw new IllegalArgumentException("DrawingInformation cannot be null");
+			dinfo = val;
+			return this;
+		}
+		
 		public Builder sensorSize(int val) {
 			if(val<0)
 				throw new IllegalArgumentException("Sensorsize cannot be smaller than 0");
@@ -495,14 +525,21 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	}
 	
 	private Spaceshuttle(Builder builder) {
-		super(builder.name, builder.parent, new JavaFXDrawingInformation(builder.color), new HShape(builder.size*2,builder.size*3,builder.size), builder.distance , builder.speed);
+		super(builder.name, builder.parent, new JavaFXDrawingInformation(builder.color), new HShape(builder.size*2,builder.size*3,builder.size), builder.orbitingDistance , builder.speed);
 		this.parent=builder.parent;
 		rotationSpeed=builder.rotationSpeed;
-		distance=(int) (orbitingDistance+distanceTo(parent));
+		orbitingDistance = builder.orbitingDistance;
+		distance=builder.orbitingDistance;
 		leavesSpaceTrash = builder.leavesSpaceTrash;
 		
+		if(builder.dinfo!=null) {
+			dInfo = builder.dinfo;		
+		}
 		if(builder.shape!=null) {
 			this.shape=builder.shape;
+		}
+		if(builder.isPlayer) {
+			ManagerRegistry.getPlayerManager().registerPlayerShuttle(this);
 		}
 		
 		sensor = new SensorArray(this,builder.sensorsize);
@@ -531,12 +568,18 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 			.map(fun -> fun.apply(this))
 			.forEach(weapon -> this.weapons.add(weapon));
 		
-		if(!builder.droneFns.isEmpty())
-			this.primaryWeapon = WeaponFactory.combineDroneMountsToDroneRack(this);
-		this.secondaryWeapon = null;
-		
-		if(primaryWeapon==null&&!weapons.isEmpty())
-			primaryWeapon = weapons.get(0);
+		if(builder.shallBeCarrier) {
+			MountedWeapon rack = WeaponFactory.combineDroneMountsToDroneRack(this);
+			primaryWeapon = rack;
+			weapons.add(rack);
+			Optional<MountedWeapon> maybeSecond = weapons.stream().filter(u -> !(u instanceof DroneMount || u instanceof DroneRack)).findFirst();
+			secondaryWeapon = maybeSecond.orElse(null);
+		} else {
+			if(weapons.size()>0)
+				primaryWeapon = weapons.get(0);
+			if(weapons.size()>1)
+				secondaryWeapon = weapons.get(1);
+		}
 		
 		spawnDronesIfAnyAreGiven();
 		

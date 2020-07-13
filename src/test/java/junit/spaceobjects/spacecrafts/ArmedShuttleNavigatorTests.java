@@ -103,7 +103,7 @@ class ArmedShuttleNavigatorTests {
 	@Test
 	void testRebuild_rebuildShuttleShouldBeArmedSpacecraft() {
 		SpaceObject root = fakeStar(0,0);
-		Spaceshuttle stubShip = new Spaceshuttle("Stub",root,0,0,0);
+		Spaceshuttle stubShip = new Spaceshuttle("Stub",root,2,10,Math.PI/20);
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stubShip,true);
 		

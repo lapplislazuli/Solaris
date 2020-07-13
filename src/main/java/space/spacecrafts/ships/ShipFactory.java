@@ -18,7 +18,7 @@ public final class ShipFactory {
 		Shape droneShape = new UShape(size*2,size*2,size/2);
 		Spaceshuttle drone = new Spaceshuttle.Builder(name, parent)
 				.size(size)
-				.distance_to_parent(orbitingDistance)
+				.orbitingDistance(orbitingDistance)
 				.speed(speed)
 				.spawnSpaceTrashOnDestruct(false)
 				.color(Color.BLANCHEDALMOND)
