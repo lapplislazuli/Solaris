@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import interfaces.spacecraft.ArmedSpacecraft;
+import interfaces.spacecraft.Spacecraft;
 import junit.fakes.FakeArmedNavigator;
-import junit.fakes.FakeArmedSpacecraft;
+import junit.fakes.FakeSpacecraft;
 import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
 import space.core.SpaceObject;
@@ -31,7 +31,7 @@ class PlayerManagerTests {
 	void testRegisterPlayerShuttle_shouldBeTheSetValue() {
 		PlayerManager mng = new PlayerManager();
 		
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		
 		mng.registerPlayerShuttle(stub);
 		assertEquals(stub,mng.getPlayerShuttle());
@@ -42,8 +42,8 @@ class PlayerManagerTests {
 		PlayerManager mng = new PlayerManager();
 		
 
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
-		FakeArmedSpacecraft replacement = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
+		FakeSpacecraft replacement = new FakeSpacecraft();
 		
 		mng.registerPlayerShuttle(stub);
 		mng.registerPlayerShuttle(replacement);
@@ -81,7 +81,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		Spacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		assertEquals(testObject,mng.getPlayerShuttle());
 	}
@@ -92,7 +92,7 @@ class PlayerManagerTests {
 		
 		FakeArmedNavigator navStub = new FakeArmedNavigator();
 		mng.registerPlayerNavigator(navStub);
-		FakeArmedSpacecraft shuttleStub = new FakeArmedSpacecraft();
+		FakeSpacecraft shuttleStub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(shuttleStub);
 		
 		mng.reset();
@@ -114,7 +114,7 @@ class PlayerManagerTests {
 	@Test
 	void testForceRespawn_checkShuttle_shouldBeDead() {
 		PlayerManager mng = new PlayerManager();
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(stub);
 		
 		mng.forceRespawn();
@@ -128,7 +128,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		ArmedSpacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		Spacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
 		
 		mng.forceRespawn();
 		
@@ -147,7 +147,7 @@ class PlayerManagerTests {
 	@Test
 	void testSpeedUp_checkShuttleSpeed_shouldBe10PercentHigher() {
 		PlayerManager mng = new PlayerManager();
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(stub);
 		
 		stub.speed=100;
@@ -159,7 +159,7 @@ class PlayerManagerTests {
 	@Test
 	void testSpeedUp_checkShuttleSpeedChanged_shouldbeChanged() {
 		PlayerManager mng = new PlayerManager();
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(stub);
 		
 		mng.speedUp();
@@ -180,7 +180,7 @@ class PlayerManagerTests {
 	@Test
 	void testSlowDown_checkShuttleSpeed_shouldBe10PercentLower() {
 		PlayerManager mng = new PlayerManager();
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(stub);
 		
 		stub.speed=100;
@@ -192,7 +192,7 @@ class PlayerManagerTests {
 	@Test
 	void testSlowDown_checkShuttleSpeedChanged_shouldbeChanged() {
 		PlayerManager mng = new PlayerManager();
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(stub);
 		
 		mng.slowDown();

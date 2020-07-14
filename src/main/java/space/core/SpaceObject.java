@@ -73,6 +73,8 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public double distanceTo(SpaceObject other) {
+		if(center == null || other == null || other.center == null)
+			return Double.MAX_VALUE;
 		return center.distanceTo(other.center);
 	}
 	

@@ -4,11 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import interfaces.spacecraft.AggressiveNavigator;
-import interfaces.spacecraft.ArmedSpacecraft;
+import interfaces.spacecraft.Spacecraft;
 
 public class PlayerManager{
 
-	private ArmedSpacecraft playerShuttle;
+	private Spacecraft playerShuttle;
 	private AggressiveNavigator playerNavigator;
 
 	private static Logger logger = LogManager.getLogger(EffectManager.class);
@@ -30,13 +30,13 @@ public class PlayerManager{
 		deathCount=0;
 	}
 	
-	public void registerPlayerShuttle(ArmedSpacecraft p) {
+	public void registerPlayerShuttle(Spacecraft p) {
 		if(playerShuttle!=null)
 			logger.info("Overwriting active playershuttle...");
 		playerShuttle=p;
 	}
 	
-	public ArmedSpacecraft getPlayerShuttle() {return playerShuttle;}
+	public Spacecraft getPlayerShuttle() {return playerShuttle;}
 	public AggressiveNavigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {

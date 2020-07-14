@@ -1,6 +1,7 @@
 package interfaces.spacecraft;
 
 import java.util.List;
+import java.util.Optional;
 
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
@@ -36,5 +37,10 @@ public interface Spacecraft extends DestructibleObject,MovingObject,MovingUpdati
 	
 	public void setSensor(Sensor val);
 	
+	public void attack(Point p);
+	
+	public void attack(SpaceObject o);
+	
+	public Optional<SpaceObject> getNearestPossibleTarget();
 }
 

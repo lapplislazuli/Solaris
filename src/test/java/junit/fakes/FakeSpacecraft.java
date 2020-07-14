@@ -3,6 +3,7 @@ package junit.fakes;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
@@ -17,7 +18,27 @@ public class FakeSpacecraft implements Spacecraft{
 	public boolean colliding = false,isPlayer=false;
 	public double speed=0;
 	public boolean speedSet=false;
+	public Optional<SpaceObject> nearestTarget = Optional.empty();
 	
+	public Spacecraft rebuildAt (String name, SpaceObject at) {
+		rebuild=true;
+		FakeSpacecraft copy = new FakeSpacecraft();
+		copy.parent=at;
+		return copy;
+	}
+	
+	public void attack(Point p) {
+		attacked=true;
+	}
+
+	public void attack(SpaceObject o) {
+		attacked=true;
+	}
+
+	public Optional<SpaceObject> getNearestPossibleTarget() {
+		return nearestTarget;
+	}
+
 	public SpacecraftState state = SpacecraftState.ORBITING;
 	
 	public SpaceObject parent,target;
@@ -49,14 +70,6 @@ public class FakeSpacecraft implements Spacecraft{
 
 	public SpacecraftState getState() {
 		return state;
-	}
-
-	@Override
-	public Spacecraft rebuildAt(String name, SpaceObject at) {
-		rebuild=true;
-		FakeSpacecraft copy = new FakeSpacecraft();
-		copy.parent=at;
-		return copy;
 	}
 
 	public double degreeTo(SpaceObject parent) {

@@ -3,7 +3,6 @@ package logic.loader;
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.spacecraft.AggressiveNavigator;
-import interfaces.spacecraft.ArmedSpacecraft;
 import javafx.scene.paint.Color;
 import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
@@ -44,8 +43,8 @@ public final class GalaxyFactory {
 					.build();
 
 			Planet moon = (new Planet.Builder("Moon", earth))
-					.size(4)
-					.distance(28)
+					.size(3)
+					.distance(30)
 					.levelOfDetail(7)
 					.speed(Math.PI/800)
 					.rotationSpeed(Math.PI*2/30)
@@ -67,20 +66,28 @@ public final class GalaxyFactory {
 					.build();
 			
 			//TODO: Builder Patttern!
-			ArmedSpacecraft pS = Spaceshuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
-			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",pS);
+			var playerShuttle = new Spaceshuttle.Builder("Ikarus", earth)
+									.size(2)
+									.orbitingDistance(45)
+									.speed(Math.PI/150)
+									.color(Color.LIGHTSALMON)
+									.setStandardWeaponry(true)
+									.build();
+			
+			//ArmedSpacecraft pS = Spaceshuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
+			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
 			playerNav.getRoute().add(mars);
 			
 			Satellite astra = (new Satellite.Builder("Astra", earth))
-					.size(3,3)
-					.distance(20)
+					.size(2,2)
+					.distance(17)
 					.levelOfDetail(8)
 					.speed(-Math.PI/400)
 					.color(Color.LIGHTGRAY)
 					.build();
 			
 			Satellite hubble = (new Satellite.Builder("Hubble-Telescope", sun))
-					.size(5,5)
+					.size(3,3)
 					.distance(70)
 					.levelOfDetail(8)
 					.speed(-Math.PI/800)
@@ -105,19 +112,32 @@ public final class GalaxyFactory {
 					.color(Color.GRAY)
 					.build();
 			
-			Spaceshuttle martians = new Spaceshuttle("Martians",mars,3,50,Math.PI/100);
+			Spaceshuttle martians = new Spaceshuttle.Builder("Martians", mars)
+										.size(3)
+										.orbitingDistance(80)
+										.speed(Math.PI/100)
+										.setStandardWeaponry(true)
+										.spawnSpaceTrashOnDestruct(false)
+										.color(Color.DARKKHAKI)
+										.build();
 			ArmedShuttleNavigator aliens = new ArmedShuttleNavigator("Alien Invader",martians,true);
 			aliens.getRoute().add(saturn);
 			aliens.getRoute().add(sun);
 			aliens.setAutoAttack(true);
 			
-			Spaceshuttle chineseShip = new Spaceshuttle("Chinese",sun,3,50,Math.PI/100);
+			Spaceshuttle chineseShip = new Spaceshuttle.Builder("Chinese", sun)
+											.size(2)
+											.orbitingDistance(80)
+											.levelOfDetail(2)
+											.speed(Math.PI/250)
+											.build();
 			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
 			chinNav.getRoute().add(mars);
 			
 			Spaceshuttle mothership = new Spaceshuttle.Builder("Mothership",sun)
 					.size(6)
-					.speed(Math.PI/500)
+					.speed(Math.PI/600)
+					.color(Color.DARKSLATEGREY)
 					.orbitingDistance(480)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)

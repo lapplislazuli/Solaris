@@ -336,6 +336,52 @@ public class SpaceshuttleTests implements RemovableTests {
 		assertTrue(shuttle.getDistance()>oldDistance);
 	}
 	
+	@Tag("Complex")
+	@Tag("SideEffect")
+	@Tag("Registry")
+	@Tag("Regression")
+	@Test
+	void testCollide_doesNotCollideItself() {
+		SpaceObject root = new Star.Builder("SampleRoot").center(0,0).radious(2).levelOfDetail(2).build();
+		Spaceshuttle testObject = new Spaceshuttle.Builder("TestShuttle", root)
+				.size(2)
+				.levelOfDetail(3)
+				.build();
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(root);
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		assertFalse(testObject.collides(testObject));
+	}
+	
+	@Tag("Complex")
+	@Tag("SideEffect")
+	@Tag("Registry")
+	@Tag("Regression")
+	@Test
+	void testCollide_shuttleNotIsDestroyed_isRebuild_doesCollideWithRebuild() {
+		SpaceObject root =  new Star.Builder("SampleRoot").center(0,0).radious(2).levelOfDetail(2).build();
+		
+		Spaceshuttle testObject = new Spaceshuttle.Builder("TestShuttle", root)
+				.size(2)
+				.levelOfDetail(3)
+				.build();
+
+		ManagerRegistry.getUpdateManager().addSpaceObject(root);
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		var rebuild = testObject.rebuildAt("TestShuttleRebuild", root);
+
+		ManagerRegistry.getUpdateManager().addSpaceObject(root);
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		assertTrue(rebuild.collides(testObject));
+		assertTrue(testObject.collides(rebuild));
+	}
+	
 	@Tag("Basic")
 	@Tag("SideEffect")
 	@Tag("Registry")

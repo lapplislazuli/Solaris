@@ -19,8 +19,8 @@ import interfaces.geom.Shape;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.UpdatingObject;
-import interfaces.spacecraft.ArmedSpacecraft;
 import interfaces.spacecraft.MountedWeapon;
+import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import javafx.scene.paint.Color;
 import logic.manager.ManagerRegistry;
@@ -35,7 +35,7 @@ import space.spacecraft.ships.devices.RocketLauncher;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.ships.missiles.Missile;
 
-public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
+public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	
 	protected static Logger logger = LogManager.getLogger(Spaceshuttle.class);
 	
@@ -140,9 +140,10 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 				logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().getPlayerDeaths());
 			}
 			state=SpacecraftState.DEAD;
-			new Explosion("Explosion from" + name,center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
-			if(leavesSpaceTrash) {
-				new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed,Asteroid.Type.TRASH);	
+			new Explosion("Explosion from" + this.getName(),center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
+			if(leavesSpaceTrash) {		
+				var ast = new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed/2,Asteroid.Type.TRASH);
+				ast.setRelativePos(this.relativePos+Math.PI/4); // little offset
 			}
 			remove();
 		}
@@ -294,8 +295,6 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 	}
 	
 	public boolean isDrone() {
-		var debugInfo = ManagerRegistry.getUpdateManager().getRegisteredItems();
-		
 		return ManagerRegistry.getUpdateManager().getRegisteredItems()
 			.stream()
 			.filter(t -> t instanceof Spaceshuttle)
@@ -605,8 +604,5 @@ public class Spaceshuttle extends MovingSpaceObject implements ArmedSpacecraft{
 		}
 		
 		spawnDronesIfAnyAreGiven();
-		
-		//Is this smart?
-		//ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 }

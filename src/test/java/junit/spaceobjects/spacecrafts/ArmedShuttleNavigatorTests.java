@@ -12,8 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import geom.AbsolutePoint;
-import interfaces.spacecraft.ArmedSpacecraft;
-import junit.fakes.FakeArmedSpacecraft;
+import interfaces.spacecraft.Spacecraft;
+import junit.fakes.FakeSpacecraft;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
@@ -33,7 +33,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testConstructor_isNotPlayer() {
-		ArmedSpacecraft stub = new FakeArmedSpacecraft();
+		Spacecraft stub = new FakeSpacecraft();
 		
 		ArmedShuttleNavigator testObject = new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -42,7 +42,7 @@ class ArmedShuttleNavigatorTests {
 
 	@Test
 	void testConstructor_doesNotAutoAttack() {
-		ArmedSpacecraft stub = new FakeArmedSpacecraft();
+		Spacecraft stub = new FakeSpacecraft();
 		
 		ArmedShuttleNavigator testObject = new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -50,7 +50,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testPlayerConstructor_isPlayer() {
-		ArmedSpacecraft stub = new FakeArmedSpacecraft();
+		Spacecraft stub = new FakeSpacecraft();
 		
 		ArmedShuttleNavigator testObject = ArmedShuttleNavigator.PlayerNavigator("Test",stub);
 
@@ -59,7 +59,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testPlayerConstructor_doesNotAutoAttack() {
-		ArmedSpacecraft stub = new FakeArmedSpacecraft();
+		Spacecraft stub = new FakeSpacecraft();
 		
 		ArmedShuttleNavigator testObject = ArmedShuttleNavigator.PlayerNavigator("Test",stub);
 
@@ -68,7 +68,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testRegisterManuallyInPlayerManager_isPlayer() {
-		ArmedSpacecraft stub = new FakeArmedSpacecraft();
+		Spacecraft stub = new FakeSpacecraft();
 		
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
@@ -80,7 +80,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testAttackPoint_shouldAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -91,7 +91,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testAttackSpaceObject_shouldAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -109,12 +109,12 @@ class ArmedShuttleNavigatorTests {
 		
 		testObject.rebuildShuttle();
 		
-		assertTrue(testObject.getShuttle() instanceof ArmedSpacecraft);
+		assertTrue(testObject.getShuttle() instanceof Spacecraft);
 	}
 	
 	@Test
 	void testAutoAttack_NothingToAttack_doesNotAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -127,7 +127,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testAutoAttack_hasTarget_shouldAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -140,7 +140,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testUpdate_isDead_doesNotAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
@@ -153,7 +153,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testUpdate_doesNotAutoAttack_doesNotAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,false);
 		
@@ -164,7 +164,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testUpdate_isAliveAndAutoAttacks_shouldAttack() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		stub.nearestTarget=Optional.of(fakeStar(0,0));
 		
 		ArmedShuttleNavigator testObject = 
@@ -179,7 +179,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testToggleAutoAttack_wasOn_shouldBeOff() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,false);
 
@@ -192,7 +192,7 @@ class ArmedShuttleNavigatorTests {
 	
 	@Test
 	void testToggleAutoAttack_wasOff_shouldBeOn() {
-		FakeArmedSpacecraft stub = new FakeArmedSpacecraft();
+		FakeSpacecraft stub = new FakeSpacecraft();
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
