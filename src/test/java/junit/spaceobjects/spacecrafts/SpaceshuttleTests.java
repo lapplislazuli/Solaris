@@ -360,6 +360,60 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Registry")
 	@Tag("Regression")
 	@Test
+	void testCollide_twoShuttlesAtDifferentPositions_shouldNotCollide() {
+		SpaceObject rootA = new Star.Builder("SampleRoot").center(0,0).radious(2).levelOfDetail(2).build();
+		Spaceshuttle shuttleA = new Spaceshuttle.Builder("TestShuttle", rootA)
+				.size(2)
+				.levelOfDetail(3)
+				.build();
+		
+		SpaceObject rootB = new Star.Builder("SampleRoot").center(250,250).radious(2).levelOfDetail(2).build();
+		Spaceshuttle shuttleB = new Spaceshuttle.Builder("TestShuttle", rootB)
+				.size(2)
+				.levelOfDetail(3)
+				.build();
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(rootA);
+		ManagerRegistry.getUpdateManager().addSpaceObject(rootB);
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		assertFalse(shuttleA.collides(shuttleB));
+		assertFalse(shuttleB.collides(shuttleA));
+	}
+	
+	@Tag("Complex")
+	@Tag("SideEffect")
+	@Tag("Registry")
+	@Tag("Regression")
+	@Test
+	void testCollide_twoShuttlesAtSamePosition_shouldCollide() {
+		SpaceObject rootA = new Star.Builder("SampleRoot").center(0,0).radious(2).levelOfDetail(2).build();
+		Spaceshuttle shuttleA = new Spaceshuttle.Builder("TestShuttle", rootA)
+				.size(2)
+				.levelOfDetail(3)
+				.build();
+		
+		SpaceObject rootB = new Star.Builder("SampleRoot").center(0,0).radious(2).levelOfDetail(2).build();
+		Spaceshuttle shuttleB = new Spaceshuttle.Builder("TestShuttle", rootB)
+				.size(2)
+				.levelOfDetail(3)
+				.build();
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(rootA);
+		ManagerRegistry.getUpdateManager().addSpaceObject(rootB);
+		ManagerRegistry.getUpdateManager().update();
+		ManagerRegistry.getCollisionManager().update();
+		
+		assertTrue(shuttleA.collides(shuttleB));
+		assertTrue(shuttleB.collides(shuttleA));
+	}
+	
+	@Tag("Complex")
+	@Tag("SideEffect")
+	@Tag("Registry")
+	@Tag("Regression")
+	@Test
 	void testCollide_shuttleNotIsDestroyed_isRebuild_doesCollideWithRebuild() {
 		SpaceObject root =  new Star.Builder("SampleRoot").center(0,0).radious(2).levelOfDetail(2).build();
 		
@@ -578,7 +632,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void rebuildAt_ShuttleHadNoWeapons_shouldNotHaveWeaponsEither() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		Spaceshuttle carrier = makeBattleCarrier();
 		
 		Spaceshuttle copy = carrier.rebuildAt("copy",carrierRoot);
@@ -686,7 +740,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_allValuesFine_shouldBuild() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		//Add 3 normal Drones
 		for(int i = 0;i<4;i++) {
@@ -711,7 +765,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_setStandardWeapons_shouldHaveLaserCannonAndRockets() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		
 		var carrier = 
 				new Spaceshuttle.Builder("TestCarrier", carrierRoot).color(Color.ALICEBLUE)
@@ -733,7 +787,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_minimalBuilder_EmptyDrones_shouldBuild() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var carrier = new Spaceshuttle.Builder("TestCarrier", carrierRoot).build();
 		
 		assertEquals(0,carrier.getTrabants().size());
@@ -743,7 +797,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_negativeSize_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.size(-1));
@@ -752,7 +806,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_negativeSensorSize_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.size(-1));
@@ -761,7 +815,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_negativeDistance_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.sensorSize(-1));
@@ -770,7 +824,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_nullShape_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.shape(null));
@@ -779,7 +833,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_nullDrawingInfo_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.drawingInformation(null));
@@ -788,7 +842,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_setColorAndDrawingInfo_DrawingInfoShouldOverwriteColor() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		// Should be overwritten by JavaFXDrawingInformation no matter the order, therefore two tests
 		var testObject1 = 
 				new Spaceshuttle.Builder("TestCarrier", carrierRoot)
@@ -812,7 +866,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_negativeLevelOfDetail_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.levelOfDetail(-1));
@@ -821,7 +875,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_LevelOfDetailZero_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.levelOfDetail(0));
@@ -830,7 +884,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_OrbitingDistanceZero_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.orbitingDistance(0));
@@ -839,7 +893,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_negativeOrbitingDistance_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		assertThrows(IllegalArgumentException.class, () -> b.orbitingDistance(-50));
@@ -848,14 +902,14 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Basic")
 	@Test
 	void testBuilder_emptyName_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		assertThrows(IllegalArgumentException.class, () ->new Spaceshuttle.Builder("", carrierRoot));
 	}
 
 	@Tag("Basic")
 	@Test
 	void testBuilder_nullName_shouldThrowError() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		assertThrows(IllegalArgumentException.class, () ->new Spaceshuttle.Builder(null, carrierRoot));
 	}
 
@@ -875,13 +929,14 @@ public class SpaceshuttleTests implements RemovableTests {
 	@ParameterizedTest
 	@ValueSource(ints = { 0,1,3,5,10,50})
 	void testCollision_inspectCarrier_doesNotCollideDrones(int numberOfDrones) {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<numberOfDrones;i++) {
 			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
 		}
 		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
 
+		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
 		ManagerRegistry.getUpdateManager().update();
 		ManagerRegistry.getCollisionManager().update();
 		
@@ -893,13 +948,14 @@ public class SpaceshuttleTests implements RemovableTests {
 	@ParameterizedTest
 	@ValueSource(ints = { 0,1,3,5,10,50})
 	void testCollision_inspectDrones_DoNotCollideCarrier(int numberOfDrones) {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<numberOfDrones;i++) {
 			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
 		}
 		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
-		
+
+		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
 		ManagerRegistry.getUpdateManager().update();
 		ManagerRegistry.getCollisionManager().update();
 		
@@ -911,7 +967,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@ParameterizedTest
 	@ValueSource(ints = { 0,1,3,5,10,50})
 	void testCollision_inspectDrones_DoNotCollideWithOtherDronesOfSameCarrier(int numberOfDrones) {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		
 		
@@ -934,7 +990,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@ParameterizedTest
 	@ValueSource(ints = {5,10,100})
 	void testCollision_dronesShooting_shouldNotCollideWithDronesOfSameCarrier(int numberOfDrones) {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<numberOfDrones;i++) {
 			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
@@ -970,7 +1026,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@ParameterizedTest
 	@ValueSource(ints = {5,10,100})
 	void testCollision_dronesShooting_shouldNotCollideWithCarrier(int numberOfDrones) {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<numberOfDrones;i++) {
 			b.addDroneMount(DroneFactory::standardLaserDrone);
@@ -1004,7 +1060,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Tag("Complex")
 	@Test
 	void testCollision_isCarrier_actuallyCollidesWithAStar() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
 		for(int i = 0;i<3;i++) {
 			b.addDroneMount(DroneFactory::standardLaserDrone);
@@ -1022,7 +1078,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	
 	@Test
 	void testAttackTargetSpaceObject_shouldEqualLaunchShipsForCarrier() {
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		Spaceshuttle carrier = makeBattleCarrier();
 
 		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
@@ -1037,7 +1093,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	@Test
 	void testAttackTargetPoint_ForCarrier_shouldNotLaunchShips() {
 		//For more Input on Launching Ships check Spaceshuttle Tests
-		SpaceObject carrierRoot = fakeStar(0,0);
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		Spaceshuttle carrier = makeBattleCarrier();
 		
 		Point target = new AbsolutePoint(1000,100);
@@ -1630,7 +1686,7 @@ public class SpaceshuttleTests implements RemovableTests {
 	
 	
 	public static Spaceshuttle makeBattleCarrier() {
-		//SpaceObject carrierRoot = fakeStar(0,0);
+		//SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
 		int randomSeed = (int) (Math.random()*10000);
 		var b = new Spaceshuttle.Builder("TestCarrier"+randomSeed, carrierRoot);
@@ -1650,8 +1706,6 @@ public class SpaceshuttleTests implements RemovableTests {
 				 .addMountedWeapon(WeaponFactory::standardLaserCannon)
 				 .shallBeCarrier(true)
 				 .build();
-
-		var rootDebugInfo = carrierRoot.getAllChildren();
 		
 		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
 		ManagerRegistry.getUpdateManager().update();

@@ -344,6 +344,8 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		copy.primaryWeapon = this.primaryWeapon;
 		copy.secondaryWeapon = this.secondaryWeapon;
 		
+		copy.setRelativePos(0);
+		
 		return copy;
 	}
 	
@@ -575,6 +577,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		this.size=builder.size;
 		
 		shape.setLevelOfDetail(builder.levelOfDetail);
+		shape.updateOrInitOutline();
 		if(getDrawingInformation() instanceof JavaFXDrawingInformation)
 			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect=true;
 		

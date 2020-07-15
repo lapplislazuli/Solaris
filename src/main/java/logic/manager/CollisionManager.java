@@ -11,6 +11,7 @@ import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.UpdatingManager;
+import interfaces.spacecraft.Spacecraft;
 
 public class CollisionManager implements UpdatingManager<CollidingObject>{
 	
@@ -40,6 +41,10 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 		for(DestructibleObject destructible : registeredDestructibles)
 			for(CollidingObject collider: registeredItems)
 				if(collider.collides(destructible)) {
+					if(collider instanceof Spacecraft) {
+						var help = collider.collides(destructible);
+						var debugHelper = "Tooot";
+					}
 					destructible.destruct();
 					destroyed.add(destructible);
 				}

@@ -120,7 +120,6 @@
 			        <execution>
 			            <!-- Default configuration for running -->
 			            <id>default-cli</id>
-			      
 			                <configuration>
 			                    <release>12</release>
 			                    <jlinkImageName>Solaris</jlinkImageName>

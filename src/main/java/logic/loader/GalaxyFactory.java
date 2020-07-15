@@ -66,11 +66,11 @@ public final class GalaxyFactory {
 					.build();
 			
 			var playerShuttle = new Spaceshuttle.Builder("Ikarus", earth)
-									.size(2)
+									.size(4)
 									.orbitingDistance(45)
 									.speed(Math.PI/150)
 									.color(Color.LIGHTSALMON)
-									.spawnSpaceTrashOnDestruct(false)
+									.spawnSpaceTrashOnDestruct(true)
 									.setStandardWeaponry(true)
 									.build();
 			
@@ -116,7 +116,7 @@ public final class GalaxyFactory {
 										.orbitingDistance(80)
 										.speed(Math.PI/100)
 										.setStandardWeaponry(true)
-										.spawnSpaceTrashOnDestruct(false)
+										.spawnSpaceTrashOnDestruct(true)
 										.color(Color.DARKKHAKI)
 										.build();
 			ArmedShuttleNavigator aliens = new ArmedShuttleNavigator("Alien Invader",martians,true);

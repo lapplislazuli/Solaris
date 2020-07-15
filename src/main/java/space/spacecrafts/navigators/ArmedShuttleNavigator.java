@@ -2,15 +2,18 @@ package space.spacecrafts.navigators;
 
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import interfaces.geom.Point;
 import interfaces.spacecraft.AggressiveNavigator;
 import interfaces.spacecraft.Spacecraft;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
-import space.spacecrafts.ships.Spaceshuttle;
 
 public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNavigator{
 	
+	private static Logger logger = LogManager.getLogger(ArmedShuttleNavigator.class);
 	private Spacecraft shuttle;
 	
 	protected boolean doesAutoAttack = false;
@@ -36,7 +39,8 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	
 	@Override
 	public void rebuildShuttle() {
-		shuttle = shuttle.rebuildAt(name+"s Ship", getRoute().get(0));
+		logger.debug(name +" is rebuilding its ship " + shuttle.toString());
+		shuttle = shuttle.rebuildAt(this.name+"s Ship", getRoute().get(0));
 		ship=shuttle;
 	}
 
