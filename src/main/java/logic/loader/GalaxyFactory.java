@@ -65,16 +65,15 @@ public final class GalaxyFactory {
 					.asteroids(60)
 					.build();
 			
-			//TODO: Builder Patttern!
 			var playerShuttle = new Spaceshuttle.Builder("Ikarus", earth)
 									.size(2)
 									.orbitingDistance(45)
 									.speed(Math.PI/150)
 									.color(Color.LIGHTSALMON)
+									.spawnSpaceTrashOnDestruct(false)
 									.setStandardWeaponry(true)
 									.build();
 			
-			//ArmedSpacecraft pS = Spaceshuttle.PlayerSpaceShuttle("Ikarus",(SpaceObject)earth,2,40,(Math.PI/140));
 			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
 			playerNav.getRoute().add(mars);
 			

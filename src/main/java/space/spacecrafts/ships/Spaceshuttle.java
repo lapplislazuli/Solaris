@@ -322,13 +322,15 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	
 	@Override
 	public Spaceshuttle rebuildAt(String name, SpaceObject at) {
+		int minLevelOfDetail = Math.max(1,this.shape.getLevelOfDetail());
+		
 		var copyBuilder =  new Builder(name,at)
 				.size(this.size)
 				.drawingInformation(this.dInfo)
 				.spawnSpaceTrashOnDestruct(this.leavesSpaceTrash)
 				.rotationSpeed(this.rotationSpeed)
 				.speed(this.speed)
-				.levelOfDetail(this.shape.getLevelOfDetail()+1)
+				.levelOfDetail(minLevelOfDetail)
 				.orbitingDistance((int)this.orbitingDistance)
 				//.sensorSize(this.sensor.)//TODO: Sensorsize?
 				.shape(this.shape);
