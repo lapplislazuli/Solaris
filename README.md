@@ -70,6 +70,26 @@ The logfile should appear next to the jar after you (tried) to run it. If someth
 
 If you are not a developer and searching for a valid config, either see the repository here or open the Solaris.jar. It has a config.json in it's root.
 
+### Debugging
+
+*Sidenote*: If you want to test some parts of your program, not the total running program, consider just adding debug points into unit tests. The following is for running the full application in debugging.
+
+Debugging the javafx application is a bit more complex. Not too much tho.
+Run the program from console using
+
+`mvn javafx:run@debug`
+
+This will tell you that there is a debug port on 8000.
+
+Now you need to attach a remote Java Program in your IDE, for eclipse go:
+
+`Debug :bug: -> DebugConfigurations -> Remote Java Application`
+
+Choose a nice name (such as SolarisRemoteDebug), select Solaris as the Project and keep the Port 8000. 
+The logger output will be on the initial console, while the debugging runs normal.
+
+Optionally, if you have added JavaFx properly in your system path, you can just click on `logic.program` *run as - debug*.
+
 ### Special Remarks
 
 Currently when "running" you need another config.json in your root directory of the project.
