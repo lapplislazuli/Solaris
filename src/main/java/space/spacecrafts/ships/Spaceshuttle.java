@@ -208,13 +208,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		weapons.add(primaryWeapon);
 		weapons.add(secondaryWeapon);
 	}
-
-	public static Spaceshuttle PlayerSpaceShuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		ManagerRegistry.getInstance(); // Initialise for tests?
-		Spaceshuttle player =new Spaceshuttle(name, parent, size, orbitingDistance, speed);
-		ManagerRegistry.getPlayerManager().registerPlayerShuttle(player);
-		return player;
-	}
 	
 	@Override
 	public void update() {
@@ -253,6 +246,11 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 			//Special exceptions for Carriers and Drones
 			if(other instanceof Spaceshuttle) {
 				var otherShuttle = (Spaceshuttle) other;
+				//If the other one is dead, do not collide
+				if(otherShuttle.isDead()) {
+					return false;
+				}
+				
 				//If I am carrier, do not collide with children
 				if(this.isCarrier()) {
 					if(this.isMyDrone(otherShuttle))
@@ -352,6 +350,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		copy.secondaryWeapon = this.secondaryWeapon;
 		
 		copy.setRelativePos(0);
+		copy.shape.setCenter(copy.getCenter());
 		
 		return copy;
 	}

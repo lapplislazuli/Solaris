@@ -86,4 +86,7 @@ public abstract class CombinedShape implements Shape{
 	public Collection<Point> getOutline() {
 		return parts.stream().flatMap(p -> p.getOutline().stream()).collect(Collectors.toList());
 	}
+	
+	
+	
 }

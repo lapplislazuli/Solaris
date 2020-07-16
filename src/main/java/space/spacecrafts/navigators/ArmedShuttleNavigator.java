@@ -14,18 +14,16 @@ import space.core.SpaceObject;
 public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNavigator{
 	
 	private static Logger logger = LogManager.getLogger(ArmedShuttleNavigator.class);
-	private Spacecraft shuttle;
 	
 	protected boolean doesAutoAttack = false;
 	
-	public ArmedShuttleNavigator(String name, Spacecraft shuttle, boolean respawn) {
-		super(name, shuttle,respawn);
-		this.shuttle=shuttle;
+	public ArmedShuttleNavigator(String name, Spacecraft ship, boolean respawn) {
+		super(name, ship,respawn);
 	}
 	
 
-	public static ArmedShuttleNavigator PlayerNavigator(String name, Spacecraft shuttle) {
-		ArmedShuttleNavigator nav = new ArmedShuttleNavigator(name, shuttle, true);
+	public static ArmedShuttleNavigator PlayerNavigator(String name, Spacecraft ship) {
+		ArmedShuttleNavigator nav = new ArmedShuttleNavigator(name, ship, true);
 		ManagerRegistry.getPlayerManager().registerPlayerNavigator(nav);
 		return nav;
 	}
@@ -33,27 +31,20 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	@Override
 	public void update(){
 		super.update();
-		if(!shuttle.isDead() && doesAutoAttack)
+		if(!ship.isDead() && doesAutoAttack)
 			autoAttack();
-	}
-	
-	@Override
-	public void rebuildShuttle() {
-		logger.debug(name +" is rebuilding its ship " + shuttle.toString());
-		shuttle = shuttle.rebuildAt(this.name+"s Ship", getRoute().get(0));
-		ship=shuttle;
 	}
 
 	public void attack(Point p) {
-		shuttle.attack(p);
+		ship.attack(p);
 	}
 
 	public void attack(SpaceObject o) {
-		shuttle.attack(o);
+		ship.attack(o);
 	}
 
 	public void autoAttack() {
-		Optional<SpaceObject> possible = shuttle.getNearestPossibleTarget();
+		Optional<SpaceObject> possible = ship.getNearestPossibleTarget();
 		if(possible!=null && possible.isPresent())
 			attack(possible.get());
 	}

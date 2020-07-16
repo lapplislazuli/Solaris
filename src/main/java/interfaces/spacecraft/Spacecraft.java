@@ -21,6 +21,8 @@ public interface Spacecraft extends DestructibleObject,MovingObject,MovingUpdati
 	
 	public double getSpeed();
 	
+	public String getName();
+	
 	public void setTarget(SpaceObject target);
 	
 	public SpacecraftState getState();

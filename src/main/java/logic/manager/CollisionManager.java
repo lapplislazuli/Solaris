@@ -45,12 +45,8 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 					continue; 
 				}
 				if(collider.collides(destructible)) {
-					//TODO: Remove this debugging info
-					if(collider instanceof Spacecraft) {
-						var help = collider.collides(destructible);
-						var debugHelper = "Tooot";
-
-						logger.info("SpaceshipCollision: " + collider.toString() + " destroyed " +destructible.toString() );
+					if(collider instanceof Spacecraft || destructible instanceof Spacecraft) {
+						logger.debug("SpaceshipCollision: " + collider.toString() + " collided destructible " +destructible.toString() );
 					}
 					destructible.destruct();
 					destroyed.add(destructible);

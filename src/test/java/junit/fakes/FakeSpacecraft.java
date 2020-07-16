@@ -19,11 +19,13 @@ public class FakeSpacecraft implements Spacecraft{
 	public double speed=0;
 	public boolean speedSet=false;
 	public Optional<SpaceObject> nearestTarget = Optional.empty();
+	public String name;
 	
 	public Spacecraft rebuildAt (String name, SpaceObject at) {
 		rebuild=true;
 		FakeSpacecraft copy = new FakeSpacecraft();
 		copy.parent=at;
+		this.name = name;
 		return copy;
 	}
 	
@@ -120,6 +122,10 @@ public class FakeSpacecraft implements Spacecraft{
 
 	public void update() {
 		updated=true;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	

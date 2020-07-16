@@ -6,6 +6,8 @@ import static junit.testhelpers.FakeSpaceObjectFactory.fakeStar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import interfaces.spacecraft.Spacecraft;
@@ -18,6 +20,15 @@ import space.spacecrafts.ships.Spaceshuttle;
 
 class PlayerManagerTests {
 
+	@BeforeEach
+	void initManagerRegistry() {
+		ManagerRegistry.getInstance();
+	}
+	@AfterEach
+	void resteManagerRegistry() {
+		ManagerRegistry.reset();
+	}
+	
 	@Test
 	void testConstructor_shouldHaveNullItems() {
 		PlayerManager mng = new PlayerManager();
@@ -81,7 +92,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		Spacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		Spacecraft testObject = new Spaceshuttle.Builder("test", root).isPlayer().build();
 		
 		assertEquals(testObject,mng.getPlayerShuttle());
 	}
@@ -128,7 +139,7 @@ class PlayerManagerTests {
 		ManagerRegistry.getInstance().setPlayerManager(mng);
 
 		SpaceObject root = fakeStar(0,0);
-		Spacecraft testObject = Spaceshuttle.PlayerSpaceShuttle("test",root,3,50,Math.PI);
+		Spacecraft testObject = new Spaceshuttle.Builder("test", root).isPlayer().build();
 		
 		mng.forceRespawn();
 		

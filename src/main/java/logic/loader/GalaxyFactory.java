@@ -68,6 +68,7 @@ public final class GalaxyFactory {
 									.size(4)
 									.orbitingDistance(45)
 									.speed(Math.PI/150)
+									.isPlayer()
 									.color(Color.LIGHTSALMON)
 									.spawnSpaceTrashOnDestruct(true)
 									.setStandardWeaponry(true)
