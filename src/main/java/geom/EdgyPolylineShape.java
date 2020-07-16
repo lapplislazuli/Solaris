@@ -7,6 +7,7 @@ import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -131,6 +132,24 @@ public class EdgyPolylineShape extends PolylineShape {
 			shape.initOutline();
 			return shape;
 		}
+	}
+
+	@Override
+	public Shape copy() {
+		JavaFXDrawingInformation dInfo = (JavaFXDrawingInformation) this.drawingInfo;
+		
+		var shapeBuilder = new Builder(outLine.get(0).clone())
+				.center(this.center.clone())
+				.fillcolor(dInfo.primarycolor)
+				.edgecolor(dInfo.secondaryColor)
+				.fillBorder(this.fillBorder)
+				.fillShape(this.fillShape);
+		
+		for(int i=1;i<outLine.size();i++) {
+			shapeBuilder = shapeBuilder.nextPoint(outLine.get(i).clone());
+		}
+		
+		return shapeBuilder.build();
 	}
 	
 }

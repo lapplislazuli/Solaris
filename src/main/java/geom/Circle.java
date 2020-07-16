@@ -3,6 +3,7 @@ package geom;
 import java.util.Collection;
 
 import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Circle extends BaseShape{
@@ -61,5 +62,10 @@ public class Circle extends BaseShape{
 	@Override
 	public Collection<Point> getOutline() {
 		return outLine;
+	}
+
+	@Override
+	public Shape copy() {
+		return new Circle(center.clone(),(int) radious);
 	}
 }

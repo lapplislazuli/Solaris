@@ -5,8 +5,10 @@ import java.util.List;
 
 import drawing.EmptyJFXDrawingInformation;
 import drawing.JavaFXDrawingInformation;
+import geom.EdgyPolylineShape.Builder;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -145,6 +147,25 @@ public class CurvyPolylineShape extends PolylineShape {
 			shape.initOutline();
 			return shape;
 		}
+				
+	}
+
+	@Override
+	public Shape copy() {
+		JavaFXDrawingInformation dInfo = (JavaFXDrawingInformation) this.drawingInfo;
+		
+		var shapeBuilder = new Builder(outLine.get(0).clone())
+				.center(this.center.clone())
+				.fillcolor(dInfo.primarycolor)
+				.edgecolor(dInfo.secondaryColor)
+				.fillBorder(this.fillBorder)
+				.fillShape(this.fillShape);
+		
+		for(int i=1;i<outLine.size();i++) {
+			shapeBuilder = shapeBuilder.nextPoint(outLine.get(i).clone(),curvePoints.get(i-1).clone());
+		}
+		
+		return shapeBuilder.build(outLine.get(outLine.size()).clone());
 	}
 	
 }

@@ -10,7 +10,6 @@ import space.advanced.AsteroidBelt;
 import space.advanced.DistantGalaxy;
 import space.core.Planet;
 import space.core.Satellite;
-import space.core.SpaceObject;
 import space.core.Star;
 import space.spacecraft.ships.devices.WeaponFactory;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;

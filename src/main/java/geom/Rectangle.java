@@ -1,6 +1,7 @@
 package geom;
 
 import interfaces.geom.Point;
+import interfaces.geom.Shape;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Rectangle extends BaseShape{
@@ -61,5 +62,10 @@ public class Rectangle extends BaseShape{
 		if(!getCenter().equals(otherParsed.getCenter()))
 			return false;
 		return otherParsed.xSize==xSize && otherParsed.ySize==ySize;
+	}
+
+	@Override
+	public Shape copy() {
+		return new Rectangle(center.clone(),xSize,ySize);
 	}
 }

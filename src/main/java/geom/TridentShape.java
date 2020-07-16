@@ -1,9 +1,15 @@
 package geom;
 
+import interfaces.geom.Shape;
+
 public class TridentShape extends CombinedShape{
+	
+	private int width,length,barThickness;
 	
 	public TridentShape(int width, int length, int barThickness) {
 		super();
+		
+		this.width=width; this.length=length;this.barThickness=barThickness;
 	
 		Rectangle rightStick = new Rectangle(new RelativePoint(center,-width/2,length/2), length, barThickness);
 		Rectangle upperBar = new Rectangle(new RelativePoint(center,-barThickness/2,0), barThickness, width);
@@ -14,5 +20,9 @@ public class TridentShape extends CombinedShape{
 		parts.add(upperBar);
 		parts.add(lowerBar);
 		parts.add(middleBar);
+	}
+	@Override
+	public Shape copy() {
+		return new TridentShape(width,length,barThickness);
 	}
 }

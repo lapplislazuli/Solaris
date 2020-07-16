@@ -133,7 +133,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	
 	
 	public void destruct() {
-		logger.info("Spaceship: " + toString() + " Destroyed @" +center.toString());
+		logger.info("Spaceship: " + toString() + " was destroyed.");
 		if(!isDead()) {
 			if(isPlayer()) {
 				ManagerRegistry.getPlayerManager().increasePlayerDeaths();
@@ -176,7 +176,9 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	
-	public boolean isDead() {return state==SpacecraftState.DEAD;}
+	public boolean isDead() {
+		return state==SpacecraftState.DEAD;
+	}
 	
 	public void remove() {
 		parent.getTrabants().remove(this);
@@ -242,7 +244,11 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 
 	@Override
 	public boolean collides(CollidingObject other) {
-		// First check: Is there a normal physical collision of shapes - If no, return false, otherwise do extra behaviour
+		// First Check: If I am dead, I do not collide
+		if(isDead())
+			return false;
+		
+		// Otherwise: Is there a normal physical collision of shapes - If no, return false, otherwise do extra behaviour
 		if(super.collides(other)) {
 			//Special exceptions for Carriers and Drones
 			if(other instanceof Spaceshuttle) {
@@ -258,7 +264,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 						return false;
 			}
 			//Special exceptions for missiles
-			if(other instanceof Missile) 
+			if(other instanceof Missile) {
 				//If this is my missile (I shot it), there is no collision
 				if(trabants.contains((Missile)other))
 					return false;
@@ -286,7 +292,8 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 					if(missileIsFromNeighbourDrones)
 						return false;	
 				}
-				
+			}
+			
 			// There are no further special exceptions to collisions - return true, the items collide
 			return true;
 		}
@@ -333,7 +340,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 				.levelOfDetail(minLevelOfDetail)
 				.orbitingDistance((int)this.orbitingDistance)
 				//.sensorSize(this.sensor.)//TODO: Sensorsize?
-				.shape(this.shape);
+				.shape(this.shape.copy());
 		if(isPlayer()) {
 			copyBuilder = copyBuilder.isPlayer();
 		}

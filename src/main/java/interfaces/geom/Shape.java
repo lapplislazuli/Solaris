@@ -21,4 +21,6 @@ public interface Shape extends DrawingObject{
 	public boolean sameShape(Shape shape);
 	
 	public Collection<Point> getOutline();
+	
+	public Shape copy();
 }

@@ -39,15 +39,23 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 		Set<DestructibleObject> destroyed=new HashSet<DestructibleObject>();
 		
 		for(DestructibleObject destructible : registeredDestructibles)
-			for(CollidingObject collider: registeredItems)
+			for(CollidingObject collider: registeredItems) {
+				if(collider.equals(destructible)) {
+					//If the items are equal, skip their collision and check for the next collider
+					continue; 
+				}
 				if(collider.collides(destructible)) {
+					//TODO: Remove this debugging info
 					if(collider instanceof Spacecraft) {
 						var help = collider.collides(destructible);
 						var debugHelper = "Tooot";
+
+						logger.info("SpaceshipCollision: " + collider.toString() + " destroyed " +destructible.toString() );
 					}
 					destructible.destruct();
 					destroyed.add(destructible);
 				}
+			}
 		
 		registeredDestructibles.removeAll(destroyed);
 		registeredItems.removeAll(destroyed);
