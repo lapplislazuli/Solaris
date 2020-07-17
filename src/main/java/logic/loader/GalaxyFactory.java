@@ -75,7 +75,7 @@ public final class GalaxyFactory {
 									.build();
 			
 			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
-			playerNav.getRoute().add(mars);
+			//playerNav.getRoute().add(mars);
 			
 			Satellite astra = (new Satellite.Builder("Astra", earth))
 					.size(2,2)

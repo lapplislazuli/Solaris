@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import geom.AbsolutePoint;
 import interfaces.spacecraft.Spacecraft;
 import junit.fakes.FakeSpacecraft;
+import junit.testhelpers.FakeSpaceObjectFactory;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.navigators.ArmedShuttleNavigator;
@@ -141,10 +142,14 @@ class ArmedShuttleNavigatorTests {
 	@Test
 	void testUpdate_isDead_doesNotAttack() {
 		FakeSpacecraft stub = new FakeSpacecraft();
+		stub.parent = fakeStar(0,0);
 		ArmedShuttleNavigator testObject = 
 				new ArmedShuttleNavigator("Test",stub,true);
 		
 		stub.dead=true;
+
+		SpaceObject routePoint = FakeSpaceObjectFactory.fakeStar(0,0);
+		testObject.getRoute().add(routePoint);
 		
 		testObject.update();
 		

@@ -18,6 +18,7 @@ import interfaces.logical.CollidingObject;
 import interfaces.logical.MovingUpdatingObject;
 import interfaces.logical.RecursiveObject;
 import interfaces.logical.UpdatingObject;
+import space.advanced.FixStar;
 
 public abstract class SpaceObject implements UpdatingObject, ClickableObject, CollidingObject, ComplexDrawingObject,RecursiveObject{
 	protected Shape shape;
@@ -41,7 +42,10 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		this.shape.setCenter(center); //To center the Area around this object - improvement possible
 		if(dInfo!=null)
 			this.dInfo=dInfo;
-		logger.debug("Build " + name + center.toString());
+		if(!(this instanceof FixStar)) {
+			//This is a bit filtered, to remove the spam of fix-stars
+			logger.debug("Build " + name + center.toString());		
+		}
 	}
 	
 	public void update() {

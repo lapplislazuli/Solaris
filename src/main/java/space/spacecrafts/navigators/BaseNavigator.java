@@ -71,7 +71,7 @@ public class BaseNavigator implements Navigator{
 	}
 	
 	public void rebuildShuttle() {
-		logger.debug(name +" is rebuilding its ship " + ship.toString());
+		logger.debug(name +" is rebuilding its ship " + ship.toString() + " around " + route.get(0).toString());
 		ship = ship.rebuildAt(ship.getName(), route.get(0));
 	}
 

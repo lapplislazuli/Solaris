@@ -151,6 +151,7 @@ class BaseNavigatorTests {
 	@Test
 	void testRebuildShuttle_shouldBeRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
+		stub.parent = fakeStar(0,0);
 		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
 		
 		testObject.rebuildShuttle();
@@ -227,6 +228,9 @@ class BaseNavigatorTests {
 	@Test
 	void testUpdate_shuttleIsDeadAndRespawns_shuttleIsRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
+		
+		stub.parent = fakeStar(0,0);
+		
 		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
 		
 		stub.dead=true;

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.Optional;
@@ -1044,6 +1045,105 @@ public class SpaceshuttleTests implements RemovableTests {
 			for(Missile m : allShots) {
 				assertFalse(drone.collides(m));			
 			}
+	}
+	
+	@Tag("Complex")
+	@Tag("Regression")
+	@Test
+	void testCollision_dronesOfACarrier_AreInAHugeSpaceObject_shouldCollide() {
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<5;i++) {
+			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		SpaceObject forcefullCollider = new Star.Builder("EmptyRoot")
+				.center(carrier.getCenter().absoluteClone())
+				.radious(250)
+				.levelOfDetail(20)
+				.build();
+		forcefullCollider.getShape().updateOrInitOutline();
+		forcefullCollider.setCenter(carrier.getCenter().absoluteClone());
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
+		ManagerRegistry.getUpdateManager().addSpaceObject(forcefullCollider);
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			assertTrue(drone.collides(forcefullCollider));
+	}
+	
+	
+	@Tag("Complex")
+	@Tag("Regression")
+	@Test
+	void testCollision_dronesOfACarrier_SpaceObjectSomeWhereElse_shouldNotCollide() {
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<5;i++) {
+			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		SpaceObject noCollider = new Star.Builder("EmptyRoot")
+				.center(10000,5000)
+				.radious(250)
+				.levelOfDetail(20)
+				.build();
+		noCollider.getShape().updateOrInitOutline();
+		noCollider.getShape().updateOrInitOutline();
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
+		ManagerRegistry.getUpdateManager().addSpaceObject(noCollider);
+		
+		for(Spaceshuttle drone : carrier.getDrones()) {
+			assertFalse(drone.collides(noCollider));
+			assertFalse(noCollider.collides(drone));	
+		}
+		assertFalse(carrier.collides(noCollider));
+		assertFalse(noCollider.collides(carrier));	
+	}
+	
+	@Tag("Complex")
+	@Tag("Regression")
+	@Test
+	void testCollision_dronesOfACarrier_AreInAHugeSpaceCraft_shouldCollide() {
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<5;i++) {
+			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		Spaceshuttle forcefullCollider = new Spaceshuttle.Builder("Collider",carrierRoot).size(250).levelOfDetail(10).build();
+		forcefullCollider.setCenter(carrierRoot.getCenter().absoluteClone());
+		forcefullCollider.getShape().updateOrInitOutline();
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			assertTrue(drone.collides(forcefullCollider));
+	}	
+	
+	@Tag("Complex")
+	@Tag("Regression")
+	@Test
+	void testCollision_dronesOfACarrier_AreInAHugeSpaceCraft_spaceCraftHasSameParentButIsNoDrone_shouldCollide() {
+		SpaceObject carrierRoot = new Star.Builder("EmptyRoot").center(0,0).radious(1).levelOfDetail(1).build();
+		var b = new Spaceshuttle.Builder("TestCarrier", carrierRoot);
+		for(int i = 0;i<5;i++) {
+			b.addDroneMount(SpaceshuttleTests::hugeLaserDrone);
+		}
+		var carrier =  b.size(150).build(); //Huge Carrier, so there is a definite collision
+		
+		Spaceshuttle forcefullCollider = new Spaceshuttle.Builder("Collider",carrier).size(250).levelOfDetail(10).build();
+		forcefullCollider.setCenter(carrierRoot.getCenter().absoluteClone());
+		forcefullCollider.getShape().updateOrInitOutline();
+		
+		ManagerRegistry.getUpdateManager().addSpaceObject(carrierRoot);
+		
+		for(Spaceshuttle drone : carrier.getDrones())
+			assertTrue(drone.collides(forcefullCollider));
 	}
 	
 	@Tag("Complex")
