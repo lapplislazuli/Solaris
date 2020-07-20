@@ -47,7 +47,8 @@ class ArmedShuttleNavigatorTests {
 		
 		ArmedShuttleNavigator testObject = new ArmedShuttleNavigator("Test",stub,true);
 		
-		assertFalse(testObject.doesAutoAttack());}
+		assertFalse(testObject.doesAutoAttack());
+	}
 	
 	@Test
 	void testPlayerConstructor_isPlayer() {

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import interfaces.geom.Point;
 import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
@@ -73,8 +74,9 @@ public class BaseNavigator implements Navigator{
 	public void rebuildShuttle() {
 		logger.debug(name +" is rebuilding its ship " + ship.toString() + " around " + route.get(0).toString());
 		ship = ship.rebuildAt(ship.getName(), route.get(0));
+		ship.updateHitbox();
 	}
-
+	
 	public void remove() {
 		ManagerRegistry.getUpdateManager().getRegisteredItems().remove(this);
 	}
