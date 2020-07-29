@@ -24,4 +24,15 @@ public class FakeSensor implements Sensor {
 		return detectedItems;
 	}
 
+	@Override
+	public double getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setSize(double val) {
+		//DO NOTHING at the moment
+	}
+
 }

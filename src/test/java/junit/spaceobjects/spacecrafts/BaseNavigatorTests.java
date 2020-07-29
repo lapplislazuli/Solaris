@@ -9,20 +9,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import geom.AbsolutePoint;
 import interfaces.spacecraft.SpacecraftState;
 import junit.fakes.FakeSpacecraft;
 import logic.manager.ManagerRegistry;
+import space.core.MovingSpaceObject;
+import space.core.Planet;
 import space.core.SpaceObject;
+import space.core.Star;
 import space.spacecrafts.navigators.BaseNavigator;
+import space.spacecrafts.ships.Spaceshuttle;
 
 class BaseNavigatorTests {
 
+	@BeforeEach
+	void initManagerRegistry() {
+		ManagerRegistry.getInstance();
+	}
 	@AfterEach
-	public void resetManagers() {
+	void resteManagerRegistry() {
 		ManagerRegistry.reset();
 	}
 	
@@ -225,17 +235,22 @@ class BaseNavigatorTests {
 	
 	@Tag("Shuttle")
 	@Tag("fast")
+	@Tag("Approximation")
 	@Test
 	void testUpdate_shuttleIsDeadAndRespawns_shuttleIsRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		
 		stub.parent = fakeStar(0,0);
 		
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
-		
+		BaseNavigator testObject = new BaseNavigator("Test",stub,true,500);
+
 		stub.dead=true;
-		
+
+
 		testObject.update();
+		
+		for(int i=0;i<1000;i++)
+			testObject.update();
 		
 		assertTrue(stub.rebuild);
 	}
@@ -305,5 +320,31 @@ class BaseNavigatorTests {
 		
 		assertFalse(stub.launched);
 	}
+
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("Integration")
+	@Tag("Approximation")
+	@Test
+	void testUpdate_shuttleIsOrbiting_OrbitingForLongTime_shouldBeLaunched() {
+		SpaceObject root = new Star("star",null,new AbsolutePoint(250,250),250);
+		
+		MovingSpaceObject target = new Planet.Builder("Flip", root).speed(Math.PI/80).distance(250).build();
 	
+		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,-Math.PI/400);
+		root.update();//To move Planets
+		
+		
+		BaseNavigator testObject = new BaseNavigator("Test",shuttle,true);
+		testObject.getRoute().add(target);
+		
+		for(int i=0;i<5000;i++) {
+			//Move planets and ship
+			root.update();
+			//Run Navigator Logic
+			testObject.update();
+		}
+		
+		assertEquals(target, shuttle.getParent());
+	}
 }
