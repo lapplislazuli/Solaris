@@ -12,8 +12,10 @@ public interface Sensor {
 	void move(Point parentCenter);
 
 	double getSpeed();
+	double getSize();
 
 	void setSpeed(double val);
+	void setSize(double val);
 
 	List<CollidingObject> getDetectedItems();
 

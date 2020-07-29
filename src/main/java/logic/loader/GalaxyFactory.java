@@ -70,12 +70,12 @@ public final class GalaxyFactory {
 									.speed(Math.PI/150)
 									.isPlayer()
 									.color(Color.LIGHTSALMON)
-									.spawnSpaceTrashOnDestruct(true)
+									.spawnSpaceTrashOnDestruct(false)
 									.setStandardWeaponry(true)
 									.build();
 			
 			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
-			//playerNav.getRoute().add(mars);
+			playerNav.getRoute().add(sun);
 			
 			Satellite astra = (new Satellite.Builder("Astra", earth))
 					.size(2,2)

@@ -64,4 +64,14 @@ public class SensorArray implements UpdatingObject,MovingObject, Sensor{
 		return detectedItems;
 	}
 
+	@Override
+	public double getSize() {
+		return radius;
+	}
+
+	@Override
+	public void setSize(double val) {
+		this.radius=(int)val;
+	}
+
 }

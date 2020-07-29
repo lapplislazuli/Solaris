@@ -275,7 +275,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 					if(missileIsFromDrones)
 						return false;
 				}
-				//If i am a drone, I don't want to collide with the missiles with my fellow drones 
+				//If i am a drone, I don't want to collide with the missiles of my fellow drones 
 				if(isDrone()) {
 					Spaceshuttle myCarrier = ManagerRegistry.getUpdateManager().getRegisteredItems().stream().filter(t-> t instanceof Spaceshuttle)
 						.map(t -> (Spaceshuttle)t)
@@ -337,7 +337,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 				.speed(this.speed)
 				.levelOfDetail(minLevelOfDetail)
 				.orbitingDistance((int)this.orbitingDistance)
-				//.sensorSize(this.sensor.)//TODO: Sensorsize?
+				.sensorSize(this.sensor.getSize())
 				.shape(this.shape.copy());
 		if(isPlayer()) {
 			copyBuilder = copyBuilder.isPlayer();
@@ -351,6 +351,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		
 		copy.setRelativePos(0);
 		copy.shape.setCenter(copy.getCenter());
+		copy.updateHitbox();
 		
 		return copy;
 	}
@@ -446,9 +447,9 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		private SpaceObject parent;
 		private Color color= Color.CORNSILK;
 		private DrawingInformation dinfo = null;
-		private int orbitingDistance = 100,size = 0, levelOfDetail=2,sensorsize=50;
+		private int orbitingDistance = 100,size = 0, levelOfDetail=2;
 		private Shape shape;
-		private double speed = 0,rotationSpeed=0;
+		private double speed = 0,rotationSpeed=0,sensorsize=50;
 		private boolean setStandardWeaponry=false,shallBeCarrier=false,leavesSpaceTrash=true,isPlayer=false;;
 		
 		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
@@ -536,7 +537,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 			return this;
 		}
 		
-		public Builder sensorSize(int val) {
+		public Builder sensorSize(double val) {
 			if(val<0)
 				throw new IllegalArgumentException("Sensorsize cannot be smaller than 0");
 			sensorsize=val;
@@ -574,7 +575,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 			ManagerRegistry.getPlayerManager().registerPlayerShuttle(this);
 		}
 		
-		sensor = new SensorArray(this,builder.sensorsize);
+		sensor = new SensorArray(this,(int)builder.sensorsize);
 		move(parent.getCenter());
 		
 		if(builder.setStandardWeaponry)
