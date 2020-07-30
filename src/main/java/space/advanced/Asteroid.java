@@ -12,41 +12,42 @@ import space.core.SpaceObject;
 public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	SpaceObject parent;
-	public enum Type{ORE, ROCK, TRASH;}
+	public enum Type{ORE, ROCK, TRASH;} // Types are only used for color, not much more at the moment
 	private Type type;
 	public Asteroid(String name, SpaceObject parent,int distance, double speed) {
 		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(3,3),distance,speed);
 		//Asteroid Types are chosen randomly if not in the Constructor
-		int typeHelper=(int)(Math.random()*2);
-		if(typeHelper==0)
-			type=Type.ORE;
-		else if (typeHelper==1)
-			type=Type.ROCK;
-		else
-			type=Type.TRASH;
+		int typeHelper = (int)(Math.random()*2);
+		if(typeHelper == 0) {
+			type = Type.ORE;
+		} else if (typeHelper == 1) {
+			type = Type.ROCK;
+		} else {
+			type = Type.TRASH;
+		}
 		setColorFromType();
 
-		this.parent=parent;
+		this.parent = parent;
 		shape.setLevelOfDetail(2);
 	}
 	//Constructor for only one type of Asteroids in the belt
 	public Asteroid(String name, SpaceObject parent,int distance, double speed,Type type) {
 		super(name,parent,new EmptyJFXDrawingInformation(null),new Rectangle(4,5),distance,speed);
-		this.type=type;
-		this.parent=parent;
+		this.type = type;
+		this.parent = parent;
 		setColorFromType();
 	}
 	
 	private void setColorFromType() {
 		switch(type) {
 		case ORE:
-			dInfo=new JavaFXDrawingInformation(Color.DARKSLATEGRAY);
+			dInfo = new JavaFXDrawingInformation(Color.DARKSLATEGRAY);
 			break;
 		case ROCK:
-			dInfo=new JavaFXDrawingInformation(Color.LIGHTGRAY);
+			dInfo = new JavaFXDrawingInformation(Color.LIGHTGRAY);
 			break;
 		case TRASH:
-			dInfo=new JavaFXDrawingInformation(Color.GRAY);
+			dInfo = new JavaFXDrawingInformation(Color.GRAY);
 			break;
 		}
 	}
@@ -67,16 +68,17 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	
 	public void destruct() {
 		logger.trace(toString() + " got destroyed");
-		if(parent!=null)
+		if(parent != null) {
 			remove();
+		}
 	}	
 	
 	public void remove() {
 		parent.getTrabants().remove(this);
-		parent=null;
+		parent = null;
 	}
 	
 	public boolean isOrphan() {
-		return parent==null;
+		return parent == null;
 	}
 }

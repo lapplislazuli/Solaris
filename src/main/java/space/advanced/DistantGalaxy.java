@@ -23,11 +23,11 @@ public class DistantGalaxy extends SpaceObject{
 	private List<FixStar> stars = new LinkedList<FixStar>();
 	private int maxStars;
 	private long nextStarNo = 1L;
-	private final Random r =new Random();
+	private final Random r = new Random(); //Small class to produce random positions for the stars - if done this way it safes some memory space and is more distinct
 	
     public DistantGalaxy(String name,int stars) {
 		super(name, new AbsolutePoint( 0, 0), new Circle(0),new EmptyJFXDrawingInformation()); 
-		maxStars=stars;
+		maxStars = stars;
 		fillStars();
 	}
     
@@ -40,8 +40,9 @@ public class DistantGalaxy extends SpaceObject{
     	
     	dc.resetContext();
 		
-    	for(FixStar star : stars)
+    	for(FixStar star : stars) {
     		star.draw(dc);
+    	}
     }
     
     public void drawBackGround(DrawingContext dc) {
@@ -51,26 +52,27 @@ public class DistantGalaxy extends SpaceObject{
 	                new Stop(0.0, Color.BLUE),
 	                new Stop(1.0, Color.DARKBLUE)));          
 			gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-		}
-    	else
+		} else {
     		throw new UnsupportedOperationException("Unsupported DrawingContext!");
+    	}
     }
     
     @Override
     public void update() {
-    	stars.removeIf(star->star.dead);
+    	stars.removeIf(star -> star.dead);
     	fillStars();
 		super.update();
 	};
 	
     public void fillStars() {
-    	while(stars.size()<maxStars)
+    	while(stars.size() < maxStars) {
     		stars.add(new FixStar("Star#"+nextStarNo++,r.nextDouble(),r.nextDouble(),r.nextInt(50)*1000));
+    	}
     }
     
     public List<FixStar> getStars() {return stars;}
     public int getMaxStars() {return maxStars;}
-    public void setMaxStars(int val) {maxStars=val;} 
+    public void setMaxStars(int val) {maxStars = val;} 
     
     @Override
 	public double distanceTo(SpaceObject other) {return Double.MAX_VALUE;}

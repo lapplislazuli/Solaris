@@ -17,15 +17,15 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class FixStar extends Star implements TimerObject {
 	private double relativeX,relativeY; //Shows Percentage of screen for resize-functions
-	public boolean dead=false;
+	public boolean dead = false;
 	public Timer timer;
 	
 	public FixStar(String name, double relX, double relY, int lifetime) {
 		super(name, new JavaFXDrawingInformation(Color.WHITESMOKE), new AbsolutePoint(0, 0),1);
 		shape.setLevelOfDetail(0);
-		relativeX=relX;
-		relativeY=relY;
-		isCentered=false;
+		relativeX = relX;
+		relativeY = relY;
+		isCentered = false;
 		setTimer(lifetime);
 	}
 	
@@ -55,7 +55,7 @@ public class FixStar extends Star implements TimerObject {
         }, lifetime);
 	}
 	
-	public void die() {dead=true;}
+	public void die() {dead = true;}
 	public boolean isDead() {return dead;}
 	
 	@Override
