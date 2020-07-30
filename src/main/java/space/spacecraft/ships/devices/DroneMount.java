@@ -21,7 +21,6 @@ public class DroneMount implements MountedWeapon {
 
 	protected static Logger logger = LogManager.getLogger(DroneMount.class);
 	
-	
 	SpaceObject target;
 	Spacecraft parent;
 	Spaceshuttle drone;
@@ -33,10 +32,12 @@ public class DroneMount implements MountedWeapon {
 	
 	@Deprecated
 	public DroneMount(Spacecraft mount,Spaceshuttle drone) {
-		if(mount == null)
+		if(mount == null) {
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
-		if(drone == null)
+		}
+		if(drone == null) {
 			throw new IllegalArgumentException("Drone cannot be null");
+		}
 		this.parent=mount;
 		this.drone=drone;
 
@@ -46,8 +47,9 @@ public class DroneMount implements MountedWeapon {
 	public DroneMount(Supplier<Spaceshuttle> droneSupplier) {
 		this.factoryMethod = droneSupplier;
 		this.drone = droneSupplier.get();
-		if(drone==null)
+		if(drone == null) {
 			throw new IllegalArgumentException("The supplierfunction returned a null value - it is invalid");
+		}
 		this.parent = (Spacecraft) drone.getParent();
 
 		moveDroneToSpawn();
@@ -56,10 +58,11 @@ public class DroneMount implements MountedWeapon {
 	@Override
 	public void activate() {
 		//Activate toggles drone attacks (if targets are set accordingly)
-		if(!drone_launched)
+		if(!drone_launched) {
 			launch_drone();
-		else
+		} else {
 			revoke_drone();
+		}
 	}
 
 	@Override
@@ -77,9 +80,10 @@ public class DroneMount implements MountedWeapon {
 	
 	@Override
 	public void setTarget(SpaceObject o) {
-		if(o == null)
+		if(o == null) {
 			throw new IllegalArgumentException("Target cannot be null");
-		this.target=o;
+		}
+		this.target = o;
 	}
 
 	@Override

@@ -22,12 +22,12 @@ public class SensorArray implements UpdatingObject,MovingObject, Sensor{
 	int radius;
 	Point center;
 	Spacecraft emitter;
-	private List<CollidingObject> detectedItems=new LinkedList<CollidingObject>();
+	private List<CollidingObject> detectedItems = new LinkedList<CollidingObject>();
 	
 	public SensorArray (Spacecraft emitter,int radius) {
-		this.emitter=emitter;
-		center=emitter.getCenter();
-		this.radius=radius;
+		this.emitter = emitter;
+		center = emitter.getCenter();
+		this.radius = radius;
 	}
 	
 	@Override
@@ -47,8 +47,8 @@ public class SensorArray implements UpdatingObject,MovingObject, Sensor{
 	
 	private boolean isCovered(int otherX, int otherY) {
 		return
-				otherY>=center.getY()-radius && otherY<=center.getY()+radius
-			&&	otherX>=center.getX()-radius && otherX<=center.getX()+radius;
+				otherY >= center.getY()-radius && otherY <= center.getY()+radius
+			&&	otherX >= center.getX()-radius && otherX <= center.getX()+radius;
 	}
 
 	public double getSpeed() {
@@ -71,7 +71,7 @@ public class SensorArray implements UpdatingObject,MovingObject, Sensor{
 
 	@Override
 	public void setSize(double val) {
-		this.radius=(int)val;
+		this.radius = (int)val;
 	}
 
 }

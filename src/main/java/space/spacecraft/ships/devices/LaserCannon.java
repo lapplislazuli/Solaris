@@ -17,29 +17,31 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 	private Spaceshuttle parent;
 	
 	public LaserCannon(Spaceshuttle mount) {
-		if(mount == null)
+		if(mount == null) {
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
-		
-		this.parent=mount;
-		this.max_cooldown=Laserbeam.COMMON_MAX_COOLDOWN;
+		}
+		this.parent = mount;
+		this.max_cooldown = Laserbeam.COMMON_MAX_COOLDOWN;
 	}
 	
 	public LaserCannon(Spaceshuttle mount,double max_cooldown) {
-		if(mount == null)
+		if(mount == null) {
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
-		if(max_cooldown <= 0)
+		}
+		if(max_cooldown <= 0) {
 			throw new IllegalArgumentException("Laser Cooldown cannot be equal or lower than 0");
-		this.parent=mount;
-		this.max_cooldown=max_cooldown;
+		} 
+		this.parent = mount;
+		this.max_cooldown = max_cooldown;
 	}
 	
 	@Override
 	public void activate() {
 		if(isReady()) {
-			new Laserbeam("Rocket from " + parent.getName(), parent,targetDirection,Laserbeam.COMMON_LASER_SPEED);
+			new Laserbeam("Laser from " + parent.getName(), parent,targetDirection,Laserbeam.COMMON_LASER_SPEED);
 			cooldown = max_cooldown;			
 			// Alter parameters to not be ready next time without newly set target
-			targetDirection=0;
+			targetDirection = 0;
 		}
 	}
 	
@@ -70,8 +72,9 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 
 	@Override
 	public void update() {
-		if (cooldown > 0)
+		if (cooldown > 0) {
 			cooldown --;
+		}
 	}
 	
 	public double currentCooldown() {

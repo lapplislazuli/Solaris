@@ -17,9 +17,9 @@ public abstract class LocalizedEffect implements Effect{
 	
 	public LocalizedEffect(String name,Point p, Shape s, DrawingInformation dInfo){
 		this.name = name;
-		center=p;
-		shape=s;
-		this.dInfo=dInfo;
+		center = p;
+		shape = s;
+		this.dInfo = dInfo;
 		ManagerRegistry.getEffectManager().registerItem(this);
 	}
 	
@@ -53,7 +53,7 @@ public abstract class LocalizedEffect implements Effect{
 	
 	@Override
 	public String toString() {
-		return name+"@"+center.toString();
+		return name + "@" + center.toString();
 	}
 	
 	// I am orphaned if i am not in the effect Manager

@@ -17,7 +17,7 @@ public class BaseNavigator implements Navigator{
 	private static Logger logger = LogManager.getLogger(BaseNavigator.class);
 	
 	protected String name;
-	protected int currentPointer=0;
+	protected int currentPointer = 0;
 	protected List<SpaceObject> route;
 	
 	protected Spacecraft ship;
@@ -26,35 +26,37 @@ public class BaseNavigator implements Navigator{
 	protected boolean isRebuilding; // Little flag to check if the respawntimer is running 
 	protected double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	protected double MAX_RESPAWNTIME = 3000.0; //With a common update cycle of 25ms, this will take 120 turns
-	protected double currentRespawnTime=3000.0;
+	protected double currentRespawnTime = 3000.0;
 	
 	public BaseNavigator(String name, Spacecraft ship, boolean respawn) {
-		if(name==null||name.isEmpty())
+		if(name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("Name cannot be null or empty");
-		if(ship==null)
+		}
+		if(ship == null) {
 			throw new IllegalArgumentException("Ship cannot be null");
-		
-		route= new LinkedList<SpaceObject>();
+		}
+		route = new LinkedList<SpaceObject>();
 		route.add(ship.getParent());
-		this.ship=ship;
-		this.name=name;
-		this.respawn=respawn;
+		this.ship = ship;
+		this.name = name;
+		this.respawn = respawn;
 		logger.info("Initiated " + name + " with Shuttle " + ship.toString());
 		
 		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 	
 	public BaseNavigator(String name, Spacecraft ship, boolean respawn,double respawntimer) {
-		if(name==null||name.isEmpty())
+		if(name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("Name cannot be null or empty");
-		if(ship==null)
+		}
+		if(ship == null) {
 			throw new IllegalArgumentException("Ship cannot be null");
-		
-		route= new LinkedList<SpaceObject>();
+		}
+		route = new LinkedList<SpaceObject>();
 		route.add(ship.getParent());
-		this.ship=ship;
-		this.name=name;
-		this.respawn=respawn;
+		this.ship = ship;
+		this.name = name;
+		this.respawn = respawn;
 		this.MAX_RESPAWNTIME = respawntimer;
 		logger.info("Initiated " + name + " with Shuttle " + ship.toString());
 		
@@ -78,14 +80,14 @@ public class BaseNavigator implements Navigator{
 						logger.debug("Navigator respawning PlayerShuttle");
 					}
 					rebuildShuttle();
-					isRebuilding=false;
+					isRebuilding = false;
 				}
 				//Timer is still running - reduce the number with every update cycle.
 				currentRespawnTime --;
 			}	
 		} else if(getShuttle().getState() == SpacecraftState.ORBITING) {
-			currentIdle+=Math.abs(getShuttle().getSpeed());
-			if(currentIdle>=idlingTurns && isInGoodLaunchPosition(getNextWayPoint())) { //SpaceShuttle idled some time
+			currentIdle += Math.abs(getShuttle().getSpeed());
+			if(currentIdle >= idlingTurns && isInGoodLaunchPosition(getNextWayPoint())) { //SpaceShuttle idled some time
 				commandLaunch();
 			}
 		}
@@ -93,7 +95,7 @@ public class BaseNavigator implements Navigator{
 	}
 	
 	public void clearRoute() {
-		route= new LinkedList<SpaceObject>();
+		route = new LinkedList<SpaceObject>();
 		route.add(getShuttle().getParent());
 	}
 	
@@ -107,8 +109,8 @@ public class BaseNavigator implements Navigator{
 	
 	private void incrementPointer() {
 		currentPointer++;
-		if (currentPointer>=route.size()-1) {
-			currentPointer=0;		
+		if (currentPointer >= route.size()-1) {
+			currentPointer = 0;		
 		}
 	}
 	
@@ -137,7 +139,7 @@ public class BaseNavigator implements Navigator{
 	public void commandLaunch() {
 		getShuttle().setTarget(getNextWayPoint());
 		getShuttle().launch();
-		currentIdle=0;
+		currentIdle = 0;
 		incrementPointer();
 	}
 }

@@ -12,7 +12,6 @@ public class Rocket extends Missile implements DestructibleObject {
 	public static final int ROCKET_SPEED = 10;
 	public static final int ROCKET_SIZE = 3;
 
-	
 	public Rocket(String name, Spaceshuttle emitter, int size) {
 		super(name, emitter,  new Rectangle(emitter.getCenter(),size,size*2),new JavaFXDrawingInformation(Color.FIREBRICK),emitter.getRotation(), emitter.getSpeed());
 		shape.setLevelOfDetail(2);

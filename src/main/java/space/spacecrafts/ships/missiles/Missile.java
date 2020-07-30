@@ -20,14 +20,15 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 
 	public Missile(String name, Spaceshuttle emitter, BaseShape area,DrawingInformation dInfo, double direction, double speed) {
 		super(name, emitter, dInfo, area, 0,speed);
-		this.emitter=emitter;
-		rotation=direction;
+		this.emitter = emitter;
+		rotation = direction;
 	}
 	
 	@Override
 	public void update() {
-		if(distance>=250 || center.getX()<=0 || center.getY() <=0) 
+		if(distance >= 250 || center.getX() <= 0 || center.getY() <= 0) {
 			remove();
+		}
 	}
 	
 	@Override
@@ -43,21 +44,24 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 	
 	@Override
 	public void remove() {
-		if(emitter!=null)
+		// If the link to the emitter is cut/removed, then there will be no updates performed and no drawing.
+		if(emitter != null) {
 			emitter.getTrabants().remove(this);
-		emitter=null;
+		}
+		emitter = null;
 	}
 	@Override 
 	public void rotate() {}
 	
 	@Override
 	public boolean collides(CollidingObject other) {
-		if(other == emitter)
+		if(other == emitter) {
 			return false;
+		}
 		return super.collides(other);
 	}
 	
 	public boolean isOrphan() {
-		return emitter==null;
+		return emitter == null;
 	}
 }

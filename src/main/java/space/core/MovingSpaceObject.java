@@ -15,16 +15,21 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingUpd
 	public MovingSpaceObject(String name,SpaceObject parent,DrawingInformation dInfo, Shape shape,int distance, double speed) {
 		super(name,parent.center.clone(),shape,dInfo);
 		
-		this.distance=distance;
-		this.speed=speed;
-		rotationSpeed=speed*2;
+		this.distance = distance;
+		this.speed = speed;
+		rotationSpeed = speed*2;
 		
-		relativePos=degreeTo(parent);
+		relativePos = degreeTo(parent);
 		parent.trabants.add(this);
 		center.setY(parent.center.getY()+distance);
 	}
 	
 	public void move(Point parentCenter) {
+		/*
+		 * The Move position moves the center to the according relativepos and distance to the parents Center
+		 * Therefore, first the moveRelativePos is invoked to update the relative pos 
+		 * After moving the center, it rotates itself. 
+		 */
 		moveRelativePos();
 		center.setX(parentCenter.getX()+(int)(Math.cos(relativePos)*distance));
 		center.setY(parentCenter.getY()+(int)(Math.sin(relativePos)*distance));
@@ -32,36 +37,39 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingUpd
 	};
 	
 	public void moveRelativePos() {
-		relativePos+=speed;
-		if (relativePos >= Math.PI*2)
+		// This moves the spaceobject around its center-piece and if there is more than 1 full degree it reduces the relativepos by one cicle
+		relativePos += speed;
+		if (relativePos >= Math.PI*2) {
 			relativePos -=  Math.PI*2;
-		else if(relativePos< 0 )
-			relativePos+= Math.PI*2;
+		} else if(relativePos< 0 ) {
+			relativePos += Math.PI*2;
+		}
 	}
 	
 	public void rotate() {
-		rotation+=rotationSpeed;
-		if (rotation >= Math.PI*2)
+		// This rotates the spaceobject around itself and if there is more than 1 full degree it reduces the rotation by one cicle
+		rotation += rotationSpeed;
+		if (rotation >= Math.PI*2) {
 			rotation -=  Math.PI*2;
-		else if (rotation < 0) {
+		} else if (rotation < 0) {
 			rotation += Math.PI*2;
 		}
 	}
 	
 	public boolean isFasterThanMe(SpaceObject other) {
 		if(other instanceof MovingSpaceObject) {
-			MovingSpaceObject otherCasted= (MovingSpaceObject) other;
-			return 	speed!=0
-					&&otherCasted.speed!=0
-					&&Math.abs(otherCasted.speed)>Math.abs(speed);
+			MovingSpaceObject otherCasted = (MovingSpaceObject) other;
+			return 	speed != 0
+					&& otherCasted.speed != 0
+					&& Math.abs(otherCasted.speed) > Math.abs(speed);
 		}
 		return false;
 	}
 	
 	public boolean movesInSameDirection(SpaceObject other) {
 		if(other instanceof MovingSpaceObject) {
-			MovingSpaceObject otherCasted= (MovingSpaceObject) other;
-			return 	otherCasted.speed>0&&speed>0 || otherCasted.speed<0&&speed<0;
+			MovingSpaceObject otherCasted = (MovingSpaceObject) other;
+			return 	otherCasted.speed > 0 && speed > 0 || otherCasted.speed < 0 && speed < 0;
 		}
 		return false;
 	}
@@ -73,9 +81,9 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingUpd
 	}
 	
 	protected void updateDrawingInformation() {
-		DrawingInformation dInfo=getDrawingInformation() ;
+		DrawingInformation dInfo = getDrawingInformation() ;
 		if(dInfo  instanceof JavaFXDrawingInformation) {
-			Affine transformRotation= new Affine();
+			Affine transformRotation = new Affine();
 			transformRotation.appendRotation(Math.toDegrees(rotation), center.getX() ,center.getY());	
 			((JavaFXDrawingInformation)dInfo).transformations.clear();
 			((JavaFXDrawingInformation)dInfo).transformations.add(transformRotation);

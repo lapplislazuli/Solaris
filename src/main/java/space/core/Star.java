@@ -22,16 +22,16 @@ public class Star extends SpaceObject {
 	public Star(String name, DrawingInformation dInfo,AbsolutePoint center, int size) {
 		super(name,center,new Circle(center,size),dInfo);
 		shape.setLevelOfDetail(100);
-		this.size=size;
+		this.size = size;
 		checkAndAddSunEffects();
 	}
 	
 	private Star(Builder builder) {
 		super(builder.name,builder.center,new Circle(builder.radious),new JavaFXDrawingInformation(builder.color));
 		shape.setLevelOfDetail(builder.levelOfDetail);
-		trabants=builder.trabants;
-		isCentered=builder.reCentering;
-		size=builder.radious;
+		trabants = builder.trabants;
+		isCentered = builder.reCentering;
+		size = builder.radious;
 		
 		checkAndAddSunEffects();
 	}
@@ -43,15 +43,16 @@ public class Star extends SpaceObject {
 	
 	@Override
 	public void draw(DrawingContext dc) {
-		if(isCentered && dc instanceof JavaFXDrawingContext)
+		if(isCentered && dc instanceof JavaFXDrawingContext) {
 			reCenter(((JavaFXDrawingContext)dc).getGraphicsContext());
+		}
 		super.draw(dc);
 	}
 	
 	
 	private void checkAndAddSunEffects() {
 		if(dInfo instanceof JavaFXDrawingInformation) {
-			((JavaFXDrawingInformation)dInfo).hasColorEffect=true;
+			((JavaFXDrawingInformation)dInfo).hasColorEffect = true;
 			((JavaFXDrawingInformation)dInfo).effects.add(new Glow(0.6));
 		}
 			
@@ -59,48 +60,51 @@ public class Star extends SpaceObject {
 	
 	public static class Builder {
 		private final String name;
-		private Color color= Color.ORANGE;
-		private int levelOfDetail=50, radious=0;
-		private AbsolutePoint center=new AbsolutePoint(0,0);
-		private boolean reCentering=false;
+		private Color color = Color.ORANGE;
+		private int levelOfDetail = 50, radious = 0;
+		private AbsolutePoint center = new AbsolutePoint(0,0);
+		private boolean reCentering = false;
 		
 		private List<MovingUpdatingObject> trabants = new LinkedList<MovingUpdatingObject>();
 		
 		public Builder(String name) throws IllegalArgumentException{
-			if(name==null||name.isEmpty())
+			if(name == null || name.isEmpty()) {
 				throw new IllegalArgumentException("Name cannot be null or empty");
-			this.name=name;
+			}
+			this.name = name;
 		}
 		
 		public Builder color(Color val){ 
-			color= val; 
+			color = val; 
 			return this;
 		}
 		
 		public Builder center(int xCoord, int yCoord){
-			center=new AbsolutePoint(xCoord,yCoord);
+			center = new AbsolutePoint(xCoord,yCoord);
 			return this;
 		}
 		
 		public Builder center(AbsolutePoint val) {
-			center=val;
+			center = val;
 			return this;
 		}
 		public Builder radious(int val) {
-			if(val<0)
+			if(val < 0) {
 				throw new IllegalArgumentException("Radious cannot be negative");
-			radious= val; 
+			}
+			radious = val; 
 			return this;
 		}
 		public Builder reCentering(boolean val) {
-			reCentering=val;
+			reCentering = val;
 			return this;
 		}
 		
 		public Builder levelOfDetail(int val){ 
-			if(val<0)
+			if(val < 0) {
 				throw new IllegalArgumentException("LoD cannot be negative");
-			levelOfDetail= val; 
+			}
+			levelOfDetail = val; 
 			return this;
 		}
 		

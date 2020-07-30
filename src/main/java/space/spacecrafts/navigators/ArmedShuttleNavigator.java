@@ -21,7 +21,6 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 		super(name, ship,respawn);
 	}
 	
-
 	public static ArmedShuttleNavigator PlayerNavigator(String name, Spacecraft ship) {
 		ArmedShuttleNavigator nav = new ArmedShuttleNavigator(name, ship, true);
 		ManagerRegistry.getPlayerManager().registerPlayerNavigator(nav);
@@ -31,8 +30,9 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 	@Override
 	public void update(){
 		super.update();
-		if(!ship.isDead() && doesAutoAttack)
+		if(!ship.isDead() && doesAutoAttack) {
 			autoAttack();
+		}
 	}
 
 	public void attack(Point p) {
@@ -45,13 +45,14 @@ public class ArmedShuttleNavigator extends BaseNavigator implements AggressiveNa
 
 	public void autoAttack() {
 		Optional<SpaceObject> possible = ship.getNearestPossibleTarget();
-		if(possible!=null && possible.isPresent())
+		if(possible != null && possible.isPresent()) {
 			attack(possible.get());
+		}
 	}
 	
 	public boolean doesAutoAttack() {return doesAutoAttack;}
-	public void setAutoAttack(boolean doesit) {doesAutoAttack=doesit;}
-	public void toggleAutoAttack() {doesAutoAttack= !doesAutoAttack;}
+	public void setAutoAttack(boolean doesit) {doesAutoAttack = doesit;}
+	public void toggleAutoAttack() {doesAutoAttack = !doesAutoAttack;}
 
 	public boolean isPlayer() {
 		return equals(ManagerRegistry.getPlayerManager().getPlayerNavigator());

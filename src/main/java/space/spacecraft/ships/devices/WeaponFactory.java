@@ -23,8 +23,8 @@ public final class WeaponFactory {
 	}
 	
 	public static MountedWeapon combineDroneMountsToDroneRack(Spaceshuttle carrier) {
-			var droneMounts = carrier.getWeapons().stream().filter(w->w instanceof DroneMount).map(w -> (DroneMount) w).collect(Collectors.toList());
-			return new DroneRack(droneMounts);
+		var droneMounts = carrier.getWeapons().stream().filter(w->w instanceof DroneMount).map(w -> (DroneMount) w).collect(Collectors.toList());
+		return new DroneRack(droneMounts);
 	}
 		
 }

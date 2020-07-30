@@ -27,22 +27,23 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 
 	protected static Logger logger = LogManager.getLogger(SpaceObject.class);
 	
-	protected DrawingInformation dInfo=new EmptyJFXDrawingInformation();
+	protected DrawingInformation dInfo = new EmptyJFXDrawingInformation();
 	
-	protected List<MovingUpdatingObject> trabants=new LinkedList<MovingUpdatingObject>();
+	protected List<MovingUpdatingObject> trabants = new LinkedList<MovingUpdatingObject>();
 	protected float rotation = 0; //in radiant-degree
 	
 	public SpaceObject(String name,Point center, Shape shape, DrawingInformation dInfo) {
-		if(name==null||name.isEmpty()) {
+		if(name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("Requires Name!");
 		}
-		this.name=name;
+		this.name = name;
 		
-		this.center=center;
-		this.shape=shape;
+		this.center = center;
+		this.shape = shape;
 		this.shape.setCenter(center); //To center the Area around this object - improvement possible
-		if(dInfo!=null)
-			this.dInfo=dInfo;
+		if(dInfo != null) {
+			this.dInfo = dInfo;
+		}
 		if(!(this instanceof FixStar)) {
 			//This is a bit filtered, to remove the spam of fix-stars
 			logger.debug("Build " + name + center.toString());		
@@ -57,7 +58,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	};
 	
 	public void draw(DrawingContext dc) {
-		if(dInfo==null) {
+		if(dInfo == null) {
 			throw new UnsupportedOperationException("Empty DrawingInformation");
 		}
 		dc.saveContext();
@@ -89,7 +90,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return center.degreeTo(other.center);
 	}
 	public boolean collides(CollidingObject other) {
-		if(other instanceof SpaceObject && other!=this) {
+		if(other instanceof SpaceObject && other != this) {
 			return shape.intersects(((SpaceObject)other).shape);	
 		}
 		return false;
@@ -116,7 +117,7 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	
 	@Override
 	public String toString() {
-		return name+"@"+center.toString();
+		return name + "@" + center.toString();
 	}
 	
 	@Override
@@ -129,17 +130,17 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 			return true;
 		}
 		return
-			name==sO.name 
-			&& rotation==sO.rotation
+			name == sO.name 
+			&& rotation == sO.rotation
 			&& center.samePosition(sO.center)
 			&& shape.sameShape(sO.shape);
 	}
 	
 	@Override
 	public int hashCode() {
-		int	result=name.hashCode();
-		result=31*result+Double.hashCode(rotation);
-		result=31*result+center.hashCode();
+		int	result = name.hashCode();
+		result = 31*result+Double.hashCode(rotation);
+		result = 31*result+center.hashCode();
 	
 		return result;
 	}

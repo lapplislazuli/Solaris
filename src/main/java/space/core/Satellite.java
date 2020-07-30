@@ -15,18 +15,20 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	
 	private Satellite(Builder builder) {
 		super(builder.name,builder.parent,new JavaFXDrawingInformation(builder.color),new TShape(builder.xSize,builder.ySize,3),builder.distance,builder.speed);
-		trabants=builder.trabants;
-		parent=builder.parent;
+		trabants = builder.trabants;
+		parent = builder.parent;
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		
-		if(getDrawingInformation() instanceof JavaFXDrawingInformation)
-			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect=true;
+		if(getDrawingInformation() instanceof JavaFXDrawingInformation) {
+			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect = true;
+		}
 	}
 	
 	@Override 
 	public void rotate() {
-		if(parent!=null)
-			rotation=degreeTo(parent);
+		if(parent != null) {
+			rotation = degreeTo(parent);	
+		}
 	}
 	
 	@Override
@@ -38,7 +40,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	public void destruct() {
 		logger.debug(toString() + " got destroyed");
 		new Explosion("Explosion from" + name,center,6,800,1.03,new JavaFXDrawingInformation(Color.FIREBRICK));
-		if(parent!=null) {
+		if(parent != null) {
 			remove();
 			logger.debug(toString() + " removed!");
 		}
@@ -55,43 +57,48 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		private List<MovingUpdatingObject> trabants = new LinkedList<MovingUpdatingObject>();
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
-			if(name==null||name.isEmpty())
+			if(name == null || name.isEmpty()) {
 				throw new IllegalArgumentException("Name cannot be null or empty");
-			if(parent==null)
+			}
+			if(parent == null) {
 				throw new IllegalArgumentException("Parent cannot be null");
-			this.name=name;
-			this.parent=parent;
+			}
+			this.name = name;
+			this.parent = parent;
 		}
 		
 		public Builder color(Color val){ 
-			color= val; 
+			color = val; 
 			return this;
 		}
 		
 		public Builder distance(int val){ 
-			if(val<0)
+			if(val < 0) {
 				throw new IllegalArgumentException("Distance cannot be negative");
-			distance= val; 
+			}
+			distance = val; 
 			return this;
 		}
 		
 		public Builder size(int xSize, int ySize){
-			if(xSize<0||ySize<0)
+			if(xSize < 0 || ySize < 0) {
 				throw new IllegalArgumentException("Size cannot be negative");
-			this.xSize=xSize;
-			this.ySize=ySize;
+			}
+			this.xSize = xSize;
+			this.ySize = ySize;
 			return this;
 		}
 		
 		public Builder speed(double val){
-			speed= val; 
+			speed = val; 
 			return this;
 		}
 		
 		public Builder levelOfDetail(int val){ 
-			if(val<0)
+			if(val < 0) {
 				throw new IllegalArgumentException("LoD cannot be negative");
-			levelOfDetail= val; 
+			}
+			levelOfDetail = val; 
 			return this;
 		}
 		

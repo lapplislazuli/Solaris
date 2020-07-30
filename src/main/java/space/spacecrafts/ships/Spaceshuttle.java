@@ -144,7 +144,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 				ManagerRegistry.getPlayerManager().increasePlayerDeaths();
 				logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().getPlayerDeaths());
 			}
-			state=SpacecraftState.DEAD;
+			state = SpacecraftState.DEAD;
 			new Explosion("Explosion from" + this.getName(),center,5,1500,1.02,new JavaFXDrawingInformation(Color.MEDIUMVIOLETRED));
 			if(leavesSpaceTrash) {		
 				var ast = new Asteroid("Trash from " + name,parent,(int)(orbitingDistance+distanceTo(parent)),speed/2,Asteroid.Type.TRASH);
@@ -155,7 +155,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	@Override
-	public void rotate() {rotation=degreeTo(parent);}
+	public void rotate() {rotation = degreeTo(parent);}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -323,13 +323,13 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	public void attack(Point p) {
-		if(primaryWeapon!=null) {
+		if(primaryWeapon != null) {
 			primaryWeapon.setTarget(p);
 			primaryWeapon.activate();
 		}
 	}
 	public void attack(SpaceObject o) {
-		if(primaryWeapon!=null) {
+		if(primaryWeapon != null) {
 			primaryWeapon.setTarget(o);
 			primaryWeapon.activate();
 		}
@@ -355,7 +355,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		
 		Spaceshuttle copy =  copyBuilder.build();
 		
-		copy.weapons=this.weapons;
+		copy.weapons = this.weapons;
 		copy.primaryWeapon = this.primaryWeapon;
 		copy.secondaryWeapon = this.secondaryWeapon;
 		
@@ -375,7 +375,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	public Optional<SpaceObject> getNearestPossibleTarget() {
 		Optional<SpaceObject> possibleTarget = Optional.empty();
 		if(!sensor.getDetectedItems().isEmpty())
-			possibleTarget=sensor.getDetectedItems().stream()
+			possibleTarget = sensor.getDetectedItems().stream()
 				.filter(c->c instanceof DestructibleObject)
 				.filter(c -> c instanceof SpaceObject)
 				.map(c-> (SpaceObject)c)
@@ -394,10 +394,12 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 
 	public boolean isMyCarrier(Spaceshuttle other) {
-		if(other==null)
+		if(other == null) {
 			return false;
-		if(!other.isCarrier())
+		}
+		if(!other.isCarrier()) {
 			return false;
+		}
 		if(this.isDrone()) {
 			return other.getDrones().contains(this);
 		}
@@ -405,46 +407,45 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	public boolean isDroneWithSameCarrier(Spaceshuttle other) {
-		if(other==null || !other.isDrone())
+		if(other == null || !other.isDrone() || !isDrone()) {
 			return false;
-		if(!isDrone())
-			return false;
+		}
 		
 		Optional<Boolean> maybeParent = getMyCarrier()
 				.map(u -> u.getDrones()
 				.contains(other));
 		
-		if(maybeParent.isEmpty())
+		if(maybeParent.isEmpty()) {
 			return false;
-		else
+		} else {
 			return maybeParent.get();
+		}
 	}
 	
 	public boolean isMyDrone(Spaceshuttle other) {
-		if(other==null)
+		if(other == null || !this.isCarrier() || !other.isDrone()) {
 			return false;
-		if(!this.isCarrier())
-			return false;
-		if(!other.isDrone())
-			return false;
+		}
 		
 		var maybeParent = other.getMyCarrier();
 		
-		if(maybeParent.isEmpty())
+		if(maybeParent.isEmpty()) {
 			return false;
-		else
+		} else {
 			return maybeParent.get().equals(this);
+		}
 	}
 	
 	private Optional<Spaceshuttle> getMyCarrier(){
-		if(!isDrone())
+		if(!isDrone()) {
 			return Optional.empty();
-		else
+		} else {
 			return ManagerRegistry.getUpdateManager().getRegisteredItems().stream().filter(t-> t instanceof Spaceshuttle)
 					.map(t -> (Spaceshuttle)t)
 					.filter(t -> t.isCarrier())
 					.filter(t -> isMyCarrier(t))
 					.findFirst();
+		}
 	}
 	
 	public Collection<MountedWeapon> getWeapons() {
@@ -455,12 +456,12 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	public static class Builder {
 		private final String name;
 		private SpaceObject parent;
-		private Color color= Color.CORNSILK;
+		private Color color = Color.CORNSILK;
 		private DrawingInformation dinfo = null;
-		private int orbitingDistance = 100,size = 0, levelOfDetail=2;
+		private int orbitingDistance = 100,size = 0, levelOfDetail = 2;
 		private Shape shape;
-		private double speed = 0,rotationSpeed=0,sensorsize=50;
-		private boolean setStandardWeaponry=false,shallBeCarrier=false,leavesSpaceTrash=true,isPlayer=false;;
+		private double speed = 0,rotationSpeed = 0,sensorsize = 50;
+		private boolean setStandardWeaponry = false,shallBeCarrier = false,leavesSpaceTrash = true,isPlayer = false;
 		
 		private List<Function<Spaceshuttle,MountedWeapon>> weaponFns = new ArrayList<>();
 		private List<Function<Spaceshuttle,Spaceshuttle>> droneFns = new ArrayList<>();

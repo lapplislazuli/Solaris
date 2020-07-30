@@ -14,12 +14,14 @@ public class RocketLauncher implements MountedWeapon {
 	private Spaceshuttle parent;
 	
 	public RocketLauncher(Spaceshuttle mount,int magazineSize) {
-		if(mount == null)
+		if(mount == null) {
 			throw new IllegalArgumentException("Mount cannot be null - it is required in later computations");
-		if(magazineSize < 0)
+		}
+		if(magazineSize < 0) {
 			throw new IllegalArgumentException("MagazineSize cannot be lower than 0");
-		this.parent=mount;
-		rockets=magazineSize;
+		}
+		this.parent = mount;
+		rockets = magazineSize;
 	}
 	
 	@Override
@@ -28,7 +30,7 @@ public class RocketLauncher implements MountedWeapon {
 			new Rocket("Rocket from " + parent.getName(), parent,Rocket.ROCKET_SIZE,targetDirection,Rocket.ROCKET_SPEED);
 			rockets--;				
 			// Alter parameters to not be ready next time without newly set target
-			targetDirection=0;
+			targetDirection = 0;
 		}
 	}
 	

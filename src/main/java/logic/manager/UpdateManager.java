@@ -54,7 +54,7 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	
 	public void addSpaceObject(SpaceObject o) {
 		registerItem(o);
-		ManagerRegistry.getDrawingManager().getRegisteredItems().add(o);
+		ManagerRegistry.getDrawingManager().registerItem(o);
 		for(RecursiveObject child : o.getAllChildren()) {
 			if(child instanceof CollidingObject) {
 				ManagerRegistry.getCollisionManager().registerItem((CollidingObject)child);
