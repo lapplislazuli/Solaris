@@ -39,6 +39,7 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	@Override
 	public void update() {
 		if(running) {
+			refresh();
 			drawAll();
 		}
 	}
@@ -54,6 +55,16 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 		registeredItems = new HashSet<DrawingObject>();
 	}
 
+	protected void refresh() {
+		registeredItems = new HashSet<DrawingObject>();
+		
+		ManagerRegistry.getUpdateManager().getRegisteredItems()
+			.stream()
+			.filter(t -> t instanceof DrawingObject)
+			.map(t -> (DrawingObject) t)
+			.forEach(u -> registeredItems.add(u));
+	}
+	
 	public void toggleUpdate() {running =! running;}
 	public boolean isRunning() {return running;}
 
