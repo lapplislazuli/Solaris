@@ -33,20 +33,21 @@ public class MouseManager implements UpdatingManager<Action> {
 	
 
 	public MouseManager() {
-		actions=ManagerRegistry.getActionManager();
-		mouseBindings=new HashMap<MouseButton,Action>();
+		actions = ManagerRegistry.getActionManager();
+		mouseBindings = new HashMap<MouseButton,Action>();
 	};
 
 	
 	public void initScene(Scene scene) {
-		this.scene=scene;
+		this.scene = scene;
 		//this.scene.addEventHandler(MouseEvent.MOUSE_MOVED, evt -> mouseMoved(evt));
         this.scene.addEventHandler(MouseEvent.MOUSE_PRESSED, evt -> mouseClicked(evt));
     }
 	
 	public void registerMouseBindings(MouseButton button, Action action) {
-		if(mouseBindings.get(button)!=null)
+		if(mouseBindings.get(button) != null) {
 			logger.info("Overrwrite Keybinding for " + button.toString() + " with Action " + action.getName());
+		}
 		mouseBindings.put(button,action);
 	}
 	
@@ -58,12 +59,12 @@ public class MouseManager implements UpdatingManager<Action> {
 	
 	public void mouseClicked(MouseEvent evt) {
 		mousePos = new AbsolutePoint((int)evt.getSceneX(),(int)evt.getSceneY());
-		if(mouseBindings.get(evt.getButton())!=null) {
-			logger.debug("Player pressed " +evt.getButton().toString() + " and did " + mouseBindings.get(evt.getButton()).getName());
+		if(mouseBindings.get(evt.getButton()) != null) {
+			logger.debug("Player pressed " + evt.getButton().toString() + " and did " + mouseBindings.get(evt.getButton()).getName());
 			mouseBindings.get(evt.getButton()).doAction();
-		}
-		else
+		} else {
 			logger.debug("No MouseBinding for this Action registered!");
+		}
 	}
 	
 	public Point getMousePos() {return mousePos;}
@@ -75,14 +76,16 @@ public class MouseManager implements UpdatingManager<Action> {
 	}
 
 	public void init(Config c) {
-		for(Entry<MouseButton,String> binding : c.getMouseConfig().getKeyBindings().entrySet())
-			if(actions.getActionByName(binding.getValue())!=null)
+		for(Entry<MouseButton,String> binding : c.getMouseConfig().getKeyBindings().entrySet()) {
+			if(actions.getActionByName(binding.getValue()) != null) {
 				mouseBindings.put(binding.getKey(),actions.getActionByName(binding.getValue()));
+			}
+		}
 	}
 
 	public void reset() {
-		actions=ManagerRegistry.getActionManager();
-		mouseBindings=new HashMap<MouseButton,Action>();
+		actions = ManagerRegistry.getActionManager();
+		mouseBindings = new HashMap<MouseButton,Action>();
 	}
 
 	public Collection<Action> getRegisteredItems() {
@@ -94,7 +97,7 @@ public class MouseManager implements UpdatingManager<Action> {
 	}
 	
 	public void toggleUpdate() {
-		running=!running;
+		running =! running;
 	}
 
 	public boolean isRunning() {

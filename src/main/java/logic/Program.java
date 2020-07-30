@@ -39,6 +39,7 @@ public class Program extends Application{
 		ManagerRegistry.getInstance().init(config);
 		logger.info("Configuration read - starting welcome view");
 		
+		// After reading config and initialising the window itself, show the first view (welcome panel)
 		var start = new StartView(config,primaryStage);
 	}
 	
@@ -46,8 +47,9 @@ public class Program extends Application{
 	
 	// To Call the correct shutdown which needs to be static
 	public static void invokeStop() {
-		if(INSTANCE!=null)
+		if(INSTANCE != null) {
 			INSTANCE.stop();
+		}
 	}
 	
 	@Override

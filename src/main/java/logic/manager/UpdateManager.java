@@ -24,15 +24,14 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 
 	private List<UpdatingObject> registeredItems;
 	private Timer timer;
-	private boolean running=true;
+	private boolean running = true; //If this variable is false, the whole game is paused.
 	
 	private static Logger logger = LogManager.getLogger(UpdateManager.class);
 	
 	public UpdateManager() {
-		registeredItems=new LinkedList<UpdatingObject>();
-		logger.debug("Build UpdateManager");
+		registeredItems = new LinkedList<UpdatingObject>();
+		logger.info("Build UpdateManager");
 	}
-	
 	
 	public void init(Config config) {
 		setTimer(config.getSettings().getUpdateIntervall());
@@ -40,36 +39,41 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	}
 	
 	public void registerItem(UpdatingObject o) {
-		if(!registeredItems.contains(o))
+		if(!registeredItems.contains(o)) {
 			registeredItems.add(o);
+		}
 	}
 	
 	public void update() {
-		if(running) 
-			for(UpdatingObject updateMe : registeredItems)
-				updateMe.update();
+		if(running) {
+			for(UpdatingObject updateMe : registeredItems) {
+				updateMe.update();	
+			}
+		}
 	}
 	
 	public void addSpaceObject(SpaceObject o) {
 		registerItem(o);
 		ManagerRegistry.getDrawingManager().getRegisteredItems().add(o);
-		for(RecursiveObject child : o.getAllChildren())
+		for(RecursiveObject child : o.getAllChildren()) {
 			if(child instanceof CollidingObject) {
 				ManagerRegistry.getCollisionManager().registerItem((CollidingObject)child);
-				if(child instanceof UpdatingObject)
+				if(child instanceof UpdatingObject) {
 					registerItem((UpdatingObject)child);
+				}
 			}
+		}
 	}
 	
 	public Set<CollidingObject> getAllActiveColliders() {	
 		Set<CollidingObject> kids = getRegisteredItems().stream()
-		.filter(updatingObject -> updatingObject instanceof RecursiveObject)
-		.map(spaceObject -> (RecursiveObject)spaceObject)
-		.flatMap(recursive -> recursive.getAllChildren().stream())
-		.filter(o -> o instanceof CollidingObject)
-		.map(o->(CollidingObject)o)
-		.collect(Collectors.toSet());
-		
+			.filter(updatingObject -> updatingObject instanceof RecursiveObject)
+			.map(spaceObject -> (RecursiveObject)spaceObject)
+			.flatMap(recursive -> recursive.getAllChildren().stream())
+			.filter(o -> o instanceof CollidingObject)
+			.map(o->(CollidingObject)o)
+			.collect(Collectors.toSet());
+			
 		Set<CollidingObject> roots = getRegisteredItems().stream()
 				.filter(t->t instanceof CollidingObject)
 				.map(o->(CollidingObject)o)
@@ -80,6 +84,7 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	
 	@Override
 	public void setTimer(int updateIntervall) {
+		// The timer runs the update method of UpdateManager-Instance, which invokes all the other Managers
 		timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -90,13 +95,13 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	}
 
 	public void toggleUpdate() {
-		running=!running;
-		logger.debug("Updatemanager set to running:" + running);
+		running =! running;
+		logger.info("Updatemanager set to running:" + running);
 	}
 	
 	public void reset() {
-		registeredItems=new LinkedList<UpdatingObject>();
-		running=true;
+		registeredItems = new LinkedList<UpdatingObject>();
+		running = true;
 		
 	}
 	

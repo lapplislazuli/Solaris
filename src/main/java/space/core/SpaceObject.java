@@ -33,8 +33,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	protected float rotation = 0; //in radiant-degree
 	
 	public SpaceObject(String name,Point center, Shape shape, DrawingInformation dInfo) {
-		if(name==null||name.isEmpty())
+		if(name==null||name.isEmpty()) {
 			throw new IllegalArgumentException("Requires Name!");
+		}
 		this.name=name;
 		
 		this.center=center;
@@ -49,15 +50,16 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public void update() {
-		for (MovingUpdatingObject trabant : trabants){
+		for (MovingUpdatingObject trabant : trabants) {
 			trabant.move(center);
 			trabant.update();
 		}
 	};
 	
 	public void draw(DrawingContext dc) {
-		if(dInfo==null)
+		if(dInfo==null) {
 			throw new UnsupportedOperationException("Empty DrawingInformation");
+		}
 		dc.saveContext();
 		dInfo.applyDrawingInformation(dc);
 		drawShape(dc);
@@ -77,8 +79,9 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	public double distanceTo(SpaceObject other) {
-		if(center == null || other == null || other.center == null)
-			return Double.MAX_VALUE;
+		if(center == null || other == null || other.center == null) {
+			return Double.MAX_VALUE;	
+		}
 		return center.distanceTo(other.center);
 	}
 	
@@ -86,16 +89,19 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 		return center.degreeTo(other.center);
 	}
 	public boolean collides(CollidingObject other) {
-		if(other instanceof SpaceObject && other!=this)
-				return shape.intersects(((SpaceObject)other).shape);
+		if(other instanceof SpaceObject && other!=this) {
+			return shape.intersects(((SpaceObject)other).shape);	
+		}
 		return false;
 	}
 	
 	public Collection<RecursiveObject> getAllChildren(){
 		Collection<RecursiveObject> flatChildren = new LinkedList<RecursiveObject>();
-		for(MovingUpdatingObject trabant : trabants)
-			if(trabant instanceof RecursiveObject)
+		for(MovingUpdatingObject trabant : trabants) {
+			if(trabant instanceof RecursiveObject) {
 				flatChildren.addAll(((RecursiveObject)trabant).getAllChildren());
+			}
+		}
 		flatChildren.add(this);
 		return flatChildren;
 	}
@@ -109,15 +115,19 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	}
 	
 	@Override
-	public String toString() {return name+"@"+center.toString();}
+	public String toString() {
+		return name+"@"+center.toString();
+	}
 	
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof SpaceObject)) 
-			return false;
+		if(!(o instanceof SpaceObject)) {
+			return false;	
+		}
 		SpaceObject sO = (SpaceObject) o;
-		if(sO == this)
+		if(sO == this) {
 			return true;
+		}
 		return
 			name==sO.name 
 			&& rotation==sO.rotation

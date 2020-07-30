@@ -16,19 +16,19 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 
 	public Set<DrawingObject> registeredItems;
 	private DrawingContext context;
-	private boolean running=true;
+	private boolean running = true; //If this is set to false, the items are not drawn but are still running and colliding. 
 
 	private static Logger logger = LogManager.getLogger(DrawingManager.class);
 	
 	public DrawingManager() {
-		registeredItems=new HashSet<DrawingObject>();
-		logger.debug("Build DrawingManager");
+		registeredItems = new HashSet<DrawingObject>();
+		logger.info("Build DrawingManager");
 	}
 	
 	private void drawAll() {
-		for(DrawingObject drawable : registeredItems)
-			drawable.draw(context);
-		//ManagerRegistry.getEffectManager().drawEffects(context);
+		for(DrawingObject drawable : registeredItems) {
+			drawable.draw(context);	
+		}
 	}
 	
 	public void initDrawingManager(DrawingContext dc) {
@@ -38,8 +38,9 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	
 	@Override
 	public void update() {
-		if(running)
-			drawAll();	
+		if(running) {
+			drawAll();
+		}
 	}
 
 	public void init(Config c) {
@@ -49,11 +50,11 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 
 	@Override
 	public void reset() {
-		running=true;
-		registeredItems=new HashSet<DrawingObject>();
+		running = true;
+		registeredItems = new HashSet<DrawingObject>();
 	}
 
-	public void toggleUpdate() {running=!running;}
+	public void toggleUpdate() {running =! running;}
 	public boolean isRunning() {return running;}
 
 	public Collection<DrawingObject> getRegisteredItems() {

@@ -24,20 +24,21 @@ public class ManagerRegistry {
 	private static ManagerRegistry INSTANCE;
 	
 	public final static ManagerRegistry getInstance() {
-		if(INSTANCE==null)
-			INSTANCE= new ManagerRegistry();
+		if(INSTANCE == null) {
+			INSTANCE = new ManagerRegistry();	
+		}
 		return INSTANCE;
 	}
 	
 	private ManagerRegistry() {
-		uptmng=new UpdateManager();
-		efxmng=new EffectManager();
-		drwmng=new DrawingManager();
-		colmng=new CollisionManager();
-		plrmng=new PlayerManager();
-		actmng=new ActionManager(true);
-		moumng=new MouseManager();
-		keymng=new KeyBoardManager();
+		uptmng = new UpdateManager();
+		efxmng = new EffectManager();
+		drwmng = new DrawingManager();
+		colmng = new CollisionManager();
+		plrmng = new PlayerManager();
+		actmng = new ActionManager(true);
+		moumng = new MouseManager();
+		keymng = new KeyBoardManager();
 		
 		logger.info("ManagerRegistry (freshly) build");
 	}
@@ -68,17 +69,17 @@ public class ManagerRegistry {
 	public static MouseManager getMouseManager()			{return moumng;}
 	public static KeyBoardManager getKeyBoardManager()		{return keymng;}
 	
-	public static void setUpdateManager(UpdateManager newmgr) 		{uptmng=newmgr;}
-	public static void setEffectManager(EffectManager newmgr) 		{efxmng=newmgr;}
-	public static void setDrawingManager(DrawingManager newmgr) 	{drwmng=newmgr;}
-	public static void setCollisionManager(CollisionManager newmgr) {colmng=newmgr;}
-	public static void setPlayerManager(PlayerManager newmgr) 		{plrmng=newmgr;}
-	public static void setActionManager(ActionManager newmgr)		{actmng=newmgr;}
-	public static void setMouseManager(MouseManager newmgr)			{moumng=newmgr;}
-	public static void setKeyboardManager(KeyBoardManager newmgr)	{keymng=newmgr;}
+	public static void setUpdateManager(UpdateManager newmgr) 		{uptmng = newmgr;}
+	public static void setEffectManager(EffectManager newmgr) 		{efxmng = newmgr;}
+	public static void setDrawingManager(DrawingManager newmgr) 	{drwmng = newmgr;}
+	public static void setCollisionManager(CollisionManager newmgr) {colmng = newmgr;}
+	public static void setPlayerManager(PlayerManager newmgr) 		{plrmng = newmgr;}
+	public static void setActionManager(ActionManager newmgr)		{actmng = newmgr;}
+	public static void setMouseManager(MouseManager newmgr)			{moumng = newmgr;}
+	public static void setKeyboardManager(KeyBoardManager newmgr)	{keymng = newmgr;}
 	
 	public final static void reset() {
-		logger.info("Reset ManagerRegistry...");
-		INSTANCE= new ManagerRegistry();
+		logger.info("Reset ManagerRegistry");
+		INSTANCE = new ManagerRegistry();
 	}
 }

@@ -74,6 +74,9 @@ public class BaseNavigator implements Navigator{
 			} else {
 				// Timer is done - rebuild the shuttle and set rebuilding to false. 
 				if(currentRespawnTime <= 0) {
+					if(getShuttle().isPlayer()) {
+						logger.debug("Navigator respawning PlayerShuttle");
+					}
 					rebuildShuttle();
 					isRebuilding=false;
 				}
@@ -95,16 +98,18 @@ public class BaseNavigator implements Navigator{
 	}
 	
 	public SpaceObject getNextWayPoint() {
-		if (currentPointer<route.size()-1)
-			return route.get(currentPointer+1);
-		else
-			return route.get(0);
+		if (currentPointer < route.size()-1) {
+			return route.get(currentPointer+1);	
+		} else {
+			return route.get(0);	
+		}
 	}
 	
 	private void incrementPointer() {
 		currentPointer++;
-		if (currentPointer>=route.size()-1) 
-			currentPointer=0;
+		if (currentPointer>=route.size()-1) {
+			currentPointer=0;		
+		}
 	}
 	
 	public void rebuildShuttle() {

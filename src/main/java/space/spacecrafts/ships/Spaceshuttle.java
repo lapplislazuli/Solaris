@@ -57,10 +57,10 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	public Spaceshuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), orbitingDistance , speed);
 		
-		this.size=size;
-		this.parent=parent;
-		this.orbitingDistance=orbitingDistance;
-		distance=(int) (orbitingDistance+distanceTo(parent));
+		this.size = size;
+		this.parent = parent;
+		this.orbitingDistance = orbitingDistance;
+		distance = (int) (orbitingDistance+distanceTo(parent));
 		sensor = new SensorArray(this,50);
 
 		shape.setLevelOfDetail(size/2);
@@ -82,41 +82,46 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 
 	protected void changeMovementAndPositionAttributes() {
-		distance=(int)distanceTo(parent);
-		relativePos=parent.degreeTo(this);
+		distance = (int)distanceTo(parent);
+		relativePos = parent.degreeTo(this);
 		evaluateBestSpeed();
 	}
 
 	protected void evaluateBestSpeed() {
 		if(isFasterThanMe(parent)) {
-			if(!movesInSameDirection(parent))
-				speed=-speed;
-		}
-		else {
-			if(movesInSameDirection(parent))
-				speed=-speed;
+			// Be careful about the ! below
+			if(!movesInSameDirection(parent)) {
+				speed =- speed;
+			}
+		} else {
+			if(movesInSameDirection(parent)) {
+				speed =- speed;	
+			}
 		}
 	}
 
 	protected void changeHierarchy() {
+		// This method is used to switch the "parents" and start moving the shuttle
+		// After changing the parent to target, the shuttle will automatically move towards it while orbiting
 		target.getTrabants().add(this);
-		state=SpacecraftState.FLYING;
+		state = SpacecraftState.FLYING;
 		parent = target;
-		target=null;
+		target = null;
 	}
 
 	protected boolean isAliveAndRegistered() {
-		return target!=null && parent != null && parent.getTrabants().remove(this);
+		return target != null && parent != null && parent.getTrabants().remove(this);
 	}
 	
 	
 	@Override 
 	public void move(Point parentCenter) {
-		if(state!=SpacecraftState.ORBITING) {
-			if(distance>=orbitingDistance+distanceTo(parent)) 
+		if(state != SpacecraftState.ORBITING) {
+			if(distance >= orbitingDistance + distanceTo(parent)) {
 				distance--;
-			else 
-				state=SpacecraftState.ORBITING;
+			} else {
+				state = SpacecraftState.ORBITING;	
+			}
 		}
 		sensor.move(center);
 		super.move(parentCenter);
@@ -154,18 +159,20 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	
 	@Override
 	public boolean equals(Object o) {
-		if(this==o)
-			return true;
-		if(!(o instanceof Spaceshuttle))
+		if(this == o) {
+			return true;	
+		}
+		if(!(o instanceof Spaceshuttle)) {
 			return false;
+		}
 		Spaceshuttle otherCasted = (Spaceshuttle) o;
 		
 		boolean sameParent = false;
-		if(parent!=null && otherCasted.parent != null)
+		if(parent != null && otherCasted.parent != null) {
 			sameParent = parent.equals(otherCasted.parent);
-		else if (parent == null && otherCasted.parent == null)
+		} else if (parent == null && otherCasted.parent == null) {
 			sameParent = true;
-		
+		}
 		return otherCasted.getName().equals(this.getName())
 				&& otherCasted.getCenter().equals(this.getCenter())
 				&& size == otherCasted.size
@@ -175,22 +182,21 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		;
 	}
 	
-	
 	public boolean isDead() {
-		return state==SpacecraftState.DEAD;
+		return state == SpacecraftState.DEAD;
 	}
 	
 	public void remove() {
 		parent.getTrabants().remove(this);
-		parent=null;
-		target=null;
+		parent = null;
+		target = null;
 	}
 
 	public double getOrbitingDistance() {return orbitingDistance;}
 	public SpaceObject getParent() {return parent;}
-	public void setTarget(SpaceObject target) {this.target=target;}
+	public void setTarget(SpaceObject target) {this.target = target;}
 	public SpaceObject getTarget() {return target;}
-	public boolean isOrphan() {return parent==null;}
+	public boolean isOrphan() {return parent == null;}
 	public SpacecraftState getState() {return state;}
 
 	public List<CollidingObject> getDetectedItems() {
@@ -198,7 +204,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 
 	public void setSensor(Sensor val) {
-		sensor=val;
+		sensor = val;
 	}
 	
 	private void setStandardWeapons() {
@@ -238,9 +244,9 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	@Override
 	public boolean collides(CollidingObject other) {
 		// First Check: If I am dead, I do not collide
-		if(isDead())
+		if(isDead()) {
 			return false;
-		
+		}
 		// Otherwise: Is there a normal physical collision of shapes - If no, return false, otherwise do extra behaviour
 		if(super.collides(other)) {
 			//Special exceptions for Carriers and Drones
@@ -252,28 +258,31 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 				}
 				
 				//If I am carrier, do not collide with children
-				if(this.isCarrier()) {
-					if(this.isMyDrone(otherShuttle))
-						return false;
+				if(this.isCarrier() && this.isMyDrone(otherShuttle)) {
+					return false;
 				}
 				//If I am a drone, do not collide with my Carrier or the carriers other drones
-				if(this.isDrone())
-					if(this.isMyCarrier(otherShuttle) || this.isDroneWithSameCarrier(otherShuttle))
-						return false;
+				if(this.isDrone()) {
+					if(this.isMyCarrier(otherShuttle) || this.isDroneWithSameCarrier(otherShuttle)) {
+						return false;	
+					}
+				}
 			}
 			//Special exceptions for missiles
 			if(other instanceof Missile) {
 				//If this is my missile (I shot it), there is no collision
-				if(trabants.contains((Missile)other))
+				if(trabants.contains((Missile)other)) {
 					return false;
+				}
 				//If i am a carrier, I check if any of my drones is the parent of this missile. 
 				if(isCarrier()) {
 					boolean missileIsFromDrones = getDrones().stream()
 					.map(t->t.getTrabants())
 					.anyMatch(lTrabants -> lTrabants.contains(other));
 					
-					if(missileIsFromDrones)
+					if(missileIsFromDrones) {
 						return false;
+					}
 				}
 				//If i am a drone, I don't want to collide with the missiles of my fellow drones 
 				if(isDrone()) {
@@ -287,8 +296,9 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 							.map(t->t.getTrabants())
 							.anyMatch(lTrabants -> lTrabants.contains(other));
 					
-					if(missileIsFromNeighbourDrones)
-						return false;	
+					if(missileIsFromNeighbourDrones) {
+						return false;
+					}
 				}
 			}
 			
@@ -457,51 +467,56 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		
 		
 		public Builder(String name,SpaceObject parent) throws IllegalArgumentException{
-			if(name==null||name.isEmpty())
-				throw new IllegalArgumentException("Name cannot be null or empty");
-			if(parent==null)
-				throw new IllegalArgumentException("Parent cannot be null");
-			this.name=name;
-			this.parent=parent;
+			if(name == null || name.isEmpty()) {
+				throw new IllegalArgumentException("Name cannot be null or empty");	
+			}
+			if(parent == null) {
+				throw new IllegalArgumentException("Parent cannot be null");	
+			}
+			this.name = name;
+			this.parent = parent;
 		}
 		
 		public Builder color(Color val){ 
-			color= val; 
+			color = val; 
 			return this;
 		}
 		
 		public Builder orbitingDistance(int val){
-			if(val<=0)
-				throw new IllegalArgumentException("Distance cannot be smaller than or equal to 0");
+			if(val <= 0) {
+				throw new IllegalArgumentException("Distance cannot be smaller than or equal to 0");	
+			}
 			orbitingDistance = val; 
 			return this;
 		}
 		
 		public Builder size(int val){
-			if(val<0)
+			if(val < 0) {
 				throw new IllegalArgumentException("Size cannot be smaller than 0");
-			size= val; 
+			}
+			size = val; 
 			return this;
 		}
 		
 		public Builder speed(double radiantPerUpdate){
-			speed= radiantPerUpdate; 
+			speed = radiantPerUpdate; 
 			return this;
 		}
 		
 		public Builder isPlayer() {
-			isPlayer=true;
+			isPlayer = true;
 			return this;
 		}
 		
 		public Builder rotationSpeed(double radiantPerUpdate){
-			rotationSpeed= radiantPerUpdate; 
+			rotationSpeed = radiantPerUpdate; 
 			return this;
 		}
 		public Builder levelOfDetail(int val){ 
-			if(val<1)
-				throw new IllegalArgumentException("LoD cannot be smaller or equal 0");
-			levelOfDetail= val; 
+			if(val < 1) {
+				throw new IllegalArgumentException("LoD cannot be smaller or equal 0");	
+			}
+			levelOfDetail = val; 
 			return this;
 		}
 		
@@ -521,32 +536,35 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		}
 		
 		public Builder setStandardWeaponry(boolean val) {
-			setStandardWeaponry=val;
+			setStandardWeaponry = val;
 			return this;
 		}
 		
 		public Builder shallBeCarrier(boolean val) {
-			shallBeCarrier=val;
+			shallBeCarrier = val;
 			return this;
 		}
 		
 		public Builder drawingInformation(DrawingInformation val) {
-			if(val==null)
+			if(val == null) {
 				throw new IllegalArgumentException("DrawingInformation cannot be null");
+			}
 			dinfo = val;
 			return this;
 		}
 		
 		public Builder sensorSize(double val) {
-			if(val<0)
+			if(val < 0) {
 				throw new IllegalArgumentException("Sensorsize cannot be smaller than 0");
-			sensorsize=val;
+			}
+			sensorsize = val;
 			return this;
 		}
 
 		public Builder shape(Shape shape) {
-			if(shape==null)
-				throw new IllegalArgumentException("Shape cannot be null");
+			if(shape == null) {
+				throw new IllegalArgumentException("Shape cannot be null");	
+			}
 			this.shape = shape;
 			return this;
 		}
@@ -559,16 +577,16 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	
 	private Spaceshuttle(Builder builder) {
 		super(builder.name, builder.parent, new JavaFXDrawingInformation(builder.color), new HShape(builder.size*2,builder.size*3,builder.size), builder.orbitingDistance , builder.speed);
-		this.parent=builder.parent;
-		rotationSpeed=builder.rotationSpeed;
+		this.parent = builder.parent;
+		rotationSpeed = builder.rotationSpeed;
 		orbitingDistance = builder.orbitingDistance;
-		distance=builder.orbitingDistance;
+		distance = builder.orbitingDistance;
 		leavesSpaceTrash = builder.leavesSpaceTrash;
 		
-		if(builder.dinfo!=null) {
+		if(builder.dinfo != null) {
 			dInfo = builder.dinfo;		
 		}
-		if(builder.shape!=null) {
+		if(builder.shape != null) {
 			this.shape=builder.shape;
 		}
 		if(builder.isPlayer) {
@@ -578,16 +596,17 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		sensor = new SensorArray(this,(int)builder.sensorsize);
 		move(parent.getCenter());
 		
-		if(builder.setStandardWeaponry)
-			setStandardWeapons();
+		if(builder.setStandardWeaponry) {
+			setStandardWeapons();	
+		}
 		
-		this.size=builder.size;
+		this.size = builder.size;
 		
 		shape.setLevelOfDetail(builder.levelOfDetail);
 		shape.updateOrInitOutline();
-		if(getDrawingInformation() instanceof JavaFXDrawingInformation)
-			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect=true;
-		
+		if(getDrawingInformation() instanceof JavaFXDrawingInformation) {
+			((JavaFXDrawingInformation)getDrawingInformation()).hasColorEffect = true;
+		}
 		builder.droneFns
 			.stream()
 			.map(fun -> {
@@ -609,12 +628,18 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 			Optional<MountedWeapon> maybeSecond = weapons.stream().filter(u -> !(u instanceof DroneMount || u instanceof DroneRack)).findFirst();
 			secondaryWeapon = maybeSecond.orElse(null);
 		} else {
-			if(weapons.size()>0)
+			if(weapons.size()>0) {
 				primaryWeapon = weapons.get(0);
-			if(weapons.size()>1)
+			}
+			if(weapons.size()>1) {
 				secondaryWeapon = weapons.get(1);
+			}
 		}
 		
 		spawnDronesIfAnyAreGiven();
+		
+		//if(!ManagerRegistry.getDrawingManager().registeredItems.contains(this)) {
+		//	ManagerRegistry.getDrawingManager().registerItem(this);
+		//}
 	}
 }

@@ -24,11 +24,11 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 
 	private ActionManager actions;
 	private Map<Character,Action> keyBindings;
-	private boolean running=true;
+	private boolean running = true; // If this is set to false, no keyboard actions are recorded (or better: fired), but everything else is still running
 	
 	public KeyBoardManager() {
-		keyBindings=new HashMap<Character,Action> ();
-		actions= ManagerRegistry.getActionManager();
+		keyBindings = new HashMap<Character,Action> ();
+		actions = ManagerRegistry.getActionManager();
 	};
 	
 	@Override
@@ -52,32 +52,33 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 	}
 	
 	public void initKeyBindings(KeyConfig config) {
-		for( Entry<String,String> binding : config.getKeyBindings().entrySet())
-			if(actions.getActionByName(binding.getValue())!=null)
+		for( Entry<String,String> binding : config.getKeyBindings().entrySet()) {
+			if(actions.getActionByName(binding.getValue())!=null) {
 				keyBindings.put(binding.getKey().toCharArray()[0],actions.getActionByName(binding.getValue()));	
+			}
+		}
 	}
 	
 	public void keyTyped(KeyEvent evt) {
-		if(currentPressed==Character.UNASSIGNED) {
+		if (currentPressed == Character.UNASSIGNED) {
 			currentPressed = evt.getCharacter().toCharArray()[0];
-			if(keyBindings.get(currentPressed)!=null) {
+			if(keyBindings.get(currentPressed) != null) {
 				logger.debug("Player pressed " + currentPressed + " and do Action " + keyBindings.get(currentPressed).getName());
 				keyBindings.get(currentPressed).doAction();
-			}
-			else
+			} else {
 				logger.debug("Player pressed " + currentPressed + " which has no action Bound!");
-		}
-		else if (currentPressed==evt.getCharacter().toCharArray()[0]) {
+			}
+		} else if (currentPressed == evt.getCharacter().toCharArray()[0]) {
 			//Someone is keeping the same Character pressed
-		}
-		else
+		} else {
 			logger.trace("Player presses "  + currentPressed + "- needs to release first for new Input");
-		
+		}
 	}
 	
 	public void registerKeyBinding(Character key, Action action) {
-		if(keyBindings.get(key)!=null)
+		if(keyBindings.get(key) != null) {
 			logger.info("Overrwrite Keybinding for " + key + " with Action " + action.getName());
+		}
 		keyBindings.put(key,action);
 	}
 
@@ -86,8 +87,8 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 	}
 
 	public void reset() {
-		keyBindings=new HashMap<Character,Action> ();
-		actions= ManagerRegistry.getActionManager();
+		keyBindings = new HashMap<Character,Action> ();
+		actions = ManagerRegistry.getActionManager();
 	}
 
 	public Collection<Action> getRegisteredItems() {

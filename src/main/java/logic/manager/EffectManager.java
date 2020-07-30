@@ -27,9 +27,11 @@ public class EffectManager implements UpdatingManager<Effect>,DrawingObject {
 	}
 	
 	public void update() {
-		if(running)
-			for(Effect e : registeredItems)
+		if(running) {
+			for(Effect e : registeredItems) {
 				e.update();
+			}
+		}
 	}
 	
 	public void removeEffect(Effect e){

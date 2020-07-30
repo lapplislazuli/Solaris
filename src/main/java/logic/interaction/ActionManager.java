@@ -16,9 +16,10 @@ public class ActionManager implements Manager<Action>{
 	private Map<String,Action> registeredActions;
 	
 	public ActionManager(boolean defaultActions) {
-		registeredActions=new HashMap<String,Action> ();
-		if(defaultActions)
+		registeredActions = new HashMap<String,Action> ();
+		if(defaultActions) {
 			initStandardActions();
+		}
 	};
 	
 	private void initStandardActions() {
