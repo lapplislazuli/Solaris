@@ -24,7 +24,7 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		this.emitter = emitter;
 		rotation = direction;
 
-		ManagerRegistry.getUpdateManager().registerItem(this);
+		ManagerRegistry.getUpdateManager().scheduleRegistration(this);
 	}
 	
 	@Override
@@ -57,8 +57,9 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 			emitter.getTrabants().remove(this);
 		}
 		emitter = null;
-		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
+		ManagerRegistry.getUpdateManager().scheduleRemoval(this);
 	}
+	
 	@Override 
 	public void rotate() {}
 	

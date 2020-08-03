@@ -37,7 +37,7 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 		parent.trabants.remove(this);
 		parent=null;		
 
-		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
+		ManagerRegistry.getUpdateManager().scheduleRemoval(this);
 	}
 	@Override
 	public void destruct() {

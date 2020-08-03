@@ -10,29 +10,30 @@ import org.apache.logging.log4j.Logger;
 import config.interfaces.Config;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.DestructibleObject;
-import interfaces.logical.UpdatingManager;
 import interfaces.spacecraft.Spacecraft;
 
-public class CollisionManager implements UpdatingManager<CollidingObject>{
+public class CollisionManager extends BaseManager<CollidingObject>{
 	
-	private Set<CollidingObject> registeredItems;
 	private Set<DestructibleObject> registeredDestructibles;
 
 	private static Logger logger = LogManager.getLogger(CollisionManager.class);
 	
-	private boolean running = true; //If this variable is false, there will be no collisions - but everything will still be flying around and moving etc. 
-	
 	public CollisionManager() {
 		registeredItems = new HashSet<CollidingObject>();
 		registeredDestructibles = new HashSet<DestructibleObject>();
+
+		scheduledRemovals = new HashSet<CollidingObject>();
+		scheduledRegistrations = new HashSet<CollidingObject>();
+		
 		logger.info("Build CollisionManager");
 	}
 
 	public void update() {
 		if(running) {
-			refresh();
 			doCollisions();
 		}	
+		
+		refresh();
 	}
 	
 	public void doCollisions() {
@@ -75,13 +76,10 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 		registeredItems.removeAll(destroyed);
 	}
 	
-	public void empty() {
+	public void refresh() {
 		registeredItems.clear();
 		registeredDestructibles.clear();
-	}
-	
-	public void refresh() {
-		empty();
+		
 		for(CollidingObject o : ManagerRegistry.getUpdateManager().getAllActiveColliders()) {
 			// There are currently regression issues with dead spacecrafts colliding - do not add dead spacecrafts to colliders
 			if(o instanceof Spacecraft && ((Spacecraft) o).isDead()) {
@@ -90,14 +88,7 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 			registerItem(o);
 			o.updateHitbox();
 		}
-	}
-	
-	public void toggleUpdate() {
-		running =! running;
-		logger.info("CollisionManager set to running:" + running);
-	}
-	public boolean isRunning() {
-		return running;
+		super.refresh();
 	}
 	
 	public void init(Config c) {}
@@ -107,10 +98,6 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 		registeredDestructibles = new HashSet<DestructibleObject>();
 		running = true;
 		logger.debug("Reset CollisionManager");
-	}
-
-	public Collection<CollidingObject> getRegisteredItems() {
-		return registeredItems;
 	}
 	
 	public Collection<DestructibleObject> getRegisteredDestructibles() {
@@ -129,4 +116,5 @@ public class CollisionManager implements UpdatingManager<CollidingObject>{
 			}
 		}
 	}
+
 }

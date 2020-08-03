@@ -78,7 +78,7 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 		parent.getTrabants().remove(this);
 		parent = null;
 
-		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
+		ManagerRegistry.getUpdateManager().scheduleRemoval(this);
 	}
 	
 	public boolean isOrphan() {

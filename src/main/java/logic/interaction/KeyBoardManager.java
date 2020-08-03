@@ -107,4 +107,11 @@ public class KeyBoardManager implements UpdatingManager<Action> {
 		return running;
 	}
 	
+	public void scheduleRegistration(Action item) {
+		// Nothing to do at the moment?
+	}
+
+	public void scheduleRemoval(Action item) {
+		// Nothing to do at the moment?
+	}
 }

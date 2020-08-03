@@ -191,7 +191,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		parent = null;
 		target = null;
 		
-		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
+		ManagerRegistry.getUpdateManager().scheduleRemoval(this);
 	}
 
 	public double getOrbitingDistance() {return orbitingDistance;}
@@ -640,6 +640,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		
 		spawnDronesIfAnyAreGiven();
 
-		ManagerRegistry.getUpdateManager().registerItem(this);
+		ManagerRegistry.getUpdateManager().scheduleRegistration(this);
 	}
 }

@@ -20,13 +20,14 @@ public abstract class LocalizedEffect implements Effect{
 		center = p;
 		shape = s;
 		this.dInfo = dInfo;
-		ManagerRegistry.getEffectManager().registerItem(this);
+		ManagerRegistry.getEffectManager().scheduleRegistration(this);
+		ManagerRegistry.getDrawingManager().scheduleRegistration(this);
 	}
 	
 	public void remove() {
-		ManagerRegistry.getEffectManager().removeEffect(this);
-
-		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
+		ManagerRegistry.getEffectManager().scheduleRemoval(this);
+		ManagerRegistry.getUpdateManager().scheduleRemoval(this);
+		ManagerRegistry.getDrawingManager().scheduleRemoval(this);
 	}
 	
 	public void update() {}

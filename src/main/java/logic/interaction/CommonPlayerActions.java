@@ -32,7 +32,7 @@ public abstract class CommonPlayerActions {
 	}
 	
 	public static void registerSpaceObjectToPlayerRoute(Point clickedPosition) {
-		ManagerRegistry.getDrawingManager().registeredItems.
+		ManagerRegistry.getDrawingManager().getRegisteredItems().
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
 			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())
@@ -49,7 +49,7 @@ public abstract class CommonPlayerActions {
 	}
 	
 	public static void showInformationOnClick(Point clickedPosition) {
-		ManagerRegistry.getDrawingManager().registeredItems.
+		ManagerRegistry.getDrawingManager().getRegisteredItems().
 			stream()
 			.filter( drawable -> drawable instanceof SpaceObject)
 			.flatMap(space -> ((SpaceObject)space).getAllChildren().stream())

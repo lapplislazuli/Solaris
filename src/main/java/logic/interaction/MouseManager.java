@@ -103,4 +103,13 @@ public class MouseManager implements UpdatingManager<Action> {
 	public boolean isRunning() {
 		return running;
 	}
+
+
+	public void scheduleRegistration(Action item) {
+		// Nothing to do at the moment?
+	}
+
+	public void scheduleRemoval(Action item) {
+		// Nothing to do at the moment?
+	}
 }

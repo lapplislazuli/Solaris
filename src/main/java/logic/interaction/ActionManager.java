@@ -79,4 +79,14 @@ public class ActionManager implements Manager<Action>{
 	public Collection<Action> getRegisteredItems() {
 		return registeredActions.entrySet().stream().map(t->t.getValue()).collect(Collectors.toList());
 	}
+
+	@Override
+	public void scheduleRegistration(Action item) {
+		// The ActionManager does not need to schedule at the moment
+	}
+
+	@Override
+	public void scheduleRemoval(Action item) {
+		// The ActionManager does not need to schedule at the moment
+	}
 }
