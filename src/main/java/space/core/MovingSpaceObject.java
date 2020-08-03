@@ -80,6 +80,13 @@ public abstract class MovingSpaceObject extends SpaceObject implements MovingUpd
 		super.draw(dc);
 	}
 	
+    
+    @Override
+    public int drawingPriority() {
+    	// Default middle-time drawing. Background is 0-3, effects and missiles are 8+
+    	return 5;
+    }
+	
 	protected void updateDrawingInformation() {
 		DrawingInformation dInfo = getDrawingInformation() ;
 		if(dInfo  instanceof JavaFXDrawingInformation) {

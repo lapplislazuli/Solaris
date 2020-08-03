@@ -52,6 +52,12 @@ public abstract class LocalizedEffect implements Effect{
 	}
 	
 	@Override
+    public int drawingPriority() {
+    	// Pretty late drawing. 
+		// Background is 0-3, planets are 4-7, effects and missiles are 8+
+    	return 12;
+    }
+	@Override
 	public String toString() {
 		return name + "@" + center.toString();
 	}

@@ -58,6 +58,12 @@ public class DistantGalaxy extends SpaceObject{
     }
     
     @Override
+    public int drawingPriority() {
+    	// The Background should always be drawn first.
+    	return 0;
+    }
+    
+    @Override
     public void update() {
     	stars.removeIf(star -> star.dead);
     	fillStars();

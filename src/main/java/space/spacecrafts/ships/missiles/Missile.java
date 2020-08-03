@@ -38,7 +38,12 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		center.setY((int) (center.getY()+Math.sin(rotation)*speed));
 		distance += oldCenter.distanceTo(center);
 	}
-	
+    
+    @Override
+    public int drawingPriority() {
+    	// Missiles are drawn pretty late, so they do not hide below ships etc. 
+    	return 10;
+    }
 	@Override
 	protected void updateDrawingInformation() {}
 	

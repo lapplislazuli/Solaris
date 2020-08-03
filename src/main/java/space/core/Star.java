@@ -58,6 +58,12 @@ public class Star extends SpaceObject {
 			
 	}
 	
+	@Override
+    public int drawingPriority() {
+    	//Background is 0-3, effects and missiles are 8+
+    	return 3;
+    }
+	
 	public static class Builder {
 		private final String name;
 		private Color color = Color.ORANGE;

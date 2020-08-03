@@ -17,7 +17,7 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	 * The DrawingManager draws items on the canvas. 
 	 * on every update, it looks up the current drawable items from the update manager, and then draws them.
 	 * There is one important "bug": The background needs to be drawn first! Otherwise, it looks like items are vanishing. 
-	 * This is done with an drawing-priority. 
+	 * This is done with an drawing-priority. Items with the lowest priority are drawn first.
 	 */
 
 	public Set<DrawingObject> registeredItems;
@@ -33,9 +33,11 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	}
 	
 	private void drawAll() {
-		for(DrawingObject drawable : registeredItems) {
-			drawable.draw(context);	
-		}
+		registeredItems.stream()
+			.sorted((a,b) -> {
+				return Integer.compare(a.drawingPriority(), b.drawingPriority());
+			})
+			.forEach(d -> d.draw(context));
 	}
 	
 	public void initDrawingManager(DrawingContext dc) {

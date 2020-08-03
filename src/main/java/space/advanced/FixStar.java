@@ -44,6 +44,13 @@ public class FixStar extends Star implements TimerObject {
 		center.setY((int) (relativeY*gc.getCanvas().getHeight()));
 	}
 
+    
+    @Override
+    public int drawingPriority() {
+    	// The Background should always be drawn first.
+    	return 1;
+    }
+	
 	@Override
 	public void setTimer(int lifetime) {
 		timer = new Timer();
