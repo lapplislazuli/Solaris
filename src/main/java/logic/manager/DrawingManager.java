@@ -52,7 +52,6 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	}
 
 	public void init(Config c) {
-		this.config = c;
 		//Nothing?
 		//Normal Init is done with DrawingContext, which is not good for a Config
 	}
