@@ -8,6 +8,7 @@ import geom.TShape;
 import interfaces.logical.DestructibleObject;
 import interfaces.logical.MovingUpdatingObject;
 import javafx.scene.paint.Color;
+import logic.manager.ManagerRegistry;
 import space.effect.Explosion;
 
 public class Satellite extends MovingSpaceObject implements DestructibleObject{
@@ -35,6 +36,8 @@ public class Satellite extends MovingSpaceObject implements DestructibleObject{
 	public void remove() {
 		parent.trabants.remove(this);
 		parent=null;		
+
+		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
 	}
 	@Override
 	public void destruct() {

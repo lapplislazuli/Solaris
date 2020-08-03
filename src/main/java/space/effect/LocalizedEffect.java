@@ -25,6 +25,8 @@ public abstract class LocalizedEffect implements Effect{
 	
 	public void remove() {
 		ManagerRegistry.getEffectManager().removeEffect(this);
+
+		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
 	}
 	
 	public void update() {}

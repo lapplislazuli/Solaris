@@ -6,6 +6,7 @@ import geom.Rectangle;
 import interfaces.geom.Point;
 import interfaces.logical.DestructibleObject;
 import javafx.scene.paint.Color;
+import logic.manager.ManagerRegistry;
 import space.core.MovingSpaceObject;
 import space.core.SpaceObject;
 
@@ -76,6 +77,8 @@ public class Asteroid extends MovingSpaceObject implements DestructibleObject{
 	public void remove() {
 		parent.getTrabants().remove(this);
 		parent = null;
+
+		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
 	}
 	
 	public boolean isOrphan() {

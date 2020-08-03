@@ -6,6 +6,7 @@ import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.logical.CollidingObject;
 import interfaces.logical.RemovableObject;
+import logic.manager.ManagerRegistry;
 import space.core.MovingSpaceObject;
 import space.spacecrafts.ships.Spaceshuttle;
 
@@ -22,6 +23,8 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 		super(name, emitter, dInfo, area, 0,speed);
 		this.emitter = emitter;
 		rotation = direction;
+
+		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 	
 	@Override
@@ -54,6 +57,7 @@ public abstract class Missile extends MovingSpaceObject implements RemovableObje
 			emitter.getTrabants().remove(this);
 		}
 		emitter = null;
+		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
 	}
 	@Override 
 	public void rotate() {}

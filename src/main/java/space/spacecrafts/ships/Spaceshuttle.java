@@ -190,6 +190,8 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		parent.getTrabants().remove(this);
 		parent = null;
 		target = null;
+		
+		ManagerRegistry.getUpdateManager().scheduleForRemoval(this);
 	}
 
 	public double getOrbitingDistance() {return orbitingDistance;}
@@ -452,7 +454,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		return weapons;
 	}
 	
-	
 	public static class Builder {
 		private final String name;
 		private SpaceObject parent;
@@ -638,9 +639,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		}
 		
 		spawnDronesIfAnyAreGiven();
-		
-		//if(!ManagerRegistry.getDrawingManager().registeredItems.contains(this)) {
-		//	ManagerRegistry.getDrawingManager().registerItem(this);
-		//}
+
+		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 }

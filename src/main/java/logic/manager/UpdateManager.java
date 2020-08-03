@@ -22,7 +22,7 @@ import space.core.SpaceObject;
 
 public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject>{
 
-	private List<UpdatingObject> registeredItems;
+	private List<UpdatingObject> registeredItems, itemsToRemove;
 	private Timer timer;
 	private boolean running = true; //If this variable is false, the whole game is paused.
 	
@@ -30,6 +30,7 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	
 	public UpdateManager() {
 		registeredItems = new LinkedList<UpdatingObject>();
+		itemsToRemove = new LinkedList<UpdatingObject>();
 		logger.info("Build UpdateManager");
 	}
 	
@@ -49,6 +50,7 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 			for(UpdatingObject updateMe : registeredItems) {
 				updateMe.update();	
 			}
+			removeScheduledItems();
 		}
 	}
 	
@@ -111,5 +113,20 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 
 	public Collection<UpdatingObject> getRegisteredItems() {
 		return registeredItems;
+	}
+
+	public void scheduleForRemoval(UpdatingObject itemToRemove) {
+		// This method is a little helper to avoid "ConcurrentModificationExceptions"
+		// Some items want to remove themselves, and sometimes do so in their update. 
+		// An example of this behaviour is the Spaceshuttle:
+		// In its update, a spaceshuttle checks for destruction. If it is destroyed, it removes itself from the update manager.
+		// If the spaceshuttle would alter the registeredItems at runtime, this would throw an error. 
+		itemsToRemove.add(itemToRemove);
+	}
+	
+	private void removeScheduledItems() {
+		// See explanation in "scheduleForRemoval"
+		registeredItems.removeAll(itemsToRemove);
+		itemsToRemove = new LinkedList<UpdatingObject>();
 	}
 }
