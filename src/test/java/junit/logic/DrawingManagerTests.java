@@ -7,13 +7,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import junit.fakes.interfaces.FakeDrawingContext;
 import junit.fakes.interfaces.FakeDrawingObject;
 import logic.manager.DrawingManager;
+import logic.manager.ManagerRegistry;
 
 public class DrawingManagerTests implements SharedManagerTests {
+	@AfterEach
+	void resetManagers() {
+		ManagerRegistry.reset();
+	}
 	
 	@Test
 	public void testDrawItems_drawSingleItem_shouldBeDrawn() {
@@ -21,6 +27,7 @@ public class DrawingManagerTests implements SharedManagerTests {
 		FakeDrawingObject fake = new FakeDrawingObject();
 		
 		mnger.registerItem(fake);
+		ManagerRegistry.getUpdateManager().registerItem(fake);
 		
 		mnger.update();
 		
@@ -35,6 +42,7 @@ public class DrawingManagerTests implements SharedManagerTests {
 		mnger.initDrawingManager(fakeContext);
 		
 		mnger.registerItem(fake);
+		ManagerRegistry.getUpdateManager().registerItem(fake);
 		
 		mnger.update();
 		

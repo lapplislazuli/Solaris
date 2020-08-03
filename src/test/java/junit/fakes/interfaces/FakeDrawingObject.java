@@ -1,12 +1,14 @@
 package junit.fakes.interfaces;
 
 import interfaces.drawing.*;
+import interfaces.logical.UpdatingObject;
 
-public class FakeDrawingObject implements ComplexDrawingObject{
+public class FakeDrawingObject implements ComplexDrawingObject, UpdatingObject{
 
 	public boolean drawn;
 	public boolean shapeDrawn;
 	public boolean drawable;
+	public boolean updated;
 	
 	public FakeDrawingObject(){
 		drawn=false;
@@ -42,6 +44,11 @@ public class FakeDrawingObject implements ComplexDrawingObject{
 	@Override
 	public DrawingInformation getDrawingInformation() {
 		return null;
+	}
+
+	@Override
+	public void update() {
+		updated = true;
 	}
 
 }

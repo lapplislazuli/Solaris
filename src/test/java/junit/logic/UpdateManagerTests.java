@@ -250,17 +250,6 @@ class UpdateManagerTests implements SharedManagerTests{
 	}
 	
 	@Test
-	public void testAddSpaceObject_ObjectIsInDrawingmanager() {
-		UpdateManager source = new UpdateManager();
-		
-		SpaceObject stub = fakeStar(0,0);
-		
-		source.addSpaceObject(stub);
-		
-		assertTrue(ManagerRegistry.getDrawingManager().getRegisteredItems().contains(stub));
-	}
-	
-	@Test
 	public void testAddSpaceObject_TrabantsAreInCollisionManager() {
 		UpdateManager source = new UpdateManager();
 		
