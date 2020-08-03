@@ -58,26 +58,18 @@ public abstract class SpaceObject implements UpdatingObject, ClickableObject, Co
 	};
 	
 	public void draw(DrawingContext dc) {
-		if(dInfo == null) {
+		if (dInfo == null) {
 			throw new UnsupportedOperationException("Empty DrawingInformation");
 		}
 		dc.saveContext();
 		dInfo.applyDrawingInformation(dc);
 		drawShape(dc);
 		dc.resetContext();
-		drawTrabants(dc);
 	}
 	
 	public void drawShape(DrawingContext dc) {
 		shape.draw(dc);
 	};
-	
-	protected void drawTrabants(DrawingContext dc){
-		trabants.stream()
-			.filter(t-> t instanceof DrawingObject)
-			.map(t -> (DrawingObject) t)
-			.forEach(trabant->trabant.draw(dc));
-	}
 	
 	public double distanceTo(SpaceObject other) {
 		if(center == null || other == null || other.center == null) {

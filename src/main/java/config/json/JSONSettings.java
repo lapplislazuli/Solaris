@@ -8,6 +8,7 @@ public class JSONSettings implements Settings {
 	
 	private int screenWidth, screenHeight;
 	private int updateIntervall;
+	private int aimedFPS; //FPS = Frames per Second, drawingManager is running separate from gamelogic updates.
 	private boolean paused;
 	private boolean collision;
 	
@@ -17,6 +18,7 @@ public class JSONSettings implements Settings {
 		updateIntervall = configJSON.getInt("updateIntervall");
 		paused = configJSON.getBoolean("paused");
 		collision = configJSON.getBoolean("collision");
+		aimedFPS = configJSON.getInt("fps");
 	}
 
 	public JsonObject toJSON() {
@@ -25,6 +27,7 @@ public class JSONSettings implements Settings {
 		.add("screenHeight", screenHeight)
 		.add("paused", paused)
 		.add("updateIntervall", updateIntervall)
+		.add("fps", aimedFPS)
 		.add("collision", collision).build();
 	}
 
@@ -66,6 +69,16 @@ public class JSONSettings implements Settings {
 
 	public void setCollision(boolean collision) {
 		this.collision = collision;
+	}
+
+	@Override
+	public int getAimedFPS() {
+		return aimedFPS;
+	}
+
+	@Override
+	public void setAimedFPS(int aimedFPS) {
+		this.aimedFPS = aimedFPS;
 	}
 	
 }

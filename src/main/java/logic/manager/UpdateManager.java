@@ -85,6 +85,7 @@ public class UpdateManager implements TimerObject,UpdatingManager<UpdatingObject
 	@Override
 	public void setTimer(int updateIntervall) {
 		// The timer runs the update method of UpdateManager-Instance, which invokes all the other Managers
+		// The only exception is the DrawingManager, which has its own timer (to separate fps from update timing).
 		timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override

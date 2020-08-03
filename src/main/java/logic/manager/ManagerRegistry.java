@@ -47,7 +47,7 @@ public class ManagerRegistry {
 		uptmng.init(conf);
 		
 		uptmng.registerItem(efxmng);
-		uptmng.registerItem(drwmng);
+		//uptmng.registerItem(drwmng);
 		uptmng.registerItem(colmng);
 		
 		colmng.init(conf);
@@ -55,6 +55,7 @@ public class ManagerRegistry {
 		
 		moumng.init(conf);
 		keymng.init(conf);
+		drwmng.init(conf);
 		//drwmng needs drawingcontext?
 		
 		logger.info("ManagerRegistry initialized with config");

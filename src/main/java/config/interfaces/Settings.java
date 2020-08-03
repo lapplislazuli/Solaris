@@ -21,5 +21,9 @@ public interface Settings {
 	boolean isCollision();
 
 	void setCollision(boolean collision);
+	
+	int getAimedFPS();
+	
+	void setAimedFPS(int aimedFPS);
 
 }

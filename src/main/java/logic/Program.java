@@ -43,8 +43,6 @@ public class Program extends Application{
 		var start = new StartView(config,primaryStage);
 	}
 	
-
-	
 	// To Call the correct shutdown which needs to be static
 	public static void invokeStop() {
 		if(INSTANCE != null) {

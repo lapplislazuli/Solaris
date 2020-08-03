@@ -13,12 +13,19 @@ import interfaces.drawing.DrawingObject;
 import interfaces.logical.UpdatingManager;
 
 public class DrawingManager implements UpdatingManager<DrawingObject> {
+	/*
+	 * The DrawingManager draws items on the canvas. 
+	 * on every update, it looks up the current drawable items from the update manager, and then draws them.
+	 * There is one important "bug": The background needs to be drawn first! Otherwise, it looks like items are vanishing. 
+	 * This is done with an drawing-priority. 
+	 */
 
 	public Set<DrawingObject> registeredItems;
 	private DrawingContext context;
 	private boolean running = true; //If this is set to false, the items are not drawn but are still running and colliding. 
 
 	private static Logger logger = LogManager.getLogger(DrawingManager.class);
+	
 	
 	public DrawingManager() {
 		registeredItems = new HashSet<DrawingObject>();
@@ -45,10 +52,11 @@ public class DrawingManager implements UpdatingManager<DrawingObject> {
 	}
 
 	public void init(Config c) {
+		this.config = c;
 		//Nothing?
 		//Normal Init is done with DrawingContext, which is not good for a Config
 	}
-
+	
 	@Override
 	public void reset() {
 		running = true;
