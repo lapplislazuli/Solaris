@@ -1,5 +1,6 @@
 package space.spacecrafts.navigators;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class BaseNavigator implements Navigator{
 	protected double MAX_RESPAWNTIME = 3000.0; //With a common update cycle of 25ms, this will take 120 turns
 	protected double currentRespawnTime = 3000.0;
 	
+	@Deprecated
 	public BaseNavigator(String name, Spacecraft ship, boolean respawn) {
 		if(name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("Name cannot be null or empty");
@@ -47,7 +49,8 @@ public class BaseNavigator implements Navigator{
 		
 		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
-	
+
+	@Deprecated
 	public BaseNavigator(String name, Spacecraft ship, boolean respawn,double respawntimer) {
 		if(name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("Name cannot be null or empty");
@@ -66,6 +69,8 @@ public class BaseNavigator implements Navigator{
 		ManagerRegistry.getUpdateManager().registerItem(this);
 	}
 	
+
+
 	public void update() {
 		if(getShuttle().isDead() && respawn) {
 			/*
@@ -175,5 +180,92 @@ public class BaseNavigator implements Navigator{
 
 	public boolean isArmed() {
 		return ship.isArmed();
+	}
+	
+	public static class Builder {
+		
+		private final Spacecraft shuttle;
+		private final String name;
+		private boolean doesRespawn = false;
+		private boolean doesAutoAttack = false;
+		private boolean isPlayer = false;
+		private List<SpaceObject> route = new ArrayList<SpaceObject>();
+		private double respawntime = 3000.0;
+		
+		public Builder (String name, Spacecraft shuttle) {
+			if(name == null || name.isEmpty() || name.isBlank()) {
+				throw new IllegalArgumentException("Name cannot be null or empty");
+			}
+			if(shuttle == null) {
+				throw new IllegalArgumentException("Ship cannot be null");
+			}
+			if(shuttle.getParent() == null) {
+				throw new IllegalArgumentException("Ship apparently has no parent! Failed to build Route.");
+			}
+			this.shuttle = shuttle;
+			this.name = name;
+			
+			route.add(shuttle.getParent());
+		}
+		
+		public Builder doesRespawn(boolean val) {
+			this.doesRespawn = val;
+			return this;
+		}
+		
+		public Builder doesAutoAttack(boolean val) {
+			this.doesAutoAttack = val;
+			return this;
+		}
+		
+		public Builder isPlayer(boolean val) {
+			this.isPlayer = val;
+			return this;
+		}
+		
+		public Builder respawntime (double val) {
+			if(val <= 0) {
+				throw new IllegalArgumentException("RespawnTime cannot be 0 or smaller");
+			}
+			this.respawntime = val;
+			return this;
+		}
+		
+		public Builder nextWayPoint(SpaceObject val) {
+			if(val == null) {
+				throw new IllegalArgumentException("Spaceobject was null - cannot add null to the Navigators Route");
+			}
+			//Shortcut to not add the same item twice to the same Route at the tsame position
+			if(route.contains(val)) {
+				int currentMax = route.size();
+				if(route.indexOf(val) == currentMax-1) {
+					return this;
+				}
+			}
+			
+			route.add(val);
+			return this;
+		}
+		
+		public BaseNavigator build() {
+			return new BaseNavigator(this);
+		}
+	}
+	
+	public BaseNavigator(Builder builder) {
+		this.route = builder.route;
+		this.ship = builder.shuttle;
+		this.name = builder.name;
+		this.respawn = builder.doesRespawn;
+		this.doesAutoAttack = builder.doesAutoAttack;
+		this.MAX_RESPAWNTIME = builder.respawntime;
+		
+		logger.info("Initiated " + name + " with Shuttle " + ship.toString());
+		
+		ManagerRegistry.getUpdateManager().registerItem(this);
+		
+		if(builder.isPlayer) {
+			ManagerRegistry.getPlayerManager().registerPlayerNavigator(this);
+		}
 	}
 }

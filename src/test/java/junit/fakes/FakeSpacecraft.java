@@ -20,6 +20,7 @@ public class FakeSpacecraft implements Spacecraft{
 	public boolean speedSet=false;
 	public Optional<SpaceObject> nearestTarget = Optional.empty();
 	public String name;
+	public SpaceObject parent,target;
 	
 	public Spacecraft rebuildAt (String name, SpaceObject at) {
 		rebuild=true;
@@ -43,7 +44,6 @@ public class FakeSpacecraft implements Spacecraft{
 
 	public SpacecraftState state = SpacecraftState.ORBITING;
 	
-	public SpaceObject parent,target;
 	
 	public Point moveFrom,moveTo,fakeCenter;
 	
@@ -83,7 +83,7 @@ public class FakeSpacecraft implements Spacecraft{
 	}
 
 	public void destruct() {
-		dead=true;
+		dead = true;
 	}
 
 	public boolean collides(CollidingObject other) {
@@ -93,7 +93,7 @@ public class FakeSpacecraft implements Spacecraft{
 	public void updateHitbox() {}
 
 	public void remove() {
-		removed=true;
+		removed = true;
 	}
 
 	public boolean isOrphan() {
@@ -101,7 +101,7 @@ public class FakeSpacecraft implements Spacecraft{
 	}
 
 	public void move(Point point) {
-		moved=true;
+		moved = true;
 		moveTo = point;
 	}
 
@@ -110,8 +110,8 @@ public class FakeSpacecraft implements Spacecraft{
 	}
 
 	public void setSpeed(double val) {
-		speedSet=true;
-		speed=val;
+		speedSet = true;
+		speed = val;
 	}
 
 	public Point getCenter() {
@@ -121,7 +121,7 @@ public class FakeSpacecraft implements Spacecraft{
 	public void setSensor(Sensor val) {}
 
 	public void update() {
-		updated=true;
+		updated = true;
 	}
 
 	public String getName() {

@@ -16,9 +16,12 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import drawing.EmptyJFXDrawingInformation;
+import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
+import junit.fakes.FakeMovingSpaceObject;
 import junit.fakes.FakeSpacecraft;
 import junit.testhelpers.FakeSpaceObjectFactory;
 import logic.manager.ManagerRegistry;
@@ -551,5 +554,133 @@ class BaseNavigatorTests {
 		testObject.toggleAutoAttack();
 		
 		assertTrue(testObject.doesAutoAttack());
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_EverythingAllright_shouldBeBuild() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(2,2), 1);
+		
+		SpaceObject o1 = new Star("Test1",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		SpaceObject o2 = new Star("Test2",new EmptyJFXDrawingInformation(), new AbsolutePoint(15,15), 1);
+		
+		
+		BaseNavigator nav  = new BaseNavigator.Builder("Test", fake)
+				.doesAutoAttack(true)
+				.doesRespawn(true)
+				.respawntime(250)
+				.nextWayPoint(o1)
+				.nextWayPoint(o2)
+				.build();
+		
+		assertTrue(ManagerRegistry.getUpdateManager().getRegisteredItems().contains(nav));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("Integration")
+	@Tag("SideEffect")
+	@Test
+	void testBuilder_isPlayerSetToTrue_shouldBeRegisteredAsPlayer() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		
+		BaseNavigator nav  = new BaseNavigator.Builder("Test", fake)
+				.isPlayer(true)
+				.build();
+		
+		assertEquals(nav,ManagerRegistry.getPlayerManager().getPlayerNavigator());
+	}
+
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_nullName_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		
+		assertThrows(IllegalArgumentException.class, () -> new BaseNavigator.Builder(null, fake));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_fakeHasNoParent_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		
+		assertThrows(IllegalArgumentException.class, () -> new BaseNavigator.Builder("Test", fake));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_emptyName_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		
+		assertThrows(IllegalArgumentException.class, () -> new BaseNavigator.Builder("", fake));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_NameIsOnlySpaces_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		
+		assertThrows(IllegalArgumentException.class, () -> new BaseNavigator.Builder("    ", fake));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_nullShip_shouldThrowIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> new BaseNavigator.Builder("Test", null));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_nullWayPoint_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		
+		var testObject = new BaseNavigator.Builder("Test", fake);
+		
+		assertThrows(IllegalArgumentException.class, () -> testObject.nextWayPoint(null));
+		
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_zeroRespawnTime_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		var testObject = new BaseNavigator.Builder("Test", fake);
+		
+		assertThrows(IllegalArgumentException.class, () -> testObject.respawntime(0));
+	}
+	
+	@Tag("Shuttle")
+	@Tag("fast")
+	@Tag("UnitTest")
+	@Test
+	void testBuilder_negativeRespawnTime_shouldThrowIllegalArgumentException() {
+		FakeSpacecraft fake = new FakeSpacecraft();
+		fake.parent = new Star("FakeParent",new EmptyJFXDrawingInformation(), new AbsolutePoint(0,0), 1);
+		var testObject = new BaseNavigator.Builder("Test", fake);
+		
+		assertThrows(IllegalArgumentException.class, () -> testObject.respawntime(-50.0));
 	}
 }

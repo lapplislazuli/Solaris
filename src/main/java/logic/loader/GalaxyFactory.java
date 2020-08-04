@@ -73,11 +73,13 @@ public final class GalaxyFactory {
 									.setStandardWeaponry(true)
 									.build();
 			
-			//Navigator playerNav = BaseNavigator.PlayerNavigator("Nasa",playerShuttle);
-			Navigator playerNav = new BaseNavigator("Nasa",playerShuttle,true,150);
-			playerNav.getRoute().add(sun);
-			
-			ManagerRegistry.getPlayerManager().registerPlayerNavigator(playerNav);
+			Navigator playerNav = new BaseNavigator.Builder("Nase",playerShuttle)
+					.doesAutoAttack(false)
+					.doesRespawn(true)
+					.respawntime(300)
+					.isPlayer(true)
+					.nextWayPoint(sun)
+					.build();
 			
 			Satellite astra = (new Satellite.Builder("Astra", earth))
 					.size(2,2)
@@ -121,10 +123,13 @@ public final class GalaxyFactory {
 										.spawnSpaceTrashOnDestruct(true)
 										.color(Color.DARKKHAKI)
 										.build();
-			BaseNavigator aliens = new BaseNavigator("Alien Invader",martians,true);
-			aliens.getRoute().add(saturn);
-			aliens.getRoute().add(sun);
-			aliens.setAutoAttack(true);
+			BaseNavigator aliens = new BaseNavigator.Builder("Alien Invader", martians)
+					.doesRespawn(true)
+					.doesAutoAttack(true)
+					.respawntime(1800)
+					.nextWayPoint(saturn)
+					.nextWayPoint(sun)
+					.build();
 			
 			Spaceshuttle chineseShip = new Spaceshuttle.Builder("Chinese", sun)
 											.size(2)
@@ -132,8 +137,12 @@ public final class GalaxyFactory {
 											.levelOfDetail(2)
 											.speed(Math.PI/250)
 											.build();
-			BaseNavigator chinNav = new BaseNavigator("Xin Ping", chineseShip,true);
-			chinNav.getRoute().add(mars);
+			BaseNavigator chinNav = new BaseNavigator.Builder("Xin Ping", chineseShip)
+					.doesRespawn(true)
+					.nextWayPoint(mars)
+					.doesAutoAttack(false)
+					.build();
+			
 			
 			Spaceshuttle mothership = new Spaceshuttle.Builder("Mothership",sun)
 					.size(6)
@@ -144,9 +153,11 @@ public final class GalaxyFactory {
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.build();
-			BaseNavigator carrierNav = new BaseNavigator("Overlord",mothership,false);
-			carrierNav.getRoute().add(earth);
-			carrierNav.setAutoAttack(true);
+			BaseNavigator carrierNav = new BaseNavigator.Builder("Overlord",mothership)
+					.doesRespawn(false)
+					.nextWayPoint(earth)
+					.doesAutoAttack(true)
+					.build();
 			
 			updateManager.addSpaceObject(milkyway);
 			updateManager.addSpaceObject(sun);
