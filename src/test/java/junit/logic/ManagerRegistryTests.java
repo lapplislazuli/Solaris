@@ -78,20 +78,6 @@ public class ManagerRegistryTests {
 	}
 	
 	@Test
-	public void testInit_EfxManager_shouldBeInDrawingManager() {
-		EffectManager toCheck = new EffectManager();
-		DrawingManager toMock = new DrawingManager();
-		ManagerRegistry.setEffectManager(toCheck);
-		ManagerRegistry.setDrawingManager(toMock);
-		
-		Config fakeConfig = FakeConfigFactory.standardConfig();
-		
-		ManagerRegistry.getInstance().init(fakeConfig);
-		
-		assertTrue(toMock.getRegisteredItems().contains(toCheck));
-	}
-	
-	@Test
 	public void testReset_RegisterManagersAndReset_ShouldAllBeGone() {
 		UpdateManager upt = new UpdateManager();
 		CollisionManager col = new CollisionManager();

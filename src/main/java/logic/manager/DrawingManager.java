@@ -17,7 +17,6 @@ public class DrawingManager extends BaseManager<DrawingObject> {
 	 */
 
 	private DrawingContext context;
-	private boolean running = true; //If this is set to false, the items are not drawn but are still running and colliding. 
 
 	private static Logger logger = LogManager.getLogger(DrawingManager.class);
 	

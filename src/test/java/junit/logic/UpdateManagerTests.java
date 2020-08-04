@@ -96,8 +96,8 @@ class UpdateManagerTests implements SharedManagerTests{
 		FakeUpdatingObject fakeParent = new FakeUpdatingObject();
 		FakeUpdatingObject fakeKid = new FakeUpdatingObject();
 		
-		fakeKid.canBeUpdatet=false;
-		fakeParent.kid=fakeKid;
+		fakeKid.canBeUpdatet = false;
+		fakeParent.kid = fakeKid;
 
 		mnger.registerItem(fakeParent);
 		mnger.update();

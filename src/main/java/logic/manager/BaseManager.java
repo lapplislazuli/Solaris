@@ -5,7 +5,7 @@ import interfaces.logical.UpdatingManager;
 
 public abstract class BaseManager<T> implements UpdatingManager<T> {
 
-	protected boolean running;
+	protected boolean running = true;
 	protected Collection<T> registeredItems, scheduledRemovals, scheduledRegistrations;
 
 

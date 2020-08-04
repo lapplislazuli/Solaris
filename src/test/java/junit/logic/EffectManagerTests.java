@@ -31,7 +31,8 @@ public class EffectManagerTests implements SharedManagerTests {
 		FakeEffect fake = new FakeEffect();
 		
 		mnger.registerItem(fake);
-		mnger.removeEffect(fake);
+		mnger.scheduleRemoval(fake);
+		mnger.update();
 		
 		assertFalse(mnger.getRegisteredItems().contains(fake));
 	}

@@ -28,6 +28,7 @@ class ExplosionTests implements SharedEffectTests {
 	@Test
 	public void testConstructor_shouldBeInEffectManager() {
 		Explosion testObject = new Explosion( "Test", new AbsolutePoint(0,0),10, 100,new EmptyJFXDrawingInformation());
+		ManagerRegistry.getEffectManager().update();
 		
 		assertTrue(ManagerRegistry.getEffectManager().getRegisteredItems().contains(testObject));		
 	}
@@ -40,10 +41,10 @@ class ExplosionTests implements SharedEffectTests {
 	}
 	
 	@Test
-	public void testConstructor_isNotOrphaned() {
+	public void testConstructor_usingPoint_isOrphaned() {
 		Explosion testObject = new Explosion( "Test", new AbsolutePoint(0,0),10, 100,new EmptyJFXDrawingInformation());
 		
-		assertFalse(testObject.isOrphan());
+		assertTrue(testObject.isOrphan());
 	}
 	
 	@Test
@@ -116,6 +117,11 @@ class ExplosionTests implements SharedEffectTests {
 		Explosion testObject = new Explosion( "Test", new AbsolutePoint(0,0),0, 100,new EmptyJFXDrawingInformation());
 		
 		assertEquals("Test@[0|0|0]",testObject.toString());
+	}
+
+	@Override
+	public void testConstructor_isNotOrphaned() {
+		return;
 	}
 
 }

@@ -144,7 +144,9 @@ public class DrawingManagerTests implements SharedManagerTests {
 	public void testState_UpdateWhenPaused_shouldNotDoAnything() {
 		DrawingManager mnger = fakeDrawingManager();
 		FakeDrawingObject fake = new FakeDrawingObject();
-		mnger.registerItem(fake);
+		// This adds the item but does not draw
+		mnger.scheduleRegistration(fake);
+		mnger.update();
 		
 		mnger.toggleUpdate();
 		mnger.update();

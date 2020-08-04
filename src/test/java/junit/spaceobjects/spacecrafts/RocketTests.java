@@ -154,6 +154,8 @@ class RocketTests {
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		testRocket.destruct();
+
+		ManagerRegistry.getEffectManager().update();
 		
 		assertEquals(1,ManagerRegistry.getEffectManager().getRegisteredItems().size());
 	}
@@ -178,6 +180,8 @@ class RocketTests {
 	
 		testRocket.destruct();
 		testRocket.destruct();
+		
+		ManagerRegistry.getEffectManager().update();
 		
 		assertEquals(1,ManagerRegistry.getEffectManager().getRegisteredItems().size());	
 	}

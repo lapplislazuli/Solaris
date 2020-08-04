@@ -102,7 +102,7 @@ public class CollisionManagerTests implements SharedManagerTests {
 		mnger.registerItem(fakeCollider);
 		mnger.registerItem(fakeDestructible);
 		
-		mnger.empty();
+		mnger.reset();
 		
 		assertTrue(mnger.getRegisteredDestructibles().isEmpty());
 		assertTrue(mnger.getRegisteredItems().isEmpty());
