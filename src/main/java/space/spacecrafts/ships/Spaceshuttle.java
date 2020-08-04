@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import drawing.JavaFXDrawingInformation;
 import geom.HShape;
+import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
@@ -42,7 +43,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	protected SpaceObject target;
 	protected SpaceObject parent;
 	protected double orbitingDistance;
-	protected boolean isPlayer;
+	protected boolean isBuildAsPlayer;
 	protected int size;
 	protected boolean leavesSpaceTrash = true;
 	
@@ -52,6 +53,8 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	protected MountedWeapon primaryWeapon,secondaryWeapon;
 	protected List<MountedWeapon> weapons = new ArrayList<>();
 	
+	// TODO REMOVE THIS AFTER DEBUG
+	private static boolean playerSpaceShuttleRebuild = false;
 
 	@Deprecated
 	public Spaceshuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
@@ -140,7 +143,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	public void destruct() {
 		logger.info("Spaceship: " + toString() + " was destroyed.");
 		if(!isDead()) {
-			if(isPlayer()) {
+			if(isActivePlayer()) {
 				ManagerRegistry.getPlayerManager().increasePlayerDeaths();
 				logger.info("PlayerDeath #"+ManagerRegistry.getPlayerManager().getPlayerDeaths());
 			}
@@ -338,6 +341,16 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	@Override
+	public void draw(DrawingContext dc) {
+		// TODO: Remove this after debugging!
+		if(playerSpaceShuttleRebuild) {
+			var med = ManagerRegistry.getInstance().getDrawingManager().getRegisteredItems().contains(this);
+			var inspector =ManagerRegistry.getInstance();
+		}
+		super.draw(dc);
+	}
+	
+	@Override
 	public Spaceshuttle rebuildAt(String name, SpaceObject at) {
 		int minLevelOfDetail = Math.max(1,this.shape.getLevelOfDetail());
 		
@@ -351,7 +364,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 				.orbitingDistance((int)this.orbitingDistance)
 				.sensorSize(this.sensor.getSize())
 				.shape(this.shape.copy());
-		if(isPlayer()) {
+		if(isActivePlayer() || isBuildAsPlayer) {
 			copyBuilder = copyBuilder.isPlayer();
 		}
 		
@@ -365,11 +378,16 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		copy.shape.setCenter(copy.getCenter());
 		copy.updateHitbox();
 		
+		if(isActivePlayer() || isBuildAsPlayer) {
+			playerSpaceShuttleRebuild=true;
+			logger.debug("Break1");
+		}
+		
 		return copy;
 	}
 	
 	@Override
-	public boolean isPlayer() {
+	public boolean isActivePlayer() {
 		// This way round, otherwise if PlayerManager is empty/new it dies 
 		return equals(ManagerRegistry.getPlayerManager().getPlayerShuttle());
 	}
@@ -593,6 +611,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		}
 		if(builder.isPlayer) {
 			ManagerRegistry.getPlayerManager().registerPlayerShuttle(this);
+			this.isBuildAsPlayer = builder.isPlayer;
 		}
 		
 		sensor = new SensorArray(this,(int)builder.sensorsize);

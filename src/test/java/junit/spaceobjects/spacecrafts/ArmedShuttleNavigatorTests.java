@@ -38,7 +38,7 @@ class ArmedShuttleNavigatorTests {
 		
 		ArmedShuttleNavigator testObject = new ArmedShuttleNavigator("Test",stub,true);
 		
-		assertFalse(testObject.isPlayer());
+		assertFalse(testObject.isActivePlayerNavigator());
 	}
 
 	@Test
@@ -49,25 +49,7 @@ class ArmedShuttleNavigatorTests {
 		
 		assertFalse(testObject.doesAutoAttack());
 	}
-	
-	@Test
-	void testPlayerConstructor_isPlayer() {
-		Spacecraft stub = new FakeSpacecraft();
-		
-		ArmedShuttleNavigator testObject = ArmedShuttleNavigator.PlayerNavigator("Test",stub);
 
-		assertTrue(testObject.isPlayer());
-	}
-	
-	@Test
-	void testPlayerConstructor_doesNotAutoAttack() {
-		Spacecraft stub = new FakeSpacecraft();
-		
-		ArmedShuttleNavigator testObject = ArmedShuttleNavigator.PlayerNavigator("Test",stub);
-
-		assertFalse(testObject.doesAutoAttack());
-	}
-	
 	@Test
 	void testRegisterManuallyInPlayerManager_isPlayer() {
 		Spacecraft stub = new FakeSpacecraft();
@@ -77,7 +59,7 @@ class ArmedShuttleNavigatorTests {
 		
 		ManagerRegistry.getPlayerManager().registerPlayerNavigator(testObject);
 		
-		assertTrue(testObject.isPlayer());
+		assertTrue(testObject.isActivePlayerNavigator());
 	}
 	
 	@Test

@@ -1,6 +1,7 @@
 package junit.logic;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
@@ -63,4 +64,17 @@ public class GalaxyFactoryTests {
 		
 		assertFalse(ManagerRegistry.getCollisionManager().getRegisteredItems().isEmpty());
 	}
+	
+	@Test
+	@Tag("Integration")
+	@Tag("SideEffect")
+	public void runInitialisation_PlayerManagerHasShuttleAndNavigator() {
+		ManagerRegistry.getInstance();
+		
+		GalaxyFactory.defaultGalaxy();
+		
+		assertNotEquals(null,ManagerRegistry.getPlayerManager().getPlayerNavigator());
+		assertNotEquals(null,ManagerRegistry.getPlayerManager().getPlayerShuttle());
+	}
+	
 }

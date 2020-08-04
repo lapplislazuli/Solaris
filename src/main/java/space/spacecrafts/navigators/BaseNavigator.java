@@ -76,7 +76,7 @@ public class BaseNavigator implements Navigator{
 			} else {
 				// Timer is done - rebuild the shuttle and set rebuilding to false. 
 				if(currentRespawnTime <= 0) {
-					if(getShuttle().isPlayer()) {
+					if(getShuttle().isActivePlayer()) {
 						logger.debug("Navigator respawning PlayerShuttle");
 					}
 					rebuildShuttle();

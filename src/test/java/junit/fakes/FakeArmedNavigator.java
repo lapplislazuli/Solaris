@@ -25,7 +25,7 @@ public class FakeArmedNavigator extends FakeNavigator implements AggressiveNavig
 			autoattacked=true;
 	}
 
-	public boolean isPlayer() {
+	public boolean isActivePlayerNavigator() {
 		return isPlayer;
 	}
 

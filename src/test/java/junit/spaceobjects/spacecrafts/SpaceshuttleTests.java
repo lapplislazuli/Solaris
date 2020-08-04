@@ -63,7 +63,7 @@ public class SpaceshuttleTests implements RemovableTests {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle testObject= new Spaceshuttle("shuttleOne",root,0,50,Math.PI);
 		
-		assertFalse(testObject.isPlayer());
+		assertFalse(testObject.isActivePlayer());
 	}
 
 	@Tag("Basic")
@@ -1669,7 +1669,7 @@ public class SpaceshuttleTests implements RemovableTests {
 		SpaceObject root = fakeStar(0,0);
 		Spaceshuttle testObject= new Spaceshuttle("Army",root,0,50,0);
 		
-		assertFalse(testObject.isPlayer());
+		assertFalse(testObject.isActivePlayer());
 	}
 
 	@Tag("Complex")

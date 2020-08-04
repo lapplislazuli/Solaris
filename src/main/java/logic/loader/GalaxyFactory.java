@@ -74,8 +74,11 @@ public final class GalaxyFactory {
 									.setStandardWeaponry(true)
 									.build();
 			
-			AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
+			//AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
+			AggressiveNavigator playerNav = new ArmedShuttleNavigator("Nasa",playerShuttle,true);
 			playerNav.getRoute().add(sun);
+			
+			ManagerRegistry.getPlayerManager().registerPlayerNavigator(playerNav);
 			
 			Satellite astra = (new Satellite.Builder("Astra", earth))
 					.size(2,2)

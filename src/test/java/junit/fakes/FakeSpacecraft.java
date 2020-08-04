@@ -105,7 +105,7 @@ public class FakeSpacecraft implements Spacecraft{
 		moveTo = point;
 	}
 
-	public boolean isPlayer() {
+	public boolean isActivePlayer() {
 		return isPlayer;
 	}
 
