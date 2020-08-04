@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import interfaces.spacecraft.Spacecraft;
-import junit.fakes.FakeArmedNavigator;
+import junit.fakes.FakeNavigator;
 import junit.fakes.FakeSpacecraft;
 import logic.manager.ManagerRegistry;
 import logic.manager.PlayerManager;
@@ -66,7 +66,7 @@ class PlayerManagerTests {
 	void testRegisterPlayerNavigator_shouldBeTheSetValue() {
 		PlayerManager mng = new PlayerManager();
 		
-		FakeArmedNavigator stub = new FakeArmedNavigator();
+		FakeNavigator stub = new FakeNavigator();
 		
 		mng.registerPlayerNavigator(stub);
 		
@@ -77,8 +77,8 @@ class PlayerManagerTests {
 	void testRegisterPlayerNavigator_doubleRegister_shouldBeOverwritten() {
 		PlayerManager mng = new PlayerManager();
 		
-		FakeArmedNavigator stub = new FakeArmedNavigator();
-		FakeArmedNavigator replacement = new FakeArmedNavigator();
+		FakeNavigator stub = new FakeNavigator();
+		FakeNavigator replacement = new FakeNavigator();
 		
 		mng.registerPlayerNavigator(stub);
 		mng.registerPlayerNavigator(replacement);
@@ -101,7 +101,7 @@ class PlayerManagerTests {
 	void testReset_afterSetSomeValues_shouldBeStandard() {
 		PlayerManager mng = new PlayerManager();
 		
-		FakeArmedNavigator navStub = new FakeArmedNavigator();
+		FakeNavigator navStub = new FakeNavigator();
 		mng.registerPlayerNavigator(navStub);
 		FakeSpacecraft shuttleStub = new FakeSpacecraft();
 		mng.registerPlayerShuttle(shuttleStub);

@@ -2,7 +2,7 @@ package logic.loader;
 
 import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
-import interfaces.spacecraft.AggressiveNavigator;
+import interfaces.spacecraft.Navigator;
 import javafx.scene.paint.Color;
 import logic.manager.ManagerRegistry;
 import logic.manager.UpdateManager;
@@ -12,7 +12,6 @@ import space.core.Planet;
 import space.core.Satellite;
 import space.core.Star;
 import space.spacecraft.ships.devices.WeaponFactory;
-import space.spacecrafts.navigators.ArmedShuttleNavigator;
 import space.spacecrafts.navigators.BaseNavigator;
 import space.spacecrafts.ships.Spaceshuttle;
 
@@ -74,8 +73,8 @@ public final class GalaxyFactory {
 									.setStandardWeaponry(true)
 									.build();
 			
-			//AggressiveNavigator playerNav = ArmedShuttleNavigator.PlayerNavigator("Nasa",playerShuttle);
-			AggressiveNavigator playerNav = new ArmedShuttleNavigator("Nasa",playerShuttle,true);
+			//Navigator playerNav = BaseNavigator.PlayerNavigator("Nasa",playerShuttle);
+			Navigator playerNav = new BaseNavigator("Nasa",playerShuttle,true,150);
 			playerNav.getRoute().add(sun);
 			
 			ManagerRegistry.getPlayerManager().registerPlayerNavigator(playerNav);
@@ -122,7 +121,7 @@ public final class GalaxyFactory {
 										.spawnSpaceTrashOnDestruct(true)
 										.color(Color.DARKKHAKI)
 										.build();
-			ArmedShuttleNavigator aliens = new ArmedShuttleNavigator("Alien Invader",martians,true);
+			BaseNavigator aliens = new BaseNavigator("Alien Invader",martians,true);
 			aliens.getRoute().add(saturn);
 			aliens.getRoute().add(sun);
 			aliens.setAutoAttack(true);
@@ -145,7 +144,7 @@ public final class GalaxyFactory {
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.addMountedWeapon(WeaponFactory::standardLaserDroneMount)
 					.build();
-			ArmedShuttleNavigator carrierNav = new ArmedShuttleNavigator("Overlord",mothership,false);
+			BaseNavigator carrierNav = new BaseNavigator("Overlord",mothership,false);
 			carrierNav.getRoute().add(earth);
 			carrierNav.setAutoAttack(true);
 			

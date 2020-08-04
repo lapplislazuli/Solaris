@@ -53,9 +53,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	protected MountedWeapon primaryWeapon,secondaryWeapon;
 	protected List<MountedWeapon> weapons = new ArrayList<>();
 	
-	// TODO REMOVE THIS AFTER DEBUG
-	private static boolean playerSpaceShuttleRebuild = false;
-
 	@Deprecated
 	public Spaceshuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
 		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), orbitingDistance , speed);
@@ -139,7 +136,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 				.collect(Collectors.toList());
 	}
 	
-	
 	public void destruct() {
 		logger.info("Spaceship: " + toString() + " was destroyed.");
 		if(!isDead()) {
@@ -208,9 +204,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		return sensor.getDetectedItems();
 	}
 
-	public void setSensor(Sensor val) {
-		sensor = val;
-	}
+	public void setSensor(Sensor val) { sensor = val;}
 	
 	private void setStandardWeapons() {
 		primaryWeapon = new LaserCannon(this);
@@ -245,6 +239,7 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		secondaryWeapon.setTarget(targetPoint);
 		secondaryWeapon.activate();
 	}
+	public boolean isArmed() {	return ! weapons.isEmpty(); }
 
 	@Override
 	public boolean collides(CollidingObject other) {
@@ -341,16 +336,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 	}
 	
 	@Override
-	public void draw(DrawingContext dc) {
-		// TODO: Remove this after debugging!
-		if(playerSpaceShuttleRebuild) {
-			var med = ManagerRegistry.getInstance().getDrawingManager().getRegisteredItems().contains(this);
-			var inspector =ManagerRegistry.getInstance();
-		}
-		super.draw(dc);
-	}
-	
-	@Override
 	public Spaceshuttle rebuildAt(String name, SpaceObject at) {
 		int minLevelOfDetail = Math.max(1,this.shape.getLevelOfDetail());
 		
@@ -377,11 +362,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		copy.setRelativePos(0);
 		copy.shape.setCenter(copy.getCenter());
 		copy.updateHitbox();
-		
-		if(isActivePlayer() || isBuildAsPlayer) {
-			playerSpaceShuttleRebuild=true;
-			logger.debug("Break1");
-		}
 		
 		return copy;
 	}
@@ -661,4 +641,5 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 
 		ManagerRegistry.getUpdateManager().scheduleRegistration(this);
 	}
+
 }

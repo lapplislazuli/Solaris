@@ -2,10 +2,12 @@ package space.spacecrafts.navigators;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import interfaces.geom.Point;
 import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
@@ -22,6 +24,7 @@ public class BaseNavigator implements Navigator{
 	
 	protected Spacecraft ship;
 	
+	protected boolean doesAutoAttack = false;
 	protected boolean respawn; //Bool whether new Ships will be spawned
 	protected boolean isRebuilding; // Little flag to check if the respawntimer is running 
 	protected double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
@@ -92,6 +95,10 @@ public class BaseNavigator implements Navigator{
 			}
 		}
 		// The last case which is not checked here is the flying shuttle. The reason is, that the flying shuttle does not need input from navigator.
+		
+		if(!ship.isDead() && isArmed() && doesAutoAttack) {
+			autoAttack();
+		}
 	}
 	
 	public void clearRoute() {
@@ -141,5 +148,32 @@ public class BaseNavigator implements Navigator{
 		getShuttle().launch();
 		currentIdle = 0;
 		incrementPointer();
+	}
+	
+	public void attack(Point p) {
+		ship.attack(p);
+	}
+
+	public void attack(SpaceObject o) {
+		ship.attack(o);
+	}
+
+	public void autoAttack() {
+		Optional<SpaceObject> possible = ship.getNearestPossibleTarget();
+		if(possible != null && possible.isPresent()) {
+			attack(possible.get());
+		}
+	}
+	
+	public boolean doesAutoAttack() {return doesAutoAttack;}
+	public void setAutoAttack(boolean doesit) {doesAutoAttack = doesit;}
+	public void toggleAutoAttack() {doesAutoAttack = !doesAutoAttack;}
+
+	public boolean isActivePlayerNavigator() {
+		return equals(ManagerRegistry.getPlayerManager().getPlayerNavigator());
+	}
+
+	public boolean isArmed() {
+		return ship.isArmed();
 	}
 }

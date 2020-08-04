@@ -34,6 +34,8 @@ public interface Spacecraft extends DestructibleObject,MovingObject,MovingUpdati
 	public List<CollidingObject> getDetectedItems();
 	
 	public boolean isActivePlayer();
+	
+	public boolean isArmed();
 
 	public Point getCenter();
 	

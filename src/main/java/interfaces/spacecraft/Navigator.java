@@ -2,6 +2,7 @@ package interfaces.spacecraft;
 
 import java.util.List;
 
+import interfaces.geom.Point;
 import interfaces.logical.RemovableObject;
 import interfaces.logical.UpdatingObject;
 import space.core.SpaceObject;
@@ -32,4 +33,14 @@ public interface Navigator extends UpdatingObject,RemovableObject{
 	public SpaceObject getNextWayPoint();
 	
 	public void commandLaunch();
+	
+	public void attack(Point p); //Maybe Point? Or Spaceobject as targets?
+	
+	public void attack(SpaceObject o);
+	
+	public void autoAttack();
+	
+	public boolean isActivePlayerNavigator();
+	
+	public boolean isArmed();
 }

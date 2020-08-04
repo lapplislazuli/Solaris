@@ -3,7 +3,7 @@ package logic.manager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import interfaces.spacecraft.AggressiveNavigator;
+import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
 
 public class PlayerManager{
@@ -15,7 +15,7 @@ public class PlayerManager{
 	 */
 	
 	private Spacecraft playerShuttle;
-	private AggressiveNavigator playerNavigator;
+	private Navigator playerNavigator;
 
 	private static Logger logger = LogManager.getLogger(EffectManager.class);
 	
@@ -24,7 +24,7 @@ public class PlayerManager{
 	public PlayerManager() {}
 	
 	
-	public void registerPlayerNavigator(AggressiveNavigator pN){
+	public void registerPlayerNavigator(Navigator pN){
 		if(playerNavigator != null) {
 			logger.info("Overwriting active playerNavigator");	
 		}
@@ -45,7 +45,7 @@ public class PlayerManager{
 	}
 	
 	public Spacecraft getPlayerShuttle() {return playerShuttle;}
-	public AggressiveNavigator getPlayerNavigator() {return playerNavigator;}
+	public Navigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {
 		if(playerShuttle != null) {

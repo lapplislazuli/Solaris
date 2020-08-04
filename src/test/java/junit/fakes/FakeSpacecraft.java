@@ -14,7 +14,7 @@ import space.spacecrafts.ships.Sensor;
 
 public class FakeSpacecraft implements Spacecraft{
 	
-	public boolean launched=false,dead=false,collided=false,moved=false,attacked=false,rebuild=false,removed=false,updated=false;
+	public boolean launched=false,dead=false,collided=false,moved=false,attacked=false,rebuild=false,removed=false,updated=false,isArmed=false;
 	public boolean colliding = false,isPlayer=false;
 	public double speed=0;
 	public boolean speedSet=false;
@@ -126,6 +126,11 @@ public class FakeSpacecraft implements Spacecraft{
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public boolean isArmed() {
+		return isArmed;
 	}
 
 	
