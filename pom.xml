@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Twonki</groupId>
   <artifactId>Solaris</artifactId>
-  <version>0.5-SNAPSHOT</version>
+  <version>0.6-SNAPSHOT</version>
   <name>Solaris</name>
   <packaging>jar</packaging>
    
