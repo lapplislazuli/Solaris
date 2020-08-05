@@ -31,6 +31,9 @@ public class BaseNavigator implements Navigator{
 	protected double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	protected double MAX_RESPAWNTIME = 3000.0; //With a common update cycle of 25ms, this will take 120 turns
 	protected double currentRespawnTime = 3000.0;
+	
+	//TODO: Remove after debugging!
+	public static int playerNavRebuildCounter = 0;
 
 	public void update() {
 		if(getShuttle().isDead() && respawn) {
@@ -227,6 +230,10 @@ public class BaseNavigator implements Navigator{
 		
 		if(builder.isPlayer) {
 			ManagerRegistry.getPlayerManager().registerPlayerNavigator(this);
+			//TODO: Remove after Debugging
+			if(playerNavRebuildCounter>1) {
+				logger.debug("Player rebuild second time");
+			}
 		}
 	}
 }

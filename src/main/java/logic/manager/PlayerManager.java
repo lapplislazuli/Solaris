@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
+import space.spacecrafts.navigators.BaseNavigator;
+import space.spacecrafts.ships.Spaceshuttle;
 
 public class PlayerManager{
 	/*
@@ -49,6 +51,10 @@ public class PlayerManager{
 
 	public void forceRespawn() {
 		if(playerShuttle != null) {
+			//TODO: Remove after debugging
+			if(BaseNavigator.playerNavRebuildCounter>1) {
+				logger.debug("Respawning more than second time!");
+			}
 			playerShuttle.destruct();	
 		}
 	}
