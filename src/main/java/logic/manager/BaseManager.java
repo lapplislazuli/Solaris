@@ -18,6 +18,7 @@ public abstract class BaseManager<T> implements UpdatingManager<T> {
 	public boolean isRunning() {return running;}
 
 	public void scheduleRegistration(T item) {
+		// See scheduled removal for more information - pretty much the same problem/logic
 		scheduledRegistrations.add(item);
 	}
 
@@ -34,7 +35,6 @@ public abstract class BaseManager<T> implements UpdatingManager<T> {
 		for(T t:scheduledRegistrations) {
 			registerItem(t);
 		}
-		//registeredItems.addAll(scheduledRegistrations);
 		registeredItems.removeAll(scheduledRemovals);
 		
 		scheduledRemovals.clear();

@@ -80,4 +80,9 @@ public class LaserCannon implements MountedWeapon, UpdatingObject {
 	public double currentCooldown() {
 		return cooldown;
 	}
+
+	@Override
+	public void setParent(Spaceshuttle copy) {
+		parent = copy;
+	}
 }

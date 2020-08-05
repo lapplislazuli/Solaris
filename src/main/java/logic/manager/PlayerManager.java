@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 
 import interfaces.spacecraft.Navigator;
 import interfaces.spacecraft.Spacecraft;
-import space.spacecrafts.navigators.BaseNavigator;
-import space.spacecrafts.ships.Spaceshuttle;
 
 public class PlayerManager{
 	/*
@@ -41,7 +39,7 @@ public class PlayerManager{
 	
 	public void registerPlayerShuttle(Spacecraft p) {
 		if(playerShuttle != null) {
-			logger.info("Overwriting active playershuttle");	
+			logger.info("Overwriting active playershuttle");
 		}
 		playerShuttle = p;
 	}
@@ -50,11 +48,12 @@ public class PlayerManager{
 	public Navigator getPlayerNavigator() {return playerNavigator;}
 
 	public void forceRespawn() {
+		if(playerShuttle != null && playerShuttle.isDead()) {
+			logger.debug("Trying to destroy playershuttle, but was already dead");
+			//Cannot destroy the shuttle if it is already dead
+			return;
+		}
 		if(playerShuttle != null) {
-			//TODO: Remove after debugging
-			if(BaseNavigator.playerNavRebuildCounter>1) {
-				logger.debug("Respawning more than second time!");
-			}
 			playerShuttle.destruct();	
 		}
 	}

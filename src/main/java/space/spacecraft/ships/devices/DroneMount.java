@@ -149,4 +149,9 @@ public class DroneMount implements MountedWeapon {
 		return drone;
 	}
 	
+	@Override
+	public void setParent(Spaceshuttle copy) {
+		parent = copy;
+	}
+	
 }

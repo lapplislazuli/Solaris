@@ -67,4 +67,9 @@ public class RocketLauncher implements MountedWeapon {
 	public void update() {
 		//Empty, Rockets are managed somewhere else
 	}
+	
+	@Override
+	public void setParent(Spaceshuttle copy) {
+		parent = copy;
+	}
 }

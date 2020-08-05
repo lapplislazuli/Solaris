@@ -10,7 +10,9 @@ import space.core.SpaceObject;
 import space.spacecrafts.ships.Spaceshuttle;
 
 public final class DroneRack implements MountedWeapon{
-	
+
+	final List<DroneMount> droneMounts;
+	final Spaceshuttle carrier;
 	
 	public DroneRack(Spaceshuttle c){
 		var droneMounts = c.getWeapons().stream().filter(w->w instanceof DroneMount).map(w -> (DroneMount) w).collect(Collectors.toList());
@@ -21,18 +23,18 @@ public final class DroneRack implements MountedWeapon{
 	
 	public DroneRack(List<DroneMount> drones){
 		this.droneMounts = drones;
-		if(drones.size()>0)
+		if(drones.size() > 0) {
 			carrier = (Spaceshuttle) drones.get(0).getParent();
-		else
+		} else {
 			carrier = null;
+		}
 	}
 	
-	final List<DroneMount> droneMounts;
-	final Spaceshuttle carrier;
 	@Override
 	public void activate() {
-		for(var d:droneMounts)
+		for(var d:droneMounts) {
 			d.activate();
+		}
 	}
 
 
@@ -43,20 +45,23 @@ public final class DroneRack implements MountedWeapon{
 
 	@Override
 	public void setTarget(SpaceObject o) {
-		for(var d:droneMounts)
+		for(var d : droneMounts) {
 			d.setTarget(o);
+		}
 	}
 
 	@Override
 	public void setTarget(Double dir) {
-		for(var d:droneMounts)
+		for(var d : droneMounts) {
 			d.setTarget(dir);
+		}
 	}
 
 	@Override
 	public void setTarget(Point p) {
-		for(var d:droneMounts)
+		for(var d : droneMounts) {
 			d.setTarget(p);
+		}
 	}
 
 	@Override
@@ -64,11 +69,15 @@ public final class DroneRack implements MountedWeapon{
 		return true; // The rack is always ready, but not necessarily all of the droneMounts
 	}
 
-
 	@Override
 	public Spacecraft getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return carrier;
 	}
-	
+
+	@Override
+	public void setParent(Spaceshuttle copy) {
+		for(var d : droneMounts) {
+			d.setParent(copy);
+		}
+	}
 }

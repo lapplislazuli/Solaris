@@ -332,9 +332,14 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		
 		Spaceshuttle copy =  copyBuilder.build();
 		
+		
 		copy.weapons = this.weapons;
 		copy.primaryWeapon = this.primaryWeapon;
 		copy.secondaryWeapon = this.secondaryWeapon;
+		
+		for(var weapon : copy.weapons) {
+			weapon.setParent(copy);
+		}
 		
 		copy.setRelativePos(0);
 		copy.shape.setCenter(copy.getCenter());
