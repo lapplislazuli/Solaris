@@ -31,45 +31,6 @@ public class BaseNavigator implements Navigator{
 	protected double idlingTurns,currentIdle; //Turns spend to Idle on Planet before Relaunch in Radiant-Degree
 	protected double MAX_RESPAWNTIME = 3000.0; //With a common update cycle of 25ms, this will take 120 turns
 	protected double currentRespawnTime = 3000.0;
-	
-	@Deprecated
-	public BaseNavigator(String name, Spacecraft ship, boolean respawn) {
-		if(name == null || name.isEmpty()) {
-			throw new IllegalArgumentException("Name cannot be null or empty");
-		}
-		if(ship == null) {
-			throw new IllegalArgumentException("Ship cannot be null");
-		}
-		route = new LinkedList<SpaceObject>();
-		route.add(ship.getParent());
-		this.ship = ship;
-		this.name = name;
-		this.respawn = respawn;
-		logger.info("Initiated " + name + " with Shuttle " + ship.toString());
-		
-		ManagerRegistry.getUpdateManager().registerItem(this);
-	}
-
-	@Deprecated
-	public BaseNavigator(String name, Spacecraft ship, boolean respawn,double respawntimer) {
-		if(name == null || name.isEmpty()) {
-			throw new IllegalArgumentException("Name cannot be null or empty");
-		}
-		if(ship == null) {
-			throw new IllegalArgumentException("Ship cannot be null");
-		}
-		route = new LinkedList<SpaceObject>();
-		route.add(ship.getParent());
-		this.ship = ship;
-		this.name = name;
-		this.respawn = respawn;
-		this.MAX_RESPAWNTIME = respawntimer;
-		logger.info("Initiated " + name + " with Shuttle " + ship.toString());
-		
-		ManagerRegistry.getUpdateManager().registerItem(this);
-	}
-	
-
 
 	public void update() {
 		if(getShuttle().isDead() && respawn) {

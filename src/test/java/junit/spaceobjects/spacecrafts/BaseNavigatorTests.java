@@ -12,16 +12,13 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import drawing.EmptyJFXDrawingInformation;
-import drawing.JavaFXDrawingInformation;
 import geom.AbsolutePoint;
 import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
-import junit.fakes.FakeMovingSpaceObject;
 import junit.fakes.FakeSpacecraft;
 import junit.testhelpers.FakeSpaceObjectFactory;
 import logic.manager.ManagerRegistry;
@@ -48,45 +45,13 @@ class BaseNavigatorTests {
 	@Test
 	void testConstructor_shouldBeBuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.toString();
 		
 		return;
 	}
-
-	@Tag("Shuttle")
-	@Tag("fast")
-	@RepeatedTest(2)
-	@Test
-	void testConstructor_NullShip_shouldThrowException() {
-		assertThrows(IllegalArgumentException.class, 
-				() -> new BaseNavigator("Test",null,true)
-		);
-	}
-
-	@Tag("Shuttle")
-	@Tag("fast")
-	@Test
-	void testConstructor_NullName_shouldThrowException() {
-		FakeSpacecraft stub = new FakeSpacecraft();
-		assertThrows(IllegalArgumentException.class, 
-				() -> new BaseNavigator(null,stub,true)
-		);
-	}
 	
-
-	@Tag("Shuttle")
-	@Tag("fast")
-	@Test
-	void testConstructor_EmptyName_shouldThrowException() {
-		FakeSpacecraft stub = new FakeSpacecraft();
-		assertThrows(IllegalArgumentException.class, 
-				() -> new BaseNavigator("",stub,true)
-		);
-	}
-	
-
 	@Tag("Shuttle")
 	@Tag("fast")
 	@Test
@@ -94,7 +59,7 @@ class BaseNavigatorTests {
 		ManagerRegistry.getInstance();
 		
 		FakeSpacecraft stub = new FakeSpacecraft();
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		assertFalse(testObject.isOrphan());
 	}
@@ -107,7 +72,7 @@ class BaseNavigatorTests {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		SpaceObject stubRoot = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		assertTrue(testObject.getRoute().contains(stubRoot));
 		assertEquals(1,testObject.getRoute().size());
@@ -121,7 +86,7 @@ class BaseNavigatorTests {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		SpaceObject stubRoot = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.clearRoute();
 		
@@ -138,7 +103,7 @@ class BaseNavigatorTests {
 		SpaceObject stubRoot = fakeStar(0,0);
 		SpaceObject stubTarget = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.getRoute().add(stubTarget);
 		
@@ -154,7 +119,7 @@ class BaseNavigatorTests {
 		SpaceObject stubRoot = fakeStar(0,0);
 		SpaceObject stubTarget = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.getRoute().add(stubTarget);
 		testObject.commandLaunch(); // Move the Pointer 
@@ -169,7 +134,7 @@ class BaseNavigatorTests {
 	void testRebuildShuttle_shouldBeRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		stub.parent = fakeStar(0,0);
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.rebuildShuttle();
 		
@@ -183,7 +148,7 @@ class BaseNavigatorTests {
 	void testIsInGoodLaunchPosition_shuttleIsDead_shouldBeFalse() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		SpaceObject stubTarget = fakeStar(0,0);
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 
 		stub.dead=true;
 		
@@ -196,7 +161,7 @@ class BaseNavigatorTests {
 	@Test
 	void testRemove_shouldBeOrphaned() {
 		FakeSpacecraft stub = new FakeSpacecraft();
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.remove();
 		
@@ -212,7 +177,7 @@ class BaseNavigatorTests {
 		SpaceObject stubRoot = fakeStar(0,0);
 		SpaceObject stubTarget = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.getRoute().add(stubTarget);
 		testObject.commandLaunch(); // Move the Pointer 
@@ -230,7 +195,7 @@ class BaseNavigatorTests {
 		SpaceObject stubTarget = fakeStar(0,0);
 		SpaceObject finalTarget = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		testObject.getRoute().add(stubTarget);
 		testObject.getRoute().add(finalTarget);
@@ -245,15 +210,15 @@ class BaseNavigatorTests {
 	@Tag("Approximation")
 	@Test
 	void testUpdate_shuttleIsDeadAndRespawns_shuttleIsRebuild() {
-		FakeSpacecraft stub = new FakeSpacecraft();
-		
+		FakeSpacecraft stub = new FakeSpacecraft();	
 		stub.parent = fakeStar(0,0);
 		
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true,500);
-
-		stub.dead=true;
-
-
+		BaseNavigator testObject  = new BaseNavigator.Builder("Test", stub)
+				.doesRespawn(true)
+				.respawntime(500)
+				.build();
+		
+		stub.dead = true;
 		testObject.update();
 		
 		for(int i=0;i<1000;i++)
@@ -267,7 +232,7 @@ class BaseNavigatorTests {
 	@Test
 	void testUpdate_shuttleIsDeadAndDoesNotRespawn_shuttleStaysDead() {
 		FakeSpacecraft stub = new FakeSpacecraft();
-		BaseNavigator testObject = new BaseNavigator("Test",stub,false);
+		BaseNavigator testObject = simpleNav(stub,false);
 		
 		stub.dead=true;
 		
@@ -281,7 +246,7 @@ class BaseNavigatorTests {
 	@Test
 	void testUpdate_shuttleIsAlive_shuttleIsNotBeRebuild() {
 		FakeSpacecraft stub = new FakeSpacecraft();
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		stub.dead=false;
 		
@@ -298,7 +263,7 @@ class BaseNavigatorTests {
 		SpaceObject stubRoot = fakeStar(0,0);
 		SpaceObject stubTarget = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		testObject.getRoute().add(stubTarget);
 		
 		stub.state=SpacecraftState.FLYING;
@@ -318,7 +283,7 @@ class BaseNavigatorTests {
 		SpaceObject stubRoot = fakeStar(0,0);
 		SpaceObject stubTarget = fakeStar(0,0);
 		stub.parent=stubRoot;
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		testObject.getRoute().add(stubTarget);
 		
 		stub.state=SpacecraftState.ORBITING;
@@ -342,7 +307,7 @@ class BaseNavigatorTests {
 		root.update();//To move Planets
 		
 		
-		BaseNavigator testObject = new BaseNavigator("Test",shuttle,true);
+		BaseNavigator testObject = simpleNav(shuttle,true);
 		testObject.getRoute().add(target);
 		
 		for(int i=0;i<5000;i++) {
@@ -363,7 +328,7 @@ class BaseNavigatorTests {
 	void testConstructor_isNotPlayerByDefault() {
 		Spacecraft stub = new FakeSpacecraft();
 		
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		assertFalse(testObject.isActivePlayerNavigator());
 	}
@@ -375,7 +340,7 @@ class BaseNavigatorTests {
 	void testConstructor_doesNotAutoAttackByDefault() {
 		Spacecraft stub = new FakeSpacecraft();
 		
-		BaseNavigator testObject = new BaseNavigator("Test",stub,true);
+		BaseNavigator testObject = simpleNav(stub,true);
 		
 		assertFalse(testObject.doesAutoAttack());
 	}
@@ -389,7 +354,7 @@ class BaseNavigatorTests {
 		Spacecraft stub = new FakeSpacecraft();
 		
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		ManagerRegistry.getPlayerManager().registerPlayerNavigator(testObject);
 		
@@ -403,7 +368,7 @@ class BaseNavigatorTests {
 	void testAttackPoint_shouldAttack() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		testObject.attack(new AbsolutePoint(0,0));
 		
@@ -416,7 +381,7 @@ class BaseNavigatorTests {
 	void testAttackSpaceObject_shouldAttack() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		testObject.attack(fakeStar(0,0));
 		
@@ -430,9 +395,9 @@ class BaseNavigatorTests {
 	@Test
 	void testRebuild_rebuildShuttleShouldBeArmedSpacecraft() {
 		SpaceObject root = fakeStar(0,0);
-		Spaceshuttle stubShip = new Spaceshuttle("Stub",root,2,10,Math.PI/20);
+		Spaceshuttle stub = new Spaceshuttle("Stub",root,2,10,Math.PI/20);
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stubShip,true);
+				simpleNav(stub,true);
 		
 		testObject.rebuildShuttle();
 		
@@ -445,7 +410,7 @@ class BaseNavigatorTests {
 	void testAutoAttack_NothingToAttack_doesNotAttack() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		stub.nearestTarget=Optional.empty();
 		
@@ -462,7 +427,7 @@ class BaseNavigatorTests {
 	void testAutoAttack_hasTarget_shouldAttack() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		stub.nearestTarget=Optional.of(fakeStar(0,0));
 		
@@ -479,7 +444,7 @@ class BaseNavigatorTests {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		stub.parent = fakeStar(0,0);
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		stub.dead=true;
 
@@ -497,7 +462,7 @@ class BaseNavigatorTests {
 	void testUpdate_doesNotAutoAttack_doesNotAttack() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,false);
+				simpleNav(stub,false);
 		
 		testObject.update();
 		
@@ -515,7 +480,7 @@ class BaseNavigatorTests {
 		stub.nearestTarget=Optional.of(fakeStar(0,0));
 		
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		testObject.setAutoAttack(true);
 		
 		testObject.update();
@@ -531,7 +496,7 @@ class BaseNavigatorTests {
 	void testToggleAutoAttack_wasOn_shouldBeOff() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,false);
+				simpleNav(stub,false);
 
 		testObject.setAutoAttack(true);
 		
@@ -547,7 +512,7 @@ class BaseNavigatorTests {
 	void testToggleAutoAttack_wasOff_shouldBeOn() {
 		FakeSpacecraft stub = new FakeSpacecraft();
 		BaseNavigator testObject = 
-				new BaseNavigator("Test",stub,true);
+				simpleNav(stub,true);
 		
 		testObject.setAutoAttack(false);
 		
@@ -682,5 +647,14 @@ class BaseNavigatorTests {
 		var testObject = new BaseNavigator.Builder("Test", fake);
 		
 		assertThrows(IllegalArgumentException.class, () -> testObject.respawntime(-50.0));
+	}
+	
+	static BaseNavigator simpleNav(Spacecraft ship, boolean b) {
+		BaseNavigator nav  = new BaseNavigator.Builder("Test", ship)
+				.doesAutoAttack(true)
+				.doesRespawn(b)
+				.build();
+		
+		return nav;
 	}
 }
