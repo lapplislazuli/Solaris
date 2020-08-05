@@ -30,11 +30,11 @@ public class FakeSpacecraft implements Spacecraft{
 		return copy;
 	}
 	
-	public void attack(Point p) {
+	public void primaryAttack(Point p) {
 		attacked=true;
 	}
 
-	public void attack(SpaceObject o) {
+	public void primaryAttack(SpaceObject o) {
 		attacked=true;
 	}
 

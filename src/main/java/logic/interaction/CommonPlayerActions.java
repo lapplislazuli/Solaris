@@ -23,7 +23,7 @@ public abstract class CommonPlayerActions {
 	}
 	
 	public static void shootAtPoint(Point clickedPosition) {
-		ManagerRegistry.getPlayerManager().getPlayerShuttle().attack(clickedPosition);
+		ManagerRegistry.getPlayerManager().getPlayerShuttle().primaryAttack(clickedPosition);
 	}
 	
 	public static void registerSpaceObjectToPlayerRoute() {

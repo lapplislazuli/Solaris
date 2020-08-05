@@ -21,6 +21,7 @@ import interfaces.spacecraft.Spacecraft;
 import interfaces.spacecraft.SpacecraftState;
 import junit.fakes.FakeSpacecraft;
 import junit.testhelpers.FakeSpaceObjectFactory;
+import junit.testhelpers.TestShipFactory;
 import logic.manager.ManagerRegistry;
 import space.core.MovingSpaceObject;
 import space.core.Planet;
@@ -308,7 +309,7 @@ class BaseNavigatorTests {
 		
 		MovingSpaceObject target = new Planet.Builder("Flip", root).speed(Math.PI/80).distance(250).build();
 	
-		Spaceshuttle shuttle= new Spaceshuttle("shuttleOne",root,0,50,-Math.PI/400);
+		Spaceshuttle shuttle = TestShipFactory.standardArmedShuttle(root,50,-Math.PI/400);
 		root.update();//To move Planets
 		
 		
@@ -392,10 +393,9 @@ class BaseNavigatorTests {
 	@Test
 	void testRebuild_rebuildShuttleShouldBeArmedSpacecraft() {
 		SpaceObject root = fakeStar(0,0);
-		Spaceshuttle stub = new Spaceshuttle("Stub",root,2,10,Math.PI/20);
+		Spaceshuttle helper = TestShipFactory.standardArmedShuttle(root,10,Math.PI/20);
 
-		BaseNavigator testObject = 
-				simpleNav(stub,true);
+		BaseNavigator testObject = simpleNav(helper,true);
 		
 		testObject.rebuildShuttle();
 		
@@ -661,4 +661,5 @@ class BaseNavigatorTests {
 		
 		return nav;
 	}
+	
 }

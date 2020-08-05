@@ -41,9 +41,9 @@ public interface Spacecraft extends DestructibleObject,MovingObject,MovingUpdati
 	
 	public void setSensor(Sensor val);
 	
-	public void attack(Point p);
+	public void primaryAttack(Point p);
 	
-	public void attack(SpaceObject o);
+	public void primaryAttack(SpaceObject o);
 	
 	public Optional<SpaceObject> getNearestPossibleTarget();
 }

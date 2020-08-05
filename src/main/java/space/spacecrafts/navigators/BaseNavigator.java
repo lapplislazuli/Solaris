@@ -117,11 +117,11 @@ public class BaseNavigator implements Navigator{
 	}
 	
 	public void attack(Point p) {
-		ship.attack(p);
+		ship.primaryAttack(p);
 	}
 
 	public void attack(SpaceObject o) {
-		ship.attack(o);
+		ship.primaryAttack(o);
 	}
 
 	public void autoAttack() {

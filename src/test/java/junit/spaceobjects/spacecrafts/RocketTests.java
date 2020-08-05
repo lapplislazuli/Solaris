@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import junit.fakes.interfaces.FakeCollidingObject;
+import junit.testhelpers.TestShipFactory;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.Spaceshuttle;
@@ -30,7 +31,7 @@ class RocketTests {
 	@Test
 	void testConstructor_shouldBeBuild() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		
 		assertEquals("TestRocket",testRocket.getName());
@@ -39,7 +40,7 @@ class RocketTests {
 	@Test
 	void testRotate_shouldNotRotate() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		
 		double oldRotation=testRocket.getRotation();
@@ -52,7 +53,7 @@ class RocketTests {
 	@Test
 	void testMove_shouldBeMoved() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		double oldDistance = testRocket.getDistance();
 		
@@ -64,7 +65,7 @@ class RocketTests {
 	@Test
 	void testMove_checkDistanceToParent_shouldBeHigher() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		double oldDistanceToParent = testRocket.distanceTo(testEmitter);
 		
@@ -76,7 +77,7 @@ class RocketTests {
 	@Test
 	public void testConstructors_IsInParentsChildren() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		
 		assertTrue(testEmitter.getTrabants().contains(testRocket));
@@ -85,7 +86,7 @@ class RocketTests {
 	@Test
 	public void testConstructors_isNotOrphaned() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		
 		assertFalse(testRocket.isOrphan());
@@ -94,7 +95,7 @@ class RocketTests {
 	@Test
 	public void testRemove_isNotInParentsChildren() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 		
 		testRocket.remove();
@@ -105,7 +106,7 @@ class RocketTests {
 	@Test
 	public void testRemove_isOrphaned() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		testRocket.remove();
@@ -116,7 +117,7 @@ class RocketTests {
 	@Test
 	public void testCollision_checkEmitter_shouldNotCollideEmitter() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		assertFalse(testRocket.collides(testEmitter));
@@ -125,7 +126,7 @@ class RocketTests {
 	@Test
 	public void testCollision_fakeCollider_shouldCollideNormally() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		FakeCollidingObject stubCollider = new FakeCollidingObject();
@@ -139,7 +140,7 @@ class RocketTests {
 	@Test
 	public void testDestruct_shouldBeRemoved() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		testRocket.destruct();
@@ -150,7 +151,7 @@ class RocketTests {
 	@Test
 	public void testDestruct_shouldSpawnEffect() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		testRocket.destruct();
@@ -163,7 +164,7 @@ class RocketTests {
 	@Test
 	public void testDestruct_doubleDestruct_doesRemove() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		testRocket.destruct();
@@ -175,7 +176,7 @@ class RocketTests {
 	@Test
 	public void testDestruct_doubleDestruct_spawnsOneEffectButNotTwo() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		testRocket.destruct();
@@ -189,7 +190,7 @@ class RocketTests {
 	@Test
 	public void testMove_MoveVeryFar_shouldBeRemoved() {
 		SpaceObject shipRoot = fakeStar(500,500);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Rocket testRocket = new Rocket("TestRocket",testEmitter,5);
 	
 		for(int i=0;i<500;i++) {
@@ -198,4 +199,8 @@ class RocketTests {
 		
 		assertTrue(testRocket.isOrphan());
 	}
+	
+	
+
+	
 }

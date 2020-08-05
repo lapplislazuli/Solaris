@@ -111,7 +111,7 @@ public class SensorArrayTests {
 	@Test
 	public void testDetection_addFakeStar_shouldDetectFakeStar() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle sensorRoot = new Spaceshuttle("SensorRoot",shipRoot,0,50,0);
+		Spaceshuttle sensorRoot = standardShip(shipRoot);
 		SensorArray testObject = new SensorArray (sensorRoot,501);
 		ManagerRegistry.getCollisionManager().registerItem(shipRoot);
 		
@@ -125,7 +125,7 @@ public class SensorArrayTests {
 	public void testDetection_addTwoFakeStars_shouldDetectBothFakeStars() {
 		SpaceObject shipRoot = fakeStar(0,0);
 		SpaceObject fakeSecondItem = fakeStar(25,25);
-		Spaceshuttle sensorRoot = new Spaceshuttle("SensorRoot",shipRoot,0,50,0);
+		Spaceshuttle sensorRoot = standardShip(shipRoot);
 		SensorArray testObject = new SensorArray (sensorRoot,500);
 		
 		ManagerRegistry.getCollisionManager().registerItem(shipRoot);
@@ -138,19 +138,11 @@ public class SensorArrayTests {
 		assertTrue(testObject.getDetectedItems().contains(fakeSecondItem));
 	}
 	
-
-	@Test
-	public void testDetection_CollidedObjectIsNotFullyCovered_shouldNotDetectIt() {
-		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle sensorRoot = new Spaceshuttle("SensorRoot",shipRoot,0,50,0);
-		//With this size, the Sensor only intersects the object. it is not detected
-		SensorArray testObject = new SensorArray (sensorRoot,50);
-		
-		ManagerRegistry.getCollisionManager().registerItem(shipRoot);
-		
-		testObject.update();
-		
-		assertEquals(0,testObject.getDetectedItems().size());
+	public static Spaceshuttle standardShip(SpaceObject root) {
+		return new Spaceshuttle.Builder("TestEmitter",root)
+				.orbitingDistance(50)
+				.speed(0)
+				.size(1)
+				.build();
 	}
-	
 }

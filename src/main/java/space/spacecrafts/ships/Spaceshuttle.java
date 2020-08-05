@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import drawing.JavaFXDrawingInformation;
 import geom.HShape;
-import interfaces.drawing.DrawingContext;
 import interfaces.drawing.DrawingInformation;
 import interfaces.geom.Point;
 import interfaces.geom.Shape;
@@ -52,23 +51,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 
 	protected MountedWeapon primaryWeapon,secondaryWeapon;
 	protected List<MountedWeapon> weapons = new ArrayList<>();
-	
-	@Deprecated
-	public Spaceshuttle(String name, SpaceObject parent, int size, int orbitingDistance, double speed) {
-		super(name, parent, new JavaFXDrawingInformation(Color.GHOSTWHITE), new HShape(size*2,size*3,size), orbitingDistance , speed);
-		
-		this.size = size;
-		this.parent = parent;
-		this.orbitingDistance = orbitingDistance;
-		distance = (int) (orbitingDistance+distanceTo(parent));
-		sensor = new SensorArray(this,50);
-
-		shape.setLevelOfDetail(size/2);
-		move(parent.getCenter());
-
-		setStandardWeapons();
-		spawnDronesIfAnyAreGiven();
-	}
 	
 	private void spawnDronesIfAnyAreGiven() {
 		weapons.stream().filter(w -> w instanceof DroneMount).map(w -> (DroneMount)w).forEach(dm -> dm.launch_drone());
@@ -221,24 +203,6 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		sensor.update();
 	}
 	
-	public void shootLaser(SpaceObject targetSpaceObject) {
-		primaryWeapon.setTarget(targetSpaceObject);
-		primaryWeapon.activate();
-	}
-	
-	public void shootRocket(SpaceObject targetSpaceObject) {
-		secondaryWeapon.setTarget(targetSpaceObject);
-		secondaryWeapon.activate();
-	}
-	public void shootLaser(Point targetPoint) {
-		primaryWeapon.setTarget(targetPoint);
-		primaryWeapon.activate();
-	}
-	
-	public void shootRocket(Point targetPoint) {
-		secondaryWeapon.setTarget(targetPoint);
-		secondaryWeapon.activate();
-	}
 	public boolean isArmed() {	return ! weapons.isEmpty(); }
 
 	@Override
@@ -322,16 +286,29 @@ public class Spaceshuttle extends MovingSpaceObject implements Spacecraft{
 		return weapons.stream().anyMatch(w-> w instanceof DroneMount);
 	}
 	
-	public void attack(Point p) {
+	public void primaryAttack(Point p) {
 		if(primaryWeapon != null) {
 			primaryWeapon.setTarget(p);
 			primaryWeapon.activate();
 		}
 	}
-	public void attack(SpaceObject o) {
+	public void primaryAttack(SpaceObject o) {
 		if(primaryWeapon != null) {
 			primaryWeapon.setTarget(o);
 			primaryWeapon.activate();
+		}
+	}
+	
+	public void secondaryAttack(Point p) {
+		if(secondaryWeapon != null) {
+			secondaryWeapon.setTarget(p);
+			secondaryWeapon.activate();
+		}
+	}
+	public void secondaryAttack(SpaceObject o) {
+		if(secondaryWeapon != null) {
+			secondaryWeapon.setTarget(o);
+			secondaryWeapon.activate();
 		}
 	}
 	

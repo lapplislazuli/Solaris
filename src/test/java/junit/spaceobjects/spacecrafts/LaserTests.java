@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import interfaces.geom.Point;
 import junit.fakes.interfaces.FakeCollidingObject;
+import junit.testhelpers.TestShipFactory;
 import logic.manager.ManagerRegistry;
 import space.core.SpaceObject;
 import space.spacecrafts.ships.Spaceshuttle;
@@ -31,7 +32,7 @@ public class LaserTests {
 	@Test
 	void testConstructor_shouldBeBuild() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		assertEquals("TestLaser",testLaser.getName());
@@ -40,7 +41,7 @@ public class LaserTests {
 	@Test
 	void testConstructor_buildOnlyWithEmitter_shouldHaveEmittersRotation() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter);
 		
 		assertEquals(testEmitter.getRotation(),testLaser.getRotation());
@@ -49,7 +50,7 @@ public class LaserTests {
 	@Test
 	void testConstructor_shouldHaveEmptyTrail() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter);
 		
 		assertTrue(testLaser.getTrail().isEmpty());
@@ -59,7 +60,7 @@ public class LaserTests {
 	@Test
 	void testRotate_shouldNotRotate() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		double oldRotation=testLaser.getRotation();
@@ -72,7 +73,7 @@ public class LaserTests {
 	@Test
 	void testUpdate_shouldBeMoved() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		double oldDistance = testLaser.getDistance();
@@ -85,7 +86,7 @@ public class LaserTests {
 	@Test
 	void testUpdate_checkDistanceToParent_shouldBeHigher() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		double oldDistanceToParent = testLaser.distanceTo(testEmitter);
 		
@@ -97,7 +98,7 @@ public class LaserTests {
 	@Test
 	void testUpdate_shouldHaveTrail() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		testEmitter.update();
@@ -108,7 +109,7 @@ public class LaserTests {
 	@Test
 	void testMove_withOldLaserCenter_shouldBeInTrail() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		Point centerBeforeMove=testLaser.getCenter().clone();
@@ -124,7 +125,7 @@ public class LaserTests {
 	@Test
 	void testUpdate_safeOldCenter_shouldBeInTrail() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		Point centerBeforeMove=testLaser.getCenter().clone();
@@ -140,7 +141,7 @@ public class LaserTests {
 	@Test
 	void testUpdateParent_safeLaserOldCenter_shouldBeInTrail() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,0,1);
 		
 		Point centerBeforeMove=testLaser.getCenter().clone();
@@ -155,7 +156,7 @@ public class LaserTests {
 	@Test
 	void testUpdateParent_checkTrail_shouldHaveOneItem() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,0,1);
 		
 		testEmitter.update();
@@ -166,7 +167,7 @@ public class LaserTests {
 	@Test
 	public void testConstructors_IsInParentsChildren() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		assertTrue(testEmitter.getTrabants().contains(testLaser));
@@ -175,7 +176,7 @@ public class LaserTests {
 	@Test
 	public void testConstructors_isNotOrphaned() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		assertFalse(testLaser.isOrphan());
@@ -184,7 +185,7 @@ public class LaserTests {
 	@Test
 	public void testRemove_isNotInParentsChildren() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		testLaser.remove();
@@ -195,7 +196,7 @@ public class LaserTests {
 	@Test
 	public void testRemove_isOrphaned() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		testLaser.remove();
@@ -206,7 +207,7 @@ public class LaserTests {
 	@Test
 	public void testCollision_checkEmitter_shouldNotCollideEmitter() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		assertFalse(testLaser.collides(testEmitter));
@@ -215,7 +216,7 @@ public class LaserTests {
 	@Test
 	public void testCollision_fakeCollider_shouldCollideNormally() {
 		SpaceObject shipRoot = fakeStar(0,0);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		FakeCollidingObject stubCollider = new FakeCollidingObject();
@@ -230,7 +231,7 @@ public class LaserTests {
 	@Test
 	public void testMove_MoveVeryFar_shouldBeRemoved() {
 		SpaceObject shipRoot = fakeStar(500,500);
-		Spaceshuttle testEmitter = new Spaceshuttle("test",shipRoot,5,5,5);
+		Spaceshuttle testEmitter = TestShipFactory.standardEmitter(shipRoot);
 		Laserbeam testLaser = new Laserbeam("TestLaser",testEmitter,1.0,5);
 		
 		for(int i=0;i<500;i++) {
@@ -239,4 +240,5 @@ public class LaserTests {
 		
 		assertTrue(testLaser.isOrphan());
 	}
+	
 }
