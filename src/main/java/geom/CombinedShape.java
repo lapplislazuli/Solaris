@@ -13,16 +13,16 @@ public abstract class CombinedShape implements Shape{
 	
 	protected List<Shape> parts;
 	protected Point center;
-	protected int levelOfDetail=3;
+	protected int levelOfDetail = 3;
 	
 	public CombinedShape() {
-		parts=new LinkedList<Shape>();
-		center=new AbsolutePoint(0,0);
+		parts = new LinkedList<Shape>();
+		center = new AbsolutePoint(0,0);
 	}
 	
 	public CombinedShape(Point center) {
-		parts=new LinkedList<Shape>();
-		this.center=center;
+		parts = new LinkedList<Shape>();
+		this.center = center;
 	}
 	
 	public double area() {
@@ -35,9 +35,9 @@ public abstract class CombinedShape implements Shape{
 	
 	public boolean covers(Shape other) {
 		return other.getOutline().stream()
-		.allMatch(
-			p -> parts.stream().anyMatch(k -> k.contains(p))			
-		);	
+			.allMatch(
+				p -> parts.stream().anyMatch(k -> k.contains(p))			
+			);	
 	}
 	
 	public boolean contains(Point p) {
@@ -45,31 +45,36 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public void updateOrInitOutline() {
-		for(Shape part : parts)
+		for(Shape part : parts) {
 			part.updateOrInitOutline();
+		}
 	}
 	
 	public void draw(DrawingContext dc) {
-		for(Shape part : parts)
+		for(Shape part : parts) {
 			part.draw(dc);
+		}
 	}
 	
 	public void setCenter(Point p) {
-		center=p;
-		for(Shape part : parts)
+		center = p;
+		for(Shape part : parts) {
 			part.setCenter(p);
+		}
 	}
 	public Point getCenter() {return center;}
 	
 	public boolean sameShape(Shape other) {
-		if(!(other instanceof CombinedShape))
+		if(!(other instanceof CombinedShape)) {
 			return false;
+		}
 		CombinedShape otherCasted=(CombinedShape)other;
-		if(otherCasted==this)
+		if(otherCasted == this) {
 			return true;
+		}
 		return 
 			center.samePosition(otherCasted.getCenter())
-			&& area()==otherCasted.area();
+			&& area() == otherCasted.area();
 	}
 	
 	public int getLevelOfDetail() {
@@ -77,9 +82,10 @@ public abstract class CombinedShape implements Shape{
 	}
 	
 	public void setLevelOfDetail(int lod) {
-		levelOfDetail=lod;
-		for(Shape part : parts)
+		levelOfDetail = lod;
+		for(Shape part : parts) {
 			part.setLevelOfDetail(lod);
+		}
 	}
 
 	@Override

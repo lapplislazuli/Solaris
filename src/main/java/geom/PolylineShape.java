@@ -12,8 +12,8 @@ public abstract class PolylineShape extends BaseShape {
 	protected boolean fillShape,fillBorder;
 	
 	protected PolylineShape(Point center,List<Point> outline) {
-		this.outLine=outline;
-		this.center=center;
+		this.outLine = outline;
+		this.center  = center;
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public abstract class PolylineShape extends BaseShape {
 	 * But when it comes to clicking, its harder to notice any difference)
 	 */
 	public Rectangle getBoundingBox(){
-		int max_x=0, max_y=0,min_x=100000,min_y=100000;
+		int max_x = 0, max_y = 0,min_x = 100000,min_y = 100000;
 		for (Point p : outLine) {
 			max_x = Math.max(max_x,p.getX());
 			min_x = Math.min(min_x,p.getX());

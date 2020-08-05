@@ -11,14 +11,15 @@ public class Circle extends BaseShape{
 	
 	public Circle(int radious) {
 		super();
-		this.radious=radious;
+		this.radious = radious;
 	}
 	
 	public Circle(Point center, int radious) {
 		super(center);
-		if(radious<0)
+		if(radious < 0) {
 			throw new IllegalArgumentException("radious cannot smaller than 0!");
-		this.radious=radious;
+		}
+		this.radious = radious;
 	}
 
 	@Override
@@ -28,15 +29,15 @@ public class Circle extends BaseShape{
 
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.fillOval(center.getX()-radious, center.getY()-radious, radious*2, radious*2);
+		gc.fillOval(center.getX() - radious, center.getY() - radious, radious * 2, radious * 2);
 	}
 
 	public void initOutline() {
 		//Reset!
 		outLine.removeIf(p->true);
 		//New Points
-		for(int i=0;i<levelOfDetail;i++) {
-			RelativePoint outLinePoint= 
+		for(int i = 0; i < levelOfDetail; i ++) {
+			RelativePoint outLinePoint = 
 					new RelativePoint(center,
 							(int)(Math.cos(i*Math.PI*2/levelOfDetail)*radious),
 							(int)(Math.sin(i*Math.PI*2/levelOfDetail)*radious));
@@ -50,13 +51,15 @@ public class Circle extends BaseShape{
 	
 	@Override 
 	public boolean equals(Object other) {
-		if(! (other instanceof Circle))
+		if(! (other instanceof Circle)) {
 			return false;
+		}
 		Circle otherParsed = (Circle) other;
 		
-		if(!getCenter().equals(otherParsed.getCenter()))
+		if(! getCenter().equals(otherParsed.getCenter())) {
 			return false;
-		return otherParsed.radious==radious;
+		}
+		return otherParsed.radious == radious;
 	}
 
 	@Override

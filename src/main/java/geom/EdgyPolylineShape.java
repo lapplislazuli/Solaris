@@ -64,18 +64,18 @@ public class EdgyPolylineShape extends PolylineShape {
 		}
 		
 		public Builder fillcolor(Color val){ 
-			fillcolor= val; 
+			fillcolor = val; 
 			return this;
 		}
 		
 		public Builder edgecolor(Color val){ 
-			edgecolor= val; 
+			edgecolor = val; 
 			return this;
 		}
 		
 		public Builder center(Point p) {
-			center=p;
-			centerManuallySet=true;
+			center = p;
+			centerManuallySet = true;
 			return this;
 		}
 		
@@ -91,7 +91,7 @@ public class EdgyPolylineShape extends PolylineShape {
 		
 		public Builder center(int x,int y) {
 			center = new AbsolutePoint(x,y);
-			centerManuallySet=true;
+			centerManuallySet = true;
 			return this;
 		}
 		
@@ -108,9 +108,9 @@ public class EdgyPolylineShape extends PolylineShape {
 		
 		
 		public EdgyPolylineShape build() {
-			if(fillcolor!=Color.BLACK) {
+			if(fillcolor != Color.BLACK) {
 				var info = new JavaFXDrawingInformation(fillcolor);
-				if(edgecolor!=null)
+				if(edgecolor != null)
 					info.secondaryColor = edgecolor;
 				else 
 					info.secondaryColor = fillcolor; // If no edge color is given, but a primary color, use the primary color
@@ -126,7 +126,7 @@ public class EdgyPolylineShape extends PolylineShape {
 				drawingInfo = info;
 			}
 			var shape = new EdgyPolylineShape(this);
-			if (!centerManuallySet) {
+			if (! centerManuallySet) {
 				shape.setCenter(shape.getBoundingBox().getCenter());
 			}
 			shape.initOutline();
@@ -145,7 +145,7 @@ public class EdgyPolylineShape extends PolylineShape {
 				.fillBorder(this.fillBorder)
 				.fillShape(this.fillShape);
 		
-		for(int i=1;i<outLine.size();i++) {
+		for(int i = 1; i < outLine.size();i ++) {
 			shapeBuilder = shapeBuilder.nextPoint(outLine.get(i).clone());
 		}
 		

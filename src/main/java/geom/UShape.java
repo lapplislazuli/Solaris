@@ -1,21 +1,21 @@
 package geom;
 
-import java.util.stream.Collectors;
-
 import interfaces.geom.Shape;
 
 public class UShape extends CombinedShape{
 	
-	private int width,length,barThickness;
+	private int width,length,barthickness;
 	
-	public UShape(int width, int length, int barThickness) {
+	public UShape(int width, int length, int barthickness) {
 		super();
 	
-		this.width=width; this.length=length;this.barThickness=barThickness;
+		this.width = width; 
+		this.length = length;
+		this.barthickness = barthickness;
 		
-		Rectangle rightStick = new Rectangle(new RelativePoint(center,-width/2,length/2), length, barThickness);
-		Rectangle upperBar = new Rectangle(new RelativePoint(center,-barThickness/2,0), barThickness, width);
-		Rectangle lowerBar = new Rectangle(new RelativePoint(center,barThickness/2-length,0), barThickness, width);
+		Rectangle rightStick = new Rectangle(new RelativePoint(center,-width/2,length/2), length, barthickness);
+		Rectangle upperBar = new Rectangle(new RelativePoint(center,-barthickness/2,0), barthickness, width);
+		Rectangle lowerBar = new Rectangle(new RelativePoint(center,barthickness/2-length,0), barthickness, width);
 		
 		parts.add(rightStick);
 		parts.add(upperBar);
@@ -24,7 +24,7 @@ public class UShape extends CombinedShape{
 	
 	@Override
 	public Shape copy() {
-		return new UShape(width,length,barThickness);
+		return new UShape(width,length,barthickness);
 	}
 
 }

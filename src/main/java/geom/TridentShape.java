@@ -4,17 +4,19 @@ import interfaces.geom.Shape;
 
 public class TridentShape extends CombinedShape{
 	
-	private int width,length,barThickness;
+	private int width,length,barthickness;
 	
-	public TridentShape(int width, int length, int barThickness) {
+	public TridentShape(int width, int length, int barthickness) {
 		super();
 		
-		this.width=width; this.length=length;this.barThickness=barThickness;
+		this.width = width; 
+		this.length = length;
+		this.barthickness = barthickness;
 	
-		Rectangle rightStick = new Rectangle(new RelativePoint(center,-width/2,length/2), length, barThickness);
-		Rectangle upperBar = new Rectangle(new RelativePoint(center,-barThickness/2,0), barThickness, width);
-		Rectangle lowerBar = new Rectangle(new RelativePoint(center,barThickness/2-length,0), barThickness, width);
-		Rectangle middleBar = new Rectangle(new RelativePoint(center,barThickness/2-length/2,0), barThickness, (int)(width*1.2));
+		Rectangle rightStick = new Rectangle(new RelativePoint(center,-width/2,length/2), length, barthickness);
+		Rectangle upperBar = new Rectangle(new RelativePoint(center,-barthickness/2,0), barthickness, width);
+		Rectangle lowerBar = new Rectangle(new RelativePoint(center,barthickness/2-length,0), barthickness, width);
+		Rectangle middleBar = new Rectangle(new RelativePoint(center,barthickness/2-length/2,0), barthickness, (int)(width*1.2));
 		
 		parts.add(rightStick);
 		parts.add(upperBar);
@@ -23,6 +25,6 @@ public class TridentShape extends CombinedShape{
 	}
 	@Override
 	public Shape copy() {
-		return new TridentShape(width,length,barThickness);
+		return new TridentShape(width,length,barthickness);
 	}
 }

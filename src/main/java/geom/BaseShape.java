@@ -12,15 +12,15 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class BaseShape implements Shape{
 	public Point center;
-	public List<Point> outLine= new LinkedList<Point>();
-	protected int levelOfDetail=10;
+	public List<Point> outLine = new LinkedList<Point>();
+	protected int levelOfDetail = 10;
 	
 	protected BaseShape(Point center) {
-		this.center=center;
+		this.center = center;
 	}
 	
 	protected BaseShape() {
-		center= new AbsolutePoint(0,0);
+		center = new AbsolutePoint(0,0);
 	}
 	
 	public boolean intersects(Shape other) {
@@ -31,23 +31,26 @@ public abstract class BaseShape implements Shape{
 	}
 	
 	public boolean covers(Shape other) {
-		if(other instanceof BaseShape)
+		if(other instanceof BaseShape) {
 			return ((BaseShape)other).outLine.stream().allMatch(p->contains(p));
+		}
 		return false;
 	}
 	
 	public void updateOrInitOutline() {
-		if(outLine.size()<levelOfDetail)
+		if(outLine.size() < levelOfDetail) {
 			initOutline();
+		}
 	};
 	
 	public abstract void initOutline();
 	
 	public void setCenter(Point p) {
-		if(center instanceof RelativePoint)
-			((RelativePoint)center).anker=p;
-		else
-			center=p;
+		if(center instanceof RelativePoint) {
+			((RelativePoint)center).anker = p;
+		} else {
+			center = p;
+		}
 	}
 	public Point getCenter() { return center;}
 	
@@ -56,23 +59,25 @@ public abstract class BaseShape implements Shape{
 	}
 	
 	public void setLevelOfDetail(int lod) {
-		levelOfDetail=lod;
+		levelOfDetail = lod;
 	}
 	
 	public boolean sameShape(Shape other) {
-		if(!(other instanceof BaseShape))
+		if(!(other instanceof BaseShape)) {
 			return false;
+		}
 		return 
 			center.samePosition(other.getCenter())
-			&& area()==other.area();
+			&& area() == other.area();
 		//TODO: Further Checks with Outline?
 	}
 	
 	public void draw(DrawingContext dc) {
-		if(dc instanceof JavaFXDrawingContext)
+		if(dc instanceof JavaFXDrawingContext) {
 			draw(((JavaFXDrawingContext)dc).getGraphicsContext());
-		else
+		} else {
 			throw new UnsupportedOperationException("Unsupported DrawingContext!");
+		}
 	}
 
 	@Override

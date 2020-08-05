@@ -13,15 +13,19 @@ public interface Point {
 	
 	default public double degreeTo(Point other) {
 		double degree;
-		if(distanceTo(other)==0) 
-			degree= 0;
-		else if(getY()<other.getY())
-			degree=Math.acos((other.getX()-getX())/distanceTo(other));
-		else 
-			degree=2*Math.PI-Math.acos((other.getX()-getX())/distanceTo(other));
+		if(distanceTo(other) == 0) {
+			degree = 0;
+		} else if(getY() < other.getY()) {
+			degree = Math.acos((other.getX()-getX())/distanceTo(other));
+		} else { 
+			degree = 2*Math.PI-Math.acos((other.getX()-getX())/distanceTo(other));
+		}
 		
-		if(degree>=2*Math.PI)
-			degree-=2*Math.PI;
+		//If the degree is more than one full circle (or is exactly one circle)
+		// Reduce by 360°
+		if(degree >= 2*Math.PI) {
+			degree -= 2*Math.PI;
+		}
 		return degree;
 	}
 	
@@ -31,15 +35,14 @@ public interface Point {
 	
 	default public boolean samePosition(Point other) {
 		return
-				   getX()==other.getX()
-				&& getY()==other.getY()
-				&& getZ()==other.getZ();
+				   getX() == other.getX()
+				&& getY() == other.getY()
+				&& getZ() == other.getZ();
 	}
 	
 	public Point clone();
 	
 	default public AbsolutePoint absoluteClone() {
-		return 
-			new AbsolutePoint(getX(),getY());
+		return new AbsolutePoint(getX(),getY());
 	}
 }
