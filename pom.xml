@@ -2,15 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Twonki</groupId>
   <artifactId>Solaris</artifactId>
-  <version>0.6-SNAPSHOT</version>
+  <version>0.7-SNAPSHOT</version>
   <name>Solaris</name>
   <packaging>jar</packaging>
    
   <description>A simple Solar System</description>
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
   </properties>
   
   <reporting>
@@ -45,24 +45,24 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>14-ea+9</version>
+            <version>16</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>14-ea+9</version>
+            <version>16</version>
             <classifier>win</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>14-ea+9</version>
+            <version>16</version>
             <classifier>linux</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>14-ea+9</version>
+            <version>16</version>
             <classifier>mac</classifier>
         </dependency>
 		
