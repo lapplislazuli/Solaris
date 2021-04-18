@@ -8,18 +8,15 @@ This repository is for training both cooperation with git as well as a source fo
 
 Feel free to extract code, share your opinion or contribute!
 
-## Currently implemented
+## What to see
 
-* Intensive use of [polymorphism](https://en.wikipedia.org/wiki/Polymorphism_(computer_science) (follow *SpaceObject -> MovingSpaceObject -> Satellite/SpaceShuttle/Planet*)
-* Use of [Interfaces](https://en.wikipedia.org/wiki/Protocol_(object-oriented_programming)) (See *DrawingObject*'s implementations *SpaceObject* and *Effect* and their use in *UpdateManager*)
 * [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) (e.g. *UpdateManager*)
 * [Builder Pattern](https://en.wikipedia.org/wiki/Builder_pattern) (*Planet, ShuttleNavigator*)
 * [UnitTests](https://en.wikipedia.org/wiki/Unit_testing) with [JUnit5](https://junit.org/junit5/)
-* Simple drawing (See *DistantGalaxy* as Background and *Star* for Items)
 * Simple userinput with keyboard or mouse
 * reading, altering and saving a JSON configurationfile, including keybindings and general settings (see package *config*)
 * Simple logging with [Log4J2](https://logging.apache.org/log4j/2.x/) and simple sample-loggersettings
-* Its a Maven and Java13 Project!
+* Its a Maven and Java16Project!
 * It is modular!
 * Travis CI
 
@@ -119,8 +116,8 @@ Not sure if your code is fine? Consider tagging *Help Wanted* or for a deeper re
 
 ## Build with
 
-* Java13
+* Java16
 * [Maven](https://maven.apache.org/)
 * [JUnit5](https://junit.org/junit5/)
 * [Log4J2](https://logging.apache.org/log4j/2.x/)
-* [JavaFX13](https://openjfx.io/)
+* [JavaFX16](https://openjfx.io/)
